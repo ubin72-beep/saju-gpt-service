@@ -1,1 +1,2 @@
-# saju-gpt-service
+# aisaju1000
+AI 사주 천년지기 - 2026 병오년 사주팔자 플랫폼
