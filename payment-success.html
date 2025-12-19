@@ -1,0 +1,94 @@
+ 1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>결제 완료 - AI 사주 천년지기</title>
+     7	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+     8	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     9	    <style>
+    10	        * { margin: 0; padding: 0; box-sizing: border-box; }
+    11	        body { font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    12	        .success-container { max-width: 600px; background: white; border-radius: 20px; padding: 3rem; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: fadeInUp 0.6s ease; }
+    13	        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    14	        .success-icon { font-size: 5rem; color: #4caf50; margin-bottom: 1.5rem; animation: scaleIn 0.5s ease 0.3s both; }
+    15	        @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+    16	        h1 { font-size: 2rem; color: #1a1a1a; margin-bottom: 1rem; }
+    17	        .order-info { background: #f9fafb; padding: 1.5rem; border-radius: 12px; margin: 2rem 0; text-align: left; }
+    18	        .info-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; }
+    19	        .info-row:last-child { border-bottom: none; }
+    20	        .info-label { color: #6b7280; font-weight: 500; }
+    21	        .info-value { color: #1a1a1a; font-weight: 600; }
+    22	        .amount { font-size: 1.5rem; color: #c41e3a; }
+    23	        .btn-group { display: flex; gap: 1rem; margin-top: 2rem; }
+    24	        .btn { flex: 1; padding: 1rem; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+    25	        .btn-primary { background: #c41e3a; color: white; }
+    26	        .btn-primary:hover { background: #a01830; transform: translateY(-2px); }
+    27	        .btn-secondary { background: #f3f4f6; color: #1a1a1a; }
+    28	        .btn-secondary:hover { background: #e5e7eb; }
+    29	    </style>
+    30	</head>
+    31	<body>
+    32	    <div class="success-container">
+    33	        <div class="success-icon">
+    34	            <i class="fas fa-check-circle"></i>
+    35	        </div>
+    36	        
+    37	        <h1>결제가 완료되었습니다!</h1>
+    38	        <p>주문하신 상품을 확인해주세요.</p>
+    39	        
+    40	        <div class="order-info">
+    41	            <div class="info-row">
+    42	                <span class="info-label">주문번호</span>
+    43	                <span class="info-value" id="orderId">-</span>
+    44	            </div>
+    45	            <div class="info-row">
+    46	                <span class="info-label">상품명</span>
+    47	                <span class="info-value" id="productName">-</span>
+    48	            </div>
+    49	            <div class="info-row">
+    50	                <span class="info-label">결제금액</span>
+    51	                <span class="info-value amount" id="amount">₩0</span>
+    52	            </div>
+    53	            <div class="info-row">
+    54	                <span class="info-label">결제일시</span>
+    55	                <span class="info-value" id="paymentDate">-</span>
+    56	            </div>
+    57	        </div>
+    58	        
+    59	        <div class="btn-group">
+    60	            <a href="mypage.html" class="btn btn-secondary">
+    61	                <i class="fas fa-user"></i> 마이페이지
+    62	            </a>
+    63	            <a href="index.html" class="btn btn-primary">
+    64	                <i class="fas fa-home"></i> 홈으로
+    65	            </a>
+    66	        </div>
+    67	    </div>
+    68	    
+    69	    <script src="js/auth.js"></script>
+    70	    <script>
+    71	        // URL 파라미터에서 결제 정보 가져오기
+    72	        const urlParams = new URLSearchParams(window.location.search);
+    73	        const orderId = urlParams.get('orderId') || 'ORD' + Date.now();
+    74	        const product = urlParams.get('product') || '상품';
+    75	        const amount = urlParams.get('amount') || '0';
+    76	        
+    77	        document.getElementById('orderId').textContent = orderId;
+    78	        document.getElementById('productName').textContent = product;
+    79	        document.getElementById('amount').textContent = '₩' + parseInt(amount).toLocaleString();
+    80	        document.getElementById('paymentDate').textContent = new Date().toLocaleString('ko-KR');
+    81	        
+    82	        // 사용자 구매 내역에 추가
+    83	        if (isLoggedIn()) {
+    84	            const user = getCurrentUser();
+    85	            addPurchaseHistory(user.id, {
+    86	                type: product,
+    87	                productName: product,
+    88	                amount: parseInt(amount),
+    89	                status: 'completed'
+    90	            });
+    91	        }
+    92	    </script>
+    93	</body>
+    94	</html>
