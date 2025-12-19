@@ -1,0 +1,594 @@
+1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>사주팔자 결과 - AI 사주 천년지기</title>
+     7	    <link rel="stylesheet" href="css/style.css">
+     8	    <link rel="stylesheet" href="css/modal.css">
+     9	    <link rel="stylesheet" href="css/result.css">
+    10	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    11	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    12	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    13	    
+    14	    <!-- Monitoring -->
+    15	    <script src="js/analytics.js"></script>
+    16	    <script src="js/sentry-init.js"></script>
+    17	</head>
+    18	<body>
+    19	    <!-- 네비게이션 -->
+    20	    <nav class="navbar">
+    21	        <div class="container">
+    22	            <div class="nav-brand">
+    23	                <a href="index.html">
+    24	                    <i class="fas fa-yin-yang"></i>
+    25	                    <span>AI 사주 천년지기</span>
+    26	                </a>
+    27	            </div>
+    28	            <ul class="nav-menu">
+    29	                <li><a href="index.html">홈</a></li>
+    30	                <li><a href="pricing.html">가격표</a></li>
+    31	                <li><a href="ai-chat.html">AI 상담</a></li>
+    32	                <li><a href="mypage.html">마이페이지</a></li>
+    33	            </ul>
+    34	        </div>
+    35	    </nav>
+    36	
+    37	    <!-- 결과 히어로 -->
+    38	    <section class="result-hero">
+    39	        <div class="container">
+    40	            <div class="result-header">
+    41	                <h1>
+    42	                    <i class="fas fa-star"></i>
+    43	                    사주팔자 결과
+    44	                </h1>
+    45	                <div class="result-info" id="userInfo">
+    46	                    <span id="userName"></span>
+    47	                    <span id="birthInfo"></span>
+    48	                </div>
+    49	            </div>
+    50	        </div>
+    51	    </section>
+    52	
+    53	    <!-- 사주 요약 정보 -->
+    54	    <section class="saju-summary" id="sajuSummary">
+    55	        <div class="container">
+    56	            <div class="summary-card">
+    57	                <div class="summary-item">
+    58	                    <div class="summary-label">📅 출생 정보</div>
+    59	                    <div class="summary-value" id="summaryBasic">-</div>
+    60	                </div>
+    61	                <div class="summary-item">
+    62	                    <div class="summary-label">🌟 일간(日干)</div>
+    63	                    <div class="summary-value" id="summaryDayMaster">-</div>
+    64	                </div>
+    65	                <div class="summary-item">
+    66	                    <div class="summary-label">🔮 오행 분석</div>
+    67	                    <div class="summary-value" id="summaryElements">-</div>
+    68	                </div>
+    69	                <div class="summary-item">
+    70	                    <div class="summary-label">⚖️ 균형도</div>
+    71	                    <div class="summary-value" id="summaryBalance">-</div>
+    72	                </div>
+    73	            </div>
+    74	        </div>
+    75	    </section>
+    76	
+    77	    <!-- 사주명식 (四柱命式) -->
+    78	    <section class="saju-pillars">
+    79	        <div class="container">
+    80	            <div class="section-title-box">
+    81	                <h2><i class="fas fa-yin-yang"></i> 사주명식 (四柱命式)</h2>
+    82	                <p class="section-subtitle">평생의 운명을 담은 사주팔자 구조</p>
+    83	            </div>
+    84	            
+    85	            <!-- 보기 방식 탭 -->
+    86	            <div class="view-tabs">
+    87	                <button class="tab-btn active" data-view="cheongan">천간지지로 보기</button>
+    88	                <button class="tab-btn" data-view="element">오행으로 보기</button>
+    89	                <button class="tab-btn" data-view="jijang">지장간으로 보기</button>
+    90	            </div>
+    91	
+    92	            <!-- 천간지지로 보기 -->
+    93	            <div class="pillars-view active" id="cheonganView">
+    94	                <div class="pillars-grid">
+    95	                    <div class="pillar-card year-pillar">
+    96	                        <div class="pillar-label">년주 (年柱)</div>
+    97	                        <div class="pillar-value" id="yearPillar">甲子</div>
+    98	                        <div class="pillar-desc">조상, 가문</div>
+    99	                    </div>
+   100	                    <div class="pillar-card month-pillar">
+   101	                        <div class="pillar-label">월주 (月柱)</div>
+   102	                        <div class="pillar-value" id="monthPillar">乙丑</div>
+   103	                        <div class="pillar-desc">부모, 청년</div>
+   104	                    </div>
+   105	                    <div class="pillar-card day-pillar">
+   106	                        <div class="pillar-label">일주 (日柱)</div>
+   107	                        <div class="pillar-value" id="dayPillar">丙寅</div>
+   108	                        <div class="pillar-desc">본인, 배우자</div>
+   109	                    </div>
+   110	                    <div class="pillar-card hour-pillar">
+   111	                        <div class="pillar-label">시주 (時柱)</div>
+   112	                        <div class="pillar-value" id="hourPillar">丁卯</div>
+   113	                        <div class="pillar-desc">자녀, 노년</div>
+   114	                    </div>
+   115	                </div>
+   116	            </div>
+   117	
+   118	            <!-- 오행으로 보기 -->
+   119	            <div class="pillars-view" id="elementView">
+   120	                <div class="pillars-grid">
+   121	                    <div class="pillar-card year-pillar">
+   122	                        <div class="pillar-label">년주 (年柱)</div>
+   123	                        <div class="pillar-element-value">
+   124	                            <div class="element-item" id="yearElement">
+   125	                                <span class="element-char wood">木</span>
+   126	                                <span class="element-char water">水</span>
+   127	                            </div>
+   128	                        </div>
+   129	                        <div class="pillar-desc">조상, 가문</div>
+   130	                    </div>
+   131	                    <div class="pillar-card month-pillar">
+   132	                        <div class="pillar-label">월주 (月柱)</div>
+   133	                        <div class="pillar-element-value">
+   134	                            <div class="element-item" id="monthElement">
+   135	                                <span class="element-char wood">木</span>
+   136	                                <span class="element-char earth">土</span>
+   137	                            </div>
+   138	                        </div>
+   139	                        <div class="pillar-desc">부모, 청년</div>
+   140	                    </div>
+   141	                    <div class="pillar-card day-pillar">
+   142	                        <div class="pillar-label">일주 (日柱)</div>
+   143	                        <div class="pillar-element-value">
+   144	                            <div class="element-item" id="dayElement">
+   145	                                <span class="element-char fire">火</span>
+   146	                                <span class="element-char wood">木</span>
+   147	                            </div>
+   148	                        </div>
+   149	                        <div class="pillar-desc">본인, 배우자</div>
+   150	                    </div>
+   151	                    <div class="pillar-card hour-pillar">
+   152	                        <div class="pillar-label">시주 (時柱)</div>
+   153	                        <div class="pillar-element-value">
+   154	                            <div class="element-item" id="hourElement">
+   155	                                <span class="element-char fire">火</span>
+   156	                                <span class="element-char wood">木</span>
+   157	                            </div>
+   158	                        </div>
+   159	                        <div class="pillar-desc">자녀, 노년</div>
+   160	                    </div>
+   161	                </div>
+   162	                <div class="element-legend">
+   163	                    <div class="legend-item">
+   164	                        <span class="element-char wood">木</span> 목(木) - 성장, 발전
+   165	                    </div>
+   166	                    <div class="legend-item">
+   167	                        <span class="element-char fire">火</span> 화(火) - 열정, 확산
+   168	                    </div>
+   169	                    <div class="legend-item">
+   170	                        <span class="element-char earth">土</span> 토(土) - 안정, 신용
+   171	                    </div>
+   172	                    <div class="legend-item">
+   173	                        <span class="element-char metal">金</span> 금(金) - 결단, 정의
+   174	                    </div>
+   175	                    <div class="legend-item">
+   176	                        <span class="element-char water">水</span> 수(水) - 지혜, 유연
+   177	                    </div>
+   178	                </div>
+   179	            </div>
+   180	
+   181	            <!-- 지장간으로 보기 -->
+   182	            <div class="pillars-view" id="jijangView">
+   183	                <div class="jijang-info">
+   184	                    <i class="fas fa-info-circle"></i>
+   185	                    <p>지장간(地藏干)은 지지 속에 숨어 있는 천간을 의미하며, 잠재력과 내면을 나타냅니다.</p>
+   186	                </div>
+   187	                <div class="pillars-grid">
+   188	                    <div class="pillar-card year-pillar">
+   189	                        <div class="pillar-label">년주 지장간</div>
+   190	                        <div class="pillar-jijang-value">
+   191	                            <div class="jijang-main" id="yearJijang">
+   192	                                <div class="jijang-item">
+   193	                                    <span class="jijang-char">癸</span>
+   194	                                    <span class="jijang-days">10일</span>
+   195	                                </div>
+   196	                            </div>
+   197	                        </div>
+   198	                        <div class="pillar-desc">초기 운세</div>
+   199	                    </div>
+   200	                    <div class="pillar-card month-pillar">
+   201	                        <div class="pillar-label">월주 지장간</div>
+   202	                        <div class="pillar-jijang-value">
+   203	                            <div class="jijang-main" id="monthJijang">
+   204	                                <div class="jijang-item">
+   205	                                    <span class="jijang-char">己</span>
+   206	                                    <span class="jijang-days">9일</span>
+   207	                                </div>
+   208	                                <div class="jijang-item">
+   209	                                    <span class="jijang-char">癸</span>
+   210	                                    <span class="jijang-days">3일</span>
+   211	                                </div>
+   212	                                <div class="jijang-item">
+   213	                                    <span class="jijang-char">辛</span>
+   214	                                    <span class="jijang-days">18일</span>
+   215	                                </div>
+   216	                            </div>
+   217	                        </div>
+   218	                        <div class="pillar-desc">중기 운세</div>
+   219	                    </div>
+   220	                    <div class="pillar-card day-pillar">
+   221	                        <div class="pillar-label">일주 지장간</div>
+   222	                        <div class="pillar-jijang-value">
+   223	                            <div class="jijang-main" id="dayJijang">
+   224	                                <div class="jijang-item">
+   225	                                    <span class="jijang-char">甲</span>
+   226	                                    <span class="jijang-days">7일</span>
+   227	                                </div>
+   228	                                <div class="jijang-item">
+   229	                                    <span class="jijang-char">丙</span>
+   230	                                    <span class="jijang-days">7일</span>
+   231	                                </div>
+   232	                                <div class="jijang-item">
+   233	                                    <span class="jijang-char">戊</span>
+   234	                                    <span class="jijang-days">16일</span>
+   235	                                </div>
+   236	                            </div>
+   237	                        </div>
+   238	                        <div class="pillar-desc">본인 내면</div>
+   239	                    </div>
+   240	                    <div class="pillar-card hour-pillar">
+   241	                        <div class="pillar-label">시주 지장간</div>
+   242	                        <div class="pillar-jijang-value">
+   243	                            <div class="jijang-main" id="hourJijang">
+   244	                                <div class="jijang-item">
+   245	                                    <span class="jijang-char">甲</span>
+   246	                                    <span class="jijang-days">10일</span>
+   247	                                </div>
+   248	                                <div class="jijang-item">
+   249	                                    <span class="jijang-char">乙</span>
+   250	                                    <span class="jijang-days">20일</span>
+   251	                                </div>
+   252	                            </div>
+   253	                        </div>
+   254	                        <div class="pillar-desc">후기 운세</div>
+   255	                    </div>
+   256	                </div>
+   257	                <div class="jijang-explanation">
+   258	                    <h4>🔍 지장간 해석</h4>
+   259	                    <p>지장간은 지지 속에 포함된 천간으로, 표면에 드러나지 않는 잠재력, 숨겨진 능력, 내면의 성향을 나타냅니다. 
+   260	                    일수(日數)는 해당 지장간의 영향력 기간을 의미하며, 수치가 클수록 영향력이 큽니다.</p>
+   261	                </div>
+   262	            </div>
+   263	        </div>
+   264	    </section>
+   265	
+   266	    <!-- 일주 성격 분석 (新) -->
+   267	    <section class="daymaster-personality-section">
+   268	        <div class="container">
+   269	            <div class="section-title-box">
+   270	                <h2><i class="fas fa-user-circle"></i> 일주 성격 분석</h2>
+   271	                <p class="section-subtitle">당신의 일주(<span id="daymasterBadge">-</span>)에 담긴 성격과 특성</p>
+   272	            </div>
+   273	            
+   274	            <div class="personality-content">
+   275	                <!-- 일주 이름 -->
+   276	                <div class="personality-header">
+   277	                    <h3><span id="daymasterName">일주</span>의 특성</h3>
+   278	                    <p id="daymasterDescription" class="personality-description"></p>
+   279	                </div>
+   280	                
+   281	                <!-- 기본 성격 -->
+   282	                <div class="personality-card">
+   283	                    <h4><i class="fas fa-heart"></i> 기본 성격</h4>
+   284	                    <p id="basicPersonality">-</p>
+   285	                </div>
+   286	                
+   287	                <!-- 장단점 -->
+   288	                <div class="personality-grid">
+   289	                    <div class="personality-card strengths-card">
+   290	                        <h4><i class="fas fa-star"></i> 장점</h4>
+   291	                        <ul id="strengthsList">
+   292	                            <li>항목을 불러오는 중...</li>
+   293	                        </ul>
+   294	                    </div>
+   295	                    <div class="personality-card weaknesses-card">
+   296	                        <h4><i class="fas fa-exclamation-triangle"></i> 주의할 점</h4>
+   297	                        <ul id="weaknessesList">
+   298	                            <li>항목을 불러오는 중...</li>
+   299	                        </ul>
+   300	                    </div>
+   301	                </div>
+   302	                
+   303	                <!-- 직업, 연애, 재물 -->
+   304	                <div class="personality-details">
+   305	                    <div class="detail-card">
+   306	                        <h4><i class="fas fa-briefcase"></i> 적성 직업</h4>
+   307	                        <p id="careerSuggestion">-</p>
+   308	                    </div>
+   309	                    <div class="detail-card">
+   310	                        <h4><i class="fas fa-heart-circle"></i> 연애 스타일</h4>
+   311	                        <p id="loveStyle">-</p>
+   312	                    </div>
+   313	                    <div class="detail-card">
+   314	                        <h4><i class="fas fa-coins"></i> 재물 경향</h4>
+   315	                        <p id="wealthTendency">-</p>
+   316	                    </div>
+   317	                </div>
+   318	            </div>
+   319	        </div>
+   320	    </section>
+   321	
+   322	    <!-- 오행 분석 -->
+   323	    <section class="elements-section">
+   324	        <div class="container">
+   325	            <div class="section-title-box">
+   326	                <h2><i class="fas fa-chart-pie"></i> 오행 분석</h2>
+   327	                <p class="section-subtitle">사주명식의 오행 균형과 강약</p>
+   328	            </div>
+   329	            <div class="section-grid">
+   330	                <div class="elements-chart">
+   331	                    <canvas id="elementsChart"></canvas>
+   332	                    <div class="elements-legend" id="elementsLegend"></div>
+   333	                </div>
+   334	                <div class="elements-desc">
+   335	                    <h3>오행 해석</h3>
+   336	                    <div id="elementsInterpretation">
+   337	                        <div class="interpretation-item">
+   338	                            <span class="element-icon wood">木</span>
+   339	                            <div>
+   340	                                <strong>목(木)</strong>
+   341	                                <p>성장, 발전, 창의성을 상징합니다.</p>
+   342	                            </div>
+   343	                        </div>
+   344	                    </div>
+   345	                </div>
+   346	            </div>
+   347	        </div>
+   348	    </section>
+   349	
+   350	
+   351	
+   352	    <!-- 2026 병오년 운세 -->
+   353	    <section class="year-2026-fortune">
+   354	        <div class="container">
+   355	            <div class="section-title-box year-2026-title">
+   356	                <h2><i class="fas fa-horse"></i> 2026 병오년(丙午年) 운세</h2>
+   357	                <p class="section-subtitle">붉은 불의 말띠 해, 당신의 한 해 운세</p>
+   358	                <div class="year-info">
+   359	                    <span class="badge badge-fire">火(火) - 丙午</span>
+   360	                    <span class="badge badge-element">양(陽)의 기운</span>
+   361	                    <span class="badge badge-animal">말띠의 해</span>
+   362	                </div>
+   363	            </div>
+   364	
+   365	            <!-- 2026년 개요 -->
+   366	            <div class="year-overview">
+   367	                <div class="overview-card">
+   368	                    <div class="overview-icon">
+   369	                        <i class="fas fa-fire"></i>
+   370	                    </div>
+   371	                    <div class="overview-content">
+   372	                        <h3>병오년의 특징</h3>
+   373	                        <p>2026년은 병오년(丙午年)으로 <strong>붉은 불의 말</strong>을 상징합니다. 화(火)의 기운이 강하게 작용하는 해로, 열정적이고 역동적인 에너지가 넘치는 한 해입니다.</p>
+   374	                        <ul class="feature-list">
+   375	                            <li><i class="fas fa-check-circle"></i> 빠른 변화와 활동성</li>
+   376	                            <li><i class="fas fa-check-circle"></i> 열정과 추진력 상승</li>
+   377	                            <li><i class="fas fa-check-circle"></i> 대인관계 활발</li>
+   378	                            <li><i class="fas fa-check-circle"></i> 새로운 도전과 기회</li>
+   379	                        </ul>
+   380	                    </div>
+   381	                </div>
+   382	
+   383	                <div class="overview-card">
+   384	                    <div class="overview-icon">
+   385	                        <i class="fas fa-chart-line"></i>
+   386	                    </div>
+   387	                    <div class="overview-content">
+   388	                        <h3>당신의 사주와 2026년</h3>
+   389	                        <p id="year2026Compatibility">사주 데이터를 분석하여 2026년과의 궁합을 확인 중...</p>
+   390	                        <div class="compatibility-meter" id="compatibilityMeter">
+   391	                            <div class="meter-bar">
+   392	                                <div class="meter-fill" id="meterFill" style="width: 0%"></div>
+   393	                            </div>
+   394	                            <div class="meter-label" id="meterLabel">분석 중...</div>
+   395	                        </div>
+   396	                    </div>
+   397	                </div>
+   398	            </div>
+   399	
+   400	            <!-- 2026년 월별 운세 미리보기 (무료) -->
+   401	            <div class="monthly-preview">
+   402	                <h3><i class="fas fa-calendar-alt"></i> 2026년 월별 흐름 미리보기</h3>
+   403	                <div class="months-grid">
+   404	                    <div class="month-card">
+   405	                        <div class="month-header">1-3월</div>
+   406	                        <div class="month-fortune">⭐⭐⭐⭐</div>
+   407	                        <p>새로운 시작, 봄의 기운과 함께 좋은 기회</p>
+   408	                    </div>
+   409	                    <div class="month-card">
+   410	                        <div class="month-header">4-6월</div>
+   411	                        <div class="month-fortune">⭐⭐⭐⭐⭐</div>
+   412	                        <p>열정과 활력, 대인운 최고조</p>
+   413	                    </div>
+   414	                    <div class="month-card">
+   415	                        <div class="month-header">7-9월</div>
+   416	                        <div class="month-fortune">⭐⭐⭐</div>
+   417	                        <p>안정기, 재정관리 필요</p>
+   418	                    </div>
+   419	                    <div class="month-card">
+   420	                        <div class="month-header">10-12월</div>
+   421	                        <div class="month-fortune">⭐⭐⭐⭐</div>
+   422	                        <p>결실의 계절, 한 해 마무리</p>
+   423	                    </div>
+   424	                </div>
+   425	            </div>
+   426	
+   427	            <!-- 2026년 상세 운세 (프리미엄) -->
+   428	            <div class="year-2026-premium">
+   429	                <div class="premium-banner">
+   430	                    <i class="fas fa-crown"></i>
+   431	                    <h4>2026년 상세 운세 보기</h4>
+   432	                    <p>월별 상세 운세, 길흉일, 주의사항 등 모든 정보를 확인하세요</p>
+   433	                    <button class="btn-premium" onclick="unlockPremium()">
+   434	                        <i class="fas fa-unlock"></i>
+   435	                        ₩4,900 - 2026 신년운세 구매
+   436	                    </button>
+   437	                </div>
+   438	            </div>
+   439	        </div>
+   440	    </section>
+   441	
+   442	    <!-- 프리미엄 잠금 -->
+   443	    <section class="premium-lock" id="premiumContent">
+   444	        <div class="container">
+   445	            <div class="lock-overlay">
+   446	                <div class="lock-content">
+   447	                    <i class="fas fa-lock"></i>
+   448	                    <h2>프리미엄 해석 보기</h2>
+   449	                    <p>상세한 운세 해석과 맞춤 조언을 확인하세요</p>
+   450	                    <ul class="premium-features">
+   451	                        <li><i class="fas fa-check"></i> 십신(십성) 상세 분석</li>
+   452	                        <li><i class="fas fa-check"></i> 대운 타임라인</li>
+   453	                        <li><i class="fas fa-check"></i> 성격/직업/재물/연애/건강 해석</li>
+   454	                        <li><i class="fas fa-check"></i> PDF 다운로드</li>
+   455	                    </ul>
+   456	                    <div class="price-display">
+   457	                        <span class="original-price">₩7,900</span>
+   458	                        <span class="sale-price">₩4,900</span>
+   459	                        <span class="discount-badge">38% 할인</span>
+   460	                    </div>
+   461	                    <button class="btn-unlock" onclick="unlockPremium()">
+   462	                        <i class="fas fa-unlock"></i>
+   463	                        프리미엄으로 업그레이드
+   464	                    </button>
+   465	                </div>
+   466	            </div>
+   467	        </div>
+   468	    </section>
+   469	
+   470	    <!-- 십신 분석 (프리미엄) -->
+   471	    <section class="sipsin-section locked">
+   472	        <div class="container">
+   473	            <h2><i class="fas fa-users"></i> 십신 분석</h2>
+   474	            <div class="blur-content">
+   475	                <div class="sipsin-grid">
+   476	                    <div class="sipsin-card">
+   477	                        <h3>비견 (比肩)</h3>
+   478	                        <p>형제, 친구, 경쟁자를 의미합니다...</p>
+   479	                    </div>
+   480	                </div>
+   481	            </div>
+   482	        </div>
+   483	    </section>
+   484	
+   485	    <!-- 대운 타임라인 (프리미엄) -->
+   486	    <section class="daeun-section locked">
+   487	        <div class="container">
+   488	            <h2><i class="fas fa-timeline"></i> 대운 타임라인</h2>
+   489	            <div class="blur-content">
+   490	                <div class="timeline">
+   491	                    <div class="timeline-item">
+   492	                        <div class="timeline-year">2020-2029</div>
+   493	                        <div class="timeline-content">
+   494	                            <h4>庚子 (경자)</h4>
+   495	                            <p>새로운 시작과 변화의 시기...</p>
+   496	                        </div>
+   497	                    </div>
+   498	                </div>
+   499	            </div>
+   500	        </div>
+   501	    </section>
+   502	
+   503	    <!-- 운세 해석 (프리미엄) -->
+   504	    <section class="fortune-section locked">
+   505	        <div class="container">
+   506	            <h2><i class="fas fa-scroll"></i> 상세 운세 해석</h2>
+   507	            <div class="blur-content">
+   508	                <div class="fortune-tabs">
+   509	                    <button class="tab-btn active" data-tab="personality">성격</button>
+   510	                    <button class="tab-btn" data-tab="career">직업</button>
+   511	                    <button class="tab-btn" data-tab="wealth">재물</button>
+   512	                    <button class="tab-btn" data-tab="love">연애</button>
+   513	                    <button class="tab-btn" data-tab="health">건강</button>
+   514	                </div>
+   515	                <div class="fortune-content">
+   516	                    <p>당신은 타고난 리더십을 가지고 있으며...</p>
+   517	                </div>
+   518	            </div>
+   519	        </div>
+   520	    </section>
+   521	
+   522	    <!-- 추천 서비스 -->
+   523	    <section class="recommend-section">
+   524	        <div class="container">
+   525	            <h2>이런 서비스는 어때요?</h2>
+   526	            <div class="recommend-grid">
+   527	                <div class="recommend-card">
+   528	                    <i class="fas fa-robot"></i>
+   529	                    <h3>AI 운세 상담</h3>
+   530	                    <p>24시간 실시간 맞춤 상담</p>
+   531	                    <span class="price">₩9,900/월</span>
+   532	                    <a href="ai-chat.html" class="btn-recommend">시작하기</a>
+   533	                </div>
+   534	                <div class="recommend-card">
+   535	                    <i class="fas fa-heart"></i>
+   536	                    <h3>맞춤 연애운</h3>
+   537	                    <p>2026년 사랑의 흐름 분석</p>
+   538	                    <span class="price">₩3,900</span>
+   539	                    <a href="pricing.html" class="btn-recommend">구매하기</a>
+   540	                </div>
+   541	                <div class="recommend-card">
+   542	                    <i class="fas fa-ring"></i>
+   543	                    <h3>정밀 궁합</h3>
+   544	                    <p>두 사람의 천생연분 확인</p>
+   545	                    <span class="price">₩9,900</span>
+   546	                    <a href="pricing.html" class="btn-recommend">확인하기</a>
+   547	                </div>
+   548	            </div>
+   549	        </div>
+   550	    </section>
+   551	
+   552	    <!-- 액션 버튼 -->
+   553	    <section class="action-section">
+   554	        <div class="container">
+   555	            <div class="action-buttons">
+   556	                <button class="btn-action" onclick="window.print()">
+   557	                    <i class="fas fa-print"></i>
+   558	                    인쇄하기
+   559	                </button>
+   560	                <button class="btn-action" onclick="downloadPDF()">
+   561	                    <i class="fas fa-file-pdf"></i>
+   562	                    PDF 다운로드
+   563	                </button>
+   564	                <button class="btn-action" onclick="shareResult()">
+   565	                    <i class="fas fa-share-alt"></i>
+   566	                    공유하기
+   567	                </button>
+   568	                <button class="btn-action btn-primary" onclick="saveResult()">
+   569	                    <i class="fas fa-save"></i>
+   570	                    저장하기
+   571	                </button>
+   572	            </div>
+   573	        </div>
+   574	    </section>
+   575	
+   576	    <!-- 푸터 -->
+   577	    <footer class="footer">
+   578	        <div class="container">
+   579	            <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
+   580	        </div>
+   581	    </footer>
+   582	
+   583	    <!-- Lunar Calendar Library -->
+   584	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+   585	    <script src="js/page-handler.js"></script>
+   586	    <script src="js/saju-calculator.js"></script>
+   587	    <script src="js/daymaster-personality.js"></script>
+   588	    <script src="js/daeun-calculator.js"></script>
+   589	    <script src="js/sinsal-analyzer.js"></script>
+   590	    <script src="js/yongsin-analyzer.js"></script>
+   591	    <script src="js/result.js"></script>
+   592	</body>
+   593	</html>
+   594	
