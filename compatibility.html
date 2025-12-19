@@ -1,0 +1,792 @@
+ 1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>궁합 분석 - AI 사주 천년지기</title>
+     7	    <meta name="description" content="연애, 결혼, 사업 궁합을 정밀하게 분석합니다. 사주 기반 상성 확인">
+     8	    
+     9	    <!-- 스타일시트 -->
+    10	    <link rel="stylesheet" href="css/style.css">
+    11	    <link rel="stylesheet" href="css/result.css">
+    12	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    13	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    14	    
+    15	    <style>
+    16	        .compatibility-hero {
+    17	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    18	            padding: 4rem 0;
+    19	            color: white;
+    20	            text-align: center;
+    21	        }
+    22	        
+    23	        .compatibility-hero h1 {
+    24	            font-size: 2.5rem;
+    25	            margin-bottom: 1rem;
+    26	        }
+    27	        
+    28	        .compatibility-hero p {
+    29	            font-size: 1.2rem;
+    30	            opacity: 0.9;
+    31	        }
+    32	        
+    33	        .compatibility-form {
+    34	            background: white;
+    35	            border-radius: 20px;
+    36	            padding: 3rem;
+    37	            margin: -2rem auto 3rem;
+    38	            max-width: 900px;
+    39	            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    40	        }
+    41	        
+    42	        .form-section {
+    43	            margin-bottom: 2rem;
+    44	        }
+    45	        
+    46	        .form-section h3 {
+    47	            font-size: 1.3rem;
+    48	            margin-bottom: 1.5rem;
+    49	            color: #333;
+    50	            display: flex;
+    51	            align-items: center;
+    52	            gap: 0.5rem;
+    53	        }
+    54	        
+    55	        .person-icon {
+    56	            font-size: 1.5rem;
+    57	        }
+    58	        
+    59	        .form-row {
+    60	            display: grid;
+    61	            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    62	            gap: 1.5rem;
+    63	            margin-bottom: 1.5rem;
+    64	        }
+    65	        
+    66	        .form-group {
+    67	            display: flex;
+    68	            flex-direction: column;
+    69	        }
+    70	        
+    71	        .form-group label {
+    72	            font-weight: 500;
+    73	            margin-bottom: 0.5rem;
+    74	            color: #555;
+    75	        }
+    76	        
+    77	        .form-group input,
+    78	        .form-group select {
+    79	            padding: 0.8rem;
+    80	            border: 2px solid #e0e0e0;
+    81	            border-radius: 8px;
+    82	            font-size: 1rem;
+    83	            transition: border-color 0.3s;
+    84	        }
+    85	        
+    86	        .form-group input:focus,
+    87	        .form-group select:focus {
+    88	            outline: none;
+    89	            border-color: #667eea;
+    90	        }
+    91	        
+    92	        .analysis-type-selector {
+    93	            display: grid;
+    94	            grid-template-columns: repeat(3, 1fr);
+    95	            gap: 1rem;
+    96	            margin-bottom: 2rem;
+    97	        }
+    98	        
+    99	        .type-card {
+   100	            background: #f8f9fa;
+   101	            border: 3px solid transparent;
+   102	            border-radius: 15px;
+   103	            padding: 1.5rem;
+   104	            text-align: center;
+   105	            cursor: pointer;
+   106	            transition: all 0.3s;
+   107	        }
+   108	        
+   109	        .type-card:hover {
+   110	            background: #e9ecef;
+   111	            transform: translateY(-3px);
+   112	        }
+   113	        
+   114	        .type-card.active {
+   115	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   116	            color: white;
+   117	            border-color: #667eea;
+   118	        }
+   119	        
+   120	        .type-card .icon {
+   121	            font-size: 2.5rem;
+   122	            margin-bottom: 0.5rem;
+   123	        }
+   124	        
+   125	        .type-card h4 {
+   126	            font-size: 1.1rem;
+   127	            margin-bottom: 0.5rem;
+   128	        }
+   129	        
+   130	        .type-card p {
+   131	            font-size: 0.9rem;
+   132	            opacity: 0.8;
+   133	        }
+   134	        
+   135	        .btn-analyze {
+   136	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   137	            color: white;
+   138	            border: none;
+   139	            padding: 1.2rem 3rem;
+   140	            font-size: 1.2rem;
+   141	            font-weight: 600;
+   142	            border-radius: 50px;
+   143	            cursor: pointer;
+   144	            width: 100%;
+   145	            transition: transform 0.3s;
+   146	        }
+   147	        
+   148	        .btn-analyze:hover {
+   149	            transform: scale(1.05);
+   150	        }
+   151	        
+   152	        .compatibility-result {
+   153	            display: none;
+   154	            max-width: 900px;
+   155	            margin: 0 auto;
+   156	            padding: 2rem 0;
+   157	        }
+   158	        
+   159	        .result-header {
+   160	            text-align: center;
+   161	            margin-bottom: 3rem;
+   162	        }
+   163	        
+   164	        .compatibility-score {
+   165	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   166	            color: white;
+   167	            border-radius: 20px;
+   168	            padding: 3rem;
+   169	            text-align: center;
+   170	            margin-bottom: 3rem;
+   171	        }
+   172	        
+   173	        .score-circle {
+   174	            width: 200px;
+   175	            height: 200px;
+   176	            border-radius: 50%;
+   177	            background: rgba(255,255,255,0.2);
+   178	            display: flex;
+   179	            align-items: center;
+   180	            justify-content: center;
+   181	            margin: 0 auto 2rem;
+   182	            font-size: 4rem;
+   183	            font-weight: 700;
+   184	        }
+   185	        
+   186	        .score-label {
+   187	            font-size: 1.5rem;
+   188	            margin-top: 1rem;
+   189	        }
+   190	        
+   191	        .analysis-section {
+   192	            background: white;
+   193	            border-radius: 15px;
+   194	            padding: 2rem;
+   195	            margin-bottom: 2rem;
+   196	            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+   197	        }
+   198	        
+   199	        .analysis-section h3 {
+   200	            font-size: 1.5rem;
+   201	            margin-bottom: 1.5rem;
+   202	            display: flex;
+   203	            align-items: center;
+   204	            gap: 0.5rem;
+   205	        }
+   206	        
+   207	        .strength-list,
+   208	        .weakness-list {
+   209	            list-style: none;
+   210	            padding: 0;
+   211	        }
+   212	        
+   213	        .strength-list li,
+   214	        .weakness-list li {
+   215	            padding: 0.8rem 0;
+   216	            border-bottom: 1px solid #f0f0f0;
+   217	            display: flex;
+   218	            align-items: start;
+   219	            gap: 0.5rem;
+   220	        }
+   221	        
+   222	        .strength-list li:before {
+   223	            content: "✓";
+   224	            color: #4caf50;
+   225	            font-weight: bold;
+   226	            font-size: 1.2rem;
+   227	        }
+   228	        
+   229	        .weakness-list li:before {
+   230	            content: "!";
+   231	            color: #ff5252;
+   232	            font-weight: bold;
+   233	            font-size: 1.2rem;
+   234	            background: #ffebee;
+   235	            width: 24px;
+   236	            height: 24px;
+   237	            border-radius: 50%;
+   238	            display: flex;
+   239	            align-items: center;
+   240	            justify-content: center;
+   241	        }
+   242	        
+   243	        .advice-box {
+   244	            background: #f0f7ff;
+   245	            border-left: 4px solid #667eea;
+   246	            padding: 1.5rem;
+   247	            border-radius: 10px;
+   248	            margin-top: 1.5rem;
+   249	        }
+   250	        
+   251	        .advice-box h4 {
+   252	            color: #667eea;
+   253	            margin-bottom: 1rem;
+   254	        }
+   255	        
+   256	        @media (max-width: 768px) {
+   257	            .compatibility-hero h1 {
+   258	                font-size: 1.8rem;
+   259	            }
+   260	            
+   261	            .compatibility-form {
+   262	                padding: 2rem 1.5rem;
+   263	                margin: -1rem 1rem 2rem;
+   264	            }
+   265	            
+   266	            .analysis-type-selector {
+   267	                grid-template-columns: 1fr;
+   268	            }
+   269	            
+   270	            .score-circle {
+   271	                width: 150px;
+   272	                height: 150px;
+   273	                font-size: 3rem;
+   274	            }
+   275	        }
+   276	    </style>
+   277	</head>
+   278	<body>
+   279	    <!-- 네비게이션 -->
+   280	    <nav class="navbar">
+   281	        <div class="container">
+   282	            <div class="logo">
+   283	                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+   284	            </div>
+   285	            <ul class="nav-menu">
+   286	                <li><a href="index.html">홈</a></li>
+   287	                <li><a href="result.html">내 사주</a></li>
+   288	                <li><a href="ai-chat.html">AI 상담</a></li>
+   289	                <li><a href="compatibility.html" class="active">궁합</a></li>
+   290	                <li><a href="pricing.html">프리미엄</a></li>
+   291	                <li><a href="mypage.html">마이페이지</a></li>
+   292	            </ul>
+   293	            <div class="nav-actions">
+   294	                <a href="login.html" class="btn-login">로그인</a>
+   295	            </div>
+   296	        </div>
+   297	    </nav>
+   298	
+   299	    <!-- 히어로 섹션 -->
+   300	    <section class="compatibility-hero">
+   301	        <div class="container">
+   302	            <h1>💕 궁합 분석</h1>
+   303	            <p>사주 기반 정밀 상성 분석으로 두 사람의 관계를 확인하세요</p>
+   304	        </div>
+   305	    </section>
+   306	
+   307	    <!-- 궁합 입력 폼 -->
+   308	    <div class="container">
+   309	        <div class="compatibility-form">
+   310	            <h2 style="text-align: center; margin-bottom: 2rem;">두 분의 정보를 입력해주세요</h2>
+   311	            
+   312	            <!-- 분석 유형 선택 -->
+   313	            <div class="analysis-type-selector">
+   314	                <div class="type-card active" data-type="love">
+   315	                    <div class="icon">💗</div>
+   316	                    <h4>연애 궁합</h4>
+   317	                    <p>연인 사이의 상성</p>
+   318	                </div>
+   319	                <div class="type-card" data-type="marriage">
+   320	                    <div class="icon">💍</div>
+   321	                    <h4>결혼 궁합</h4>
+   322	                    <p>평생 동반자 상성</p>
+   323	                </div>
+   324	                <div class="type-card" data-type="business">
+   325	                    <div class="icon">💼</div>
+   326	                    <h4>사업 궁합</h4>
+   327	                    <p>비즈니스 파트너 상성</p>
+   328	                </div>
+   329	            </div>
+   330	
+   331	            <form id="compatibilityForm">
+   332	                <!-- 첫 번째 사람 -->
+   333	                <div class="form-section">
+   334	                    <h3><span class="person-icon">👤</span> 첫 번째 분</h3>
+   335	                    <div class="form-row">
+   336	                        <div class="form-group">
+   337	                            <label for="person1Name">이름</label>
+   338	                            <input type="text" id="person1Name" placeholder="홍길동" required>
+   339	                        </div>
+   340	                        <div class="form-group">
+   341	                            <label for="person1Gender">성별</label>
+   342	                            <select id="person1Gender" required>
+   343	                                <option value="male">남성</option>
+   344	                                <option value="female">여성</option>
+   345	                            </select>
+   346	                        </div>
+   347	                    </div>
+   348	                    <div class="form-row">
+   349	                        <div class="form-group">
+   350	                            <label for="person1Year">생년</label>
+   351	                            <input type="number" id="person1Year" placeholder="1990" min="1900" max="2024" required>
+   352	                        </div>
+   353	                        <div class="form-group">
+   354	                            <label for="person1Month">생월</label>
+   355	                            <input type="number" id="person1Month" placeholder="5" min="1" max="12" required>
+   356	                        </div>
+   357	                        <div class="form-group">
+   358	                            <label for="person1Day">생일</label>
+   359	                            <input type="number" id="person1Day" placeholder="15" min="1" max="31" required>
+   360	                        </div>
+   361	                        <div class="form-group">
+   362	                            <label for="person1Hour">생시 (시)</label>
+   363	                            <input type="number" id="person1Hour" placeholder="14" min="0" max="23">
+   364	                        </div>
+   365	                    </div>
+   366	                    <div class="form-row">
+   367	                        <div class="form-group">
+   368	                            <label for="person1Calendar">양력/음력</label>
+   369	                            <select id="person1Calendar" required>
+   370	                                <option value="solar">양력</option>
+   371	                                <option value="lunar">음력</option>
+   372	                            </select>
+   373	                        </div>
+   374	                        <div class="form-group">
+   375	                            <label for="person1Leap">윤달 여부</label>
+   376	                            <select id="person1Leap">
+   377	                                <option value="false">평달</option>
+   378	                                <option value="true">윤달</option>
+   379	                            </select>
+   380	                        </div>
+   381	                    </div>
+   382	                </div>
+   383	
+   384	                <!-- 두 번째 사람 -->
+   385	                <div class="form-section">
+   386	                    <h3><span class="person-icon">👤</span> 두 번째 분</h3>
+   387	                    <div class="form-row">
+   388	                        <div class="form-group">
+   389	                            <label for="person2Name">이름</label>
+   390	                            <input type="text" id="person2Name" placeholder="김영희" required>
+   391	                        </div>
+   392	                        <div class="form-group">
+   393	                            <label for="person2Gender">성별</label>
+   394	                            <select id="person2Gender" required>
+   395	                                <option value="male">남성</option>
+   396	                                <option value="female">여성</option>
+   397	                            </select>
+   398	                        </div>
+   399	                    </div>
+   400	                    <div class="form-row">
+   401	                        <div class="form-group">
+   402	                            <label for="person2Year">생년</label>
+   403	                            <input type="number" id="person2Year" placeholder="1992" min="1900" max="2024" required>
+   404	                        </div>
+   405	                        <div class="form-group">
+   406	                            <label for="person2Month">생월</label>
+   407	                            <input type="number" id="person2Month" placeholder="8" min="1" max="12" required>
+   408	                        </div>
+   409	                        <div class="form-group">
+   410	                            <label for="person2Day">생일</label>
+   411	                            <input type="number" id="person2Day" placeholder="20" min="1" max="31" required>
+   412	                        </div>
+   413	                        <div class="form-group">
+   414	                            <label for="person2Hour">생시 (시)</label>
+   415	                            <input type="number" id="person2Hour" placeholder="10" min="0" max="23">
+   416	                        </div>
+   417	                    </div>
+   418	                    <div class="form-row">
+   419	                        <div class="form-group">
+   420	                            <label for="person2Calendar">양력/음력</label>
+   421	                            <select id="person2Calendar" required>
+   422	                                <option value="solar">양력</option>
+   423	                                <option value="lunar">음력</option>
+   424	                            </select>
+   425	                        </div>
+   426	                        <div class="form-group">
+   427	                            <label for="person2Leap">윤달 여부</label>
+   428	                            <select id="person2Leap">
+   429	                                <option value="false">평달</option>
+   430	                                <option value="true">윤달</option>
+   431	                            </select>
+   432	                        </div>
+   433	                    </div>
+   434	                </div>
+   435	
+   436	                <button type="submit" class="btn-analyze">
+   437	                    <i class="fas fa-heart"></i> 궁합 분석하기
+   438	                </button>
+   439	            </form>
+   440	        </div>
+   441	
+   442	        <!-- 분석 결과 -->
+   443	        <div class="compatibility-result" id="resultSection">
+   444	            <div class="result-header">
+   445	                <h2 id="resultTitle">연애 궁합 분석 결과</h2>
+   446	                <p id="resultSubtitle">홍길동 ♥ 김영희</p>
+   447	            </div>
+   448	
+   449	            <!-- 궁합 점수 -->
+   450	            <div class="compatibility-score">
+   451	                <div class="score-circle" id="scoreCircle">85점</div>
+   452	                <div class="score-label" id="scoreLabel">매우 좋은 궁합입니다!</div>
+   453	                <p id="scoreDescription">두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.</p>
+   454	            </div>
+   455	
+   456	            <!-- 장점 분석 -->
+   457	            <div class="analysis-section">
+   458	                <h3><i class="fas fa-check-circle" style="color: #4caf50;"></i> 궁합의 장점</h3>
+   459	                <ul class="strength-list" id="strengthList">
+   460	                    <li>오행의 균형이 잘 맞아 서로를 보완해줍니다</li>
+   461	                    <li>성격이 잘 맞아 갈등이 적을 것입니다</li>
+   462	                    <li>금전적인 면에서 서로 도움이 됩니다</li>
+   463	                </ul>
+   464	            </div>
+   465	
+   466	            <!-- 주의사항 -->
+   467	            <div class="analysis-section">
+   468	                <h3><i class="fas fa-exclamation-circle" style="color: #ff5252;"></i> 주의할 점</h3>
+   469	                <ul class="weakness-list" id="weaknessList">
+   470	                    <li>가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다</li>
+   471	                    <li>서로의 차이를 존중하는 자세가 필요합니다</li>
+   472	                </ul>
+   473	            </div>
+   474	
+   475	            <!-- 조언 -->
+   476	            <div class="analysis-section">
+   477	                <h3><i class="fas fa-lightbulb" style="color: #ffc107;"></i> 관계 개선 조언</h3>
+   478	                <div class="advice-box">
+   479	                    <h4>💡 이렇게 해보세요</h4>
+   480	                    <p id="adviceText">
+   481	                        서로의 장점을 인정하고 단점은 보완해주는 자세가 중요합니다. 
+   482	                        정기적인 대화 시간을 가지고 서로의 생각을 공유하세요.
+   483	                        작은 배려와 관심이 큰 행복을 만듭니다.
+   484	                    </p>
+   485	                </div>
+   486	            </div>
+   487	        </div>
+   488	    </div>
+   489	
+   490	    <!-- 푸터 -->
+   491	    <footer class="footer">
+   492	        <div class="container">
+   493	            <div class="footer-content">
+   494	                <div class="footer-section">
+   495	                    <h3>AI 사주 천년지기</h3>
+   496	                    <p>정통 사주팔자와 AI가 만나다</p>
+   497	                </div>
+   498	                <div class="footer-section">
+   499	                    <h4>서비스</h4>
+   500	                    <ul>
+   501	                        <li><a href="index.html">사주팔자</a></li>
+   502	                        <li><a href="ai-chat.html">AI 상담</a></li>
+   503	                        <li><a href="taekil.html">택일</a></li>
+   504	                        <li><a href="compatibility.html">궁합</a></li>
+   505	                    </ul>
+   506	                </div>
+   507	                <div class="footer-section">
+   508	                    <h4>고객지원</h4>
+   509	                    <ul>
+   510	                        <li><a href="faq.html">FAQ</a></li>
+   511	                        <li><a href="terms.html">이용약관</a></li>
+   512	                        <li><a href="privacy.html">개인정보처리방침</a></li>
+   513	                    </ul>
+   514	                </div>
+   515	            </div>
+   516	            <div class="footer-bottom">
+   517	                <p>&copy; 2026 Saju2026. All rights reserved.</p>
+   518	            </div>
+   519	        </div>
+   520	    </footer>
+   521	
+   522	    <!-- 자바스크립트 -->
+   523	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   524	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+   525	    <script src="js/page-handler.js"></script>
+   526	    <script src="js/saju-calculator.js"></script>
+   527	    <script>
+   528	        let selectedType = 'love';
+   529	
+   530	        // 분석 유형 선택
+   531	        document.querySelectorAll('.type-card').forEach(card => {
+   532	            card.addEventListener('click', function() {
+   533	                document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+   534	                this.classList.add('active');
+   535	                selectedType = this.dataset.type;
+   536	            });
+   537	        });
+   538	
+   539	        // 궁합 분석 폼 제출
+   540	        document.getElementById('compatibilityForm').addEventListener('submit', function(e) {
+   541	            e.preventDefault();
+   542	            analyzeCompatibility();
+   543	        });
+   544	
+   545	        function analyzeCompatibility() {
+   546	            // 데이터 수집
+   547	            const person1 = {
+   548	                name: document.getElementById('person1Name').value,
+   549	                gender: document.getElementById('person1Gender').value,
+   550	                year: parseInt(document.getElementById('person1Year').value),
+   551	                month: parseInt(document.getElementById('person1Month').value),
+   552	                day: parseInt(document.getElementById('person1Day').value),
+   553	                hour: parseInt(document.getElementById('person1Hour').value) || 12,
+   554	                calendar: document.getElementById('person1Calendar').value,
+   555	                isLeapMonth: document.getElementById('person1Leap').value === 'true'
+   556	            };
+   557	
+   558	            const person2 = {
+   559	                name: document.getElementById('person2Name').value,
+   560	                gender: document.getElementById('person2Gender').value,
+   561	                year: parseInt(document.getElementById('person2Year').value),
+   562	                month: parseInt(document.getElementById('person2Month').value),
+   563	                day: parseInt(document.getElementById('person2Day').value),
+   564	                hour: parseInt(document.getElementById('person2Hour').value) || 12,
+   565	                calendar: document.getElementById('person2Calendar').value,
+   566	                isLeapMonth: document.getElementById('person2Leap').value === 'true'
+   567	            };
+   568	
+   569	            // 사주 계산
+   570	            const saju1 = calculateSaju(person1);
+   571	            const saju2 = calculateSaju(person2);
+   572	
+   573	            // 궁합 점수 계산 (간단한 알고리즘)
+   574	            const score = calculateCompatibilityScore(saju1, saju2, selectedType);
+   575	
+   576	            // 결과 표시
+   577	            displayCompatibilityResult(person1, person2, score, selectedType);
+   578	
+   579	            // 결과 섹션으로 스크롤
+   580	            document.getElementById('resultSection').style.display = 'block';
+   581	            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+   582	        }
+   583	
+   584	        function calculateCompatibilityScore(saju1, saju2, type) {
+   585	            let score = 50; // 기본 점수
+   586	
+   587	            // 일주 오행 상생/상극 체크
+   588	            const element1 = getElementFromStem(saju1.pillars.day.heavenlyStem);
+   589	            const element2 = getElementFromStem(saju2.pillars.day.heavenlyStem);
+   590	
+   591	            // 상생 관계 (+20)
+   592	            const shengRelations = {
+   593	                '木': '火', '火': '土', '土': '金', '金': '水', '水': '木'
+   594	            };
+   595	            if (shengRelations[element1] === element2 || shengRelations[element2] === element1) {
+   596	                score += 20;
+   597	            }
+   598	
+   599	            // 같은 오행 (+10)
+   600	            if (element1 === element2) {
+   601	                score += 10;
+   602	            }
+   603	
+   604	            // 상극 관계 (-10)
+   605	            const keRelations = {
+   606	                '木': '土', '土': '水', '水': '火', '火': '金', '金': '木'
+   607	            };
+   608	            if (keRelations[element1] === element2 || keRelations[element2] === element1) {
+   609	                score -= 10;
+   610	            }
+   611	
+   612	            // 지지 합 체크 (+15)
+   613	            const earthlyBranches1 = [
+   614	                saju1.pillars.year.earthlyBranch,
+   615	                saju1.pillars.month.earthlyBranch,
+   616	                saju1.pillars.day.earthlyBranch,
+   617	                saju1.pillars.hour.earthlyBranch
+   618	            ];
+   619	            const earthlyBranches2 = [
+   620	                saju2.pillars.year.earthlyBranch,
+   621	                saju2.pillars.month.earthlyBranch,
+   622	                saju2.pillars.day.earthlyBranch,
+   623	                saju2.pillars.hour.earthlyBranch
+   624	            ];
+   625	
+   626	            // 육합, 삼합 체크
+   627	            const hexCombos = [
+   628	                ['子', '丑'], ['寅', '亥'], ['卯', '戌'], ['辰', '酉'], ['巳', '申'], ['午', '未']
+   629	            ];
+   630	            
+   631	            for (let b1 of earthlyBranches1) {
+   632	                for (let b2 of earthlyBranches2) {
+   633	                    for (let combo of hexCombos) {
+   634	                        if ((combo[0] === b1 && combo[1] === b2) || (combo[1] === b1 && combo[0] === b2)) {
+   635	                            score += 15;
+   636	                        }
+   637	                    }
+   638	                }
+   639	            }
+   640	
+   641	            // 충 체크 (-15)
+   642	            const conflicts = [
+   643	                ['子', '午'], ['丑', '未'], ['寅', '申'], ['卯', '酉'], ['辰', '戌'], ['巳', '亥']
+   644	            ];
+   645	            
+   646	            for (let b1 of earthlyBranches1) {
+   647	                for (let b2 of earthlyBranches2) {
+   648	                    for (let conflict of conflicts) {
+   649	                        if ((conflict[0] === b1 && conflict[1] === b2) || (conflict[1] === b1 && conflict[0] === b2)) {
+   650	                            score -= 15;
+   651	                        }
+   652	                    }
+   653	                }
+   654	            }
+   655	
+   656	            // 타입별 조정
+   657	            if (type === 'marriage') {
+   658	                // 결혼은 장기적 안정성 중시
+   659	                score += Math.random() * 10 - 5;
+   660	            } else if (type === 'business') {
+   661	                // 사업은 상호 보완성 중시
+   662	                score += Math.random() * 10 - 5;
+   663	            }
+   664	
+   665	            // 점수 범위 조정
+   666	            score = Math.max(0, Math.min(100, Math.round(score)));
+   667	
+   668	            return score;
+   669	        }
+   670	
+   671	        function getElementFromStem(stem) {
+   672	            const elementMap = {
+   673	                '甲': '木', '乙': '木',
+   674	                '丙': '火', '丁': '火',
+   675	                '戊': '土', '己': '土',
+   676	                '庚': '金', '辛': '金',
+   677	                '壬': '水', '癸': '水'
+   678	            };
+   679	            return elementMap[stem] || '土';
+   680	        }
+   681	
+   682	        function displayCompatibilityResult(person1, person2, score, type) {
+   683	            // 타이틀 설정
+   684	            const titles = {
+   685	                'love': '💗 연애 궁합 분석',
+   686	                'marriage': '💍 결혼 궁합 분석',
+   687	                'business': '💼 사업 궁합 분석'
+   688	            };
+   689	            document.getElementById('resultTitle').textContent = titles[type];
+   690	            document.getElementById('resultSubtitle').textContent = `${person1.name} ♥ ${person2.name}`;
+   691	
+   692	            // 점수 표시
+   693	            document.getElementById('scoreCircle').textContent = `${score}점`;
+   694	
+   695	            // 점수별 레이블 및 설명
+   696	            let label, description;
+   697	            if (score >= 90) {
+   698	                label = '완벽한 궁합!';
+   699	                description = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
+   700	            } else if (score >= 75) {
+   701	                label = '매우 좋은 궁합!';
+   702	                description = '두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.';
+   703	            } else if (score >= 60) {
+   704	                label = '좋은 궁합';
+   705	                description = '전반적으로 좋은 궁합입니다. 서로 노력한다면 행복한 관계를 만들 수 있습니다.';
+   706	            } else if (score >= 40) {
+   707	                label = '보통 궁합';
+   708	                description = '노력이 필요한 관계입니다. 서로의 차이를 이해하고 존중한다면 좋은 관계를 만들 수 있습니다.';
+   709	            } else {
+   710	                label = '주의 필요';
+   711	                description = '많은 노력과 이해가 필요한 관계입니다. 서로를 깊이 알아가는 시간이 필요합니다.';
+   712	            }
+   713	
+   714	            document.getElementById('scoreLabel').textContent = label;
+   715	            document.getElementById('scoreDescription').textContent = description;
+   716	
+   717	            // 장점 리스트
+   718	            const strengths = getCompatibilityStrengths(score, type);
+   719	            document.getElementById('strengthList').innerHTML = strengths.map(s => `<li>${s}</li>`).join('');
+   720	
+   721	            // 주의사항 리스트
+   722	            const weaknesses = getCompatibilityWeaknesses(score, type);
+   723	            document.getElementById('weaknessList').innerHTML = weaknesses.map(w => `<li>${w}</li>`).join('');
+   724	
+   725	            // 조언
+   726	            const advice = getCompatibilityAdvice(score, type);
+   727	            document.getElementById('adviceText').textContent = advice;
+   728	        }
+   729	
+   730	        function getCompatibilityStrengths(score, type) {
+   731	            const strengths = [];
+   732	            
+   733	            if (score >= 70) {
+   734	                strengths.push('오행의 균형이 잘 맞아 서로를 보완해줍니다');
+   735	                strengths.push('성격이 잘 맞아 갈등이 적을 것입니다');
+   736	                strengths.push('서로에게 긍정적인 영향을 주는 관계입니다');
+   737	            } else if (score >= 50) {
+   738	                strengths.push('서로 다른 점이 매력으로 작용합니다');
+   739	                strengths.push('함께 성장할 수 있는 관계입니다');
+   740	            } else {
+   741	                strengths.push('차이를 통해 배울 점이 많은 관계입니다');
+   742	            }
+   743	
+   744	            if (type === 'marriage') {
+   745	                strengths.push('가정을 꾸리는 데 있어 좋은 조화를 이룹니다');
+   746	            } else if (type === 'business') {
+   747	                strengths.push('서로의 능력이 시너지를 낼 수 있습니다');
+   748	            }
+   749	
+   750	            return strengths;
+   751	        }
+   752	
+   753	        function getCompatibilityWeaknesses(score, type) {
+   754	            const weaknesses = [];
+   755	
+   756	            if (score < 60) {
+   757	                weaknesses.push('가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다');
+   758	                weaknesses.push('서로의 차이를 존중하는 자세가 필요합니다');
+   759	                weaknesses.push('인내심을 가지고 서로를 이해하려는 노력이 필요합니다');
+   760	            } else {
+   761	                weaknesses.push('너무 비슷해서 발전이 더딜 수 있으니 자극이 필요합니다');
+   762	                weaknesses.push('서로에게 익숙해지면 소홀해질 수 있으니 주의하세요');
+   763	            }
+   764	
+   765	            return weaknesses;
+   766	        }
+   767	
+   768	        function getCompatibilityAdvice(score, type) {
+   769	            if (type === 'love') {
+   770	                if (score >= 70) {
+   771	                    return '좋은 궁합이니 서로를 믿고 꾸준히 사랑을 키워가세요. 작은 관심과 배려가 큰 행복을 만듭니다.';
+   772	                } else {
+   773	                    return '서로의 차이를 인정하고 존중하는 자세가 중요합니다. 정기적인 데이트와 대화 시간을 가지세요.';
+   774	                }
+   775	            } else if (type === 'marriage') {
+   776	                if (score >= 70) {
+   777	                    return '결혼 후에도 행복한 가정을 꾸릴 수 있는 좋은 궁합입니다. 서로를 위한 시간을 충분히 가지세요.';
+   778	                } else {
+   779	                    return '결혼은 타협과 이해의 연속입니다. 서로의 가치관을 존중하고 함께 성장하는 자세가 필요합니다.';
+   780	                }
+   781	            } else {
+   782	                if (score >= 70) {
+   783	                    return '비즈니스 파트너로서 좋은 시너지를 낼 수 있습니다. 명확한 역할 분담과 소통이 성공의 열쇠입니다.';
+   784	                } else {
+   785	                    return '서로의 강점을 살리고 약점을 보완하는 전략이 필요합니다. 명확한 계약과 규칙을 정하세요.';
+   786	                }
+   787	            }
+   788	        }
+   789	    </script>
+   790	</body>
+   791	</html>
+   792	
