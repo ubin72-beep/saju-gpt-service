@@ -1,0 +1,151 @@
+ 1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>자주 묻는 질문 - AI 사주 천년지기</title>
+     7	    <link rel="stylesheet" href="css/style.css">
+     8	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+     9	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    10	    <style>
+    11	        .faq-page { padding: 4rem 0; background: #f9fafb; min-height: 100vh; }
+    12	        .faq-header { text-align: center; margin-bottom: 3rem; }
+    13	        .faq-header h1 { font-size: 2.5rem; font-family: 'Noto Serif KR', serif; color: #1a1a1a; margin-bottom: 1rem; }
+    14	        .faq-search { max-width: 600px; margin: 2rem auto; position: relative; }
+    15	        .faq-search input { width: 100%; padding: 1rem 1rem 1rem 3rem; border: 2px solid #e5e7eb; border-radius: 50px; font-size: 1rem; }
+    16	        .faq-search i { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+    17	        .faq-categories { display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+    18	        .category-btn { padding: 0.75rem 1.5rem; background: white; border: 2px solid #e5e7eb; border-radius: 25px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+    19	        .category-btn.active { background: #c41e3a; color: white; border-color: #c41e3a; }
+    20	        .faq-list { max-width: 900px; margin: 0 auto; }
+    21	        .faq-item { background: white; border-radius: 12px; margin-bottom: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    22	        .faq-question { padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s; }
+    23	        .faq-question:hover { background: #f9fafb; }
+    24	        .faq-question h3 { font-size: 1.125rem; color: #1a1a1a; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+    25	        .faq-question .icon { width: 32px; height: 32px; background: linear-gradient(135deg, #c41e3a, #8b0000); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    26	        .faq-question .toggle { color: #9ca3af; transition: transform 0.3s; }
+    27	        .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: all 0.3s; }
+    28	        .faq-answer.active { padding: 0 1.5rem 1.5rem; max-height: 1000px; }
+    29	        .faq-answer p { color: #6b7280; line-height: 1.8; }
+    30	        .contact-cta { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 20px; text-align: center; margin-top: 3rem; }
+    31	        .contact-cta h2 { font-size: 1.75rem; margin-bottom: 1rem; }
+    32	        .contact-cta .btn { background: white; color: #667eea; padding: 1rem 2rem; border-radius: 50px; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 1rem; }
+    33	    </style>
+    34	</head>
+    35	<body>
+    36	    <nav class="navbar">
+    37	        <div class="container">
+    38	            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
+    39	            <ul class="nav-menu">
+    40	                <li><a href="index.html">홈</a></li>
+    41	                <li><a href="pricing.html">가격표</a></li>
+    42	                <li><a href="ai-chat.html">AI 상담</a></li>
+    43	                <li><a href="faq.html" class="active">FAQ</a></li>
+    44	            </ul>
+    45	        </div>
+    46	    </nav>
+    47	
+    48	    <div class="faq-page">
+    49	        <div class="container">
+    50	            <div class="faq-header">
+    51	                <h1>자주 묻는 질문</h1>
+    52	                <p>궁금하신 내용을 빠르게 찾아보세요</p>
+    53	                <div class="faq-search">
+    54	                    <i class="fas fa-search"></i>
+    55	                    <input type="text" id="faqSearch" placeholder="질문을 검색하세요..." onkeyup="searchFAQ()">
+    56	                </div>
+    57	            </div>
+    58	
+    59	            <div class="faq-categories">
+    60	                <button class="category-btn active" onclick="filterCategory('all')">전체</button>
+    61	                <button class="category-btn" onclick="filterCategory('service')">서비스 이용</button>
+    62	                <button class="category-btn" onclick="filterCategory('payment')">결제/환불</button>
+    63	                <button class="category-btn" onclick="filterCategory('saju')">사주팔자</button>
+    64	                <button class="category-btn" onclick="filterCategory('ai')">AI 상담</button>
+    65	            </div>
+    66	
+    67	            <div class="faq-list" id="faqList">
+    68	                <!-- FAQ 항목들이 여기에 동적으로 추가됩니다 -->
+    69	            </div>
+    70	
+    71	            <div class="contact-cta">
+    72	                <h2>찾으시는 답변이 없으신가요?</h2>
+    73	                <p>고객센터를 통해 문의해주시면 빠르게 답변드리겠습니다.</p>
+    74	                <a href="mailto:support@saju2026.com" class="btn">
+    75	                    <i class="fas fa-envelope"></i> 문의하기
+    76	                </a>
+    77	            </div>
+    78	        </div>
+    79	    </div>
+    80	
+    81	    <script src="js/page-handler.js"></script>
+    82	    <script>
+    83	        const faqs = [
+    84	            { id: 1, category: 'service', question: '무료 서비스와 프리미엄 서비스의 차이는 무엇인가요?', answer: '무료 서비스는 기본 사주팔자 확인과 하루 3회 AI 상담이 가능합니다. 프리미엄 서비스는 상세 사주 해석, 무제한 AI 상담, 맞춤 운세 리포트, 택일 서비스 등 모든 기능을 제한없이 이용하실 수 있습니다.' },
+    85	            { id: 2, category: 'payment', question: '결제 수단은 어떤 것들이 있나요?', answer: '신용카드, 체크카드, 계좌이체, 간편결제(카카오페이, 네이버페이, 토스) 등 다양한 결제 수단을 지원합니다.' },
+    86	            { id: 3, category: 'payment', question: '환불 정책은 어떻게 되나요?', answer: '서비스 이용 전 7일 이내 100% 환불 가능하며, 일부 사용 후에는 이용 기간에 따라 부분 환불이 가능합니다. 자세한 내용은 환불 정책 페이지를 참고해주세요.' },
+    87	            { id: 4, category: 'saju', question: '음력과 양력 중 어떤 것을 선택해야 하나요?', answer: '본인이 태어난 날짜의 기준을 선택하시면 됩니다. 병원에서 받은 출생증명서는 양력이며, 음력으로 생일을 쇠신다면 음력을 선택하시면 됩니다.' },
+    88	            { id: 5, category: 'saju', question: '정확한 태어난 시간을 모르는데 괜찮나요?', answer: '태어난 시간은 시주(時柱) 계산에 사용됩니다. 모르시는 경우 낮/밤 정도만 선택하셔도 기본적인 사주 분석은 가능합니다.' },
+    89	            { id: 6, category: 'ai', question: 'AI 상담은 어떻게 진행되나요?', answer: 'ChatGPT-4 기반의 AI가 귀하의 사주 정보를 바탕으로 맞춤형 상담을 제공합니다. 운세, 연애, 직업, 재물, 건강 등 다양한 주제로 질문하실 수 있습니다.' },
+    90	            { id: 7, category: 'ai', question: 'AI 상담 무료 횟수는 언제 초기화되나요?', answer: '무료 회원의 경우 매일 자정(00:00)에 3회로 초기화됩니다. 프리미엄 회원은 무제한으로 이용 가능합니다.' },
+    91	            { id: 8, category: 'service', question: '프리미엄 구독은 자동 갱신되나요?', answer: '네, 월간/연간 구독은 만료일에 자동으로 갱신됩니다. 자동 갱신을 원하지 않으시면 마이페이지에서 해지하실 수 있습니다.' },
+    92	            { id: 9, category: 'saju', question: '사주팔자 결과는 저장되나요?', answer: '네, 로그인 후 사주를 확인하시면 자동으로 저장되어 언제든지 마이페이지에서 다시 확인하실 수 있습니다.' },
+    93	            { id: 10, category: 'service', question: '모바일에서도 이용할 수 있나요?', answer: '네, 반응형 웹으로 제작되어 PC, 태블릿, 스마트폰 모든 기기에서 최적화된 화면으로 이용 가능합니다.' }
+    94	        ];
+    95	
+    96	        let currentCategory = 'all';
+    97	
+    98	        function renderFAQs(filteredFaqs = faqs) {
+    99	            const faqList = document.getElementById('faqList');
+   100	            faqList.innerHTML = filteredFaqs.map(faq => `
+   101	                <div class="faq-item" data-category="${faq.category}">
+   102	                    <div class="faq-question" onclick="toggleFAQ(${faq.id})">
+   103	                        <h3>
+   104	                            <span class="icon">Q</span>
+   105	                            ${faq.question}
+   106	                        </h3>
+   107	                        <i class="fas fa-chevron-down toggle" id="toggle-${faq.id}"></i>
+   108	                    </div>
+   109	                    <div class="faq-answer" id="answer-${faq.id}">
+   110	                        <p>${faq.answer}</p>
+   111	                    </div>
+   112	                </div>
+   113	            `).join('');
+   114	        }
+   115	
+   116	        function toggleFAQ(id) {
+   117	            const answer = document.getElementById(`answer-${id}`);
+   118	            const toggle = document.getElementById(`toggle-${id}`);
+   119	            
+   120	            answer.classList.toggle('active');
+   121	            toggle.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0)';
+   122	        }
+   123	
+   124	        function filterCategory(category) {
+   125	            currentCategory = category;
+   126	            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+   127	            event.target.classList.add('active');
+   128	            
+   129	            const filtered = category === 'all' ? faqs : faqs.filter(faq => faq.category === category);
+   130	            renderFAQs(filtered);
+   131	        }
+   132	
+   133	        function searchFAQ() {
+   134	            const query = document.getElementById('faqSearch').value.toLowerCase();
+   135	            const filtered = faqs.filter(faq => 
+   136	                faq.question.toLowerCase().includes(query) || 
+   137	                faq.answer.toLowerCase().includes(query)
+   138	            );
+   139	            
+   140	            if (currentCategory !== 'all') {
+   141	                filtered = filtered.filter(faq => faq.category === currentCategory);
+   142	            }
+   143	            
+   144	            renderFAQs(filtered);
+   145	        }
+   146	
+   147	        // 초기 렌더링
+   148	        renderFAQs();
+   149	    </script>
+   150	</body>
+   151	</html>
