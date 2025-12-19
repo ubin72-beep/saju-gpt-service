@@ -1,0 +1,350 @@
+1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>관리자 대시보드 - AI 사주 천년지기</title>
+     7	    <link rel="stylesheet" href="css/style.css">
+     8	    <link rel="stylesheet" href="css/admin.css">
+     9	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    10	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    11	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    12	</head>
+    13	<body class="admin-body">
+    14	    <!-- 사이드바 -->
+    15	    <aside class="admin-sidebar" id="adminSidebar">
+    16	        <div class="sidebar-header">
+    17	            <div class="logo">
+    18	                <i class="fas fa-yin-yang"></i>
+    19	                <span>관리자</span>
+    20	            </div>
+    21	            <button class="sidebar-toggle" id="sidebarToggle">
+    22	                <i class="fas fa-bars"></i>
+    23	            </button>
+    24	        </div>
+    25	
+    26	        <nav class="sidebar-nav">
+    27	            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+    28	                <i class="fas fa-chart-line"></i>
+    29	                <span>대시보드</span>
+    30	            </a>
+    31	            <a href="#users" class="nav-item" data-section="users">
+    32	                <i class="fas fa-users"></i>
+    33	                <span>사용자 관리</span>
+    34	            </a>
+    35	            <a href="#orders" class="nav-item" data-section="orders">
+    36	                <i class="fas fa-shopping-cart"></i>
+    37	                <span>주문 관리</span>
+    38	            </a>
+    39	            <a href="#products" class="nav-item" data-section="products">
+    40	                <i class="fas fa-box"></i>
+    41	                <span>상품 관리</span>
+    42	            </a>
+    43	            <a href="#promotions" class="nav-item" data-section="promotions">
+    44	                <i class="fas fa-gift"></i>
+    45	                <span>프로모션</span>
+    46	            </a>
+    47	            <a href="#analytics" class="nav-item" data-section="analytics">
+    48	                <i class="fas fa-chart-pie"></i>
+    49	                <span>분석 리포트</span>
+    50	            </a>
+    51	            <a href="#settings" class="nav-item" data-section="settings">
+    52	                <i class="fas fa-cog"></i>
+    53	                <span>설정</span>
+    54	            </a>
+    55	        </nav>
+    56	
+    57	        <div class="sidebar-footer">
+    58	            <button onclick="handleLogout()" class="btn-back" style="width: 100%; border: none; background: rgba(255,255,255,0.1); cursor: pointer;">
+    59	                <i class="fas fa-sign-out-alt"></i>
+    60	                <span>로그아웃</span>
+    61	            </button>
+    62	        </div>
+    63	    </aside>
+    64	
+    65	    <!-- 메인 콘텐츠 -->
+    66	    <main class="admin-main">
+    67	        <!-- 헤더 -->
+    68	        <header class="admin-header">
+    69	            <div class="header-left">
+    70	                <button class="mobile-menu-btn" id="mobileMenuBtn">
+    71	                    <i class="fas fa-bars"></i>
+    72	                </button>
+    73	                <h1 id="pageTitle">대시보드</h1>
+    74	            </div>
+    75	            <div class="header-right">
+    76	                <div class="search-box">
+    77	                    <i class="fas fa-search"></i>
+    78	                    <input type="text" placeholder="검색...">
+    79	                </div>
+    80	                <button class="notification-btn">
+    81	                    <i class="fas fa-bell"></i>
+    82	                    <span class="badge">5</span>
+    83	                </button>
+    84	                <div class="user-menu" onclick="handleLogout()" style="cursor: pointer;" title="로그아웃">
+    85	                    <img src="https://ui-avatars.com/api/?name=Admin&background=c41e3a&color=fff" alt="Admin">
+    86	                    <span>관리자</span>
+    87	                    <i class="fas fa-sign-out-alt"></i>
+    88	                </div>
+    89	            </div>
+    90	        </header>
+    91	
+    92	        <!-- 대시보드 섹션 -->
+    93	        <section class="admin-section active" id="dashboardSection">
+    94	            <div class="container-fluid">
+    95	                <!-- 통계 카드 -->
+    96	                <div class="stats-grid">
+    97	                    <div class="stat-card">
+    98	                        <div class="stat-icon revenue">
+    99	                            <i class="fas fa-won-sign"></i>
+   100	                        </div>
+   101	                        <div class="stat-content">
+   102	                            <h3>오늘 매출</h3>
+   103	                            <p class="stat-value" id="todayRevenue">₩1,234,000</p>
+   104	                            <span class="stat-change positive">
+   105	                                <i class="fas fa-arrow-up"></i> 12.5%
+   106	                            </span>
+   107	                        </div>
+   108	                    </div>
+   109	
+   110	                    <div class="stat-card">
+   111	                        <div class="stat-icon users">
+   112	                            <i class="fas fa-users"></i>
+   113	                        </div>
+   114	                        <div class="stat-content">
+   115	                            <h3>신규 사용자</h3>
+   116	                            <p class="stat-value" id="newUsers">328</p>
+   117	                            <span class="stat-change positive">
+   118	                                <i class="fas fa-arrow-up"></i> 8.2%
+   119	                            </span>
+   120	                        </div>
+   121	                    </div>
+   122	
+   123	                    <div class="stat-card">
+   124	                        <div class="stat-icon orders">
+   125	                            <i class="fas fa-shopping-cart"></i>
+   126	                        </div>
+   127	                        <div class="stat-content">
+   128	                            <h3>오늘 주문</h3>
+   129	                            <p class="stat-value" id="todayOrders">142</p>
+   130	                            <span class="stat-change negative">
+   131	                                <i class="fas fa-arrow-down"></i> 3.1%
+   132	                            </span>
+   133	                        </div>
+   134	                    </div>
+   135	
+   136	                    <div class="stat-card">
+   137	                        <div class="stat-icon conversion">
+   138	                            <i class="fas fa-percentage"></i>
+   139	                        </div>
+   140	                        <div class="stat-content">
+   141	                            <h3>전환율</h3>
+   142	                            <p class="stat-value" id="conversionRate">3.8%</p>
+   143	                            <span class="stat-change positive">
+   144	                                <i class="fas fa-arrow-up"></i> 0.4%
+   145	                            </span>
+   146	                        </div>
+   147	                    </div>
+   148	                </div>
+   149	
+   150	                <!-- 차트 -->
+   151	                <div class="charts-grid">
+   152	                    <div class="chart-card">
+   153	                        <div class="card-header">
+   154	                            <h3>매출 추이 (최근 7일)</h3>
+   155	                            <select class="chart-select">
+   156	                                <option>최근 7일</option>
+   157	                                <option>최근 30일</option>
+   158	                                <option>최근 90일</option>
+   159	                            </select>
+   160	                        </div>
+   161	                        <div class="chart-container">
+   162	                            <canvas id="revenueChart"></canvas>
+   163	                        </div>
+   164	                    </div>
+   165	
+   166	                    <div class="chart-card">
+   167	                        <div class="card-header">
+   168	                            <h3>상품별 판매 비율</h3>
+   169	                        </div>
+   170	                        <div class="chart-container">
+   171	                            <canvas id="productChart"></canvas>
+   172	                        </div>
+   173	                    </div>
+   174	                </div>
+   175	
+   176	                <!-- 최근 주문 -->
+   177	                <div class="table-card">
+   178	                    <div class="card-header">
+   179	                        <h3>최근 주문</h3>
+   180	                        <button class="btn-secondary">전체 보기</button>
+   181	                    </div>
+   182	                    <div class="table-responsive">
+   183	                        <table class="admin-table">
+   184	                            <thead>
+   185	                                <tr>
+   186	                                    <th>주문번호</th>
+   187	                                    <th>고객명</th>
+   188	                                    <th>상품</th>
+   189	                                    <th>금액</th>
+   190	                                    <th>상태</th>
+   191	                                    <th>일시</th>
+   192	                                    <th>액션</th>
+   193	                                </tr>
+   194	                            </thead>
+   195	                            <tbody id="recentOrdersTable">
+   196	                                <!-- JavaScript로 채워짐 -->
+   197	                            </tbody>
+   198	                        </table>
+   199	                    </div>
+   200	                </div>
+   201	            </div>
+   202	        </section>
+   203	
+   204	        <!-- 사용자 관리 섹션 -->
+   205	        <section class="admin-section" id="usersSection">
+   206	            <div class="container-fluid">
+   207	                <div class="section-header">
+   208	                    <h2>사용자 관리</h2>
+   209	                    <div class="header-actions">
+   210	                        <button class="btn-secondary">
+   211	                            <i class="fas fa-download"></i> CSV 내보내기
+   212	                        </button>
+   213	                        <button class="btn-primary">
+   214	                            <i class="fas fa-plus"></i> 사용자 추가
+   215	                        </button>
+   216	                    </div>
+   217	                </div>
+   218	
+   219	                <!-- 필터 -->
+   220	                <div class="filters">
+   221	                    <input type="text" class="filter-input" placeholder="이름, 이메일 검색...">
+   222	                    <select class="filter-select">
+   223	                        <option>전체 구독</option>
+   224	                        <option>무료</option>
+   225	                        <option>월 구독</option>
+   226	                        <option>연 구독</option>
+   227	                    </select>
+   228	                    <select class="filter-select">
+   229	                        <option>가입일순</option>
+   230	                        <option>최근 활동순</option>
+   231	                        <option>구매액순</option>
+   232	                    </select>
+   233	                </div>
+   234	
+   235	                <!-- 사용자 테이블 -->
+   236	                <div class="table-card">
+   237	                    <div class="table-responsive">
+   238	                        <table class="admin-table">
+   239	                            <thead>
+   240	                                <tr>
+   241	                                    <th><input type="checkbox" id="selectAll"></th>
+   242	                                    <th>ID</th>
+   243	                                    <th>이름</th>
+   244	                                    <th>이메일</th>
+   245	                                    <th>구독</th>
+   246	                                    <th>가입일</th>
+   247	                                    <th>총 구매액</th>
+   248	                                    <th>상태</th>
+   249	                                    <th>액션</th>
+   250	                                </tr>
+   251	                            </thead>
+   252	                            <tbody id="usersTable">
+   253	                                <!-- JavaScript로 채워짐 -->
+   254	                            </tbody>
+   255	                        </table>
+   256	                    </div>
+   257	                    <div class="pagination" id="usersPagination">
+   258	                        <!-- JavaScript로 채워짐 -->
+   259	                    </div>
+   260	                </div>
+   261	            </div>
+   262	        </section>
+   263	
+   264	        <!-- 주문 관리 섹션 -->
+   265	        <section class="admin-section" id="ordersSection">
+   266	            <div class="container-fluid">
+   267	                <div class="section-header">
+   268	                    <h2>주문 관리</h2>
+   269	                    <div class="header-actions">
+   270	                        <button class="btn-secondary">
+   271	                            <i class="fas fa-download"></i> CSV 내보내기
+   272	                        </button>
+   273	                    </div>
+   274	                </div>
+   275	
+   276	                <!-- 주문 통계 -->
+   277	                <div class="order-stats">
+   278	                    <div class="order-stat-item">
+   279	                        <h4>대기중</h4>
+   280	                        <p class="stat-number">12</p>
+   281	                    </div>
+   282	                    <div class="order-stat-item">
+   283	                        <h4>처리중</h4>
+   284	                        <p class="stat-number">28</p>
+   285	                    </div>
+   286	                    <div class="order-stat-item">
+   287	                        <h4>완료</h4>
+   288	                        <p class="stat-number">1,234</p>
+   289	                    </div>
+   290	                    <div class="order-stat-item">
+   291	                        <h4>환불</h4>
+   292	                        <p class="stat-number">5</p>
+   293	                    </div>
+   294	                </div>
+   295	
+   296	                <!-- 주문 테이블 -->
+   297	                <div class="table-card">
+   298	                    <div class="filters">
+   299	                        <input type="text" class="filter-input" placeholder="주문번호, 고객명 검색...">
+   300	                        <select class="filter-select">
+   301	                            <option>전체 상태</option>
+   302	                            <option>대기중</option>
+   303	                            <option>처리중</option>
+   304	                            <option>완료</option>
+   305	                            <option>환불</option>
+   306	                        </select>
+   307	                        <input type="date" class="filter-input" placeholder="시작일">
+   308	                        <input type="date" class="filter-input" placeholder="종료일">
+   309	                    </div>
+   310	
+   311	                    <div class="table-responsive">
+   312	                        <table class="admin-table">
+   313	                            <thead>
+   314	                                <tr>
+   315	                                    <th>주문번호</th>
+   316	                                    <th>고객</th>
+   317	                                    <th>상품</th>
+   318	                                    <th>금액</th>
+   319	                                    <th>결제방법</th>
+   320	                                    <th>상태</th>
+   321	                                    <th>주문일시</th>
+   322	                                    <th>액션</th>
+   323	                                </tr>
+   324	                            </thead>
+   325	                            <tbody id="ordersTable">
+   326	                                <!-- JavaScript로 채워짐 -->
+   327	                            </tbody>
+   328	                        </table>
+   329	                    </div>
+   330	                    <div class="pagination" id="ordersPagination"></div>
+   331	                </div>
+   332	            </div>
+   333	        </section>
+   334	
+   335	        <!-- 상품 관리 섹션 -->
+   336	        <section class="admin-section" id="productsSection">
+   337	            <div class="container-fluid">
+   338	                <div class="section-header">
+   339	                    <h2>상품 관리</h2>
+   340	                    <button class="btn-primary">
+   341	                        <i class="fas fa-plus"></i> 상품 추가
+   342	                    </button>
+   343	                </div>
+   344	
+   345	                <div class="products-grid">
+   346	                    <div class="product-card">
+   347	                        <div class="product-header">
+   348	                            <span class="badge badge-success">활성</span>
+   349	                        </div>
+   350	                        <h3>AI 운세 상담</h3>
