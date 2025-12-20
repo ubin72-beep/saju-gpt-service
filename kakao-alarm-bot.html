@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주 알람 설정 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .alarm-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+
+        .alarm-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .alarm-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #c41e3a, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .alarm-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .alarm-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .alarm-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alarm-card h3 i {
+            color: #c41e3a;
+        }
+
+        .alarm-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .alarm-option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .alarm-info {
+            flex: 1;
+        }
+
+        .alarm-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .alarm-info p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #c41e3a, #d4af37);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .time-picker {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .time-picker select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .time-picker select:focus {
+            outline: none;
+            border-color: #c41e3a;
+        }
+
+        .kakao-connect {
+            background: linear-gradient(135deg, #fee500, #ffd900);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .kakao-connect h3 {
+            color: #3c1e1e;
+            margin-bottom: 1rem;
+        }
+
+        .kakao-connect p {
+            color: #3c1e1e;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-kakao {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: #3c1e1e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-kakao:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(60, 30, 30, 0.3);
+        }
+
+        .btn-kakao i {
+            font-size: 1.3rem;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #c41e3a, #d4af37);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(196, 30, 58, 0.3);
+        }
+
+        .preview-box {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.05), rgba(212, 175, 55, 0.05));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #c41e3a;
+        }
+
+        .preview-box h4 {
+            color: #c41e3a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-message {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            margin-top: 1rem;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        .success-message i {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .alarm-container {
+                margin-top: 80px;
+                padding: 15px;
+            }
+
+            .alarm-header h1 {
+                font-size: 2rem;
+            }
+
+            .alarm-card {
+                padding: 1.5rem;
+            }
+
+            .alarm-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .toggle-switch {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <i class="fas fa-yin-yang"></i>
+                    <span>AI 사주 천년지기</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="alarm-container">
+        <div class="alarm-header">
+            <h1><i class="fas fa-bell"></i> 사주 알람 설정</h1>
+            <p>매일 아침 당신만을 위한 맞춤 운세를 받아보세요</p>
+        </div>
+
+        <!-- 카카오톡 연결 -->
+        <div class="kakao-connect" id="kakaoConnect">
+            <h3><i class="fas fa-comment"></i> 카카오톡 알림 받기</h3>
+            <p>카카오톡으로 매일 운세와 중요한 알림을 받아보세요</p>
+            <button class="btn-kakao" onclick="connectKakao()">
+                <i class="fas fa-comment-dots"></i>
+                카카오톡 연결하기
+            </button>
+            <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">
+                * 카카오톡 채널 추가 후 알림을 받을 수 있습니다
+            </p>
+        </div>
+
+        <!-- 알람 옵션 -->
+        <div class="alarm-card">
+            <h3><i class="fas fa-sun"></i> 매일 운세 알람</h3>
+            
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>오늘의 운세</h4>
+                    <p>매일 아침 종합 운세, 행운의 색상, 방향, 숫자를 알려드립니다</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dailyFortune" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="time-picker" id="timePickerDaily">
+                <i class="fas fa-clock" style="color: #c41e3a;"></i>
+                <span>알람 시간:</span>
+                <select id="dailyHour">
+                    <option value="06">06시</option>
+                    <option value="07">07시</option>
+                    <option value="08" selected>08시</option>
+                    <option value="09">09시</option>
+                    <option value="10">10시</option>
+                </select>
+                <span>:</span>
+                <select id="dailyMinute">
+                    <option value="00" selected>00분</option>
+                    <option value="10">10분</option>
+                    <option value="20">20분</option>
+                    <option value="30">30분</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="alarm-card">
+            <h3><i class="fas fa-star"></i> 중요 이벤트 알람</h3>
+            
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>대운 전환기 알림</h4>
+                    <p>운명의 큰 전환기가 다가오면 미리 알려드립니다</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="fortuneChange" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>길일 추천</h4>
+                    <p>중요한 일을 시작하기 좋은 날을 추천해드립니다</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="luckyDay" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>흉일 주의보</h4>
+                    <p>조심해야 할 날을 미리 알려 사고를 예방합니다</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="warningDay">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="alarm-card">
+            <h3><i class="fas fa-heart"></i> 맞춤 알람</h3>
+            
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>주간 운세 요약</h4>
+                    <p>매주 월요일 이번 주 운세를 미리 확인하세요</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="weeklyFortune">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>월간 운세 요약</h4>
+                    <p>매월 1일 이번 달 전체 운세를 안내해드립니다</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="monthlyFortune">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="alarm-option">
+                <div class="alarm-info">
+                    <h4>프리미엄 혜택 알림</h4>
+                    <p>프리미엄 전용 콘텐츠와 할인 정보를 받아보세요</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="premiumNotif">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 미리보기 -->
+        <div class="preview-box">
+            <h4><i class="fas fa-eye"></i> 알림 미리보기</h4>
+            <div class="preview-message" id="previewMessage">
+                <strong>🌅 좋은 아침입니다, 홍길동님!</strong><br><br>
+                <strong>📅 2026년 1월 15일 (수) 오늘의 운세</strong><br><br>
+                <strong>🔮 종합운:</strong> ★★★★☆ (80점)<br>
+                오늘은 새로운 기회가 찾아오는 날입니다. 적극적인 태도로 임하세요!<br><br>
+                <strong>💰 재물운:</strong> 예상치 못한 소득이 있을 수 있습니다<br>
+                <strong>❤️ 연애운:</strong> 좋은 인연을 만날 가능성이 높습니다<br>
+                <strong>💼 직장운:</strong> 상사의 인정을 받을 수 있는 날<br><br>
+                <strong>🎨 행운의 색상:</strong> 빨강, 금색<br>
+                <strong>🧭 행운의 방향:</strong> 남쪽<br>
+                <strong>🔢 행운의 숫자:</strong> 3, 7, 9<br><br>
+                <em>오늘도 좋은 하루 보내세요! ✨</em>
+            </div>
+        </div>
+
+        <!-- 저장 버튼 -->
+        <button class="save-btn" onclick="saveAlarmSettings()">
+            <i class="fas fa-save"></i> 알람 설정 저장
+        </button>
+
+        <!-- 성공 메시지 -->
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <div>
+                <strong>저장 완료!</strong><br>
+                알람 설정이 성공적으로 저장되었습니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 카카오톡 연결
+        function connectKakao() {
+            alert('카카오톡 채널 "AI 사주 천년지기"를 추가해주세요!\n\n채널 추가 후 자동으로 알림을 받으실 수 있습니다.');
+            
+            document.getElementById('kakaoConnect').innerHTML = `
+                <h3><i class="fas fa-check-circle" style="color: #3c1e1e;"></i> 카카오톡 연결 완료!</h3>
+                <p style="color: #3c1e1e;">이제 카카오톡으로 알림을 받으실 수 있습니다 ✅</p>
+            `;
+        }
+
+        // 설정 저장
+        function saveAlarmSettings() {
+            const settings = {
+                dailyFortune: document.getElementById('dailyFortune').checked,
+                dailyTime: {
+                    hour: document.getElementById('dailyHour').value,
+                    minute: document.getElementById('dailyMinute').value
+                },
+                fortuneChange: document.getElementById('fortuneChange').checked,
+                luckyDay: document.getElementById('luckyDay').checked,
+                warningDay: document.getElementById('warningDay').checked,
+                weeklyFortune: document.getElementById('weeklyFortune').checked,
+                monthlyFortune: document.getElementById('monthlyFortune').checked,
+                premiumNotif: document.getElementById('premiumNotif').checked
+            };
+
+            localStorage.setItem('sajuAlarmSettings', JSON.stringify(settings));
+
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            console.log('알람 설정 저장:', settings);
+        }
+
+        // 페이지 로드 시 저장된 설정 불러오기
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('sajuAlarmSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                
+                document.getElementById('dailyFortune').checked = settings.dailyFortune;
+                document.getElementById('dailyHour').value = settings.dailyTime.hour;
+                document.getElementById('dailyMinute').value = settings.dailyTime.minute;
+                document.getElementById('fortuneChange').checked = settings.fortuneChange;
+                document.getElementById('luckyDay').checked = settings.luckyDay;
+                document.getElementById('warningDay').checked = settings.warningDay;
+                document.getElementById('weeklyFortune').checked = settings.weeklyFortune;
+                document.getElementById('monthlyFortune').checked = settings.monthlyFortune;
+                document.getElementById('premiumNotif').checked = settings.premiumNotif;
+            }
+        });
+    </script>
+</body>
+</html>
