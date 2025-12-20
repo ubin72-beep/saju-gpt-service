@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추천인 프로그램 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .referral-hero { background: linear-gradient(135deg, #d4af37, #f4e5b5); padding: 100px 0 60px; text-align: center; }
+        .referral-hero h1 { font-size: 3rem; color: #1a1a1a; margin-bottom: 1rem; }
+        .referral-code-section { padding: 3rem 0; }
+        .code-card { background: white; border-radius: 20px; padding: 3rem; text-align: center; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .my-code { font-size: 3rem; font-weight: bold; color: #c41e3a; background: #f5f5f5; padding: 1.5rem; border-radius: 15px; margin: 2rem 0; font-family: 'Courier New', monospace; }
+        .share-buttons { display: flex; gap: 1rem; margin-top: 2rem; }
+        .btn-share { flex: 1; padding: 1rem; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+        .btn-kakao { background: #FEE500; color: #000; }
+        .btn-copy { background: #1a1a1a; color: white; }
+        .stats-section { background: #f5f5f5; padding: 3rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 2rem; }
+        .stat-card { background: white; padding: 2rem; border-radius: 15px; text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #c41e3a; }
+        .rewards-section { padding: 3rem 0; }
+        .rewards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem; }
+        .reward-card { background: linear-gradient(135deg, #c41e3a, #8b0000); color: white; padding: 2rem; border-radius: 15px; text-align: center; }
+        .reward-amount { font-size: 2rem; font-weight: bold; margin: 1rem 0; }
+        .leaderboard-section { background: #f5f5f5; padding: 3rem 0; }
+        .leaderboard { background: white; border-radius: 15px; padding: 2rem; }
+        .leader-item { display: flex; align-items: center; padding: 1rem; border-bottom: 1px solid #eee; }
+        .leader-rank { font-size: 1.5rem; font-weight: bold; width: 50px; }
+        .leader-name { flex: 1; }
+        .leader-count { font-weight: bold; color: #c41e3a; }
+        @media (max-width: 768px) {
+            .stats-grid, .rewards-grid { grid-template-columns: 1fr; }
+            .share-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><a href="index.html"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="referral.html" class="active">추천인</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="referral-hero">
+        <div class="container">
+            <h1><i class="fas fa-gift"></i> 친구 초대하고 보상 받기</h1>
+            <p style="font-size: 1.3rem; color: #1a1a1a;">친구가 유료 전환 시 양쪽 모두 혜택!</p>
+        </div>
+    </section>
+
+    <section class="referral-code-section">
+        <div class="container">
+            <div class="code-card">
+                <h2>나의 추천 코드</h2>
+                <div class="my-code" id="myReferralCode">LOADING...</div>
+                <p>이 코드를 친구에게 공유하세요!</p>
+                <div class="share-buttons">
+                    <button class="btn-share btn-kakao" onclick="shareKakao()"><i class="fab fa-kickstarter"></i> 카카오톡</button>
+                    <button class="btn-share btn-copy" onclick="copyCode()"><i class="fas fa-copy"></i> 복사하기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <h2 style="text-align: center;">나의 추천 현황</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalReferrals">0</div>
+                    <div>총 추천 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="convertedReferrals">0</div>
+                    <div>전환된 추천</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₩<span id="earnedRewards">0</span></div>
+                    <div>획득 보상</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₩<span id="pendingRewards">0</span></div>
+                    <div>대기 중 보상</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rewards-section">
+        <div class="container">
+            <h2 style="text-align: center;">보상 구조</h2>
+            <div class="rewards-grid">
+                <div class="reward-card">
+                    <i class="fas fa-user-plus" style="font-size: 3rem;"></i>
+                    <h3>추천인</h3>
+                    <div class="reward-amount">₩3,000</div>
+                    <p>친구가 유료 전환 시 적립</p>
+                </div>
+                <div class="reward-card">
+                    <i class="fas fa-percentage" style="font-size: 3rem;"></i>
+                    <h3>피추천인</h3>
+                    <div class="reward-amount">30% 할인</div>
+                    <p>첫 구매 시 자동 적용</p>
+                </div>
+                <div class="reward-card">
+                    <i class="fas fa-trophy" style="font-size: 3rem;"></i>
+                    <h3>보너스</h3>
+                    <div class="reward-amount">₩10,000</div>
+                    <p>10명마다 추가 지급</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="leaderboard-section">
+        <div class="container">
+            <h2 style="text-align: center;">추천 리더보드</h2>
+            <div class="leaderboard">
+                <div class="leader-item">
+                    <div class="leader-rank">🥇</div>
+                    <div class="leader-name">김**</div>
+                    <div class="leader-count">127명 추천</div>
+                </div>
+                <div class="leader-item">
+                    <div class="leader-rank">🥈</div>
+                    <div class="leader-name">이**</div>
+                    <div class="leader-count">98명 추천</div>
+                </div>
+                <div class="leader-item">
+                    <div class="leader-rank">🥉</div>
+                    <div class="leader-name">박**</div>
+                    <div class="leader-count">76명 추천</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; AI 사주 천년지기. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let user = null;
+        document.addEventListener('DOMContentLoaded', () => {
+            user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (!user.id) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'login.html';
+                return;
+            }
+            loadReferralData();
+        });
+
+        function loadReferralData() {
+            const code = user.referralCode || generateReferralCode();
+            document.getElementById('myReferralCode').textContent = code;
+            
+            const stats = JSON.parse(localStorage.getItem('referralStats_' + user.id) || '{"total":0,"converted":0,"earned":0,"pending":0}');
+            document.getElementById('totalReferrals').textContent = stats.total;
+            document.getElementById('convertedReferrals').textContent = stats.converted;
+            document.getElementById('earnedRewards').textContent = stats.earned.toLocaleString();
+            document.getElementById('pendingRewards').textContent = stats.pending.toLocaleString();
+        }
+
+        function generateReferralCode() {
+            return 'REF' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        function copyCode() {
+            const code = document.getElementById('myReferralCode').textContent;
+            navigator.clipboard.writeText(code);
+            alert('추천 코드가 복사되었습니다!');
+        }
+
+        function shareKakao() {
+            const code = document.getElementById('myReferralCode').textContent;
+            alert(`카카오톡 공유 기능은 준비 중입니다.\n추천 코드: ${code}`);
+        }
+    </script>
+    <script src="js/page-handler.js"></script>
+</body>
+</html>
