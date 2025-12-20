@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 운세 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .daily-hero { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); padding: 4rem 0; color: white; text-align: center; }
+        .today-date { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .fortune-card { background: white; border-radius: 20px; padding: 3rem; max-width: 700px; margin: -2rem auto 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .fortune-score { font-size: 4rem; font-weight: 700; color: #19547b; text-align: center; margin-bottom: 1rem; }
+        .fortune-label { text-align: center; font-size: 1.5rem; color: #666; margin-bottom: 2rem; }
+        .fortune-section { margin-bottom: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 15px; }
+        .fortune-section h3 { color: #19547b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .lucky-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+        .lucky-item { background: white; padding: 1rem; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="daily-fortune.html" class="active">오늘의 운세</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+            </ul>
+            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
+        </div>
+    </nav>
+
+    <section class="daily-hero">
+        <div class="container">
+            <h1>📆 오늘의 운세</h1>
+            <div class="today-date" id="todayDate"></div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="fortune-card">
+            <div class="fortune-score" id="fortuneScore">85점</div>
+            <div class="fortune-label" id="fortuneLabel">좋은 하루가 될 것입니다</div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-heart"></i> 종합운</h3>
+                <p id="overallFortune">전반적으로 좋은 운세입니다. 긍정적인 마음가짐을 유지하세요.</p>
+            </div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-briefcase"></i> 직장운</h3>
+                <p id="workFortune">업무가 순조롭게 진행될 것입니다. 상사의 인정을 받을 수 있습니다.</p>
+            </div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-coins"></i> 금전운</h3>
+                <p id="moneyFortune">작은 횡재수가 있을 수 있습니다. 충동 소비는 자제하세요.</p>
+            </div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-heart-pulse"></i> 연애운</h3>
+                <p id="loveFortune">좋은 만남이 있을 수 있습니다. 적극적으로 표현하세요.</p>
+            </div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-star"></i> 오늘의 행운</h3>
+                <div class="lucky-grid">
+                    <div class="lucky-item">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                        <p style="font-weight: 600; margin-bottom: 0.3rem;">행운의 색</p>
+                        <p id="luckyColor">파란색</p>
+                    </div>
+                    <div class="lucky-item">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧭</div>
+                        <p style="font-weight: 600; margin-bottom: 0.3rem;">길한 방향</p>
+                        <p id="luckyDirection">동쪽</p>
+                    </div>
+                    <div class="lucky-item">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔢</div>
+                        <p style="font-weight: 600; margin-bottom: 0.3rem;">행운의 숫자</p>
+                        <p id="luckyNumber">7, 14</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fortune-section">
+                <h3><i class="fas fa-lightbulb"></i> 오늘의 조언</h3>
+                <p id="todayAdvice">아침 일찍 일어나 가벼운 운동을 하면 하루가 더 활기차게 시작됩니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/page-handler.js"></script>
+    <script>
+        const today = new Date();
+        const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        document.getElementById('todayDate').textContent = 
+            `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 ${weekdays[today.getDay()]}`;
+
+        const score = 70 + Math.floor(Math.random() * 30);
+        document.getElementById('fortuneScore').textContent = `${score}점`;
+
+        if (score >= 90) document.getElementById('fortuneLabel').textContent = '최고의 하루!';
+        else if (score >= 75) document.getElementById('fortuneLabel').textContent = '좋은 하루가 될 것입니다';
+        else if (score >= 60) document.getElementById('fortuneLabel').textContent = '평범한 하루';
+        else document.getElementById('fortuneLabel').textContent = '조심스러운 하루';
+
+        const colors = ['빨강', '파랑', '노랑', '초록', '보라'];
+        const directions = ['동쪽', '서쪽', '남쪽', '북쪽', '남동쪽'];
+        document.getElementById('luckyColor').textContent = colors[Math.floor(Math.random() * colors.length)];
+        document.getElementById('luckyDirection').textContent = directions[Math.floor(Math.random() * directions.length)];
+        document.getElementById('luckyNumber').textContent = `${Math.floor(Math.random() * 9) + 1}, ${Math.floor(Math.random() * 20) + 10}`;
+    </script>
+</body>
+</html>
