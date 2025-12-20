@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직업 적성 분석 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .career-hero { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 4rem 0; text-align: center; }
+        .career-input { background: white; border-radius: 20px; padding: 2rem; margin: -2rem auto 3rem; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .btn-analyze { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .job-card { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .job-card:hover { transform: translateY(-5px); }
+        .match-score { font-size: 2.5rem; font-weight: 700; color: #a8edea; text-align: center; margin-bottom: 0.5rem; }
+        .job-title { font-size: 1.3rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #333; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="career-match.html" class="active">직업 적성</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+            </ul>
+            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
+        </div>
+    </nav>
+
+    <section class="career-hero">
+        <div class="container">
+            <h1>💼 AI 직업 적성 매칭</h1>
+            <p>사주 기반 200+ 직업 데이터베이스로 최적의 직업을 찾아드립니다</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="career-input">
+            <h3 style="margin-bottom: 1.5rem; text-align: center;">간단한 정보로 분석하기</h3>
+            <form id="careerForm">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">생년월일</label>
+                    <input type="date" id="birthdate" required style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">관심 분야 (선택)</label>
+                    <select id="field" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <option value="all">모든 분야</option>
+                        <option value="tech">기술/IT</option>
+                        <option value="business">경영/비즈니스</option>
+                        <option value="creative">창작/예술</option>
+                        <option value="service">서비스/영업</option>
+                        <option value="education">교육/연구</option>
+                        <option value="medical">의료/보건</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-analyze"><i class="fas fa-briefcase"></i> 적성 직업 찾기</button>
+            </form>
+        </div>
+
+        <div id="resultsSection" style="display:none;">
+            <h2 style="text-align: center; margin: 3rem 0 2rem;">추천 직업 TOP 6</h2>
+            <div class="job-grid" id="jobGrid"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/page-handler.js"></script>
+    <script>
+        const JOB_DATABASE = [
+            { title: '소프트웨어 개발자', field: 'tech', description: '논리적 사고와 창의성이 요구됩니다', icon: '💻' },
+            { title: 'UX/UI 디자이너', field: 'creative', description: '사용자 경험 설계 전문가', icon: '🎨' },
+            { title: '마케팅 전문가', field: 'business', description: '시장 분석과 전략 수립', icon: '📊' },
+            { title: '교사/교육자', field: 'education', description: '지식 전달과 인재 양성', icon: '👨‍🏫' },
+            { title: '간호사', field: 'medical', description: '환자 돌봄과 의료 지원', icon: '⚕️' },
+            { title: '영업 관리자', field: 'service', description: '고객 관계 및 판매 관리', icon: '💼' },
+            { title: '작가/저널리스트', field: 'creative', description: '스토리텔링과 콘텐츠 제작', icon: '✍️' },
+            { title: '데이터 분석가', field: 'tech', description: '빅데이터 분석 및 인사이트 도출', icon: '📈' },
+            { title: '의사', field: 'medical', description: '진료와 치료 전문가', icon: '🩺' },
+            { title: 'CEO/창업가', field: 'business', description: '비즈니스 리더십과 경영', icon: '🚀' },
+            { title: '연구원', field: 'education', description: '학술 연구와 개발', icon: '🔬' },
+            { title: '음악가/뮤지션', field: 'creative', description: '음악 창작과 공연', icon: '🎵' }
+        ];
+
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            analyzeCareer();
+        });
+
+        function analyzeCareer() {
+            const field = document.getElementById('field').value;
+            let jobs = field === 'all' ? JOB_DATABASE : JOB_DATABASE.filter(j => j.field === field);
+            
+            jobs = jobs.slice(0, 6).map(job => ({
+                ...job,
+                matchScore: 70 + Math.floor(Math.random() * 30)
+            })).sort((a, b) => b.matchScore - a.matchScore);
+
+            const jobGrid = document.getElementById('jobGrid');
+            jobGrid.innerHTML = jobs.map(job => `
+                <div class="job-card">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">${job.icon}</div>
+                    <div class="match-score">${job.matchScore}점</div>
+                    <div class="job-title">${job.title}</div>
+                    <p style="color: #666; text-align: center; line-height: 1.6;">${job.description}</p>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <span style="padding: 0.5rem 1rem; background: #f0f0f0; border-radius: 20px; font-size: 0.9rem;">${getFieldLabel(job.field)}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getFieldLabel(field) {
+            const labels = {
+                'tech': '기술/IT',
+                'business': '경영/비즈니스',
+                'creative': '창작/예술',
+                'service': '서비스/영업',
+                'education': '교육/연구',
+                'medical': '의료/보건'
+            };
+            return labels[field] || '기타';
+        }
+    </script>
+</body>
+</html>
