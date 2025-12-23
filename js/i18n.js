@@ -959,59 +959,65 @@
    959	    // 페이지 로드 시 언어 적용
    960	    updatePageLanguage();
    961	    
-   962	    // 언어 선택기 추가
-   963	    const container = document.getElementById('languageSwitcherContainer') || document.querySelector('.nav-container');
-   964	    if (container) {
-   965	        const switcher = createLanguageSwitcher();
-   966	        
-   967	        // 이미 존재하는지 확인
-   968	        const existing = container.querySelector('.language-switcher');
-   969	        if (existing) {
-   970	            existing.remove();
-   971	        }
-   972	        
-   973	        container.appendChild(switcher);
-   974	        
-   975	        // 드롭다운 토글
-   976	        const langBtn = document.getElementById('langBtn');
-   977	        const langDropdown = document.getElementById('langDropdown');
-   978	        
-   979	        langBtn?.addEventListener('click', (e) => {
-   980	            e.stopPropagation();
-   981	            langDropdown.classList.toggle('active');
-   982	        });
-   983	        
-   984	        // 언어 선택
-   985	        document.querySelectorAll('.lang-option').forEach(btn => {
-   986	            btn.addEventListener('click', () => {
-   987	                const lang = btn.getAttribute('data-lang');
-   988	                changeLanguage(lang);
-   989	                langDropdown.classList.remove('active');
-   990	            });
-   991	        });
-   992	        
-   993	        // 외부 클릭 시 닫기
-   994	        document.addEventListener('click', (e) => {
-   995	            if (!switcher.contains(e.target)) {
-   996	                langDropdown?.classList.remove('active');
-   997	            }
-   998	        });
-   999	    }
-  1000	}
-  1001	
-  1002	// 🚀 DOMContentLoaded 시 자동 초기화
-  1003	if (document.readyState === 'loading') {
-  1004	    document.addEventListener('DOMContentLoaded', initI18n);
-  1005	} else {
-  1006	    initI18n();
-  1007	}
-  1008	
-  1009	// Export
-  1010	window.i18n = {
-  1011	    t,
-  1012	    changeLanguage,
-  1013	    currentLanguage: () => currentLanguage,
-  1014	    supportedLanguages,
-  1015	    updatePageLanguage
-  1016	};
-  1017	
+   962	    // 언어 선택기 추가 (약간의 딜레이를 주어 DOM이 완전히 로드되도록)
+   963	    setTimeout(() => {
+   964	        const container = document.getElementById('languageSwitcherContainer');
+   965	        
+   966	        if (container) {
+   967	            // 이미 존재하는지 확인
+   968	            const existing = container.querySelector('.language-switcher');
+   969	            if (existing) {
+   970	                existing.remove();
+   971	            }
+   972	            
+   973	            const switcher = createLanguageSwitcher();
+   974	            container.appendChild(switcher);
+   975	            
+   976	            // 드롭다운 토글
+   977	            const langBtn = document.getElementById('langBtn');
+   978	            const langDropdown = document.getElementById('langDropdown');
+   979	            
+   980	            if (langBtn && langDropdown) {
+   981	                langBtn.addEventListener('click', (e) => {
+   982	                    e.stopPropagation();
+   983	                    langDropdown.classList.toggle('active');
+   984	                });
+   985	                
+   986	                // 언어 선택
+   987	                document.querySelectorAll('.lang-option').forEach(btn => {
+   988	                    btn.addEventListener('click', () => {
+   989	                        const lang = btn.getAttribute('data-lang');
+   990	                        changeLanguage(lang);
+   991	                        langDropdown.classList.remove('active');
+   992	                    });
+   993	                });
+   994	                
+   995	                // 외부 클릭 시 닫기
+   996	                document.addEventListener('click', (e) => {
+   997	                    if (!switcher.contains(e.target)) {
+   998	                        langDropdown.classList.remove('active');
+   999	                    }
+  1000	                });
+  1001	            }
+  1002	        } else {
+  1003	            console.warn('languageSwitcherContainer not found');
+  1004	        }
+  1005	    }, 100);
+  1006	}
+  1007	
+  1008	// 🚀 DOMContentLoaded 시 자동 초기화
+  1009	if (document.readyState === 'loading') {
+  1010	    document.addEventListener('DOMContentLoaded', initI18n);
+  1011	} else {
+  1012	    initI18n();
+  1013	}
+  1014	
+  1015	// Export
+  1016	window.i18n = {
+  1017	    t,
+  1018	    changeLanguage,
+  1019	    currentLanguage: () => currentLanguage,
+  1020	    supportedLanguages,
+  1021	    updatePageLanguage
+  1022	};
+  1023	
