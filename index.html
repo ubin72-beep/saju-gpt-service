@@ -1499,10 +1499,170 @@
                     });
                 }
         1501        });
-1502    </script>
-1503    
-1504    <!-- i18n 다국어 지원 (마지막에 로드) -->
-1505    <script src="js/i18n.js"></script>
-1506</body>
-1507</html>
 
+        
+    <!-- i18n 다국어 지원 (인라인 스크립트) -->
+    <script>
+    (function() {
+        // 현재 언어 (기본: 한국어)
+        let currentLanguage = localStorage.getItem('saju_language') || 'ko';
+
+        // 지원 언어 목록
+        const supportedLanguages = {
+            ko: { name: '한국어', flag: '🇰🇷', direction: 'ltr' },
+            en: { name: 'English', flag: '🇺🇸', direction: 'ltr' },
+            zh: { name: '中文', flag: '🇨🇳', direction: 'ltr' },
+            ja: { name: '日本語', flag: '🇯🇵', direction: 'ltr' }
+        };
+
+        // 번역 데이터베이스 (축약버전)
+        const translations = {
+            nav: {
+                home: { ko: '홈', en: 'Home', zh: '首页', ja: 'ホーム' },
+                services: { ko: '서비스', en: 'Services', zh: '服务', ja: 'サービス' },
+                aiChat: { ko: 'AI 상담', en: 'AI Consultation', zh: 'AI咨询', ja: 'AI相談' },
+                myInfo: { ko: '내 정보', en: 'My Info', zh: '我的信息', ja: 'マイページ' }
+            },
+            hero: {
+                badge: { ko: '60년 만의 특별한 해', en: 'Once in 60 Years', zh: '60年一遇的特殊年份', ja: '60年に一度の特別な年' },
+                yearName: {
+                    ko: '병오년 <span class="hanja">丙午年</span>',
+                    en: 'Byeong-O Year <span class="hanja">丙午年</span>',
+                    zh: '丙午年 <span class="hanja">丙午年</span>',
+                    ja: '丙午年 <span class="hanja">丙午年</span>'
+                },
+                subtitle: { ko: '붉은 불의 말띠 해', en: 'Year of the Red Fire Horse', zh: '红火马年', ja: '赤い火の馬年' },
+                description: {
+                    ko: '1000년의 지혜와 함께하는 명리학의 만세력<br>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다',
+                    en: 'The 10,000-year calendar with 1000 years of wisdom<br>Discover your destiny with authentic astrology and AI technology',
+                    zh: '拥有千年智慧的万年历<br>用正统命理学和AI技术揭示您的命运',
+                    ja: '千年の知恵とともに歩む命理学の万歳暦<br>正統派命理学とAI技術であなたの運命を明らかにします'
+                },
+                freeSaju: { ko: '무료로 사주 보기', en: 'Free Saju Reading', zh: '免费查看四柱', ja: '無料で四柱推命' },
+                aiConsult: { ko: 'AI 상담 시작', en: 'Start AI Chat', zh: '开始AI咨询', ja: 'AI相談開始' }
+            }
+        };
+
+        // 번역 함수
+        function t(key) {
+            const keys = key.split('.');
+            let value = translations;
+            for (const k of keys) {
+                value = value[k];
+                if (!value) return key;
+            }
+            return value[currentLanguage] || value['ko'] || key;
+        }
+
+        // 언어 변경
+        function changeLanguage(lang) {
+            if (!supportedLanguages[lang]) return;
+            currentLanguage = lang;
+            localStorage.setItem('saju_language', lang);
+            updatePageLanguage();
+        }
+
+        // 페이지 언어 업데이트
+        function updatePageLanguage() {
+            document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                const key = element.getAttribute('data-i18n');
+                const translation = t(key);
+                if (element.hasAttribute('placeholder')) {
+                    element.placeholder = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(function(element) {
+                const key = element.getAttribute('data-i18n-html');
+                element.innerHTML = t(key);
+            });
+        }
+
+        // 언어 선택 UI 생성
+        function createLanguageSwitcher() {
+            const switcher = document.createElement('div');
+            switcher.className = 'language-switcher';
+            
+            let html = '<button class="lang-btn" id="langBtn">';
+            html += '<span class="lang-flag">' + supportedLanguages[currentLanguage].flag + '</span>';
+            html += '<span class="lang-name">' + supportedLanguages[currentLanguage].name + '</span>';
+            html += '<i class="fas fa-chevron-down"></i></button>';
+            html += '<div class="lang-dropdown" id="langDropdown">';
+            
+            for (const code in supportedLanguages) {
+                const info = supportedLanguages[code];
+                const isActive = code === currentLanguage;
+                html += '<button class="lang-option' + (isActive ? ' active' : '') + '" data-lang="' + code + '">';
+                html += '<span class="lang-flag">' + info.flag + '</span>';
+                html += '<span class="lang-name">' + info.name + '</span>';
+                if (isActive) html += '<i class="fas fa-check"></i>';
+                html += '</button>';
+            }
+            html += '</div>';
+            switcher.innerHTML = html;
+            return switcher;
+        }
+
+        // 초기화
+        function initI18n() {
+            updatePageLanguage();
+            
+            setTimeout(function() {
+                const container = document.getElementById('languageSwitcherContainer');
+                if (!container) {
+                    console.warn('languageSwitcherContainer not found');
+                    return;
+                }
+                
+                const existing = container.querySelector('.language-switcher');
+                if (existing) existing.remove();
+                
+                const switcher = createLanguageSwitcher();
+                container.appendChild(switcher);
+                
+                const langBtn = document.getElementById('langBtn');
+                const langDropdown = document.getElementById('langDropdown');
+                
+                if (langBtn && langDropdown) {
+                    langBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        langDropdown.classList.toggle('active');
+                    });
+                    
+                    const options = document.querySelectorAll('.lang-option');
+                    for (let i = 0; i < options.length; i++) {
+                        options[i].addEventListener('click', function() {
+                            const lang = this.getAttribute('data-lang');
+                            changeLanguage(lang);
+                            langDropdown.classList.remove('active');
+                        });
+                    }
+                    
+                    document.addEventListener('click', function(e) {
+                        if (!switcher.contains(e.target)) {
+                            langDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            }, 200);
+        }
+
+        // Export
+        window.i18n = {
+            t: t,
+            changeLanguage: changeLanguage,
+            currentLanguage: function() { return currentLanguage; },
+            supportedLanguages: supportedLanguages,
+            updatePageLanguage: updatePageLanguage
+        };
+
+        // 초기화 실행
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initI18n);
+        } else {
+            initI18n();
+        }
+    })();
+    </script>
+                                                      
