@@ -1,4 +1,4 @@
-  1	<!DOCTYPE html>
+1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -10,309 +10,399 @@
     10	    <link rel="stylesheet" href="css/modal.css">
     11	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     12	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    13	</head>
-    14	<body>
-    15	    <!-- 네비게이션 -->
-    16	    <nav class="navbar">
-    17	        <div class="container">
-    18	            <div class="nav-brand">
-    19	                <a href="index.html">
-    20	                    <i class="fas fa-yin-yang"></i>
-    21	                    AI 사주 천년지기
-    22	                </a>
-    23	            </div>
-    24	            <ul class="nav-menu">
-    25	                <li><a href="index.html">홈</a></li>
-    26	                <li><a href="pricing.html">가격표</a></li>
-    27	                <li><a href="ai-chat.html" class="active">AI 상담</a></li>
-    28	                <li><a href="referral.html">추천인</a></li>
-    29	                <li><a href="kakao-alarm-bot.html" class="nav-highlight"><i class="fas fa-bell"></i> 알람</a></li>
-    30	                <li><a href="mypage.html">마이페이지</a></li>
-    31	                <li><a href="#" id="authBtn">로그인</a></li>
-    32	            </ul>
-    33	            <button class="mobile-menu-toggle">
-    34	                <i class="fas fa-bars"></i>
-    35	            </button>
-    36	        </div>
-    37	    </nav>
-    38	
-    39	    <!-- AI 상담 히어로 -->
-    40	    <section class="ai-hero">
-    41	        <div class="container">
-    42	            <h1>
-    43	                <i class="fas fa-robot"></i>
-    44	                AI 사주 상담
-    45	            </h1>
-    46	            <p>ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다</p>
-    47	            
-    48	            <!-- 요금제 -->
-    49	            <div class="ai-pricing-cards">
-    50	                <div class="ai-price-card">
-    51	                    <div class="price-icon">🆓</div>
-    52	                    <h3>무료</h3>
-    53	                    <div class="price">₩0</div>
-    54	                    <ul>
-    55	                        <li>✅ 매일 3개 질문</li>
-    56	                        <li>✅ 기본 사주 해석</li>
-    57	                        <li>✅ 간단한 조언</li>
-    58	                    </ul>
-    59	                    <button class="btn-secondary" onclick="startChat('free')">시작하기</button>
-    60	                </div>
-    61	
-    62	                <div class="ai-price-card featured">
-    63	                    <div class="badge">인기</div>
-    64	                    <div class="price-icon">💬</div>
-    65	                    <h3>추가 10개 질문</h3>
-    66	                    <div class="price">₩2,900</div>
-    67	                    <ul>
-    68	                        <li>✅ 즉시 10개 질문 추가</li>
-    69	                        <li>✅ 상세한 해석</li>
-    70	                        <li>✅ 채팅 히스토리 저장</li>
-    71	                        <li>✅ PDF 내보내기</li>
-    72	                    </ul>
-    73	                    <button class="btn-primary" onclick="purchaseQuestions()">구매하기</button>
-    74	                </div>
-    75	
-    76	                <div class="ai-price-card premium">
-    77	                    <div class="badge gold">프리미엄</div>
-    78	                    <div class="price-icon">♾️</div>
-    79	                    <h3>무제한 구독</h3>
-    80	                    <div class="price">₩9,900<span>/월</span></div>
-    81	                    <ul>
-    82	                        <li>✅ 무제한 질문</li>
-    83	                        <li>✅ 우선 응답</li>
-    84	                        <li>✅ 고급 AI 모델</li>
-    85	                        <li>✅ 전문가 리뷰 월 1회</li>
-    86	                        <li>✅ 모든 프리미엄 혜택</li>
-    87	                    </ul>
-    88	                    <button class="btn-gold" onclick="subscribeUnlimited()">구독하기</button>
-    89	                </div>
-    90	            </div>
-    91	        </div>
-    92	    </section>
-    93	
-    94	    <!-- 채팅 인터페이스 -->
-    95	    <section class="chat-section">
-    96	        <div class="container">
-    97	            <div class="chat-container">
-    98	                <!-- 사이드바 -->
-    99	                <div class="chat-sidebar">
-   100	                    <div class="user-status">
-   101	                        <div class="status-header">
-   102	                            <h3>나의 상담 현황</h3>
-   103	                        </div>
-   104	                        <div class="status-info">
-   105	                            <div class="status-item">
-   106	                                <i class="fas fa-comment-dots"></i>
-   107	                                <div>
-   108	                                    <span class="label">남은 질문</span>
-   109	                                    <span class="value" id="remainingQuestions">3</span>
-   110	                                </div>
-   111	                            </div>
-   112	                            <div class="status-item">
-   113	                                <i class="fas fa-calendar-day"></i>
-   114	                                <div>
-   115	                                    <span class="label">오늘 사용</span>
-   116	                                    <span class="value" id="todayUsed">0</span>
-   117	                                </div>
-   118	                            </div>
-   119	                            <div class="status-item">
-   120	                                <i class="fas fa-history"></i>
-   121	                                <div>
-   122	                                    <span class="label">총 대화</span>
-   123	                                    <span class="value" id="totalConversations">0</span>
-   124	                                </div>
-   125	                            </div>
-   126	                        </div>
-   127	                        <button class="btn-upgrade" onclick="window.location.href='pricing.html'">
-   128	                            <i class="fas fa-star"></i>
-   129	                            업그레이드
-   130	                        </button>
-   131	                    </div>
+    13	    <style>
+    14	        /* 언어 선택기 스타일 */
+    15	        .language-switcher {
+    16	            position: relative;
+    17	            margin-left: 1rem;
+    18	        }
+    19	        .lang-btn {
+    20	            background: transparent;
+    21	            border: 2px solid #d4af37;
+    22	            color: #d4af37;
+    23	            padding: 8px 16px;
+    24	            border-radius: 25px;
+    25	            cursor: pointer;
+    26	            display: flex;
+    27	            align-items: center;
+    28	            gap: 8px;
+    29	            font-size: 14px;
+    30	            font-weight: 600;
+    31	            transition: all 0.3s;
+    32	        }
+    33	        .lang-btn:hover {
+    34	            background: rgba(212, 175, 55, 0.1);
+    35	            transform: translateY(-2px);
+    36	        }
+    37	        .lang-flag {
+    38	            font-size: 18px;
+    39	        }
+    40	        .lang-dropdown {
+    41	            position: absolute;
+    42	            top: 120%;
+    43	            right: 0;
+    44	            background: white;
+    45	            border: 2px solid #d4af37;
+    46	            border-radius: 15px;
+    47	            min-width: 180px;
+    48	            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    49	            opacity: 0;
+    50	            visibility: hidden;
+    51	            transform: translateY(-10px);
+    52	            transition: all 0.3s;
+    53	            z-index: 1000;
+    54	        }
+    55	        .lang-dropdown.active {
+    56	            opacity: 1;
+    57	            visibility: visible;
+    58	            transform: translateY(0);
+    59	        }
+    60	        .lang-option {
+    61	            width: 100%;
+    62	            padding: 12px 20px;
+    63	            border: none;
+    64	            background: white;
+    65	            text-align: left;
+    66	            cursor: pointer;
+    67	            display: flex;
+    68	            align-items: center;
+    69	            gap: 10px;
+    70	            font-size: 14px;
+    71	            transition: all 0.2s;
+    72	            color: #333;
+    73	        }
+    74	        .lang-option:first-child {
+    75	            border-radius: 13px 13px 0 0;
+    76	        }
+    77	        .lang-option:last-child {
+    78	            border-radius: 0 0 13px 13px;
+    79	        }
+    80	        .lang-option:hover {
+    81	            background: rgba(212, 175, 55, 0.1);
+    82	        }
+    83	        .lang-option.active {
+    84	            background: rgba(212, 175, 55, 0.2);
+    85	            font-weight: 700;
+    86	            color: #c41e3a;
+    87	        }
+    88	        .lang-option i {
+    89	            margin-left: auto;
+    90	            color: #c41e3a;
+    91	        }
+    92	        .container {
+    93	            display: flex;
+    94	            align-items: center;
+    95	            justify-content: space-between;
+    96	        }
+    97	        .nav-menu {
+    98	            display: flex;
+    99	            gap: 1.5rem;
+   100	            list-style: none;
+   101	            align-items: center;
+   102	        }
+   103	    </style>
+   104	</head>
+   105	<body>
+   106	    <!-- i18n 다국어 시스템 -->
+   107	    <script>(function(){var a=localStorage.getItem('saju_language')||'ko',b={ko:{name:'한국어',flag:'🇰🇷'},en:{name:'English',flag:'🇺🇸'},zh:{name:'中文',flag:'🇨🇳'},ja:{name:'日本語',flag:'🇯🇵'}},c={nav:{home:{ko:'홈',en:'Home',zh:'首页',ja:'ホーム'},pricing:{ko:'가격표',en:'Pricing',zh:'价格',ja:'料金'},aiChat:{ko:'AI 상담',en:'AI Chat',zh:'AI咨询',ja:'AI相談'},referral:{ko:'추천인',en:'Referral',zh:'推荐人',ja:'紹介'},alarm:{ko:'알람',en:'Alarm',zh:'闹钟',ja:'アラーム'},mypage:{ko:'마이페이지',en:'My Page',zh:'我的页面',ja:'マイページ'},login:{ko:'로그인',en:'Login',zh:'登录',ja:'ログイン'}},aiChat:{title:{ko:'AI 사주 상담',en:'AI Saju Consultation',zh:'AI四柱咨询',ja:'AI四柱相談'},description:{ko:'ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다',en:'ChatGPT-based AI analyzes your Saju 24/7 and provides personalized advice',zh:'基于ChatGPT的AI全天候分析您的四柱并提供个性化建议',ja:'ChatGPTベースのAIが24時間体制であなたの四柱を分析し、カスタマイズされたアドバイスを提供します'}}};function d(e){var f=e.split('.'),g=c;for(var h=0;h<f.length;h++){g=g[f[h]];if(!g)return e}return g[a]||g.ko||e}function i(e){if(!b[e])return;a=e;localStorage.setItem('saju_language',e);j();k()}function j(){document.querySelectorAll('[data-i18n]').forEach(function(e){var f=e.getAttribute('data-i18n'),g=d(f);e.hasAttribute('placeholder')?e.placeholder=g:e.textContent=g});document.querySelectorAll('[data-i18n-html]').forEach(function(e){e.innerHTML=d(e.getAttribute('data-i18n-html'))})}function k(){var e=document.getElementById('langBtn');if(e){var f=b[a];e.querySelector('.lang-flag').textContent=f.flag;e.querySelector('.lang-name').textContent=f.name}document.querySelectorAll('.lang-option').forEach(function(e){e.classList.remove('active');var f=e.querySelector('.fa-check');f&&f.remove();if(e.getAttribute('data-lang')===a){e.classList.add('active');e.innerHTML+='<i class="fas fa-check"></i>'}})}function l(){var e=document.getElementById('languageSwitcherContainer');if(!e)return;e.innerHTML='<div class="language-switcher"><button class="lang-btn" id="langBtn"><span class="lang-flag">'+b[a].flag+'</span><span class="lang-name">'+b... (line truncated)
+   108	    <!-- 네비게이션 -->
+   109	    <nav class="navbar">
+   110	        <div class="container">
+   111	            <div class="nav-brand">
+   112	                <a href="index.html">
+   113	                    <i class="fas fa-yin-yang"></i>
+   114	                    AI 사주 천년지기
+   115	                </a>
+   116	            </div>
+   117	            <ul class="nav-menu">
+   118	                <li><a href="index.html" data-i18n="nav.home">홈</a></li>
+   119	                <li><a href="pricing.html" data-i18n="nav.pricing">가격표</a></li>
+   120	                <li><a href="ai-chat.html" class="active" data-i18n="nav.aiChat">AI 상담</a></li>
+   121	                <li><a href="referral.html" data-i18n="nav.referral">추천인</a></li>
+   122	                <li><a href="kakao-alarm-bot.html" class="nav-highlight"><i class="fas fa-bell"></i> <span data-i18n="nav.alarm">알람</span></a></li>
+   123	                <li><a href="mypage.html" data-i18n="nav.mypage">마이페이지</a></li>
+   124	                <li><a href="#" id="authBtn" data-i18n="nav.login">로그인</a></li>
+   125	            </ul>
+   126	            <div id="languageSwitcherContainer"></div>
+   127	            <button class="mobile-menu-toggle">
+   128	                <i class="fas fa-bars"></i>
+   129	            </button>
+   130	        </div>
+   131	    </nav>
    132	
-   133	                    <!-- 질문 템플릿 -->
-   134	                    <div class="question-templates">
-   135	                        <h3><i class="fas fa-lightbulb"></i> 추천 질문</h3>
-   136	                        <div class="template-list">
-   137	                            <button class="template-btn" data-question="2026년 나의 연애운은 어떤가요?">
-   138	                                <i class="fas fa-heart"></i>
-   139	                                2026년 연애운
-   140	                            </button>
-   141	                            <button class="template-btn" data-question="직업을 바꾸기에 좋은 시기는 언제인가요?">
-   142	                                <i class="fas fa-briefcase"></i>
-   143	                                이직 시기
-   144	                            </button>
-   145	                            <button class="template-btn" data-question="재물운을 높이는 방법은 무엇인가요?">
-   146	                                <i class="fas fa-coins"></i>
-   147	                                재물운 향상
-   148	                            </button>
-   149	                            <button class="template-btn" data-question="건강 관리에 주의해야 할 점은?">
-   150	                                <i class="fas fa-heartbeat"></i>
-   151	                                건강 조언
-   152	                            </button>
-   153	                            <button class="template-btn" data-question="배우자와의 궁합은 어떤가요?">
-   154	                                <i class="fas fa-ring"></i>
-   155	                                부부 궁합
-   156	                            </button>
-   157	                            <button class="template-btn" data-question="사업을 시작하기 좋은 날은 언제인가요?">
-   158	                                <i class="fas fa-rocket"></i>
-   159	                                사업 택일
-   160	                            </button>
-   161	                        </div>
-   162	                    </div>
-   163	
-   164	                    <!-- 채팅 히스토리 -->
-   165	                    <div class="chat-history">
-   166	                        <h3><i class="fas fa-clock"></i> 이전 대화</h3>
-   167	                        <div id="historyList" class="history-list">
-   168	                            <p class="empty-message">아직 대화 내역이 없습니다</p>
-   169	                        </div>
-   170	                    </div>
-   171	                </div>
-   172	
-   173	                <!-- 메인 채팅 영역 -->
-   174	                <div class="chat-main">
-   175	                    <div class="chat-header">
-   176	                        <div class="ai-info">
-   177	                            <div class="ai-avatar">
-   178	                                <i class="fas fa-robot"></i>
-   179	                            </div>
-   180	                            <div class="ai-details">
-   181	                                <h3>AI 명리학 전문가</h3>
-   182	                                <span class="status online">
-   183	                                    <i class="fas fa-circle"></i>
-   184	                                    온라인
-   185	                                </span>
-   186	                            </div>
-   187	                        </div>
-   188	                        <div class="chat-actions">
-   189	                            <button class="icon-btn" onclick="exportChat()" title="채팅 내보내기">
-   190	                                <i class="fas fa-download"></i>
-   191	                            </button>
-   192	                            <button class="icon-btn" onclick="clearChat()" title="대화 초기화">
-   193	                                <i class="fas fa-trash"></i>
-   194	                            </button>
-   195	                        </div>
-   196	                    </div>
-   197	
-   198	                    <div class="chat-messages" id="chatMessages">
-   199	                        <!-- 환영 메시지 -->
-   200	                        <div class="message ai-message">
-   201	                            <div class="message-avatar">
-   202	                                <i class="fas fa-robot"></i>
-   203	                            </div>
-   204	                            <div class="message-content">
-   205	                                <div class="message-bubble">
-   206	                                    <p>안녕하세요! 저는 AI 명리학 전문가입니다. 🔮</p>
-   207	                                    <p>당신의 사주팔자를 기반으로 맞춤형 조언을 드리겠습니다.</p>
-   208	                                    <p><strong>먼저 생년월일시를 알려주시면 더 정확한 상담이 가능합니다!</strong></p>
-   209	                                    <br>
-   210	                                    <p>💡 왼쪽의 추천 질문을 클릭하거나, 자유롭게 질문해주세요.</p>
+   133	    <!-- AI 상담 히어로 -->
+   134	    <section class="ai-hero">
+   135	        <div class="container">
+   136	            <h1>
+   137	                <i class="fas fa-robot"></i>
+   138	                <span data-i18n="aiChat.title">AI 사주 상담</span>
+   139	            </h1>
+   140	            <p data-i18n="aiChat.description">ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다</p>
+   141	            
+   142	            <!-- 요금제 -->
+   143	            <div class="ai-pricing-cards">
+   144	                <div class="ai-price-card">
+   145	                    <div class="price-icon">🆓</div>
+   146	                    <h3>무료</h3>
+   147	                    <div class="price">₩0</div>
+   148	                    <ul>
+   149	                        <li>✅ 매일 3개 질문</li>
+   150	                        <li>✅ 기본 사주 해석</li>
+   151	                        <li>✅ 간단한 조언</li>
+   152	                    </ul>
+   153	                    <button class="btn-secondary" onclick="startChat('free')">시작하기</button>
+   154	                </div>
+   155	
+   156	                <div class="ai-price-card featured">
+   157	                    <div class="badge">인기</div>
+   158	                    <div class="price-icon">💬</div>
+   159	                    <h3>추가 10개 질문</h3>
+   160	                    <div class="price">₩2,900</div>
+   161	                    <ul>
+   162	                        <li>✅ 즉시 10개 질문 추가</li>
+   163	                        <li>✅ 상세한 해석</li>
+   164	                        <li>✅ 채팅 히스토리 저장</li>
+   165	                        <li>✅ PDF 내보내기</li>
+   166	                    </ul>
+   167	                    <button class="btn-primary" onclick="purchaseQuestions()">구매하기</button>
+   168	                </div>
+   169	
+   170	                <div class="ai-price-card premium">
+   171	                    <div class="badge gold">프리미엄</div>
+   172	                    <div class="price-icon">♾️</div>
+   173	                    <h3>무제한 구독</h3>
+   174	                    <div class="price">₩9,900<span>/월</span></div>
+   175	                    <ul>
+   176	                        <li>✅ 무제한 질문</li>
+   177	                        <li>✅ 우선 응답</li>
+   178	                        <li>✅ 고급 AI 모델</li>
+   179	                        <li>✅ 전문가 리뷰 월 1회</li>
+   180	                        <li>✅ 모든 프리미엄 혜택</li>
+   181	                    </ul>
+   182	                    <button class="btn-gold" onclick="subscribeUnlimited()">구독하기</button>
+   183	                </div>
+   184	            </div>
+   185	        </div>
+   186	    </section>
+   187	
+   188	    <!-- 채팅 인터페이스 -->
+   189	    <section class="chat-section">
+   190	        <div class="container">
+   191	            <div class="chat-container">
+   192	                <!-- 사이드바 -->
+   193	                <div class="chat-sidebar">
+   194	                    <div class="user-status">
+   195	                        <div class="status-header">
+   196	                            <h3>나의 상담 현황</h3>
+   197	                        </div>
+   198	                        <div class="status-info">
+   199	                            <div class="status-item">
+   200	                                <i class="fas fa-comment-dots"></i>
+   201	                                <div>
+   202	                                    <span class="label">남은 질문</span>
+   203	                                    <span class="value" id="remainingQuestions">3</span>
+   204	                                </div>
+   205	                            </div>
+   206	                            <div class="status-item">
+   207	                                <i class="fas fa-calendar-day"></i>
+   208	                                <div>
+   209	                                    <span class="label">오늘 사용</span>
+   210	                                    <span class="value" id="todayUsed">0</span>
    211	                                </div>
-   212	                                <span class="message-time">방금</span>
-   213	                            </div>
-   214	                        </div>
-   215	                    </div>
-   216	
-   217	                    <!-- 입력 영역 -->
-   218	                    <div class="chat-input-area">
-   219	                        <div class="input-wrapper">
-   220	                            <button class="icon-btn" onclick="attachFile()" title="파일 첨부">
-   221	                                <i class="fas fa-paperclip"></i>
-   222	                            </button>
-   223	                            <textarea 
-   224	                                id="chatInput" 
-   225	                                placeholder="메시지를 입력하세요... (Shift+Enter로 줄바꿈)" 
-   226	                                rows="1"
-   227	                                maxlength="500"
-   228	                            ></textarea>
-   229	                            <div class="input-actions">
-   230	                                <span class="char-count">
-   231	                                    <span id="charCount">0</span>/500
-   232	                                </span>
-   233	                                <button class="btn-send" id="sendBtn" onclick="sendMessage()">
-   234	                                    <i class="fas fa-paper-plane"></i>
-   235	                                    전송
-   236	                                </button>
-   237	                            </div>
-   238	                        </div>
-   239	                        <div class="input-hints">
-   240	                            <small>
-   241	                                <i class="fas fa-info-circle"></i>
-   242	                                남은 질문: <strong id="remainingCount">3</strong>개
-   243	                                | AI가 응답하는 데 5-10초 소요될 수 있습니다.
-   244	                            </small>
-   245	                        </div>
-   246	                    </div>
-   247	                </div>
-   248	            </div>
-   249	        </div>
-   250	    </section>
-   251	
-   252	    <!-- 푸터 -->
-   253	    <footer class="footer">
-   254	        <div class="container">
-   255	            <div class="footer-content">
-   256	                <div class="footer-section">
-   257	                    <h4>AI 사주 천년지기</h4>
-   258	                    <p>정통 명리학으로 풀어보는 붉은 불의 말띠 해</p>
-   259	                </div>
-   260	                <div class="footer-section">
-   261	                    <h4>서비스</h4>
-   262	                    <ul>
-   263	                        <li><a href="index.html">사주팔자</a></li>
-   264	                        <li><a href="pricing.html">가격표</a></li>
-   265	                        <li><a href="ai-chat.html">AI 상담</a></li>
-   266	                        <li><a href="referral.html">추천인 프로그램</a></li>
-   267	                    </ul>
-   268	                </div>
-   269	                <div class="footer-section">
-   270	                    <h4>법률</h4>
-   271	                    <ul>
-   272	                        <li><a href="terms.html">이용약관</a></li>
-   273	                        <li><a href="privacy.html">개인정보처리방침</a></li>
-   274	                        <li><a href="refund.html">환불정책</a></li>
-   275	                    </ul>
-   276	                </div>
-   277	                <div class="footer-section">
-   278	                    <h4>고객지원</h4>
-   279	                    <p>이메일: support@saju2026.com</p>
-   280	                    <p>운영시간: 평일 10:00-18:00</p>
-   281	                </div>
-   282	            </div>
-   283	            <div class="footer-bottom">
-   284	                <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
-   285	            </div>
-   286	        </div>
-   287	    </footer>
-   288	
-   289	    <!-- 결제 모달 -->
-   290	    <div id="purchaseModal" class="modal">
-   291	        <div class="modal-content">
-   292	            <span class="close">&times;</span>
-   293	            <h2>AI 상담 질문 추가</h2>
-   294	            <div class="purchase-info">
-   295	                <p class="price-display">₩2,900</p>
-   296	                <p class="description">10개 질문을 추가로 구매합니다</p>
-   297	                <ul class="benefit-list">
-   298	                    <li><i class="fas fa-check"></i> 즉시 10개 질문 사용 가능</li>
-   299	                    <li><i class="fas fa-check"></i> 채팅 히스토리 저장</li>
-   300	                    <li><i class="fas fa-check"></i> PDF 내보내기</li>
-   301	                </ul>
-   302	            </div>
-   303	            <div class="modal-actions">
-   304	                <button class="btn-secondary" onclick="closeModal()">취소</button>
-   305	                <button class="btn-primary" onclick="confirmPurchase()">구매하기</button>
-   306	            </div>
-   307	        </div>
-   308	    </div>
-   309	
-   310	    <script src="js/page-handler.js"></script>
-   311	    <script src="js/ai-chat.js"></script>
-   312	    <script src="js/payment-system.js"></script>
-          <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
-
-   313	</body>
-   314	</html>
-   315	
+   212	                            </div>
+   213	                            <div class="status-item">
+   214	                                <i class="fas fa-history"></i>
+   215	                                <div>
+   216	                                    <span class="label">총 대화</span>
+   217	                                    <span class="value" id="totalConversations">0</span>
+   218	                                </div>
+   219	                            </div>
+   220	                        </div>
+   221	                        <button class="btn-upgrade" onclick="window.location.href='pricing.html'">
+   222	                            <i class="fas fa-star"></i>
+   223	                            업그레이드
+   224	                        </button>
+   225	                    </div>
+   226	
+   227	                    <!-- 질문 템플릿 -->
+   228	                    <div class="question-templates">
+   229	                        <h3><i class="fas fa-lightbulb"></i> 추천 질문</h3>
+   230	                        <div class="template-list">
+   231	                            <button class="template-btn" data-question="2026년 나의 연애운은 어떤가요?">
+   232	                                <i class="fas fa-heart"></i>
+   233	                                2026년 연애운
+   234	                            </button>
+   235	                            <button class="template-btn" data-question="직업을 바꾸기에 좋은 시기는 언제인가요?">
+   236	                                <i class="fas fa-briefcase"></i>
+   237	                                이직 시기
+   238	                            </button>
+   239	                            <button class="template-btn" data-question="재물운을 높이는 방법은 무엇인가요?">
+   240	                                <i class="fas fa-coins"></i>
+   241	                                재물운 향상
+   242	                            </button>
+   243	                            <button class="template-btn" data-question="건강 관리에 주의해야 할 점은?">
+   244	                                <i class="fas fa-heartbeat"></i>
+   245	                                건강 조언
+   246	                            </button>
+   247	                            <button class="template-btn" data-question="배우자와의 궁합은 어떤가요?">
+   248	                                <i class="fas fa-ring"></i>
+   249	                                부부 궁합
+   250	                            </button>
+   251	                            <button class="template-btn" data-question="사업을 시작하기 좋은 날은 언제인가요?">
+   252	                                <i class="fas fa-rocket"></i>
+   253	                                사업 택일
+   254	                            </button>
+   255	                        </div>
+   256	                    </div>
+   257	
+   258	                    <!-- 채팅 히스토리 -->
+   259	                    <div class="chat-history">
+   260	                        <h3><i class="fas fa-clock"></i> 이전 대화</h3>
+   261	                        <div id="historyList" class="history-list">
+   262	                            <p class="empty-message">아직 대화 내역이 없습니다</p>
+   263	                        </div>
+   264	                    </div>
+   265	                </div>
+   266	
+   267	                <!-- 메인 채팅 영역 -->
+   268	                <div class="chat-main">
+   269	                    <div class="chat-header">
+   270	                        <div class="ai-info">
+   271	                            <div class="ai-avatar">
+   272	                                <i class="fas fa-robot"></i>
+   273	                            </div>
+   274	                            <div class="ai-details">
+   275	                                <h3>AI 명리학 전문가</h3>
+   276	                                <span class="status online">
+   277	                                    <i class="fas fa-circle"></i>
+   278	                                    온라인
+   279	                                </span>
+   280	                            </div>
+   281	                        </div>
+   282	                        <div class="chat-actions">
+   283	                            <button class="icon-btn" onclick="exportChat()" title="채팅 내보내기">
+   284	                                <i class="fas fa-download"></i>
+   285	                            </button>
+   286	                            <button class="icon-btn" onclick="clearChat()" title="대화 초기화">
+   287	                                <i class="fas fa-trash"></i>
+   288	                            </button>
+   289	                        </div>
+   290	                    </div>
+   291	
+   292	                    <div class="chat-messages" id="chatMessages">
+   293	                        <!-- 환영 메시지 -->
+   294	                        <div class="message ai-message">
+   295	                            <div class="message-avatar">
+   296	                                <i class="fas fa-robot"></i>
+   297	                            </div>
+   298	                            <div class="message-content">
+   299	                                <div class="message-bubble">
+   300	                                    <p>안녕하세요! 저는 AI 명리학 전문가입니다. 🔮</p>
+   301	                                    <p>당신의 사주팔자를 기반으로 맞춤형 조언을 드리겠습니다.</p>
+   302	                                    <p><strong>먼저 생년월일시를 알려주시면 더 정확한 상담이 가능합니다!</strong></p>
+   303	                                    <br>
+   304	                                    <p>💡 왼쪽의 추천 질문을 클릭하거나, 자유롭게 질문해주세요.</p>
+   305	                                </div>
+   306	                                <span class="message-time">방금</span>
+   307	                            </div>
+   308	                        </div>
+   309	                    </div>
+   310	
+   311	                    <!-- 입력 영역 -->
+   312	                    <div class="chat-input-area">
+   313	                        <div class="input-wrapper">
+   314	                            <button class="icon-btn" onclick="attachFile()" title="파일 첨부">
+   315	                                <i class="fas fa-paperclip"></i>
+   316	                            </button>
+   317	                            <textarea 
+   318	                                id="chatInput" 
+   319	                                placeholder="메시지를 입력하세요... (Shift+Enter로 줄바꿈)" 
+   320	                                rows="1"
+   321	                                maxlength="500"
+   322	                            ></textarea>
+   323	                            <div class="input-actions">
+   324	                                <span class="char-count">
+   325	                                    <span id="charCount">0</span>/500
+   326	                                </span>
+   327	                                <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+   328	                                    <i class="fas fa-paper-plane"></i>
+   329	                                    전송
+   330	                                </button>
+   331	                            </div>
+   332	                        </div>
+   333	                        <div class="input-hints">
+   334	                            <small>
+   335	                                <i class="fas fa-info-circle"></i>
+   336	                                남은 질문: <strong id="remainingCount">3</strong>개
+   337	                                | AI가 응답하는 데 5-10초 소요될 수 있습니다.
+   338	                            </small>
+   339	                        </div>
+   340	                    </div>
+   341	                </div>
+   342	            </div>
+   343	        </div>
+   344	    </section>
+   345	
+   346	    <!-- 푸터 -->
+   347	    <footer class="footer">
+   348	        <div class="container">
+   349	            <div class="footer-content">
+   350	                <div class="footer-section">
+   351	                    <h4>AI 사주 천년지기</h4>
+   352	                    <p>정통 명리학으로 풀어보는 붉은 불의 말띠 해</p>
+   353	                </div>
+   354	                <div class="footer-section">
+   355	                    <h4>서비스</h4>
+   356	                    <ul>
+   357	                        <li><a href="index.html">사주팔자</a></li>
+   358	                        <li><a href="pricing.html">가격표</a></li>
+   359	                        <li><a href="ai-chat.html">AI 상담</a></li>
+   360	                        <li><a href="referral.html">추천인 프로그램</a></li>
+   361	                    </ul>
+   362	                </div>
+   363	                <div class="footer-section">
+   364	                    <h4>법률</h4>
+   365	                    <ul>
+   366	                        <li><a href="terms.html">이용약관</a></li>
+   367	                        <li><a href="privacy.html">개인정보처리방침</a></li>
+   368	                        <li><a href="refund.html">환불정책</a></li>
+   369	                    </ul>
+   370	                </div>
+   371	                <div class="footer-section">
+   372	                    <h4>고객지원</h4>
+   373	                    <p>이메일: support@saju2026.com</p>
+   374	                    <p>운영시간: 평일 10:00-18:00</p>
+   375	                </div>
+   376	            </div>
+   377	            <div class="footer-bottom">
+   378	                <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
+   379	            </div>
+   380	        </div>
+   381	    </footer>
+   382	
+   383	    <!-- 결제 모달 -->
+   384	    <div id="purchaseModal" class="modal">
+   385	        <div class="modal-content">
+   386	            <span class="close">&times;</span>
+   387	            <h2>AI 상담 질문 추가</h2>
+   388	            <div class="purchase-info">
+   389	                <p class="price-display">₩2,900</p>
+   390	                <p class="description">10개 질문을 추가로 구매합니다</p>
+   391	                <ul class="benefit-list">
+   392	                    <li><i class="fas fa-check"></i> 즉시 10개 질문 사용 가능</li>
+   393	                    <li><i class="fas fa-check"></i> 채팅 히스토리 저장</li>
+   394	                    <li><i class="fas fa-check"></i> PDF 내보내기</li>
+   395	                </ul>
+   396	            </div>
+   397	            <div class="modal-actions">
+   398	                <button class="btn-secondary" onclick="closeModal()">취소</button>
+   399	                <button class="btn-primary" onclick="confirmPurchase()">구매하기</button>
+   400	            </div>
+   401	        </div>
+   402	    </div>
+   403	
+   404	    <script src="js/page-handler.js"></script>
+   405	    <script src="js/ai-chat.js"></script>
+   406	</body>
+   407	</html>
+   408	
