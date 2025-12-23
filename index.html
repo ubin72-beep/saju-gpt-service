@@ -730,15 +730,22 @@
             color: rgba(255, 255, 255, 0.5);
         }
         
-        /* 모바일 반응형 */
+               /* 모바일 반응형 */
         @media (max-width: 968px) {
             .hero-container {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 30px;
+                padding: 0 15px;
+            }
+            
+            .hero {
+                padding: 50px 0;
             }
             
             .hero-image {
                 order: -1;
+                max-width: 280px;
+                margin: 0 auto;
             }
             
             .nav-menu {
@@ -748,44 +755,286 @@
             .language-switcher {
                 margin-left: 0;
             }
+            
+            .nav-brand {
+                font-size: 20px;
+            }
+            
+            .nav-brand span {
+                font-size: 22px;
+            }
         }
         
         @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            /* 히어로 섹션 모바일 */
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 15px;
+            }
+            
             .year-number {
-                font-size: 72px;
+                font-size: 56px;
             }
             
             .year-name {
-                font-size: 36px;
-            }
-            
-            .year-subtitle {
                 font-size: 28px;
             }
             
+            .hanja {
+                font-size: 20px;
+            }
+            
+            .year-subtitle {
+                font-size: 22px;
+                margin-top: 10px;
+            }
+            
             .hero-description {
-                font-size: 18px;
+                font-size: 15px;
+                line-height: 1.5;
+                margin: 15px 0;
             }
             
             .cta-buttons {
                 flex-direction: column;
+                gap: 10px;
             }
             
             .btn-primary, .btn-secondary {
                 width: 100%;
+                padding: 14px 30px;
+                font-size: 16px;
             }
             
+            /* 섹션 타이틀 */
             .section-title {
-                font-size: 32px;
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+            
+            /* 신뢰 지표 */
+            .trust-section {
+                padding: 40px 0;
+            }
+            
+            .trust-stats {
+                gap: 25px;
+            }
+            
+            .trust-stat {
+                padding: 20px 10px;
+            }
+            
+            .trust-stat-icon {
+                font-size: 36px;
+            }
+            
+            .trust-stat-number {
+                font-size: 36px;
+            }
+            
+            .trust-stat-label {
+                font-size: 15px;
+            }
+            
+            /* 사주 입력 폼 */
+            .saju-form-section {
+                padding: 50px 0;
             }
             
             .saju-form {
+                padding: 25px 20px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-group label {
+                font-size: 15px;
+                margin-bottom: 8px;
+            }
+            
+            .form-group input, .form-group select {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            .submit-btn {
+                padding: 15px;
+                font-size: 17px;
+            }
+            
+            /* 서비스 그리드 */
+            .premium-section {
+                padding: 50px 0;
+            }
+            
+            .service-grid {
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .service-card {
                 padding: 30px 20px;
+            }
+            
+            .service-icon {
+                font-size: 48px;
+                margin-bottom: 15px;
+            }
+            
+            .service-title {
+                font-size: 19px;
+                margin-bottom: 12px;
+            }
+            
+            .service-description {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .service-price {
+                font-size: 24px;
+            }
+            
+            /* 유명인 섹션 */
+            .celebrity-section {
+                padding: 50px 0;
+            }
+            
+            .celebrity-grid {
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .celebrity-card {
+                padding: 25px 20px;
+            }
+            
+            .celebrity-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 36px;
+                margin-bottom: 15px;
+            }
+            
+            .celebrity-name {
+                font-size: 20px;
+            }
+            
+            .celebrity-info {
+                font-size: 13px;
+            }
+            
+            .celebrity-saju {
+                font-size: 13px;
+            }
+            
+            /* 리뷰 섹션 */
+            .review-section {
+                padding: 50px 0;
+            }
+            
+            .review-stats {
+                margin-bottom: 40px;
+            }
+            
+            .review-score {
+                font-size: 60px;
+            }
+            
+            .review-stars {
+                font-size: 32px;
+                margin: 15px 0;
+            }
+            
+            .review-count {
+                font-size: 17px;
+            }
+            
+            .review-grid {
+                gap: 20px;
+            }
+            
+            .review-card {
+                padding: 25px 20px;
+            }
+            
+            .review-text {
+                font-size: 14px;
+            }
+            
+            /* FAQ 섹션 */
+            .faq-section {
+                padding: 50px 0;
+            }
+            
+            .faq-question {
+                padding: 20px;
+                font-size: 16px;
+            }
+            
+            .faq-answer {
+                padding: 0 20px 20px;
+                font-size: 14px;
+            }
+            
+            /* 푸터 */
+            .footer {
+                padding: 40px 0 20px;
+            }
+            
+            .footer-content {
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .footer-section h3 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            .footer-section p, .footer-section a {
+                font-size: 14px;
+                margin-bottom: 8px;
             }
             
             .lang-dropdown {
                 right: auto;
                 left: 0;
+            }
+        }
+        
+        /* 초소형 모바일 (iPhone SE 등) */
+        @media (max-width: 375px) {
+            .year-number {
+                font-size: 48px;
+            }
+            
+            .year-name {
+                font-size: 24px;
+            }
+            
+            .year-subtitle {
+                font-size: 20px;
+            }
+            
+            .hero-description {
+                font-size: 14px;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 12px 25px;
+                font-size: 15px;
             }
         }
     </style>
