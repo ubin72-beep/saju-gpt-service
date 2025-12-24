@@ -1,437 +1,605 @@
-1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>토정비결 2026 - 병오년 월별 운세</title>
-     7	    <meta name="description" content="2026년 병오년 토정비결로 12개월 상세 운세를 확인하세요">
-     8	    
-     9	    <link rel="stylesheet" href="css/style.css">
-    10	    <link rel="stylesheet" href="css/result.css">
-    11	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
-    12	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    13	    
-    14	    <style>
-    15	        .tojeong-hero {
-    16	            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    17	            padding: 4rem 0;
-    18	            color: white;
-    19	            text-align: center;
-    20	        }
-    21	        
-    22	        .tojeong-hero h1 {
-    23	            font-size: 2.5rem;
-    24	            margin-bottom: 1rem;
-    25	        }
-    26	        
-    27	        .tojeong-input {
-    28	            background: white;
-    29	            border-radius: 20px;
-    30	            padding: 2rem;
-    31	            margin: -2rem auto 3rem;
-    32	            max-width: 600px;
-    33	            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    34	        }
-    35	        
-    36	        .year-display {
-    37	            text-align: center;
-    38	            font-size: 2rem;
-    39	            font-weight: 700;
-    40	            color: #ff6b6b;
-    41	            margin-bottom: 2rem;
-    42	        }
-    43	        
-    44	        .fortune-input {
-    45	            display: flex;
-    46	            gap: 1rem;
-    47	            margin-bottom: 1.5rem;
-    48	        }
-    49	        
-    50	        .fortune-input input {
-    51	            flex: 1;
-    52	            padding: 1rem;
-    53	            border: 2px solid #e0e0e0;
-    54	            border-radius: 10px;
-    55	            font-size: 1rem;
-    56	        }
-    57	        
-    58	        .btn-calculate {
-    59	            width: 100%;
-    60	            padding: 1.2rem;
-    61	            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    62	            color: white;
-    63	            border: none;
-    64	            border-radius: 50px;
-    65	            font-size: 1.1rem;
-    66	            font-weight: 600;
-    67	            cursor: pointer;
-    68	        }
-    69	        
-    70	        .month-grid {
-    71	            display: grid;
-    72	            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    73	            gap: 2rem;
-    74	            margin-top: 3rem;
-    75	        }
-    76	        
-    77	        .month-card {
-    78	            background: white;
-    79	            border-radius: 15px;
-    80	            padding: 2rem;
-    81	            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    82	            transition: transform 0.3s;
-    83	        }
-    84	        
-    85	        .month-card:hover {
-    86	            transform: translateY(-5px);
-    87	        }
-    88	        
-    89	        .month-header {
-    90	            display: flex;
-    91	            justify-content: space-between;
-    92	            align-items: center;
-    93	            margin-bottom: 1.5rem;
-    94	        }
-    95	        
-    96	        .month-title {
-    97	            font-size: 1.5rem;
-    98	            font-weight: 700;
-    99	            color: #ff6b6b;
-   100	        }
-   101	        
-   102	        .fortune-badge {
-   103	            padding: 0.5rem 1rem;
-   104	            border-radius: 20px;
-   105	            font-weight: 600;
-   106	            font-size: 0.9rem;
-   107	        }
-   108	        
-   109	        .fortune-excellent { background: #d4edda; color: #155724; }
-   110	        .fortune-good { background: #d1ecf1; color: #0c5460; }
-   111	        .fortune-normal { background: #fff3cd; color: #856404; }
-   112	        .fortune-caution { background: #f8d7da; color: #721c24; }
-   113	        
-   114	        .fortune-stars {
-   115	            font-size: 1.5rem;
-   116	            margin-bottom: 1rem;
-   117	            text-align: center;
-   118	        }
-   119	        
-   120	        .fortune-content h4 {
-   121	            font-size: 1.1rem;
-   122	            margin-bottom: 0.8rem;
-   123	            color: #333;
-   124	        }
-   125	        
-   126	        .fortune-content p {
-   127	            color: #666;
-   128	            line-height: 1.8;
-   129	            margin-bottom: 1rem;
-   130	        }
-   131	        
-   132	        .lucky-items {
-   133	            background: #f8f9fa;
-   134	            border-radius: 10px;
-   135	            padding: 1rem;
-   136	            margin-top: 1rem;
-   137	        }
-   138	        
-   139	        .lucky-items h5 {
-   140	            font-size: 0.9rem;
-   141	            color: #ff6b6b;
-   142	            margin-bottom: 0.5rem;
-   143	        }
-   144	        
-   145	        .lucky-items p {
-   146	            font-size: 0.85rem;
-   147	            color: #555;
-   148	            margin-bottom: 0.3rem;
-   149	        }
-   150	    </style>
-   151	</head>
-   152	<body>
-   153	    <nav class="navbar">
-   154	        <div class="container">
-   155	            <div class="logo">
-   156	                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-   157	            </div>
-   158	            <ul class="nav-menu">
-   159	                <li><a href="index.html">홈</a></li>
-   160	                <li><a href="result.html">내 사주</a></li>
-   161	                <li><a href="ai-chat.html">AI 상담</a></li>
-   162	                <li><a href="tojeong.html" class="active">토정비결</a></li>
-   163	                <li><a href="pricing.html">프리미엄</a></li>
-   164	            </ul>
-   165	            <div class="nav-actions">
-   166	                <a href="login.html" class="btn-login">로그인</a>
-   167	            </div>
-   168	        </div>
-   169	    </nav>
-   170	
-   171	    <section class="tojeong-hero">
-   172	        <div class="container">
-   173	            <h1>📖 토정비결 2026</h1>
-   174	            <p>병오년 12개월 상세 운세를 확인하세요</p>
-   175	        </div>
-   176	    </section>
-   177	
-   178	    <div class="container">
-   179	        <div class="tojeong-input">
-   180	            <div class="year-display">🐴 2026년 병오년 (丙午年)</div>
-   181	            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
-   182	                생년월일을 입력하시면 2026년 12개월 운세를 보여드립니다
-   183	            </p>
-   184	            
-   185	            <form id="tojeongForm">
-   186	                <div class="fortune-input">
-   187	                    <input type="number" id="birthYear" placeholder="생년 (예: 1990)" min="1900" max="2024" required>
-   188	                    <input type="number" id="birthMonth" placeholder="월 (1-12)" min="1" max="12" required>
-   189	                    <input type="number" id="birthDay" placeholder="일 (1-31)" min="1" max="31" required>
-   190	                </div>
-   191	                
-   192	                <div class="form-group" style="margin-bottom: 1.5rem;">
-   193	                    <select id="calendar" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px;">
-   194	                        <option value="solar">양력</option>
-   195	                        <option value="lunar">음력</option>
-   196	                    </select>
-   197	                </div>
-   198	                
-   199	                <button type="submit" class="btn-calculate">
-   200	                    <i class="fas fa-book-open"></i> 2026년 운세 보기
-   201	                </button>
-   202	            </form>
-   203	        </div>
-   204	
-   205	        <div id="fortuneResult" style="display: none;">
-   206	            <h2 style="text-align: center; margin: 3rem 0 2rem;">2026년 월별 운세</h2>
-   207	            <div class="month-grid" id="monthGrid"></div>
-   208	        </div>
-   209	    </div>
-   210	
-   211	    <footer class="footer">
-   212	        <div class="container">
-   213	            <div class="footer-content">
-   214	                <div class="footer-section">
-   215	                    <h3>AI 사주 천년지기</h3>
-   216	                    <p>정통 사주팔자와 AI가 만나다</p>
-   217	                </div>
-   218	            </div>
-   219	            <div class="footer-bottom">
-   220	                <p>&copy; 2026 Saju2026. All rights reserved.</p>
-   221	            </div>
-   222	        </div>
-   223	    </footer>
-   224	
-   225	    <script src="js/page-handler.js"></script>
-   226	    <script>
-   227	        // 토정비결 데이터 (12개월)
-   228	        const TOJEONG_DATA = {
-   229	            1: {
-   230	                title: '정월 (1월)',
-   231	                fortune: 'excellent',
-   232	                stars: '⭐⭐⭐⭐⭐',
-   233	                summary: '새해 첫 달, 모든 일이 순조롭게 풀립니다',
-   234	                detail: '새로운 시작과 함께 좋은 기운이 가득합니다. 계획했던 일들을 시작하기 좋은 시기입니다. 대인관계도 원만하고 재물운도 좋습니다.',
-   235	                advice: '적극적으로 새로운 일에 도전하세요. 인맥을 넓히기 좋은 시기입니다.',
-   236	                luckyColor: '빨강, 금색',
-   237	                luckyDirection: '동쪽',
-   238	                luckyNumber: '1, 6'
-   239	            },
-   240	            2: {
-   241	                title: '2월',
-   242	                fortune: 'good',
-   243	                stars: '⭐⭐⭐⭐',
-   244	                summary: '노력한 만큼 결실을 맺는 달',
-   245	                detail: '꾸준히 노력해온 일들이 결실을 맺기 시작합니다. 직장에서 인정받을 수 있으며, 재물운도 상승합니다.',
-   246	                advice: '현재 하고 있는 일에 집중하세요. 조급해하지 말고 꾸준히 나아가면 좋은 결과가 있을 것입니다.',
-   247	                luckyColor: '초록, 연두',
-   248	                luckyDirection: '남동쪽',
-   249	                luckyNumber: '3, 8'
-   250	            },
-   251	            3: {
-   252	                title: '3월',
-   253	                fortune: 'excellent',
-   254	                stars: '⭐⭐⭐⭐⭐',
-   255	                summary: '봄 기운과 함께 활력 넘치는 달',
-   256	                detail: '건강운이 상승하고 의욕이 넘칩니다. 새로운 프로젝트를 시작하거나 이직을 고려하기 좋은 시기입니다.',
-   257	                advice: '야외 활동을 많이 하고 건강 관리에 신경 쓰세요. 운동을 시작하기 좋은 때입니다.',
-   258	                luckyColor: '파랑, 하늘색',
-   259	                luckyDirection: '동북쪽',
-   260	                luckyNumber: '4, 9'
-   261	            },
-   262	            4: {
-   263	                title: '4월',
-   264	                fortune: 'good',
-   265	                stars: '⭐⭐⭐⭐',
-   266	                summary: '대인운이 좋은 달, 협력이 중요',
-   267	                detail: '주변 사람들과의 관계가 돈독해집니다. 협업 프로젝트나 파트너십을 맺기 좋은 시기입니다.',
-   268	                advice: '혼자보다는 함께 일하는 것이 더 좋은 결과를 가져옵니다. 네트워킹 이벤트에 참석하세요.',
-   269	                luckyColor: '노랑, 금색',
-   270	                luckyDirection: '남쪽',
-   271	                luckyNumber: '5, 10'
-   272	            },
-   273	            5: {
-   274	                title: '5월',
-   275	                fortune: 'normal',
-   276	                stars: '⭐⭐⭐',
-   277	                summary: '안정을 추구하는 달',
-   278	                detail: '급격한 변화보다는 현재를 유지하는 것이 좋습니다. 재정 관리에 신경 쓰고 무리한 투자는 피하세요.',
-   279	                advice: '안정적으로 현재 일을 마무리하는 데 집중하세요. 건강 체크업을 받기 좋은 시기입니다.',
-   280	                luckyColor: '흰색, 은색',
-   281	                luckyDirection: '서쪽',
-   282	                luckyNumber: '2, 7'
-   283	            },
-   284	            6: {
-   285	                title: '6월',
-   286	                fortune: 'excellent',
-   287	                stars: '⭐⭐⭐⭐⭐',
-   288	                summary: '재물운 상승, 투자 적기',
-   289	                detail: '금전운이 매우 좋습니다. 투자나 사업 확장을 고려해볼 만한 시기입니다. 승진이나 보너스의 기회가 있을 수 있습니다.',
-   290	                advice: '재테크에 관심을 가지고 공부하세요. 부동산이나 주식 투자를 신중하게 검토해보세요.',
-   291	                luckyColor: '보라, 남색',
-   292	                luckyDirection: '북동쪽',
-   293	                luckyNumber: '6, 11'
-   294	            },
-   295	            7: {
-   296	                title: '7월',
-   297	                fortune: 'good',
-   298	                stars: '⭐⭐⭐⭐',
-   299	                summary: '여름 휴가와 재충전의 시간',
-   300	                detail: '바쁜 상반기를 마치고 휴식이 필요한 시기입니다. 여행을 가거나 취미 활동에 시간을 투자하세요.',
-   301	                advice: '일과 삶의 균형을 찾으세요. 가족과 함께 시간을 보내는 것이 중요합니다.',
-   302	                luckyColor: '민트, 청록',
-   303	                luckyDirection: '동남쪽',
-   304	                luckyNumber: '3, 8'
-   305	            },
-   306	            8: {
-   307	                title: '8월',
-   308	                fortune: 'normal',
-   309	                stars: '⭐⭐⭐',
-   310	                summary: '건강 관리가 필요한 달',
-   311	                detail: '무더위로 건강에 주의가 필요합니다. 과로하지 말고 충분한 휴식을 취하세요. 큰 결정은 미루는 것이 좋습니다.',
-   312	                advice: '스트레스 관리에 신경 쓰세요. 규칙적인 생활 습관을 유지하는 것이 중요합니다.',
-   313	                luckyColor: '검정, 회색',
-   314	                luckyDirection: '북쪽',
-   315	                luckyNumber: '1, 6'
-   316	            },
-   317	            9: {
-   318	                title: '9월',
-   319	                fortune: 'good',
-   320	                stars: '⭐⭐⭐⭐',
-   321	                summary: '가을 수확의 계절, 결실의 시기',
-   322	                detail: '상반기에 심은 씨앗이 결실을 맺는 시기입니다. 프로젝트가 완료되고 성과를 인정받을 수 있습니다.',
-   323	                advice: '마무리를 잘하는 것이 중요합니다. 감사의 마음을 표현하고 주변 사람들과 성과를 나누세요.',
-   324	                luckyColor: '주황, 갈색',
-   325	                luckyDirection: '서남쪽',
-   326	                luckyNumber: '2, 7'
-   327	            },
-   328	            10: {
-   329	                title: '10월',
-   330	                fortune: 'excellent',
-   331	                stars: '⭐⭐⭐⭐⭐',
-   332	                summary: '최고의 운세, 모든 것이 순조로운 달',
-   333	                detail: '연중 최고의 운세입니다. 중요한 결정을 내리거나 새로운 도전을 하기 좋은 시기입니다. 사랑운도 좋습니다.',
-   334	                advice: '자신감을 가지고 원하는 것을 추구하세요. 고백이나 청혼을 계획한다면 이달이 적기입니다.',
-   335	                luckyColor: '핑크, 베이지',
-   336	                luckyDirection: '남서쪽',
-   337	                luckyNumber: '9, 14'
-   338	            },
-   339	            11: {
-   340	                title: '11월',
-   341	                fortune: 'good',
-   342	                stars: '⭐⭐⭐⭐',
-   343	                summary: '준비와 계획의 달',
-   344	                detail: '다가오는 새해를 준비하는 시기입니다. 회고하고 내년 계획을 세우세요. 학습운이 좋아 공부나 자격증에 도전하기 좋습니다.',
-   345	                advice: '내년 목표를 구체적으로 세우세요. 자기계발에 투자하는 것이 미래에 큰 도움이 됩니다.',
-   346	                luckyColor: '청색, 남색',
-   347	                luckyDirection: '북서쪽',
-   348	                luckyNumber: '4, 9'
-   349	            },
-   350	            12: {
-   351	                title: '12월',
-   352	                fortune: 'normal',
-   353	                stars: '⭐⭐⭐',
-   354	                summary: '한 해 마무리, 감사와 성찰의 시간',
-   355	                detail: '한 해를 마무리하고 정리하는 시기입니다. 과소비 주의하고 가족과 의미 있는 시간을 보내세요.',
-   356	                advice: '한 해를 돌아보고 감사한 일들을 떠올리세요. 사랑하는 사람들에게 마음을 전하는 것이 중요합니다.',
-   357	                luckyColor: '빨강, 금색',
-   358	                luckyDirection: '동쪽',
-   359	                luckyNumber: '5, 10'
-   360	            }
-   361	        };
-   362	
-   363	        document.getElementById('tojeongForm').addEventListener('submit', function(e) {
-   364	            e.preventDefault();
-   365	            displayTojeongFortune();
-   366	        });
-   367	
-   368	        function displayTojeongFortune() {
-   369	            const birthYear = document.getElementById('birthYear').value;
-   370	            const birthMonth = document.getElementById('birthMonth').value;
-   371	            const birthDay = document.getElementById('birthDay').value;
-   372	
-   373	            if (!birthYear || !birthMonth || !birthDay) {
-   374	                alert('생년월일을 모두 입력해주세요.');
-   375	                return;
-   376	            }
-   377	
-   378	            // 월별 운세 표시
-   379	            const monthGrid = document.getElementById('monthGrid');
-   380	            monthGrid.innerHTML = '';
-   381	
-   382	            for (let month = 1; month <= 12; month++) {
-   383	                const data = TOJEONG_DATA[month];
-   384	                const card = createMonthCard(data);
-   385	                monthGrid.appendChild(card);
-   386	            }
-   387	
-   388	            document.getElementById('fortuneResult').style.display = 'block';
-   389	            document.getElementById('fortuneResult').scrollIntoView({ behavior: 'smooth' });
-   390	        }
-   391	
-   392	        function createMonthCard(data) {
-   393	            const card = document.createElement('div');
-   394	            card.className = 'month-card';
-   395	            
-   396	            card.innerHTML = `
-   397	                <div class="month-header">
-   398	                    <div class="month-title">${data.title}</div>
-   399	                    <div class="fortune-badge fortune-${data.fortune}">
-   400	                        ${getFortuneLabelKorean(data.fortune)}
-   401	                    </div>
-   402	                </div>
-   403	                <div class="fortune-stars">${data.stars}</div>
-   404	                <div class="fortune-content">
-   405	                    <h4>${data.summary}</h4>
-   406	                    <p>${data.detail}</p>
-   407	                    <div class="lucky-items">
-   408	                        <h5>🍀 이달의 행운</h5>
-   409	                        <p><strong>색상:</strong> ${data.luckyColor}</p>
-   410	                        <p><strong>방향:</strong> ${data.luckyDirection}</p>
-   411	                        <p><strong>숫자:</strong> ${data.luckyNumber}</p>
-   412	                    </div>
-   413	                    <div class="advice-box" style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-   414	                        <strong>💡 조언:</strong> ${data.advice}
-   415	                    </div>
-   416	                </div>
-   417	            `;
-   418	            
-   419	            return card;
-   420	        }
-   421	
-   422	        function getFortuneLabelKorean(fortune) {
-   423	            const labels = {
-   424	                'excellent': '대길',
-   425	                'good': '길',
-   426	                'normal': '평',
-   427	                'caution': '주의'
-   428	            };
-   429	            return labels[fortune] || '평';
-   430	        }
-   431	    </script>
-            <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토정비결 2026 - 병오년 월별 운세</title>
+    <meta name="description" content="2026년 병오년 토정비결로 12개월 상세 운세를 확인하세요">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <style>
+        /* 기본 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #ff6b6b;
+        }
+        
+        .nav-actions .btn-login {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .nav-actions .btn-login:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 히어로 섹션 */
+        .tojeong-hero {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .tojeong-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* 입력 섹션 */
+        .tojeong-input {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: -2rem auto 3rem;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .year-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 2rem;
+        }
+        
+        .fortune-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .fortune-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        .fortune-input input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .btn-calculate:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 월별 카드 */
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .month-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .month-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .month-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+        
+        .fortune-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .fortune-excellent { background: #d4edda; color: #155724; }
+        .fortune-good { background: #d1ecf1; color: #0c5460; }
+        .fortune-normal { background: #fff3cd; color: #856404; }
+        .fortune-caution { background: #f8d7da; color: #721c24; }
+        
+        .fortune-stars {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .fortune-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .fortune-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .lucky-items {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .lucky-items h5 {
+            font-size: 0.9rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .lucky-items p {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 0.3rem;
+        }
+        
+        .advice-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .tojeong-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .fortune-input {
+                flex-direction: column;
+            }
+            
+            .month-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="result.html">내 사주</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="tojeong.html" class="active">토정비결</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="btn-login">로그인</a>
+            </div>
+        </div>
+    </nav>
 
-   432	</body>
-   433	</html>
-   434	
+    <section class="tojeong-hero">
+        <div class="container">
+            <h1>📖 토정비결 2026</h1>
+            <p>병오년 12개월 상세 운세를 확인하세요</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="tojeong-input">
+            <div class="year-display">🐴 2026년 병오년 (丙午年)</div>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                생년월일을 입력하시면 2026년 12개월 운세를 보여드립니다
+            </p>
+            
+            <form id="tojeongForm">
+                <div class="fortune-input">
+                    <input type="number" id="birthYear" placeholder="생년 (예: 1990)" min="1900" max="2024" required>
+                    <input type="number" id="birthMonth" placeholder="월 (1-12)" min="1" max="12" required>
+                    <input type="number" id="birthDay" placeholder="일 (1-31)" min="1" max="31" required>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <select id="calendar" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                        <option value="solar">양력</option>
+                        <option value="lunar">음력</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-calculate">
+                    <i class="fas fa-book-open"></i> 2026년 운세 보기
+                </button>
+            </form>
+        </div>
+
+        <div id="fortuneResult" style="display: none;">
+            <h2 style="text-align: center; margin: 3rem 0 2rem; font-size: 2rem; color: #ff6b6b;">2026년 월별 운세</h2>
+            <div class="month-grid" id="monthGrid"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI 사주 천년지기</h3>
+                    <p>정통 사주팔자와 AI가 만나다</p>
+                </div>
+                <div class="footer-section">
+                    <h4>서비스</h4>
+                    <ul>
+                        <li><a href="index.html">사주팔자</a></li>
+                        <li><a href="ai-chat.html">AI 상담</a></li>
+                        <li><a href="tojeong.html">토정비결</a></li>
+                        <li><a href="compatibility.html">궁합</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>고객지원</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Saju2026. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/page-handler.js"></script>
+    <script>
+        // 토정비결 데이터 (12개월)
+        const TOJEONG_DATA = {
+            1: {
+                title: '정월 (1월)',
+                fortune: 'excellent',
+                stars: '⭐⭐⭐⭐⭐',
+                summary: '새해 첫 달, 모든 일이 순조롭게 풀립니다',
+                detail: '새로운 시작과 함께 좋은 기운이 가득합니다. 계획했던 일들을 시작하기 좋은 시기입니다. 대인관계도 원만하고 재물운도 좋습니다.',
+                advice: '적극적으로 새로운 일에 도전하세요. 인맥을 넓히기 좋은 시기입니다.',
+                luckyColor: '빨강, 금색',
+                luckyDirection: '동쪽',
+                luckyNumber: '1, 6'
+            },
+            2: {
+                title: '2월',
+                fortune: 'good',
+                stars: '⭐⭐⭐⭐',
+                summary: '노력한 만큼 결실을 맺는 달',
+                detail: '꾸준히 노력해온 일들이 결실을 맺기 시작합니다. 직장에서 인정받을 수 있으며, 재물운도 상승합니다.',
+                advice: '현재 하고 있는 일에 집중하세요. 조급해하지 말고 꾸준히 나아가면 좋은 결과가 있을 것입니다.',
+                luckyColor: '초록, 연두',
+                luckyDirection: '남동쪽',
+                luckyNumber: '3, 8'
+            },
+            3: {
+                title: '3월',
+                fortune: 'excellent',
+                stars: '⭐⭐⭐⭐⭐',
+                summary: '봄 기운과 함께 활력 넘치는 달',
+                detail: '건강운이 상승하고 의욕이 넘칩니다. 새로운 프로젝트를 시작하거나 이직을 고려하기 좋은 시기입니다.',
+                advice: '야외 활동을 많이 하고 건강 관리에 신경 쓰세요. 운동을 시작하기 좋은 때입니다.',
+                luckyColor: '파랑, 하늘색',
+                luckyDirection: '동북쪽',
+                luckyNumber: '4, 9'
+            },
+            4: {
+                title: '4월',
+                fortune: 'good',
+                stars: '⭐⭐⭐⭐',
+                summary: '대인운이 좋은 달, 협력이 중요',
+                detail: '주변 사람들과의 관계가 돈독해집니다. 협업 프로젝트나 파트너십을 맺기 좋은 시기입니다.',
+                advice: '혼자보다는 함께 일하는 것이 더 좋은 결과를 가져옵니다. 네트워킹 이벤트에 참석하세요.',
+                luckyColor: '노랑, 금색',
+                luckyDirection: '남쪽',
+                luckyNumber: '5, 10'
+            },
+            5: {
+                title: '5월',
+                fortune: 'normal',
+                stars: '⭐⭐⭐',
+                summary: '안정을 추구하는 달',
+                detail: '급격한 변화보다는 현재를 유지하는 것이 좋습니다. 재정 관리에 신경 쓰고 무리한 투자는 피하세요.',
+                advice: '안정적으로 현재 일을 마무리하는 데 집중하세요. 건강 체크업을 받기 좋은 시기입니다.',
+                luckyColor: '흰색, 은색',
+                luckyDirection: '서쪽',
+                luckyNumber: '2, 7'
+            },
+            6: {
+                title: '6월',
+                fortune: 'excellent',
+                stars: '⭐⭐⭐⭐⭐',
+                summary: '재물운 상승, 투자 적기',
+                detail: '금전운이 매우 좋습니다. 투자나 사업 확장을 고려해볼 만한 시기입니다. 승진이나 보너스의 기회가 있을 수 있습니다.',
+                advice: '재테크에 관심을 가지고 공부하세요. 부동산이나 주식 투자를 신중하게 검토해보세요.',
+                luckyColor: '보라, 남색',
+                luckyDirection: '북동쪽',
+                luckyNumber: '6, 11'
+            },
+            7: {
+                title: '7월',
+                fortune: 'good',
+                stars: '⭐⭐⭐⭐',
+                summary: '여름 휴가와 재충전의 시간',
+                detail: '바쁜 상반기를 마치고 휴식이 필요한 시기입니다. 여행을 가거나 취미 활동에 시간을 투자하세요.',
+                advice: '일과 삶의 균형을 찾으세요. 가족과 함께 시간을 보내는 것이 중요합니다.',
+                luckyColor: '민트, 청록',
+                luckyDirection: '동남쪽',
+                luckyNumber: '3, 8'
+            },
+            8: {
+                title: '8월',
+                fortune: 'normal',
+                stars: '⭐⭐⭐',
+                summary: '건강 관리가 필요한 달',
+                detail: '무더위로 건강에 주의가 필요합니다. 과로하지 말고 충분한 휴식을 취하세요. 큰 결정은 미루는 것이 좋습니다.',
+                advice: '스트레스 관리에 신경 쓰세요. 규칙적인 생활 습관을 유지하는 것이 중요합니다.',
+                luckyColor: '검정, 회색',
+                luckyDirection: '북쪽',
+                luckyNumber: '1, 6'
+            },
+            9: {
+                title: '9월',
+                fortune: 'good',
+                stars: '⭐⭐⭐⭐',
+                summary: '가을 수확의 계절, 결실의 시기',
+                detail: '상반기에 심은 씨앗이 결실을 맺는 시기입니다. 프로젝트가 완료되고 성과를 인정받을 수 있습니다.',
+                advice: '마무리를 잘하는 것이 중요합니다. 감사의 마음을 표현하고 주변 사람들과 성과를 나누세요.',
+                luckyColor: '주황, 갈색',
+                luckyDirection: '서남쪽',
+                luckyNumber: '2, 7'
+            },
+            10: {
+                title: '10월',
+                fortune: 'excellent',
+                stars: '⭐⭐⭐⭐⭐',
+                summary: '최고의 운세, 모든 것이 순조로운 달',
+                detail: '연중 최고의 운세입니다. 중요한 결정을 내리거나 새로운 도전을 하기 좋은 시기입니다. 사랑운도 좋습니다.',
+                advice: '자신감을 가지고 원하는 것을 추구하세요. 고백이나 청혼을 계획한다면 이달이 적기입니다.',
+                luckyColor: '핑크, 베이지',
+                luckyDirection: '남서쪽',
+                luckyNumber: '9, 14'
+            },
+            11: {
+                title: '11월',
+                fortune: 'good',
+                stars: '⭐⭐⭐⭐',
+                summary: '준비와 계획의 달',
+                detail: '다가오는 새해를 준비하는 시기입니다. 회고하고 내년 계획을 세우세요. 학습운이 좋아 공부나 자격증에 도전하기 좋습니다.',
+                advice: '내년 목표를 구체적으로 세우세요. 자기계발에 투자하는 것이 미래에 큰 도움이 됩니다.',
+                luckyColor: '청색, 남색',
+                luckyDirection: '북서쪽',
+                luckyNumber: '4, 9'
+            },
+            12: {
+                title: '12월',
+                fortune: 'normal',
+                stars: '⭐⭐⭐',
+                summary: '한 해 마무리, 감사와 성찰의 시간',
+                detail: '한 해를 마무리하고 정리하는 시기입니다. 과소비 주의하고 가족과 의미 있는 시간을 보내세요.',
+                advice: '한 해를 돌아보고 감사한 일들을 떠올리세요. 사랑하는 사람들에게 마음을 전하는 것이 중요합니다.',
+                luckyColor: '빨강, 금색',
+                luckyDirection: '동쪽',
+                luckyNumber: '5, 10'
+            }
+        };
+
+        document.getElementById('tojeongForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            displayTojeongFortune();
+        });
+
+        function displayTojeongFortune() {
+            const birthYear = document.getElementById('birthYear').value;
+            const birthMonth = document.getElementById('birthMonth').value;
+            const birthDay = document.getElementById('birthDay').value;
+
+            if (!birthYear || !birthMonth || !birthDay) {
+                alert('생년월일을 모두 입력해주세요.');
+                return;
+            }
+
+            // 월별 운세 표시
+            const monthGrid = document.getElementById('monthGrid');
+            monthGrid.innerHTML = '';
+
+            for (let month = 1; month <= 12; month++) {
+                const data = TOJEONG_DATA[month];
+                const card = createMonthCard(data);
+                monthGrid.appendChild(card);
+            }
+
+            document.getElementById('fortuneResult').style.display = 'block';
+            document.getElementById('fortuneResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function createMonthCard(data) {
+            const card = document.createElement('div');
+            card.className = 'month-card';
+            
+            card.innerHTML = `
+                <div class="month-header">
+                    <div class="month-title">${data.title}</div>
+                    <div class="fortune-badge fortune-${data.fortune}">
+                        ${getFortuneLabelKorean(data.fortune)}
+                    </div>
+                </div>
+                <div class="fortune-stars">${data.stars}</div>
+                <div class="fortune-content">
+                    <h4>${data.summary}</h4>
+                    <p>${data.detail}</p>
+                    <div class="lucky-items">
+                        <h5>🍀 이달의 행운</h5>
+                        <p><strong>색상:</strong> ${data.luckyColor}</p>
+                        <p><strong>방향:</strong> ${data.luckyDirection}</p>
+                        <p><strong>숫자:</strong> ${data.luckyNumber}</p>
+                    </div>
+                    <div class="advice-box">
+                        <strong>💡 조언:</strong> ${data.advice}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function getFortuneLabelKorean(fortune) {
+            const labels = {
+                'excellent': '대길',
+                'good': '길',
+                'normal': '평',
+                'caution': '주의'
+            };
+            return labels[fortune] || '평';
+        }
+    </script>
+</body>
+</html>
