@@ -736,74 +736,184 @@
                 <div class="trust-label">고객 만족도</div>
             </div>
         </div>
-         <!-- 사주 입력 폼 -->
-    <section class="saju-section" id="saju-form">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
-            <form class="saju-form" id="sajuForm">
-                <!-- 1. 생년월일 입력 -->
-                <div class="form-group">
-                    <label><i class="fas fa-calendar"></i> 생년월일</label>
-                    <input type="date" name="birthdate" required>
-                </div>
-                
-                <!-- 2. 음력/양력 선택 -->
-                <div class="form-group">
-                    <label>음력/양력</label>
-                    <div class="gender-options">
-                        <div class="gender-option" onclick="document.getElementById('solar').checked=true">
-                            <input type="radio" id="solar" name="calendar" value="solar" checked>
-                            <label for="solar">양력 🌞</label>
-                        </div>
-                        <div class="gender-option" onclick="document.getElementById('lunar').checked=true">
-                            <input type="radio" id="lunar" name="calendar" value="lunar">
-                            <label for="lunar">음력 🌙</label>
-                        </div>
+        <!-- 사주 입력 폼 -->
+<section class="saju-section" id="saju-form">
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
+        <form class="saju-form" id="sajuForm">
+            <!-- 1. 생년월일 입력 -->
+            <div class="form-group">
+                <label><i class="fas fa-calendar"></i> 생년월일</label>
+                <input type="date" name="birthdate" required>
+            </div>
+            
+            <!-- 2. 음력/양력 선택 (한 줄) -->
+            <div class="form-group">
+                <label>음력/양력</label>
+                <div class="calendar-options">
+                    <div class="calendar-option" onclick="document.getElementById('solar').checked=true">
+                        <input type="radio" id="solar" name="calendar" value="solar" checked>
+                        <label for="solar">양력 🌞</label>
+                    </div>
+                    <div class="calendar-option" onclick="document.getElementById('lunar').checked=true">
+                        <input type="radio" id="lunar" name="calendar" value="lunar">
+                        <label for="lunar">음력 🌙</label>
                     </div>
                 </div>
-                
-                <!-- 3. 태어난 시간 -->
-                <div class="form-group">
-                    <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
-                    <select name="birthtime">
-                        <option value="">모름</option>
-                        <option value="23-01">자시 (23:00-01:00)</option>
-                        <option value="01-03">축시 (01:00-03:00)</option>
-                        <option value="03-05">인시 (03:00-05:00)</option>
-                        <option value="05-07">묘시 (05:00-07:00)</option>
-                        <option value="07-09">진시 (07:00-09:00)</option>
-                        <option value="09-11">사시 (09:00-11:00)</option>
-                        <option value="11-13">오시 (11:00-13:00)</option>
-                        <option value="13-15">미시 (13:00-15:00)</option>
-                        <option value="15-17">신시 (15:00-17:00)</option>
-                        <option value="17-19">유시 (17:00-19:00)</option>
-                        <option value="19-21">술시 (19:00-21:00)</option>
-                        <option value="21-23">해시 (21:00-23:00)</option>
-                    </select>
-                </div>
-                
-                <!-- 4. 성별 선택 -->
-                <div class="form-group">
-                    <label><i class="fas fa-venus-mars"></i> 성별</label>
-                    <div class="gender-options">
-                        <div class="gender-option" onclick="document.getElementById('male').checked=true">
-                            <input type="radio" id="male" name="gender" value="male" required>
-                            <label for="male">남성 👨</label>
-                        </div>
-                        <div class="gender-option" onclick="document.getElementById('female').checked=true">
-                            <input type="radio" id="female" name="gender" value="female">
-                            <label for="female">여성 👩</label>
-                        </div>
+            </div>
+            
+            <!-- 3. 태어난 시간 -->
+            <div class="form-group">
+                <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
+                <select name="birthtime">
+                    <option value="">모름</option>
+                    <option value="23-01">자시 (23:00-01:00)</option>
+                    <option value="01-03">축시 (01:00-03:00)</option>
+                    <option value="03-05">인시 (03:00-05:00)</option>
+                    <option value="05-07">묘시 (05:00-07:00)</option>
+                    <option value="07-09">진시 (07:00-09:00)</option>
+                    <option value="09-11">사시 (09:00-11:00)</option>
+                    <option value="11-13">오시 (11:00-13:00)</option>
+                    <option value="13-15">미시 (13:00-15:00)</option>
+                    <option value="15-17">신시 (15:00-17:00)</option>
+                    <option value="17-19">유시 (17:00-19:00)</option>
+                    <option value="19-21">술시 (19:00-21:00)</option>
+                    <option value="21-23">해시 (21:00-23:00)</option>
+                </select>
+            </div>
+            
+            <!-- 4. 성별 선택 (한 줄) -->
+            <div class="form-group">
+                <label><i class="fas fa-venus-mars"></i> 성별</label>
+                <div class="gender-options">
+                    <div class="gender-option" onclick="document.getElementById('male').checked=true">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">남성 👨</label>
+                    </div>
+                    <div class="gender-option" onclick="document.getElementById('female').checked=true">
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">여성 👩</label>
                     </div>
                 </div>
-                
-                <!-- 5. 제출 버튼 -->
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-magic"></i> 내 운세 확인하기
-                </button>
-            </form>
-        </div>
-    </section>
+            </div>
+            
+            <!-- 5. 제출 버튼 -->
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-magic"></i> 내 운세 확인하기
+            </button>
+        </form>
+    </div>
+</section>
+
+<style>
+/* 음력/양력 선택 - 가로 한 줄 배치 */
+.calendar-options {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+}
+
+.calendar-option {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.calendar-option:hover {
+    border-color: #c41e3a;
+    background: #fff5f5;
+}
+
+.calendar-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calendar-option label {
+    cursor: pointer;
+    margin: 0;
+    display: block;
+    font-size: 16px;
+}
+
+.calendar-option:has(input[type="radio"]:checked) {
+    border-color: #c41e3a;
+    background: #fff5f5;
+}
+
+.calendar-option:has(input[type="radio"]:checked) label {
+    color: #c41e3a;
+    font-weight: 700;
+}
+
+/* 성별 선택 - 가로 한 줄 배치 */
+.gender-options {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+}
+
+.gender-option {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.gender-option:hover {
+    border-color: #c41e3a;
+    background: #fff5f5;
+}
+
+.gender-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gender-option label {
+    cursor: pointer;
+    margin: 0;
+    display: block;
+    font-size: 16px;
+}
+
+.gender-option:has(input[type="radio"]:checked) {
+    border-color: #c41e3a;
+    background: #fff5f5;
+}
+
+.gender-option:has(input[type="radio"]:checked) label {
+    color: #c41e3a;
+    font-weight: 700;
+}
+
+/* 모바일 반응형 - 가로 배치 유지 */
+@media (max-width: 768px) {
+    .calendar-options,
+    .gender-options {
+        gap: 10px;
+    }
+    
+    .calendar-option,
+    .gender-option {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+}
+</style>
    <h2 class="section-title">프리미엄 서비스</h2>
             <div class="services-grid">
                 <div class="service-card" onclick="location.href='compatibility.html'">
