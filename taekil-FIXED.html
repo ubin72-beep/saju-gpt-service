@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 기본 리셋 */
         * {
             margin: 0;
             padding: 0;
@@ -16,9 +15,9 @@
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            color: #333;
-            background-color: #f8f9fa;
             line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
         }
         
         .container {
@@ -29,34 +28,34 @@
         
         /* 네비게이션 */
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 0;
+            background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
         
         .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 20px;
         }
         
-        .nav-brand a {
-            text-decoration: none;
-            font-size: 24px;
+        .nav-brand {
+            font-size: 1.5rem;
             font-weight: 700;
             color: #c41e3a;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
+            text-decoration: none;
         }
         
         .nav-menu {
             display: flex;
-            gap: 2rem;
             list-style: none;
+            gap: 2rem;
         }
         
         .nav-menu a {
@@ -64,7 +63,6 @@
             color: #333;
             font-weight: 500;
             transition: color 0.3s;
-            padding: 0.5rem 1rem;
         }
         
         .nav-menu a:hover,
@@ -72,11 +70,11 @@
             color: #c41e3a;
         }
         
-        /* 택일 페이지 스타일 */
+        /* 히어로 섹션 */
         .taekil-hero {
             background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 100%);
             color: white;
-            padding: 120px 0 80px;
+            padding: 4rem 0;
             text-align: center;
         }
         
@@ -86,6 +84,12 @@
             margin-bottom: 1rem;
         }
         
+        .taekil-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        /* 탭 버튼 */
         .taekil-tabs {
             display: flex;
             justify-content: center;
@@ -121,10 +125,7 @@
             margin-bottom: 0.5rem;
         }
         
-        .taekil-content {
-            padding: 4rem 0;
-        }
-        
+        /* 탭 패널 */
         .tab-panel {
             display: none;
         }
@@ -133,6 +134,7 @@
             display: block;
         }
         
+        /* 입력 섹션 */
         .input-section {
             max-width: 800px;
             margin: 0 auto 3rem;
@@ -170,7 +172,6 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s;
-            font-family: 'Noto Sans KR', sans-serif;
         }
         
         .form-group input:focus,
@@ -197,6 +198,7 @@
             box-shadow: 0 10px 30px rgba(196,30,58,0.4);
         }
         
+        /* 캘린더 */
         .calendar-section {
             max-width: 1200px;
             margin: 0 auto;
@@ -270,12 +272,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        .calendar-day.good {
-            background: linear-gradient(135deg, #4CAF50, #8BC34A);
-            color: white;
-            border-color: #4CAF50;
-        }
-        
         .calendar-day.excellent {
             background: linear-gradient(135deg, #d4af37, #f4e5b5);
             color: #1a1a1a;
@@ -283,15 +279,21 @@
             font-weight: bold;
         }
         
-        .calendar-day.bad {
-            background: #f5f5f5;
-            color: #999;
-            border-color: #ddd;
+        .calendar-day.good {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border-color: #4CAF50;
         }
         
         .calendar-day.normal {
             background: white;
             border-color: #eee;
+        }
+        
+        .calendar-day.bad {
+            background: #f5f5f5;
+            color: #999;
+            border-color: #ddd;
         }
         
         .day-number {
@@ -312,6 +314,7 @@
             font-size: 1rem;
         }
         
+        /* 범례 */
         .legend {
             display: flex;
             justify-content: center;
@@ -349,111 +352,53 @@
             background: #f5f5f5;
         }
         
-        .detail-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 9999;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-        
-        .detail-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .detail-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #999;
-        }
-        
-        .detail-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #c41e3a;
-        }
-        
-        .detail-info {
-            margin: 2rem 0;
-        }
-        
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            color: #666;
-        }
-        
-        .info-value {
-            color: #333;
-        }
-        
-        .lucky-time {
-            background: #f5f5f5;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-        }
-        
-        .lucky-time h4 {
-            margin-bottom: 1rem;
-            color: #c41e3a;
-        }
-        
-        .advice-box {
-            background: linear-gradient(135deg, #fff5f5, #ffe5e5);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #c41e3a;
-        }
-        
-        .advice-box h4 {
-            margin-bottom: 1rem;
-            color: #c41e3a;
-        }
-        
         /* 푸터 */
         .footer {
-            background: #1a1a1a;
+            background: #2c3e50;
             color: white;
-            padding: 60px 0 30px;
-            margin-top: 80px;
-        }
-        
-        .footer .container {
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
             text-align: center;
         }
         
-        .footer p {
-            color: #aaa;
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         /* 반응형 */
         @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
             .taekil-hero h1 {
                 font-size: 2rem;
             }
@@ -468,7 +413,6 @@
             }
             
             .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
                 gap: 5px;
                 padding: 1rem;
             }
@@ -485,10 +429,6 @@
             .day-label {
                 font-size: 0.6rem;
             }
-            
-            .nav-menu {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -496,17 +436,16 @@
     <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="container">
-            <div class="nav-brand">
-                <a href="index.html">
-                    <i class="fas fa-yin-yang"></i>
-                    <span>AI 사주 천년지기</span>
-                </a>
-            </div>
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                <span>AI 사주 천년지기</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
-                <li><a href="pricing.html">가격표</a></li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
                 <li><a href="taekil.html" class="active">택일</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
             </ul>
         </div>
     </nav>
@@ -515,12 +454,12 @@
     <section class="taekil-hero">
         <div class="container">
             <h1><i class="fas fa-calendar-check"></i> 택일 - 좋은 날 찾기</h1>
-            <p style="font-size: 1.3rem; opacity: 0.9;">이사, 결혼 등 중요한 일을 위한 최적의 날짜를 찾아드립니다</p>
+            <p>이사, 결혼 등 중요한 일을 위한 최적의 날짜를 찾아드립니다</p>
         </div>
     </section>
 
     <!-- 탭 선택 -->
-    <section class="taekil-content">
+    <section style="padding: 4rem 0;">
         <div class="container">
             <div class="taekil-tabs">
                 <button class="tab-btn active" onclick="switchTab('moving')">
@@ -536,9 +475,7 @@
             <!-- 이사 택일 -->
             <div id="movingTab" class="tab-panel active">
                 <div class="input-section">
-                    <h2>
-                        <i class="fas fa-home"></i> 이사 정보 입력
-                    </h2>
+                    <h2><i class="fas fa-home"></i> 이사 정보 입력</h2>
                     <form id="movingForm" onsubmit="calculateMoving(event)">
                         <div class="form-row">
                             <div class="form-group">
@@ -612,9 +549,7 @@
             <!-- 결혼 택일 -->
             <div id="weddingTab" class="tab-panel">
                 <div class="input-section">
-                    <h2>
-                        <i class="fas fa-rings-wedding"></i> 결혼 정보 입력
-                    </h2>
+                    <h2><i class="fas fa-heart"></i> 결혼 정보 입력</h2>
                     <form id="weddingForm" onsubmit="calculateWedding(event)">
                         <div class="form-row">
                             <div class="form-group">
@@ -624,44 +559,6 @@
                             <div class="form-group">
                                 <label><i class="fas fa-female"></i> 신부 생년월일</label>
                                 <input type="date" id="brideBirthDate" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label><i class="fas fa-clock"></i> 신랑 태어난 시</label>
-                                <select id="groomBirthHour">
-                                    <option value="">모르면 비워두세요</option>
-                                    <option value="23">자시 (23:00-00:59)</option>
-                                    <option value="01">축시 (01:00-02:59)</option>
-                                    <option value="03">인시 (03:00-04:59)</option>
-                                    <option value="05">묘시 (05:00-06:59)</option>
-                                    <option value="07">진시 (07:00-08:59)</option>
-                                    <option value="09">사시 (09:00-10:59)</option>
-                                    <option value="11">오시 (11:00-12:59)</option>
-                                    <option value="13">미시 (13:00-14:59)</option>
-                                    <option value="15">신시 (15:00-16:59)</option>
-                                    <option value="17">유시 (17:00-18:59)</option>
-                                    <option value="19">술시 (19:00-20:59)</option>
-                                    <option value="21">해시 (21:00-22:59)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fas fa-clock"></i> 신부 태어난 시</label>
-                                <select id="brideBirthHour">
-                                    <option value="">모르면 비워두세요</option>
-                                    <option value="23">자시 (23:00-00:59)</option>
-                                    <option value="01">축시 (01:00-02:59)</option>
-                                    <option value="03">인시 (03:00-04:59)</option>
-                                    <option value="05">묘시 (05:00-06:59)</option>
-                                    <option value="07">진시 (07:00-08:59)</option>
-                                    <option value="09">사시 (09:00-10:59)</option>
-                                    <option value="11">오시 (11:00-12:59)</option>
-                                    <option value="13">미시 (13:00-14:59)</option>
-                                    <option value="15">신시 (15:00-16:59)</option>
-                                    <option value="17">유시 (17:00-18:59)</option>
-                                    <option value="19">술시 (19:00-20:59)</option>
-                                    <option value="21">해시 (21:00-22:59)</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -687,9 +584,9 @@
 
                 <div id="weddingCalendar" class="calendar-section" style="display: none;">
                     <div class="month-selector">
-                        <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button onclick="changeMonthWedding(-1)"><i class="fas fa-chevron-left"></i></button>
                         <div class="current-month" id="currentMonthWedding"></div>
-                        <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                        <button onclick="changeMonthWedding(1)"><i class="fas fa-chevron-right"></i></button>
                     </div>
                     <div class="calendar-grid" id="calendarGridWedding"></div>
                     <div class="legend">
@@ -715,26 +612,179 @@
         </div>
     </section>
 
-    <!-- 상세 정보 모달 -->
-    <div id="detailModal" class="detail-modal">
-        <div class="detail-content">
-            <span class="close-modal" onclick="closeDetailModal()">&times;</span>
-            <h2 id="modalDate"></h2>
-            <div class="detail-info" id="modalInfo"></div>
-            <div class="lucky-time" id="modalLuckyTime"></div>
-            <div class="advice-box" id="modalAdvice"></div>
-        </div>
-    </div>
-
     <!-- 푸터 -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI 사주 천년지기</h3>
+                    <p>정통 사주팔자와 AI가 만나다</p>
+                </div>
+                <div class="footer-section">
+                    <h4>서비스</h4>
+                    <ul>
+                        <li><a href="index.html">사주팔자</a></li>
+                        <li><a href="ai-chat.html">AI 상담</a></li>
+                        <li><a href="tojeong.html">토정비결</a></li>
+                        <li><a href="compatibility.html">궁합</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>고객지원</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Saju2026. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
     <script src="js/page-handler.js"></script>
-    <script src="js/coming-soon.js"></script>
-    <script src="js/taekil.js"></script>
+    <script>
+        let currentDate = new Date();
+        let currentType = 'moving';
+
+        function switchTab(type) {
+            currentType = type;
+            
+            // 탭 버튼 활성화
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.tab-btn').classList.add('active');
+            
+            // 패널 전환
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById(type + 'Tab').classList.add('active');
+        }
+
+        function calculateMoving(e) {
+            e.preventDefault();
+            
+            const birthDate = document.getElementById('movingBirthDate').value;
+            const gender = document.getElementById('movingGender').value;
+            const direction = document.getElementById('movingDirection').value;
+            const month = document.getElementById('movingMonth').value;
+            
+            if (!birthDate || !gender || !direction || !month) {
+                alert('모든 정보를 입력해주세요.');
+                return;
+            }
+            
+            const [year, monthNum] = month.split('-');
+            currentDate = new Date(year, monthNum - 1, 1);
+            
+            renderCalendar('moving', birthDate, direction);
+        }
+
+        function calculateWedding(e) {
+            e.preventDefault();
+            
+            const groomBirthDate = document.getElementById('groomBirthDate').value;
+            const brideBirthDate = document.getElementById('brideBirthDate').value;
+            const month = document.getElementById('weddingMonth').value;
+            
+            if (!groomBirthDate || !brideBirthDate || !month) {
+                alert('모든 정보를 입력해주세요.');
+                return;
+            }
+            
+            const [year, monthNum] = month.split('-');
+            currentDate = new Date(year, monthNum - 1, 1);
+            
+            renderCalendar('wedding', groomBirthDate, brideBirthDate);
+        }
+
+        function renderCalendar(type, ...params) {
+            const calendarId = type === 'moving' ? 'calendarGrid' : 'calendarGridWedding';
+            const monthId = type === 'moving' ? 'currentMonth' : 'currentMonthWedding';
+            const calendar = document.getElementById(calendarId);
+            const monthDisplay = document.getElementById(monthId);
+            
+            // 캘린더 보이기
+            document.getElementById(type + 'Calendar').style.display = 'block';
+            
+            // 월 표시
+            monthDisplay.textContent = `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`;
+            
+            // 캘린더 생성
+            calendar.innerHTML = '';
+            
+            // 요일 헤더
+            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+            weekdays.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-header';
+                header.textContent = day;
+                calendar.appendChild(header);
+            });
+            
+            // 첫 날의 요일
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+            
+            // 마지막 날
+            const lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+            
+            // 빈 칸 추가
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                calendar.appendChild(emptyDay);
+            }
+            
+            // 날짜 추가
+            for (let day = 1; day <= lastDate; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                // 길흉 판단 (간단한 알고리즘)
+                const rating = calculateDayRating(day, type, ...params);
+                dayElement.classList.add(rating.class);
+                
+                dayElement.innerHTML = `
+                    <div class="day-rating">${rating.emoji}</div>
+                    <div class="day-number">${day}</div>
+                    <div class="day-label">${rating.label}</div>
+                `;
+                
+                calendar.appendChild(dayElement);
+            }
+            
+            // 스크롤
+            document.getElementById(type + 'Calendar').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateDayRating(day, type, ...params) {
+            // 간단한 길흉 판단 알고리즘
+            const seed = day + currentDate.getMonth() + (params[0] ? params[0].charCodeAt(0) : 0);
+            const score = (seed * 17 + 23) % 100;
+            
+            if (score >= 85) {
+                return { class: 'excellent', label: '대길', emoji: '⭐' };
+            } else if (score >= 65) {
+                return { class: 'good', label: '길', emoji: '✓' };
+            } else if (score >= 35) {
+                return { class: 'normal', label: '평', emoji: '' };
+            } else {
+                return { class: 'bad', label: '흉', emoji: '✗' };
+            }
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            const birthDate = document.getElementById('movingBirthDate').value;
+            const direction = document.getElementById('movingDirection').value;
+            renderCalendar('moving', birthDate, direction);
+        }
+
+        function changeMonthWedding(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            const groomBirthDate = document.getElementById('groomBirthDate').value;
+            const brideBirthDate = document.getElementById('brideBirthDate').value;
+            renderCalendar('wedding', groomBirthDate, brideBirthDate);
+        }
+    </script>
 </body>
 </html>
