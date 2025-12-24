@@ -738,23 +738,32 @@
         </div>
     </section>
 
-    <!-- 사주 입력 폼 -->
+        <!-- 사주 입력 폼 -->
     <section class="saju-section" id="saju-form">
         <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
         <form class="saju-form" id="sajuForm">
+            <!-- 1. 생년월일 입력 (추가!) -->
             <div class="form-group">
-    <label>음력/양력</label>
-    <div class="gender-options">
-        <div class="gender-option">
-            <input type="radio" id="solar" name="calendar" value="solar" checked>
-            <label for="solar">양력 🌞</label>
-        </div>
-        <div class="gender-option">
-            <input type="radio" id="lunar" name="calendar" value="lunar">
-            <label for="lunar">음력 🌙</label>
-        </div>
-    </div>
-</div>
+                <label><i class="fas fa-calendar"></i> 생년월일</label>
+                <input type="date" name="birthdate" required>
+            </div>
+            
+            <!-- 2. 음력/양력 선택 -->
+            <div class="form-group">
+                <label>음력/양력</label>
+                <div class="gender-options">
+                    <div class="gender-option">
+                        <input type="radio" id="solar" name="calendar" value="solar" checked>
+                        <label for="solar">양력 🌞</label>
+                    </div>
+                    <div class="gender-option">
+                        <input type="radio" id="lunar" name="calendar" value="lunar">
+                        <label for="lunar">음력 🌙</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3. 태어난 시간 -->
             <div class="form-group">
                 <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
                 <select name="birthtime">
@@ -772,6 +781,7 @@
                     <option value="19-21">술시 (19:00-21:00)</option>
                     <option value="21-23">해시 (21:00-23:00)</option>
                 </select>
+            </div>
             </div>
             <div class="form-group">
                 <label><i class="fas fa-venus-mars"></i> 성별</label>
