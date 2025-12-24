@@ -738,31 +738,82 @@
         </div>
     </section>
 
-        <!-- 사주 입력 폼 -->
-    <section class="saju-section" id="saju-form">
-        <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
-        <form class="saju-form" id="sajuForm">
-            <!-- 1. 생년월일 입력 (추가!) -->
-            <div class="form-group">
-                <label><i class="fas fa-calendar"></i> 생년월일</label>
-                <input type="date" name="birthdate" required>
-            </div>
-            
-            <!-- 2. 음력/양력 선택 -->
-            <div class="form-group">
-                <label>음력/양력</label>
-                <div class="gender-options">
-                    <div class="gender-option">
-                        <input type="radio" id="solar" name="calendar" value="solar" checked>
-                        <label for="solar">양력 🌞</label>
-                    </div>
-                    <div class="gender-option">
-                        <input type="radio" id="lunar" name="calendar" value="lunar">
-                        <label for="lunar">음력 🌙</label>
-                    </div>
-                </div>
-            </div>
-            
+            .gender-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gender-option:hover {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+        
+        .gender-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .gender-option label {
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: block;
+            font-size: 1rem;
+        }
+        
+        .gender-option input[type="radio"]:checked ~ label,
+        .gender-option input[type="radio"]:checked + label {
+            color: #c41e3a;
+            font-weight: 700;
+        }
+        
+        .gender-option:has(input[type="radio"]:checked) {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+old_string:
+        .gender-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .gender-option:hover {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+        
+        .gender-option input[type="radio"]:checked ~ label,
+        .gender-option input[type="radio"]:checked + label {
+            color: #c41e3a;
+            font-weight: 700;
+        }
+        
+        .gender-option:has(input[type="radio"]:checked) {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+        
+        .gender-option input[type="radio"] {
+            display: none;
+        }
             <!-- 3. 태어난 시간 -->
             <div class="form-group">
                 <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
