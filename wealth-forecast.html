@@ -4,16 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>재물운 분석 - AI 사주 천년지기</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .wealth-hero { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 4rem 0; text-align: center; }
-        .chart-container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        canvas { height: 400px !important; }
-        .wealth-tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .tip-card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        /* 기본 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fcb69f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #fcb69f;
+        }
+        
+        .nav-actions .btn-login {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .nav-actions .btn-login:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 히어로 섹션 */
+        .wealth-hero {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .wealth-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .wealth-hero p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        /* 차트 컨테이너 */
+        .chart-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        canvas {
+            height: 400px !important;
+        }
+        
+        /* 재물운 팁 */
+        .wealth-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tip-card h3 {
+            color: #fcb69f;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tip-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .wealth-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .chart-container {
+                padding: 1rem;
+            }
+            
+            canvas {
+                height: 300px !important;
+            }
+            
+            .wealth-tips {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -22,8 +220,10 @@
             <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
                 <li><a href="wealth-forecast.html" class="active">재물운</a></li>
                 <li><a href="pricing.html">프리미엄</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
             </ul>
             <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
         </div>
@@ -38,29 +238,54 @@
 
     <div class="container">
         <div class="chart-container">
-            <h2 style="text-align: center; margin-bottom: 2rem;">20세~80세 재물운 그래프</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">20세~80세 재물운 그래프</h2>
             <canvas id="wealthChart"></canvas>
         </div>
 
         <div class="wealth-tips">
             <div class="tip-card">
-                <h3 style="color: #fcb69f; margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> 투자 적기</h3>
-                <p style="color: #666;">30대 중반과 50대 초반이 재물운이 가장 좋은 시기입니다. 이 시기에 부동산이나 주식 투자를 고려하세요.</p>
+                <h3><i class="fas fa-chart-line"></i> 투자 적기</h3>
+                <p>30대 중반과 50대 초반이 재물운이 가장 좋은 시기입니다. 이 시기에 부동산이나 주식 투자를 고려하세요.</p>
             </div>
             <div class="tip-card">
-                <h3 style="color: #fcb69f; margin-bottom: 1rem;"><i class="fas fa-piggy-bank"></i> 저축 전략</h3>
-                <p style="color: #666;">40대까지 꾸준히 저축하고, 50대부터는 안정적인 자산 관리에 집중하세요.</p>
+                <h3><i class="fas fa-piggy-bank"></i> 저축 전략</h3>
+                <p>40대까지 꾸준히 저축하고, 50대부터는 안정적인 자산 관리에 집중하세요.</p>
             </div>
             <div class="tip-card">
-                <h3 style="color: #fcb69f; margin-bottom: 1rem;"><i class="fas fa-exclamation-triangle"></i> 주의 시기</h3>
-                <p style="color: #666;">60대 중반은 재물운이 다소 낮아지는 시기입니다. 무리한 투자는 피하고 안정을 추구하세요.</p>
+                <h3><i class="fas fa-exclamation-triangle"></i> 주의 시기</h3>
+                <p>60대 중반은 재물운이 다소 낮아지는 시기입니다. 무리한 투자는 피하고 안정을 추구하세요.</p>
             </div>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI 사주 천년지기</h3>
+                    <p>정통 사주팔자와 AI가 만나다</p>
+                </div>
+                <div class="footer-section">
+                    <h4>서비스</h4>
+                    <ul>
+                        <li><a href="index.html">사주팔자</a></li>
+                        <li><a href="ai-chat.html">AI 상담</a></li>
+                        <li><a href="tojeong.html">토정비결</a></li>
+                        <li><a href="compatibility.html">궁합</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>고객지원</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Saju2026. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
@@ -103,8 +328,5 @@
             }
         });
     </script>
-        <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
-
 </body>
 </html>
