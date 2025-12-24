@@ -1,408 +1,774 @@
-1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>AI 사주 상담 - AI 사주 천년지기</title>
-     7	    <meta name="description" content="ChatGPT 기반 AI 사주팔자 상담. 24시간 실시간 맞춤형 운세 조언.">
-     8	    <link rel="stylesheet" href="css/style.css">
-     9	    <link rel="stylesheet" href="css/chat.css">
-    10	    <link rel="stylesheet" href="css/modal.css">
-    11	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    12	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    13	    <style>
-    14	        /* 언어 선택기 스타일 */
-    15	        .language-switcher {
-    16	            position: relative;
-    17	            margin-left: 1rem;
-    18	        }
-    19	        .lang-btn {
-    20	            background: transparent;
-    21	            border: 2px solid #d4af37;
-    22	            color: #d4af37;
-    23	            padding: 8px 16px;
-    24	            border-radius: 25px;
-    25	            cursor: pointer;
-    26	            display: flex;
-    27	            align-items: center;
-    28	            gap: 8px;
-    29	            font-size: 14px;
-    30	            font-weight: 600;
-    31	            transition: all 0.3s;
-    32	        }
-    33	        .lang-btn:hover {
-    34	            background: rgba(212, 175, 55, 0.1);
-    35	            transform: translateY(-2px);
-    36	        }
-    37	        .lang-flag {
-    38	            font-size: 18px;
-    39	        }
-    40	        .lang-dropdown {
-    41	            position: absolute;
-    42	            top: 120%;
-    43	            right: 0;
-    44	            background: white;
-    45	            border: 2px solid #d4af37;
-    46	            border-radius: 15px;
-    47	            min-width: 180px;
-    48	            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    49	            opacity: 0;
-    50	            visibility: hidden;
-    51	            transform: translateY(-10px);
-    52	            transition: all 0.3s;
-    53	            z-index: 1000;
-    54	        }
-    55	        .lang-dropdown.active {
-    56	            opacity: 1;
-    57	            visibility: visible;
-    58	            transform: translateY(0);
-    59	        }
-    60	        .lang-option {
-    61	            width: 100%;
-    62	            padding: 12px 20px;
-    63	            border: none;
-    64	            background: white;
-    65	            text-align: left;
-    66	            cursor: pointer;
-    67	            display: flex;
-    68	            align-items: center;
-    69	            gap: 10px;
-    70	            font-size: 14px;
-    71	            transition: all 0.2s;
-    72	            color: #333;
-    73	        }
-    74	        .lang-option:first-child {
-    75	            border-radius: 13px 13px 0 0;
-    76	        }
-    77	        .lang-option:last-child {
-    78	            border-radius: 0 0 13px 13px;
-    79	        }
-    80	        .lang-option:hover {
-    81	            background: rgba(212, 175, 55, 0.1);
-    82	        }
-    83	        .lang-option.active {
-    84	            background: rgba(212, 175, 55, 0.2);
-    85	            font-weight: 700;
-    86	            color: #c41e3a;
-    87	        }
-    88	        .lang-option i {
-    89	            margin-left: auto;
-    90	            color: #c41e3a;
-    91	        }
-    92	        .container {
-    93	            display: flex;
-    94	            align-items: center;
-    95	            justify-content: space-between;
-    96	        }
-    97	        .nav-menu {
-    98	            display: flex;
-    99	            gap: 1.5rem;
-   100	            list-style: none;
-   101	            align-items: center;
-   102	        }
-   103	    </style>
-   104	</head>
-   105	<body>
-   106	    <!-- i18n 다국어 시스템 -->
-   107	    <script>(function(){var a=localStorage.getItem('saju_language')||'ko',b={ko:{name:'한국어',flag:'🇰🇷'},en:{name:'English',flag:'🇺🇸'},zh:{name:'中文',flag:'🇨🇳'},ja:{name:'日本語',flag:'🇯🇵'}},c={nav:{home:{ko:'홈',en:'Home',zh:'首页',ja:'ホーム'},pricing:{ko:'가격표',en:'Pricing',zh:'价格',ja:'料金'},aiChat:{ko:'AI 상담',en:'AI Chat',zh:'AI咨询',ja:'AI相談'},referral:{ko:'추천인',en:'Referral',zh:'推荐人',ja:'紹介'},alarm:{ko:'알람',en:'Alarm',zh:'闹钟',ja:'アラーム'},mypage:{ko:'마이페이지',en:'My Page',zh:'我的页面',ja:'マイページ'},login:{ko:'로그인',en:'Login',zh:'登录',ja:'ログイン'}},aiChat:{title:{ko:'AI 사주 상담',en:'AI Saju Consultation',zh:'AI四柱咨询',ja:'AI四柱相談'},description:{ko:'ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다',en:'ChatGPT-based AI analyzes your Saju 24/7 and provides personalized advice',zh:'基于ChatGPT的AI全天候分析您的四柱并提供个性化建议',ja:'ChatGPTベースのAIが24時間体制であなたの四柱を分析し、カスタマイズされたアドバイスを提供します'}}};function d(e){var f=e.split('.'),g=c;for(var h=0;h<f.length;h++){g=g[f[h]];if(!g)return e}return g[a]||g.ko||e}function i(e){if(!b[e])return;a=e;localStorage.setItem('saju_language',e);j();k()}function j(){document.querySelectorAll('[data-i18n]').forEach(function(e){var f=e.getAttribute('data-i18n'),g=d(f);e.hasAttribute('placeholder')?e.placeholder=g:e.textContent=g});document.querySelectorAll('[data-i18n-html]').forEach(function(e){e.innerHTML=d(e.getAttribute('data-i18n-html'))})}function k(){var e=document.getElementById('langBtn');if(e){var f=b[a];e.querySelector('.lang-flag').textContent=f.flag;e.querySelector('.lang-name').textContent=f.name}document.querySelectorAll('.lang-option').forEach(function(e){e.classList.remove('active');var f=e.querySelector('.fa-check');f&&f.remove();if(e.getAttribute('data-lang')===a){e.classList.add('active');e.innerHTML+='<i class="fas fa-check"></i>'}})}function l(){var e=document.getElementById('languageSwitcherContainer');if(!e)return;e.innerHTML='<div class="language-switcher"><button class="lang-btn" id="langBtn"><span class="lang-flag">'+b[a].flag+'</span><span class="lang-name">'+b... (line truncated)
-   108	    <!-- 네비게이션 -->
-   109	    <nav class="navbar">
-   110	        <div class="container">
-   111	            <div class="nav-brand">
-   112	                <a href="index.html">
-   113	                    <i class="fas fa-yin-yang"></i>
-   114	                    AI 사주 천년지기
-   115	                </a>
-   116	            </div>
-   117	            <ul class="nav-menu">
-   118	                <li><a href="index.html" data-i18n="nav.home">홈</a></li>
-   119	                <li><a href="pricing.html" data-i18n="nav.pricing">가격표</a></li>
-   120	                <li><a href="ai-chat.html" class="active" data-i18n="nav.aiChat">AI 상담</a></li>
-   121	                <li><a href="referral.html" data-i18n="nav.referral">추천인</a></li>
-   122	                <li><a href="kakao-alarm-bot.html" class="nav-highlight"><i class="fas fa-bell"></i> <span data-i18n="nav.alarm">알람</span></a></li>
-   123	                <li><a href="mypage.html" data-i18n="nav.mypage">마이페이지</a></li>
-   124	                <li><a href="#" id="authBtn" data-i18n="nav.login">로그인</a></li>
-   125	            </ul>
-   126	            <div id="languageSwitcherContainer"></div>
-   127	            <button class="mobile-menu-toggle">
-   128	                <i class="fas fa-bars"></i>
-   129	            </button>
-   130	        </div>
-   131	    </nav>
-   132	
-   133	    <!-- AI 상담 히어로 -->
-   134	    <section class="ai-hero">
-   135	        <div class="container">
-   136	            <h1>
-   137	                <i class="fas fa-robot"></i>
-   138	                <span data-i18n="aiChat.title">AI 사주 상담</span>
-   139	            </h1>
-   140	            <p data-i18n="aiChat.description">ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다</p>
-   141	            
-   142	            <!-- 요금제 -->
-   143	            <div class="ai-pricing-cards">
-   144	                <div class="ai-price-card">
-   145	                    <div class="price-icon">🆓</div>
-   146	                    <h3>무료</h3>
-   147	                    <div class="price">₩0</div>
-   148	                    <ul>
-   149	                        <li>✅ 매일 3개 질문</li>
-   150	                        <li>✅ 기본 사주 해석</li>
-   151	                        <li>✅ 간단한 조언</li>
-   152	                    </ul>
-   153	                    <button class="btn-secondary" onclick="startChat('free')">시작하기</button>
-   154	                </div>
-   155	
-   156	                <div class="ai-price-card featured">
-   157	                    <div class="badge">인기</div>
-   158	                    <div class="price-icon">💬</div>
-   159	                    <h3>추가 10개 질문</h3>
-   160	                    <div class="price">₩2,900</div>
-   161	                    <ul>
-   162	                        <li>✅ 즉시 10개 질문 추가</li>
-   163	                        <li>✅ 상세한 해석</li>
-   164	                        <li>✅ 채팅 히스토리 저장</li>
-   165	                        <li>✅ PDF 내보내기</li>
-   166	                    </ul>
-   167	                    <button class="btn-primary" onclick="purchaseQuestions()">구매하기</button>
-   168	                </div>
-   169	
-   170	                <div class="ai-price-card premium">
-   171	                    <div class="badge gold">프리미엄</div>
-   172	                    <div class="price-icon">♾️</div>
-   173	                    <h3>무제한 구독</h3>
-   174	                    <div class="price">₩9,900<span>/월</span></div>
-   175	                    <ul>
-   176	                        <li>✅ 무제한 질문</li>
-   177	                        <li>✅ 우선 응답</li>
-   178	                        <li>✅ 고급 AI 모델</li>
-   179	                        <li>✅ 전문가 리뷰 월 1회</li>
-   180	                        <li>✅ 모든 프리미엄 혜택</li>
-   181	                    </ul>
-   182	                    <button class="btn-gold" onclick="subscribeUnlimited()">구독하기</button>
-   183	                </div>
-   184	            </div>
-   185	        </div>
-   186	    </section>
-   187	
-   188	    <!-- 채팅 인터페이스 -->
-   189	    <section class="chat-section">
-   190	        <div class="container">
-   191	            <div class="chat-container">
-   192	                <!-- 사이드바 -->
-   193	                <div class="chat-sidebar">
-   194	                    <div class="user-status">
-   195	                        <div class="status-header">
-   196	                            <h3>나의 상담 현황</h3>
-   197	                        </div>
-   198	                        <div class="status-info">
-   199	                            <div class="status-item">
-   200	                                <i class="fas fa-comment-dots"></i>
-   201	                                <div>
-   202	                                    <span class="label">남은 질문</span>
-   203	                                    <span class="value" id="remainingQuestions">3</span>
-   204	                                </div>
-   205	                            </div>
-   206	                            <div class="status-item">
-   207	                                <i class="fas fa-calendar-day"></i>
-   208	                                <div>
-   209	                                    <span class="label">오늘 사용</span>
-   210	                                    <span class="value" id="todayUsed">0</span>
-   211	                                </div>
-   212	                            </div>
-   213	                            <div class="status-item">
-   214	                                <i class="fas fa-history"></i>
-   215	                                <div>
-   216	                                    <span class="label">총 대화</span>
-   217	                                    <span class="value" id="totalConversations">0</span>
-   218	                                </div>
-   219	                            </div>
-   220	                        </div>
-   221	                        <button class="btn-upgrade" onclick="window.location.href='pricing.html'">
-   222	                            <i class="fas fa-star"></i>
-   223	                            업그레이드
-   224	                        </button>
-   225	                    </div>
-   226	
-   227	                    <!-- 질문 템플릿 -->
-   228	                    <div class="question-templates">
-   229	                        <h3><i class="fas fa-lightbulb"></i> 추천 질문</h3>
-   230	                        <div class="template-list">
-   231	                            <button class="template-btn" data-question="2026년 나의 연애운은 어떤가요?">
-   232	                                <i class="fas fa-heart"></i>
-   233	                                2026년 연애운
-   234	                            </button>
-   235	                            <button class="template-btn" data-question="직업을 바꾸기에 좋은 시기는 언제인가요?">
-   236	                                <i class="fas fa-briefcase"></i>
-   237	                                이직 시기
-   238	                            </button>
-   239	                            <button class="template-btn" data-question="재물운을 높이는 방법은 무엇인가요?">
-   240	                                <i class="fas fa-coins"></i>
-   241	                                재물운 향상
-   242	                            </button>
-   243	                            <button class="template-btn" data-question="건강 관리에 주의해야 할 점은?">
-   244	                                <i class="fas fa-heartbeat"></i>
-   245	                                건강 조언
-   246	                            </button>
-   247	                            <button class="template-btn" data-question="배우자와의 궁합은 어떤가요?">
-   248	                                <i class="fas fa-ring"></i>
-   249	                                부부 궁합
-   250	                            </button>
-   251	                            <button class="template-btn" data-question="사업을 시작하기 좋은 날은 언제인가요?">
-   252	                                <i class="fas fa-rocket"></i>
-   253	                                사업 택일
-   254	                            </button>
-   255	                        </div>
-   256	                    </div>
-   257	
-   258	                    <!-- 채팅 히스토리 -->
-   259	                    <div class="chat-history">
-   260	                        <h3><i class="fas fa-clock"></i> 이전 대화</h3>
-   261	                        <div id="historyList" class="history-list">
-   262	                            <p class="empty-message">아직 대화 내역이 없습니다</p>
-   263	                        </div>
-   264	                    </div>
-   265	                </div>
-   266	
-   267	                <!-- 메인 채팅 영역 -->
-   268	                <div class="chat-main">
-   269	                    <div class="chat-header">
-   270	                        <div class="ai-info">
-   271	                            <div class="ai-avatar">
-   272	                                <i class="fas fa-robot"></i>
-   273	                            </div>
-   274	                            <div class="ai-details">
-   275	                                <h3>AI 명리학 전문가</h3>
-   276	                                <span class="status online">
-   277	                                    <i class="fas fa-circle"></i>
-   278	                                    온라인
-   279	                                </span>
-   280	                            </div>
-   281	                        </div>
-   282	                        <div class="chat-actions">
-   283	                            <button class="icon-btn" onclick="exportChat()" title="채팅 내보내기">
-   284	                                <i class="fas fa-download"></i>
-   285	                            </button>
-   286	                            <button class="icon-btn" onclick="clearChat()" title="대화 초기화">
-   287	                                <i class="fas fa-trash"></i>
-   288	                            </button>
-   289	                        </div>
-   290	                    </div>
-   291	
-   292	                    <div class="chat-messages" id="chatMessages">
-   293	                        <!-- 환영 메시지 -->
-   294	                        <div class="message ai-message">
-   295	                            <div class="message-avatar">
-   296	                                <i class="fas fa-robot"></i>
-   297	                            </div>
-   298	                            <div class="message-content">
-   299	                                <div class="message-bubble">
-   300	                                    <p>안녕하세요! 저는 AI 명리학 전문가입니다. 🔮</p>
-   301	                                    <p>당신의 사주팔자를 기반으로 맞춤형 조언을 드리겠습니다.</p>
-   302	                                    <p><strong>먼저 생년월일시를 알려주시면 더 정확한 상담이 가능합니다!</strong></p>
-   303	                                    <br>
-   304	                                    <p>💡 왼쪽의 추천 질문을 클릭하거나, 자유롭게 질문해주세요.</p>
-   305	                                </div>
-   306	                                <span class="message-time">방금</span>
-   307	                            </div>
-   308	                        </div>
-   309	                    </div>
-   310	
-   311	                    <!-- 입력 영역 -->
-   312	                    <div class="chat-input-area">
-   313	                        <div class="input-wrapper">
-   314	                            <button class="icon-btn" onclick="attachFile()" title="파일 첨부">
-   315	                                <i class="fas fa-paperclip"></i>
-   316	                            </button>
-   317	                            <textarea 
-   318	                                id="chatInput" 
-   319	                                placeholder="메시지를 입력하세요... (Shift+Enter로 줄바꿈)" 
-   320	                                rows="1"
-   321	                                maxlength="500"
-   322	                            ></textarea>
-   323	                            <div class="input-actions">
-   324	                                <span class="char-count">
-   325	                                    <span id="charCount">0</span>/500
-   326	                                </span>
-   327	                                <button class="btn-send" id="sendBtn" onclick="sendMessage()">
-   328	                                    <i class="fas fa-paper-plane"></i>
-   329	                                    전송
-   330	                                </button>
-   331	                            </div>
-   332	                        </div>
-   333	                        <div class="input-hints">
-   334	                            <small>
-   335	                                <i class="fas fa-info-circle"></i>
-   336	                                남은 질문: <strong id="remainingCount">3</strong>개
-   337	                                | AI가 응답하는 데 5-10초 소요될 수 있습니다.
-   338	                            </small>
-   339	                        </div>
-   340	                    </div>
-   341	                </div>
-   342	            </div>
-   343	        </div>
-   344	    </section>
-   345	
-   346	    <!-- 푸터 -->
-   347	    <footer class="footer">
-   348	        <div class="container">
-   349	            <div class="footer-content">
-   350	                <div class="footer-section">
-   351	                    <h4>AI 사주 천년지기</h4>
-   352	                    <p>정통 명리학으로 풀어보는 붉은 불의 말띠 해</p>
-   353	                </div>
-   354	                <div class="footer-section">
-   355	                    <h4>서비스</h4>
-   356	                    <ul>
-   357	                        <li><a href="index.html">사주팔자</a></li>
-   358	                        <li><a href="pricing.html">가격표</a></li>
-   359	                        <li><a href="ai-chat.html">AI 상담</a></li>
-   360	                        <li><a href="referral.html">추천인 프로그램</a></li>
-   361	                    </ul>
-   362	                </div>
-   363	                <div class="footer-section">
-   364	                    <h4>법률</h4>
-   365	                    <ul>
-   366	                        <li><a href="terms.html">이용약관</a></li>
-   367	                        <li><a href="privacy.html">개인정보처리방침</a></li>
-   368	                        <li><a href="refund.html">환불정책</a></li>
-   369	                    </ul>
-   370	                </div>
-   371	                <div class="footer-section">
-   372	                    <h4>고객지원</h4>
-   373	                    <p>이메일: support@saju2026.com</p>
-   374	                    <p>운영시간: 평일 10:00-18:00</p>
-   375	                </div>
-   376	            </div>
-   377	            <div class="footer-bottom">
-   378	                <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
-   379	            </div>
-   380	        </div>
-   381	    </footer>
-   382	
-   383	    <!-- 결제 모달 -->
-   384	    <div id="purchaseModal" class="modal">
-   385	        <div class="modal-content">
-   386	            <span class="close">&times;</span>
-   387	            <h2>AI 상담 질문 추가</h2>
-   388	            <div class="purchase-info">
-   389	                <p class="price-display">₩2,900</p>
-   390	                <p class="description">10개 질문을 추가로 구매합니다</p>
-   391	                <ul class="benefit-list">
-   392	                    <li><i class="fas fa-check"></i> 즉시 10개 질문 사용 가능</li>
-   393	                    <li><i class="fas fa-check"></i> 채팅 히스토리 저장</li>
-   394	                    <li><i class="fas fa-check"></i> PDF 내보내기</li>
-   395	                </ul>
-   396	            </div>
-   397	            <div class="modal-actions">
-   398	                <button class="btn-secondary" onclick="closeModal()">취소</button>
-   399	                <button class="btn-primary" onclick="confirmPurchase()">구매하기</button>
-   400	            </div>
-   401	        </div>
-   402	    </div>
-   403	
-   404	    <script src="js/page-handler.js"></script>
-   405	    <script src="js/ai-chat.js"></script>
-   406	</body>
-   407	</html>
-   408	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta.title">24시간 AI 상담 - AI 사주 천년지기</title>
+    <meta name="description" content="24시간 언제든지 AI와 실시간으로 사주, 운세, 고민 상담. 무료로 이용 가능!">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        
+        .lang-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .lang-option.active {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        /* 채팅 컨테이너 */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* 채팅 헤더 */
+        .chat-header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .chat-header h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .chat-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #e8f5e9;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #2e7d32;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* 채팅 메시지 영역 */
+        .chat-messages {
+            flex: 1;
+            background: white;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 400px;
+            max-height: 500px;
+        }
+        
+        .message {
+            display: flex;
+            gap: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            line-height: 1.6;
+        }
+        
+        .message.ai .message-content {
+            background: #f5f5f5;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+        
+        /* 입력 영역 */
+        .chat-input {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+        
+        #messageInput {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        #messageInput:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        #sendButton {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        #sendButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        #sendButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 빠른 질문 */
+        .quick-questions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0 1rem;
+        }
+        
+        .quick-btn {
+            padding: 0.6rem 1.2rem;
+            background: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quick-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* 로딩 애니메이션 */
+        .typing-indicator {
+            display: none;
+            padding: 1rem 1.5rem;
+            background: #f5f5f5;
+            border-radius: 18px;
+            width: fit-content;
+        }
+        
+        .typing-indicator.active {
+            display: block;
+        }
+        
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .chat-container {
+                margin: 1rem auto;
+            }
+            
+            .message-content {
+                max-width: 80%;
+            }
+            
+            .quick-questions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" data-i18n="nav.home">홈</a></li>
+                <li><a href="pricing.html" data-i18n="nav.pricing">가격표</a></li>
+                <li><a href="mypage.html" data-i18n="nav.mypage">마이페이지</a></li>
+                <li><a href="login.html" data-i18n="nav.login">로그인</a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 채팅 컨테이너 -->
+    <div class="chat-container">
+        <!-- 빠른 질문 -->
+        <div class="quick-questions" id="quickQuestions">
+            <button class="quick-btn" onclick="sendQuickQuestion(0)">
+                <i class="fas fa-star"></i> <span data-i18n="quick.today">오늘의 운세</span>
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion(1)">
+                <i class="fas fa-coins"></i> <span data-i18n="quick.money">금전운</span>
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion(2)">
+                <i class="fas fa-heart"></i> <span data-i18n="quick.love">연애운</span>
+            </button>
+            <button class="quick-btn" onclick="sendQuickQuestion(3)">
+                <i class="fas fa-heartbeat"></i> <span data-i18n="quick.health">건강운</span>
+            </button>
+        </div>
+        
+        <!-- 채팅 헤더 -->
+        <div class="chat-header">
+            <h1><i class="fas fa-robot"></i> <span data-i18n="header.title">24시간 AI 사주 상담</span></h1>
+            <p data-i18n="header.description">언제든지 편하게 질문하세요. AI가 24시간 실시간으로 답변드립니다.</p>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span data-i18n="header.status">AI 상담사 대기 중</span>
+            </div>
+        </div>
+        
+        <!-- 메시지 영역 -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="typing-indicator" id="typingIndicator">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        </div>
+        
+        <!-- 입력 영역 -->
+        <div class="chat-input">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    data-i18n-placeholder="input.placeholder"
+                    placeholder="메시지를 입력하세요..."
+                    onkeypress="handleKeyPress(event)"
+                >
+            </div>
+            <button id="sendButton" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+                <span data-i18n="input.send">전송</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 다국어 번역 데이터
+        const translations = {
+            ko: {
+                meta: { title: '24시간 AI 상담 - AI 사주 천년지기' },
+                nav: { home: '홈', pricing: '가격표', mypage: '마이페이지', login: '로그인' },
+                header: {
+                    title: '24시간 AI 사주 상담',
+                    description: '언제든지 편하게 질문하세요. AI가 24시간 실시간으로 답변드립니다.',
+                    status: 'AI 상담사 대기 중'
+                },
+                quick: { today: '오늘의 운세', money: '금전운', love: '연애운', health: '건강운' },
+                input: { placeholder: '메시지를 입력하세요...', send: '전송' },
+                welcome: `안녕하세요! AI 사주 상담사입니다. 😊<br>운세, 사주, 고민 상담 등 무엇이든 편하게 물어보세요!<br><br><strong>📌 이런 것들을 물어볼 수 있어요:</strong><br>• 오늘/이번 주/이번 달 운세<br>• 금전운, 연애운, 건강운, 직업운<br>• 인생 고민 및 선택 조언<br>• 궁합, 작명, 택일 등`,
+                quickQuestions: ['오늘의 운세가 궁금해요', '금전운이 궁금해요', '연애운이 궁금해요', '건강운이 궁금해요']
+            },
+            en: {
+                meta: { title: '24/7 AI Consultation - AI Saju Millennium' },
+                nav: { home: 'Home', pricing: 'Pricing', mypage: 'My Page', login: 'Login' },
+                header: {
+                    title: '24/7 AI Saju Consultation',
+                    description: 'Ask anything, anytime. AI responds 24/7 in real-time.',
+                    status: 'AI Consultant Available'
+                },
+                quick: { today: "Today's Fortune", money: 'Wealth', love: 'Love', health: 'Health' },
+                input: { placeholder: 'Type your message...', send: 'Send' },
+                welcome: `Hello! I'm your AI Saju consultant. 😊<br>Feel free to ask about fortune, destiny, or any concerns!<br><br><strong>📌 You can ask about:</strong><br>• Today/This week/This month's fortune<br>• Wealth, love, health, career fortune<br>• Life advice and decision making<br>• Compatibility, naming, auspicious dates`,
+                quickQuestions: ["What's my fortune today?", "Tell me about my wealth luck", "How's my love fortune?", "What about my health?"]
+            },
+            zh: {
+                meta: { title: '24小时AI咨询 - AI四柱千年知己' },
+                nav: { home: '首页', pricing: '价格', mypage: '我的信息', login: '登录' },
+                header: {
+                    title: '24小时AI四柱咨询',
+                    description: '随时提问，AI 24小时实时回答。',
+                    status: 'AI顾问待命中'
+                },
+                quick: { today: '今日运势', money: '财运', love: '爱情运', health: '健康运' },
+                input: { placeholder: '输入消息...', send: '发送' },
+                welcome: `您好！我是AI四柱咨询师。😊<br>关于运势、命运、烦恼等，请随意询问！<br><br><strong>📌 您可以询问：</strong><br>• 今天/本周/本月运势<br>• 财运、爱情运、健康运、事业运<br>• 人生建议和选择<br>• 合婚、起名、择日等`,
+                quickQuestions: ['今天的运势如何？', '我的财运怎么样？', '爱情运如何？', '健康运势好吗？']
+            },
+            ja: {
+                meta: { title: '24時間AI相談 - AI四柱千年知己' },
+                nav: { home: 'ホーム', pricing: '価格表', mypage: 'マイページ', login: 'ログイン' },
+                header: {
+                    title: '24時間AI四柱相談',
+                    description: 'いつでもお気軽にご質問ください。AIが24時間リアルタイムで回答します。',
+                    status: 'AIコンサルタント待機中'
+                },
+                quick: { today: '今日の運勢', money: '金運', love: '恋愛運', health: '健康運' },
+                input: { placeholder: 'メッセージを入力...', send: '送信' },
+                welcome: `こんにちは！AI四柱推命コンサルタントです。😊<br>運勢、運命、お悩みなど、お気軽にお尋ねください！<br><br><strong>📌 こんなことが聞けます：</strong><br>• 今日/今週/今月の運勢<br>• 金運、恋愛運、健康運、仕事運<br>• 人生の悩みや選択のアドバイス<br>• 相性、命名、吉日選び等`,
+                quickQuestions: ['今日の運勢を教えて', '金運が知りたい', '恋愛運はどう？', '健康運について']
+            }
+        };
+
+        const langData = {
+            ko: { name: '한국어', flag: '🇰🇷' },
+            en: { name: 'English', flag: '🇺🇸' },
+            zh: { name: '中文', flag: '🇨🇳' },
+            ja: { name: '日本語', flag: '🇯🇵' }
+        };
+
+        let currentLang = localStorage.getItem('saju_language') || 'ko';
+
+        // 언어 업데이트
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('saju_language', lang);
+            
+            // 텍스트 번역
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let value = translations[lang];
+                keys.forEach(k => value = value?.[k]);
+                if (value) el.textContent = value;
+            });
+            
+            // Placeholder 번역
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                const keys = key.split('.');
+                let value = translations[lang];
+                keys.forEach(k => value = value?.[k]);
+                if (value) el.placeholder = value;
+            });
+            
+            // 언어 선택기 업데이트
+            document.getElementById('currentFlag').textContent = langData[lang].flag;
+            document.getElementById('currentLang').textContent = langData[lang].name;
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.getAttribute('data-lang') === lang) {
+                    opt.classList.add('active');
+                }
+            });
+            
+            // 채팅 초기화
+            initializeChat();
+        }
+
+        // 언어 선택기 이벤트
+        document.getElementById('langBtn').addEventListener('click', () => {
+            document.getElementById('langDropdown').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const lang = e.currentTarget.getAttribute('data-lang');
+                updateLanguage(lang);
+                document.getElementById('langDropdown').classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) {
+                document.getElementById('langDropdown').classList.remove('active');
+            }
+        });
+
+        // 현재 시간 포맷
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        // 메시지 추가
+        function addMessage(text, isUser = false) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            
+            const avatar = isUser ? '👤' : '🤖';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div>
+                    <div class="message-content">${text}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            
+            messagesDiv.insertBefore(messageDiv, typingIndicator);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // AI 응답 생성 (다국어)
+        function getAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            const lang = currentLang;
+            
+            const responses = {
+                ko: {
+                    today: `오늘은 전반적으로 좋은 날입니다! ✨<br><br><strong>🌟 금전운:</strong> 예상치 못한 작은 행운이 있을 수 있어요.<br><strong>💖 연애운:</strong> 솔직한 대화가 관계를 더욱 돈독하게 만들 거예요.<br><strong>💼 직장운:</strong> 동료들과의 협력이 좋은 결과를 가져올 것입니다.<br><strong>⚠️ 주의사항:</strong> 오후 시간대에 중요한 결정은 피하세요.`,
+                    money: `💰 금전운에 대해 말씀드릴게요!<br><br>최근 들어 금전운이 상승하는 흐름입니다.<br>작은 투자나 새로운 도전을 고민하신다면 지금이 좋은 시기예요.<br><br><strong>💡 조언:</strong><br>• 충동적인 소비는 자제하세요<br>• 장기적인 재테크 계획을 세우시면 좋아요<br>• 이달 말까지 금전운이 계속 상승할 예정입니다`,
+                    love: `💕 연애운에 대해 알려드릴게요!<br><br>현재 연애운이 매우 좋은 시기입니다!<br>솔로라면 새로운 만남의 기회가 곧 찾아올 거예요.<br>연인이 있다면 관계가 한 단계 더 깊어질 수 있어요.<br><br><strong>💡 조언:</strong><br>• 적극적으로 나서보세요<br>• 솔직한 감정 표현이 중요해요<br>• 다음 주말이 특히 좋은 날입니다`,
+                    health: `💪 건강운에 대해 말씀드릴게요!<br><br>전반적으로 건강 상태가 양호합니다.<br>다만 최근 피로가 쌓여있을 수 있으니 충분한 휴식이 필요해요.<br><br><strong>💡 조언:</strong><br>• 규칙적인 운동을 시작하세요<br>• 수면 시간을 충분히 확보하세요<br>• 스트레스 관리에 신경 쓰세요`,
+                    default: `질문 감사합니다! 😊<br><br>더 정확한 답변을 위해 구체적으로 질문해주시면 좋아요.<br>예를 들어:<br>• "오늘의 운세가 궁금해요"<br>• "금전운을 알고 싶어요"<br>• "연애운이 궁금합니다"<br><br>또는 위의 빠른 질문 버튼을 클릭해보세요!`
+                },
+                en: {
+                    today: `Today is a great day overall! ✨<br><br><strong>🌟 Wealth:</strong> Unexpected small luck may come your way.<br><strong>💖 Love:</strong> Honest conversation will strengthen your relationship.<br><strong>💼 Career:</strong> Cooperation with colleagues will bring good results.<br><strong>⚠️ Caution:</strong> Avoid important decisions in the afternoon.`,
+                    money: `💰 About your wealth fortune!<br><br>Your financial luck is on the rise recently.<br>If you're considering small investments or new challenges, now is a good time.<br><br><strong>💡 Advice:</strong><br>• Avoid impulsive spending<br>• Make long-term financial plans<br>• Your wealth luck will continue to rise until the end of this month`,
+                    love: `💕 About your love fortune!<br><br>Your love luck is excellent right now!<br>Singles may soon meet someone special.<br>Couples can deepen their relationship.<br><br><strong>💡 Advice:</strong><br>• Be proactive<br>• Express your feelings honestly<br>• Next weekend is especially auspicious`,
+                    health: `💪 About your health fortune!<br><br>Your overall health condition is good.<br>However, you may have accumulated fatigue, so sufficient rest is needed.<br><br><strong>💡 Advice:</strong><br>• Start regular exercise<br>• Get enough sleep<br>• Pay attention to stress management`,
+                    default: `Thank you for your question! 😊<br><br>For more accurate answers, please be specific.<br>For example:<br>• "What's my fortune today?"<br>• "Tell me about my wealth luck"<br>• "How's my love fortune?"<br><br>Or try the quick question buttons above!`
+                },
+                zh: {
+                    today: `今天总体来说是个好日子！✨<br><br><strong>🌟 财运：</strong>可能会有意想不到的小幸运。<br><strong>💖 爱情运：</strong>坦诚的对话会让关系更加稳固。<br><strong>💼 事业运：</strong>与同事的合作会带来好结果。<br><strong>⚠️ 注意：</strong>避免在下午时段做重要决定。`,
+                    money: `💰 关于您的财运！<br><br>最近财运呈上升趋势。<br>如果您正在考虑小额投资或新的挑战，现在是个好时机。<br><br><strong>💡 建议：</strong><br>• 避免冲动消费<br>• 制定长期理财计划<br>• 本月底之前财运将持续上升`,
+                    love: `💕 关于您的爱情运！<br><br>目前爱情运非常好！<br>单身者可能很快会遇到特别的人。<br>有伴侣的可以加深关系。<br><br><strong>💡 建议：</strong><br>• 主动出击<br>• 诚实表达感情<br>• 下个周末特别吉利`,
+                    health: `💪 关于您的健康运！<br><br>整体健康状况良好。<br>但最近可能积累了疲劳，需要充分休息。<br><br><strong>💡 建议：</strong><br>• 开始定期运动<br>• 保证充足睡眠<br>• 注意压力管理`,
+                    default: `感谢您的提问！😊<br><br>为了更准确的回答，请具体说明。<br>例如：<br>• "今天的运势如何？"<br>• "我的财运怎么样？"<br>• "爱情运如何？"<br><br>或者点击上方的快速提问按钮！`
+                },
+                ja: {
+                    today: `今日は全体的に良い日です！✨<br><br><strong>🌟 金運：</strong>予想外の小さな幸運があるかもしれません。<br><strong>💖 恋愛運：</strong>正直な会話が関係をより強固にします。<br><strong>💼 仕事運：</strong>同僚との協力が良い結果をもたらすでしょう。<br><strong>⚠️ 注意：</strong>午後の時間帯に重要な決定は避けてください。`,
+                    money: `💰 金運についてお伝えします！<br><br>最近金運が上昇傾向にあります。<br>小額投資や新しい挑戦を考えているなら、今が良い時期です。<br><br><strong>💡 アドバイス：</strong><br>• 衝動的な支出は控えましょう<br>• 長期的な資産運用計画を立てましょう<br>• 今月末まで金運は上昇し続けます`,
+                    love: `💕 恋愛運についてお伝えします！<br><br>現在恋愛運が非常に良い時期です！<br>シングルなら特別な人との出会いが近いでしょう。<br>カップルなら関係がさらに深まります。<br><br><strong>💡 アドバイス：</strong><br>• 積極的に行動しましょう<br>• 正直に気持ちを表現しましょう<br>• 来週末が特に良い日です`,
+                    health: `💪 健康運についてお伝えします！<br><br>全体的に健康状態は良好です。<br>ただし最近疲労が蓄積している可能性があるので、十分な休息が必要です。<br><br><strong>💡 アドバイス：</strong><br>• 定期的な運動を始めましょう<br>• 十分な睡眠を確保しましょう<br>• ストレス管理に気を付けましょう`,
+                    default: `ご質問ありがとうございます！😊<br><br>より正確な回答のため、具体的にお聞きください。<br>例えば：<br>• "今日の運勢を教えて"<br>• "金運が知りたい"<br>• "恋愛運はどう？"<br><br>または上の質問ボタンをお試しください！`
+                }
+            };
+            
+            if (message.includes('today') || message.includes('오늘') || message.includes('今天') || message.includes('今日')) {
+                return responses[lang].today;
+            }
+            if (message.includes('money') || message.includes('금전') || message.includes('재물') || message.includes('财') || message.includes('金運')) {
+                return responses[lang].money;
+            }
+            if (message.includes('love') || message.includes('연애') || message.includes('사랑') || message.includes('爱情') || message.includes('恋愛')) {
+                return responses[lang].love;
+            }
+            if (message.includes('health') || message.includes('건강') || message.includes('健康')) {
+                return responses[lang].health;
+            }
+            
+            return responses[lang].default;
+        }
+
+        // 메시지 전송
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, true);
+            input.value = '';
+            
+            input.disabled = true;
+            document.getElementById('sendButton').disabled = true;
+            
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.add('active');
+            
+            setTimeout(() => {
+                typingIndicator.classList.remove('active');
+                const response = getAIResponse(message);
+                addMessage(response, false);
+                
+                input.disabled = false;
+                document.getElementById('sendButton').disabled = false;
+                input.focus();
+            }, 1000 + Math.random() * 1000);
+        }
+
+        // 빠른 질문
+        function sendQuickQuestion(index) {
+            const questions = translations[currentLang].quickQuestions;
+            document.getElementById('messageInput').value = questions[index];
+            sendMessage();
+        }
+
+        // 엔터키 처리
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // 채팅 초기화
+        function initializeChat() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // 기존 메시지 제거 (타이핑 인디케이터 제외)
+            while (messagesDiv.firstChild && messagesDiv.firstChild !== typingIndicator) {
+                messagesDiv.removeChild(messagesDiv.firstChild);
+            }
+            
+            // 환영 메시지 추가
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.className = 'message ai';
+            welcomeMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div>
+                    <div class="message-content">${translations[currentLang].welcome}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            messagesDiv.insertBefore(welcomeMsg, typingIndicator);
+        }
+
+        // 페이지 로드
+        window.onload = function() {
+            updateLanguage(currentLang);
+            document.getElementById('messageInput').focus();
+        };
+    </script>
+</body>
+</html>
