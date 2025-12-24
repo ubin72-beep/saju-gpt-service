@@ -4,31 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 꿈해몽 - AI 사주 천년지기</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f5f5f5; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* 네비게이션 */
+        .navbar { background: #1a1a1a; padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: #d4af37; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; }
+        .nav-menu a { color: rgba(255,255,255,0.9); text-decoration: none; transition: color 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { color: #d4af37; }
+        .btn-login { padding: 0.5rem 1.5rem; background: linear-gradient(135deg, #d4af37, #f4e5b5); color: #1a1a1a; border-radius: 20px; text-decoration: none; font-weight: 600; }
+        
+        /* 히어로 */
         .dream-hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 4rem 0; color: white; text-align: center; }
+        .dream-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        
+        /* 입력 영역 */
         .dream-input { background: white; border-radius: 20px; padding: 2rem; margin: -2rem auto 3rem; max-width: 700px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-        textarea { width: 100%; min-height: 150px; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; font-family: inherit; }
-        .btn-analyze { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
+        textarea { width: 100%; min-height: 150px; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; font-family: inherit; resize: vertical; }
+        textarea:focus { outline: none; border-color: #667eea; }
+        .btn-analyze { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: transform 0.3s; }
+        .btn-analyze:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+        
+        /* 결과 영역 */
         .result-card { background: white; border-radius: 15px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .dream-type-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; margin-bottom: 1rem; }
         .type-good { background: #d4edda; color: #155724; }
         .type-neutral { background: #d1ecf1; color: #0c5460; }
         .type-bad { background: #f8d7da; color: #721c24; }
+        .result-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #333; }
+        .result-card p { line-height: 1.8; color: #666; }
+        .advice-box { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; }
+        .advice-box h4 { color: #667eea; margin-bottom: 0.5rem; }
+        .advice-box p { color: #555; }
+        
+        /* 푸터 */
+        .footer { background: #1a1a1a; color: rgba(255,255,255,0.7); padding: 3rem 0; margin-top: 5rem; text-align: center; }
+        .footer-bottom p { margin-top: 1rem; }
+        
+        @media (max-width: 768px) {
+            .dream-hero h1 { font-size: 2rem; }
+            .nav-menu { display: none; }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
-            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
+            <a href="index.html" class="logo">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
                 <li><a href="dream.html" class="active">꿈해몽</a></li>
                 <li><a href="pricing.html">프리미엄</a></li>
             </ul>
-            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
+            <div class="nav-actions">
+                <a href="login.html" class="btn-login">로그인</a>
+            </div>
         </div>
     </nav>
 
@@ -43,17 +81,19 @@
         <div class="dream-input">
             <h3 style="margin-bottom: 1rem;">꿈 내용을 입력하세요</h3>
             <textarea id="dreamText" placeholder="예: 밤하늘에 별이 쏟아지는 꿈을 꿨어요"></textarea>
-            <button class="btn-analyze" onclick="analyzeDream()"><i class="fas fa-magic"></i> 꿈 해석하기</button>
+            <button class="btn-analyze" onclick="analyzeDream()">
+                <i class="fas fa-magic"></i> 꿈 해석하기
+            </button>
         </div>
 
         <div id="resultSection" style="display:none;">
             <div class="result-card">
                 <div class="dream-type-badge type-good" id="dreamType">길몽</div>
                 <h3 id="dreamTitle">별이 쏟아지는 꿈</h3>
-                <p id="dreamMeaning" style="line-height: 1.8; color: #666;"></p>
-                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
-                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">💡 실천 방법</h4>
-                    <p id="dreamAdvice" style="color: #555;"></p>
+                <p id="dreamMeaning"></p>
+                <div class="advice-box">
+                    <h4>💡 실천 방법</h4>
+                    <p id="dreamAdvice"></p>
                 </div>
             </div>
         </div>
@@ -61,26 +101,41 @@
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="terms.html" style="color: rgba(255,255,255,0.7); margin: 0 10px;">이용약관</a> |
+                    <a href="privacy.html" style="color: rgba(255,255,255,0.7); margin: 0 10px;">개인정보처리방침</a>
+                </p>
+            </div>
         </div>
     </footer>
 
-    <script src="js/page-handler.js"></script>
     <script>
         const DREAM_DATABASE = {
-            '별': { type: 'good', title: '별이 나오는 꿈', meaning: '희망과 행운을 상징합니다. 소원이 이루어질 길조입니다.', advice: '적극적으로 목표를 추구하세요.' },
-            '물': { type: 'good', title: '맑은 물 꿈', meaning: '재물운과 건강운이 좋아집니다.', advice: '투자나 사업 기회를 잡으세요.' },
-            '뱀': { type: 'good', title: '뱀이 나오는 꿈', meaning: '금전운과 승진운이 따릅니다.', advice: '중요한 결정을 내리기 좋은 시기입니다.' },
-            '돼지': { type: 'good', title: '돼지 꿈', meaning: '재물과 복이 들어옵니다.', advice: '복권이나 투자를 고려해보세요.' },
-            '불': { type: 'neutral', title: '불이 나는 꿈', meaning: '변화와 정화를 의미합니다.', advice: '새로운 시작을 준비하세요.' },
-            '죽음': { type: 'good', title: '죽음에 관한 꿈', meaning: '재생과 변화의 길조입니다.', advice: '두려워하지 말고 변화를 받아들이세요.' }
+            '별': { type: 'good', title: '별이 나오는 꿈', meaning: '희망과 행운을 상징합니다. 소원이 이루어질 길조입니다. 별은 우주의 에너지를 받아 긍정적인 변화가 찾아올 것을 암시합니다.', advice: '적극적으로 목표를 추구하세요. 지금이 도전하기 좋은 시기입니다.' },
+            '물': { type: 'good', title: '맑은 물 꿈', meaning: '재물운과 건강운이 좋아집니다. 맑은 물은 정화와 풍요를 의미하며, 좋은 기회가 다가올 징조입니다.', advice: '투자나 사업 기회를 잡으세요. 새로운 프로젝트를 시작하기 좋은 때입니다.' },
+            '뱀': { type: 'good', title: '뱀이 나오는 꿈', meaning: '금전운과 승진운이 따릅니다. 뱀은 지혜와 재물의 상징으로 큰 행운이 올 수 있습니다.', advice: '중요한 결정을 내리기 좋은 시기입니다. 자신감을 가지고 앞으로 나아가세요.' },
+            '돼지': { type: 'good', title: '돼지 꿈', meaning: '재물과 복이 들어옵니다. 돼지는 풍요와 번영의 상징으로 금전적 이득이 있을 것입니다.', advice: '복권이나 투자를 고려해보세요. 재정 관리에 신경 쓰면 좋은 결과가 있을 것입니다.' },
+            '불': { type: 'neutral', title: '불이 나는 꿈', meaning: '변화와 정화를 의미합니다. 불은 파괴와 재생을 동시에 상징하며, 새로운 시작을 알립니다.', advice: '새로운 시작을 준비하세요. 과거에 얽매이지 말고 앞으로 나아가세요.' },
+            '죽음': { type: 'good', title: '죽음에 관한 꿈', meaning: '재생과 변화의 길조입니다. 죽음은 끝이 아닌 새로운 시작을 의미합니다.', advice: '두려워하지 말고 변화를 받아들이세요. 긍정적인 마음으로 새로운 기회를 맞이하세요.' },
+            '비': { type: 'good', title: '비가 오는 꿈', meaning: '정화와 풍요를 의미합니다. 비는 땅을 적시고 생명을 주는 길조입니다.', advice: '마음을 정리하고 새로운 마음가짐으로 시작하세요.' },
+            '산': { type: 'good', title: '높은 산 꿈', meaning: '목표 달성과 성취를 상징합니다. 산을 오르는 꿈은 성공의 징조입니다.', advice: '큰 목표를 세우고 차근차근 나아가세요.' }
         };
 
         function analyzeDream() {
             const text = document.getElementById('dreamText').value.trim();
-            if (!text) { alert('꿈 내용을 입력해주세요.'); return; }
+            if (!text) { 
+                alert('꿈 내용을 입력해주세요.'); 
+                return; 
+            }
 
-            let result = { type: 'neutral', title: '특별한 꿈', meaning: '무의식의 메시지입니다. 최근 생각이나 감정을 반영합니다.', advice: '꿈에서 느낀 감정을 돌아보세요.' };
+            let result = { 
+                type: 'neutral', 
+                title: '특별한 꿈', 
+                meaning: '무의식의 메시지입니다. 최근 생각이나 감정을 반영하고 있습니다. 꿈은 우리의 내면이 전하는 중요한 신호입니다.', 
+                advice: '꿈에서 느낀 감정을 돌아보세요. 그 속에서 중요한 통찰을 얻을 수 있습니다.' 
+            };
 
             for (let keyword in DREAM_DATABASE) {
                 if (text.includes(keyword)) {
@@ -89,18 +144,22 @@
                 }
             }
 
-            document.getElementById('dreamType').textContent = result.type === 'good' ? '길몽' : result.type === 'bad' ? '흉몽' : '일반';
+            document.getElementById('dreamType').textContent = result.type === 'good' ? '길몽 🎉' : result.type === 'bad' ? '흉몽 ⚠️' : '일반 💭';
             document.getElementById('dreamType').className = `dream-type-badge type-${result.type}`;
             document.getElementById('dreamTitle').textContent = result.title;
             document.getElementById('dreamMeaning').textContent = result.meaning;
             document.getElementById('dreamAdvice').textContent = result.advice;
             
             document.getElementById('resultSection').style.display = 'block';
-            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    </script>
-        <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
 
+        // Enter 키로도 분석 가능
+        document.getElementById('dreamText').addEventListener('keypress', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                analyzeDream();
+            }
+        });
+    </script>
 </body>
 </html>
