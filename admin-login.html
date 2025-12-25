@@ -1,390 +1,384 @@
-1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>관리자 로그인 - AI 사주 천년지기</title>
-     7	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-     8	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     9	    <style>
-    10	        * {
-    11	            margin: 0;
-    12	            padding: 0;
-    13	            box-sizing: border-box;
-    14	        }
-    15	
-    16	        body {
-    17	            font-family: 'Noto Sans KR', sans-serif;
-    18	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    19	            min-height: 100vh;
-    20	            display: flex;
-    21	            align-items: center;
-    22	            justify-content: center;
-    23	            padding: 20px;
-    24	        }
-    25	
-    26	        .login-container {
-    27	            background: white;
-    28	            border-radius: 20px;
-    29	            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    30	            width: 100%;
-    31	            max-width: 450px;
-    32	            overflow: hidden;
-    33	        }
-    34	
-    35	        .login-header {
-    36	            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-    37	            padding: 3rem 2rem;
-    38	            text-align: center;
-    39	            color: white;
-    40	        }
-    41	
-    42	        .login-header i {
-    43	            font-size: 3rem;
-    44	            margin-bottom: 1rem;
-    45	            opacity: 0.9;
-    46	        }
-    47	
-    48	        .login-header h1 {
-    49	            font-size: 1.75rem;
-    50	            font-weight: 700;
-    51	            margin-bottom: 0.5rem;
-    52	        }
-    53	
-    54	        .login-header p {
-    55	            font-size: 0.9375rem;
-    56	            opacity: 0.9;
-    57	        }
-    58	
-    59	        .login-body {
-    60	            padding: 2.5rem 2rem;
-    61	        }
-    62	
-    63	        .form-group {
-    64	            margin-bottom: 1.5rem;
-    65	        }
-    66	
-    67	        .form-group label {
-    68	            display: block;
-    69	            margin-bottom: 0.5rem;
-    70	            font-weight: 500;
-    71	            color: #2c3e50;
-    72	            font-size: 0.9375rem;
-    73	        }
-    74	
-    75	        .input-group {
-    76	            position: relative;
-    77	        }
-    78	
-    79	        .input-group i {
-    80	            position: absolute;
-    81	            left: 1rem;
-    82	            top: 50%;
-    83	            transform: translateY(-50%);
-    84	            color: #9ca3af;
-    85	            font-size: 1.125rem;
-    86	        }
-    87	
-    88	        .form-control {
-    89	            width: 100%;
-    90	            padding: 1rem 1rem 1rem 3rem;
-    91	            border: 2px solid #e5e7eb;
-    92	            border-radius: 12px;
-    93	            font-size: 1rem;
-    94	            transition: all 0.3s ease;
-    95	        }
-    96	
-    97	        .form-control:focus {
-    98	            outline: none;
-    99	            border-color: #c41e3a;
-   100	            box-shadow: 0 0 0 4px rgba(196,30,58,0.1);
-   101	        }
-   102	
-   103	        .checkbox-group {
-   104	            display: flex;
-   105	            align-items: center;
-   106	            gap: 0.5rem;
-   107	            margin-bottom: 1.5rem;
-   108	        }
-   109	
-   110	        .checkbox-group input[type="checkbox"] {
-   111	            width: 18px;
-   112	            height: 18px;
-   113	            cursor: pointer;
-   114	        }
-   115	
-   116	        .checkbox-group label {
-   117	            font-size: 0.9375rem;
-   118	            color: #6b7280;
-   119	            cursor: pointer;
-   120	            margin: 0;
-   121	        }
-   122	
-   123	        .btn-login {
-   124	            width: 100%;
-   125	            padding: 1rem;
-   126	            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-   127	            color: white;
-   128	            border: none;
-   129	            border-radius: 12px;
-   130	            font-size: 1.0625rem;
-   131	            font-weight: 600;
-   132	            cursor: pointer;
-   133	            transition: all 0.3s ease;
-   134	            display: flex;
-   135	            align-items: center;
-   136	            justify-content: center;
-   137	            gap: 0.5rem;
-   138	        }
-   139	
-   140	        .btn-login:hover {
-   141	            transform: translateY(-2px);
-   142	            box-shadow: 0 10px 25px rgba(196,30,58,0.3);
-   143	        }
-   144	
-   145	        .btn-login:active {
-   146	            transform: translateY(0);
-   147	        }
-   148	
-   149	        .login-footer {
-   150	            text-align: center;
-   151	            padding: 1.5rem;
-   152	            background: #f9fafb;
-   153	            border-top: 1px solid #e5e7eb;
-   154	        }
-   155	
-   156	        .login-footer a {
-   157	            color: #c41e3a;
-   158	            text-decoration: none;
-   159	            font-weight: 500;
-   160	            transition: all 0.3s ease;
-   161	        }
-   162	
-   163	        .login-footer a:hover {
-   164	            color: #a01830;
-   165	            text-decoration: underline;
-   166	        }
-   167	
-   168	        .alert {
-   169	            padding: 1rem;
-   170	            border-radius: 12px;
-   171	            margin-bottom: 1.5rem;
-   172	            display: none;
-   173	        }
-   174	
-   175	        .alert.show {
-   176	            display: block;
-   177	            animation: slideDown 0.3s ease;
-   178	        }
-   179	
-   180	        .alert-danger {
-   181	            background: #fee2e2;
-   182	            color: #dc2626;
-   183	            border: 1px solid #fecaca;
-   184	        }
-   185	
-   186	        .alert-success {
-   187	            background: #d1fae5;
-   188	            color: #065f46;
-   189	            border: 1px solid #a7f3d0;
-   190	        }
-   191	
-   192	        @keyframes slideDown {
-   193	            from {
-   194	                opacity: 0;
-   195	                transform: translateY(-10px);
-   196	            }
-   197	            to {
-   198	                opacity: 1;
-   199	                transform: translateY(0);
-   200	            }
-   201	        }
-   202	
-   203	        .loading {
-   204	            display: inline-block;
-   205	            width: 18px;
-   206	            height: 18px;
-   207	            border: 3px solid rgba(255,255,255,0.3);
-   208	            border-top-color: white;
-   209	            border-radius: 50%;
-   210	            animation: spin 0.8s linear infinite;
-   211	        }
-   212	
-   213	        @keyframes spin {
-   214	            to { transform: rotate(360deg); }
-   215	        }
-   216	
-   217	        .demo-info {
-   218	            background: #fef3c7;
-   219	            border: 2px solid #fbbf24;
-   220	            border-radius: 12px;
-   221	            padding: 1rem;
-   222	            margin-bottom: 1.5rem;
-   223	            font-size: 0.875rem;
-   224	        }
-   225	
-   226	        .demo-info strong {
-   227	            color: #92400e;
-   228	            display: block;
-   229	            margin-bottom: 0.5rem;
-   230	        }
-   231	
-   232	        .demo-info code {
-   233	            background: white;
-   234	            padding: 0.25rem 0.5rem;
-   235	            border-radius: 4px;
-   236	            font-family: 'Courier New', monospace;
-   237	            color: #c41e3a;
-   238	        }
-   239	
-   240	        @media (max-width: 480px) {
-   241	            .login-header {
-   242	                padding: 2rem 1.5rem;
-   243	            }
-   244	
-   245	            .login-header h1 {
-   246	                font-size: 1.5rem;
-   247	            }
-   248	
-   249	            .login-body {
-   250	                padding: 2rem 1.5rem;
-   251	            }
-   252	        }
-   253	    </style>
-   254	</head>
-   255	<body>
-   256	    <div class="login-container">
-   257	        <div class="login-header">
-   258	            <i class="fas fa-shield-alt"></i>
-   259	            <h1>관리자 로그인</h1>
-   260	            <p>AI 사주 천년지기 관리 시스템</p>
-   261	        </div>
-   262	
-   263	        <div class="login-body">
-   264	            <!-- 데모 계정 안내 -->
-   265	            <div class="demo-info">
-   266	                <strong><i class="fas fa-info-circle"></i> 데모 계정 정보</strong>
-   267	                <div>ID: <code>admin</code></div>
-   268	                <div>비밀번호: <code>admin1234</code></div>
-   269	            </div>
-   270	
-   271	            <div class="alert alert-danger" id="errorAlert">
-   272	                <i class="fas fa-exclamation-circle"></i>
-   273	                <span id="errorMessage"></span>
-   274	            </div>
-   275	
-   276	            <form id="loginForm">
-   277	                <div class="form-group">
-   278	                    <label for="adminId">관리자 ID</label>
-   279	                    <div class="input-group">
-   280	                        <i class="fas fa-user"></i>
-   281	                        <input 
-   282	                            type="text" 
-   283	                            id="adminId" 
-   284	                            class="form-control" 
-   285	                            placeholder="관리자 ID를 입력하세요"
-   286	                            required
-   287	                            autocomplete="username"
-   288	                        >
-   289	                    </div>
-   290	                </div>
-   291	
-   292	                <div class="form-group">
-   293	                    <label for="adminPassword">비밀번호</label>
-   294	                    <div class="input-group">
-   295	                        <i class="fas fa-lock"></i>
-   296	                        <input 
-   297	                            type="password" 
-   298	                            id="adminPassword" 
-   299	                            class="form-control" 
-   300	                            placeholder="비밀번호를 입력하세요"
-   301	                            required
-   302	                            autocomplete="current-password"
-   303	                        >
-   304	                    </div>
-   305	                </div>
-   306	
-   307	                <div class="checkbox-group">
-   308	                    <input type="checkbox" id="rememberMe">
-   309	                    <label for="rememberMe">로그인 상태 유지</label>
-   310	                </div>
-   311	
-   312	                <button type="submit" class="btn-login" id="loginBtn">
-   313	                    <span>로그인</span>
-   314	                    <i class="fas fa-arrow-right"></i>
-   315	                </button>
-   316	            </form>
-   317	        </div>
-   318	
-   319	        <div class="login-footer">
-   320	            <a href="index.html">
-   321	                <i class="fas fa-arrow-left"></i> 메인 사이트로 돌아가기
-   322	            </a>
-   323	        </div>
-   324	    </div>
-   325	
-   326	    <!-- 관리자 인증 시스템 -->
-   327	    <script src="js/admin-auth.js"></script>
-   328	    
-   329	    <script>
-   330	        const loginForm = document.getElementById('loginForm');
-   331	        const loginBtn = document.getElementById('loginBtn');
-   332	        const errorAlert = document.getElementById('errorAlert');
-   333	        const errorMessage = document.getElementById('errorMessage');
-   334	
-   335	        // 페이지 로드 시 이미 로그인되어 있는지 확인
-   336	        window.addEventListener('DOMContentLoaded', () => {
-   337	            // 이미 로그인된 경우 관리자 페이지로 리다이렉션
-   338	            if (isAdminLoggedIn()) {
-   339	                window.location.href = 'admin/index.html';
-   340	            }
-   341	        });
-   342	
-   343	        loginForm.addEventListener('submit', async (e) => {
-   344	            e.preventDefault();
-   345	
-   346	            const username = document.getElementById('adminId').value;
-   347	            const password = document.getElementById('adminPassword').value;
-   348	            const rememberMe = document.getElementById('rememberMe').checked;
-   349	
-   350	            // 로딩 상태
-   351	            loginBtn.disabled = true;
-   352	            loginBtn.innerHTML = '<div class="loading"></div><span>로그인 중...</span>';
-   353	            
-   354	            // 에러 메시지 숨김
-   355	            errorAlert.classList.remove('show');
-   356	
-   357	            // 로그인 처리 (admin-auth.js 사용)
-   358	            setTimeout(() => {
-   359	                const result = adminLogin(username, password);
-   360	
-   361	                if (result.success) {
-   362	                    // 로그인 성공
-   363	                    if (rememberMe) {
-   364	                        localStorage.setItem('admin_remember', 'true');
-   365	                    }
-   366	
-   367	                    // 성공 메시지
-   368	                    errorAlert.className = 'alert alert-success show';
-   369	                    errorMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${result.message} 관리자 페이지로 이동합니다...`;
-   370	
-   371	                    // 관리자 페이지로 이동
-   372	                    setTimeout(() => {
-   373	                        window.location.href = 'admin/index.html';
-   374	                    }, 1000);
-   375	                } else {
-   376	                    // 로그인 실패
-   377	                    errorAlert.className = 'alert alert-danger show';
-   378	                    errorMessage.textContent = result.message;
-   379	                    
-   380	                    loginBtn.disabled = false;
-   381	                    loginBtn.innerHTML = '<span>로그인</span><i class="fas fa-arrow-right"></i>';
-   382	                }
-   383	            }, 800);
-   384	        });
-   385	
-   386	        console.log('✅ 관리자 로그인 페이지 로드 완료');
-   387	        console.log('🔐 기본 관리자 계정: admin / admin1234');
-   388	    </script>
-   389	</body>
-   390	</html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 로그인 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .login-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .login-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 0.9375rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.125rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #c41e3a;
+            box-shadow: 0 0 0 4px rgba(196,30,58,0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 0.9375rem;
+            color: #6b7280;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.0625rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(196,30,58,0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .login-footer a {
+            color: #c41e3a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: #a01830;
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .login-body {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-shield-alt"></i>
+            <h1>관리자 로그인</h1>
+            <p>AI 사주 천년지기 관리 시스템</p>
+        </div>
+
+        <div class="login-body">
+            <div class="alert alert-danger" id="errorAlert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMessage"></span>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminId">관리자 ID</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input 
+                            type="text" 
+                            id="adminId" 
+                            class="form-control" 
+                            placeholder="관리자 ID를 입력하세요"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">비밀번호</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="adminPassword" 
+                            class="form-control" 
+                            placeholder="비밀번호를 입력하세요"
+                            required
+                            autocomplete="current-password"
+                        >
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">로그인 상태 유지</label>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <span>로그인</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i> 메인 사이트로 돌아가기
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorAlert = document.getElementById('errorAlert');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // 기본 관리자 계정 (보안 강화: 콘솔에만 표시)
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin1234'
+        };
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('adminId').value;
+            const password = document.getElementById('adminPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // 로딩 상태
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<div class="loading"></div><span>로그인 중...</span>';
+            
+            // 에러 메시지 숨김
+            errorAlert.classList.remove('show');
+
+            // 로그인 검증
+            setTimeout(() => {
+                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                    // 로그인 성공
+                    const sessionData = {
+                        name: '관리자',
+                        role: 'admin',
+                        loginTime: new Date().toISOString(),
+                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24시간
+                    };
+
+                    // 세션 저장
+                    if (rememberMe) {
+                        localStorage.setItem('adminSession', JSON.stringify(sessionData));
+                    } else {
+                        sessionStorage.setItem('adminSession', JSON.stringify(sessionData));
+                    }
+
+                    // 성공 메시지
+                    errorAlert.className = 'alert alert-success show';
+                    errorMessage.innerHTML = '<i class="fas fa-check-circle"></i> 로그인 성공! 관리자 페이지로 이동합니다...';
+
+                    // 관리자 페이지로 이동
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                } else {
+                    // 로그인 실패
+                    errorAlert.className = 'alert alert-danger show';
+                    errorMessage.textContent = '❌ 아이디 또는 비밀번호가 올바르지 않습니다.';
+                    
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<span>로그인</span><i class="fas fa-arrow-right"></i>';
+                }
+            }, 800);
+        });
+
+        // 페이지 로드 시 이미 로그인되어 있는지 확인
+        window.addEventListener('DOMContentLoaded', () => {
+            const session = localStorage.getItem('adminSession') || sessionStorage.getItem('adminSession');
+            
+            if (session) {
+                try {
+                    const data = JSON.parse(session);
+                    const expiresAt = new Date(data.expiresAt);
+                    
+                    // 세션이 유효하면 자동 리다이렉트
+                    if (expiresAt > new Date()) {
+                        window.location.href = 'admin.html';
+                    }
+                } catch (error) {
+                    // 세션 오류 시 삭제
+                    localStorage.removeItem('adminSession');
+                    sessionStorage.removeItem('adminSession');
+                }
+            }
+        });
+
+        console.log('✅ 관리자 로그인 페이지 로드 완료');
+        console.log('🔐 보안 강화: 데모 계정 정보는 콘솔에서만 확인 가능');
+    </script>
+</body>
+</html>
