@@ -1,350 +1,1239 @@
-1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>관리자 대시보드 - AI 사주 천년지기</title>
-     7	    <link rel="stylesheet" href="css/style.css">
-     8	    <link rel="stylesheet" href="css/admin.css">
-     9	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    10	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    11	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    12	</head>
-    13	<body class="admin-body">
-    14	    <!-- 사이드바 -->
-    15	    <aside class="admin-sidebar" id="adminSidebar">
-    16	        <div class="sidebar-header">
-    17	            <div class="logo">
-    18	                <i class="fas fa-yin-yang"></i>
-    19	                <span>관리자</span>
-    20	            </div>
-    21	            <button class="sidebar-toggle" id="sidebarToggle">
-    22	                <i class="fas fa-bars"></i>
-    23	            </button>
-    24	        </div>
-    25	
-    26	        <nav class="sidebar-nav">
-    27	            <a href="#dashboard" class="nav-item active" data-section="dashboard">
-    28	                <i class="fas fa-chart-line"></i>
-    29	                <span>대시보드</span>
-    30	            </a>
-    31	            <a href="#users" class="nav-item" data-section="users">
-    32	                <i class="fas fa-users"></i>
-    33	                <span>사용자 관리</span>
-    34	            </a>
-    35	            <a href="#orders" class="nav-item" data-section="orders">
-    36	                <i class="fas fa-shopping-cart"></i>
-    37	                <span>주문 관리</span>
-    38	            </a>
-    39	            <a href="#products" class="nav-item" data-section="products">
-    40	                <i class="fas fa-box"></i>
-    41	                <span>상품 관리</span>
-    42	            </a>
-    43	            <a href="#promotions" class="nav-item" data-section="promotions">
-    44	                <i class="fas fa-gift"></i>
-    45	                <span>프로모션</span>
-    46	            </a>
-    47	            <a href="#analytics" class="nav-item" data-section="analytics">
-    48	                <i class="fas fa-chart-pie"></i>
-    49	                <span>분석 리포트</span>
-    50	            </a>
-    51	            <a href="#settings" class="nav-item" data-section="settings">
-    52	                <i class="fas fa-cog"></i>
-    53	                <span>설정</span>
-    54	            </a>
-    55	        </nav>
-    56	
-    57	        <div class="sidebar-footer">
-    58	            <button onclick="handleLogout()" class="btn-back" style="width: 100%; border: none; background: rgba(255,255,255,0.1); cursor: pointer;">
-    59	                <i class="fas fa-sign-out-alt"></i>
-    60	                <span>로그아웃</span>
-    61	            </button>
-    62	        </div>
-    63	    </aside>
-    64	
-    65	    <!-- 메인 콘텐츠 -->
-    66	    <main class="admin-main">
-    67	        <!-- 헤더 -->
-    68	        <header class="admin-header">
-    69	            <div class="header-left">
-    70	                <button class="mobile-menu-btn" id="mobileMenuBtn">
-    71	                    <i class="fas fa-bars"></i>
-    72	                </button>
-    73	                <h1 id="pageTitle">대시보드</h1>
-    74	            </div>
-    75	            <div class="header-right">
-    76	                <div class="search-box">
-    77	                    <i class="fas fa-search"></i>
-    78	                    <input type="text" placeholder="검색...">
-    79	                </div>
-    80	                <button class="notification-btn">
-    81	                    <i class="fas fa-bell"></i>
-    82	                    <span class="badge">5</span>
-    83	                </button>
-    84	                <div class="user-menu" onclick="handleLogout()" style="cursor: pointer;" title="로그아웃">
-    85	                    <img src="https://ui-avatars.com/api/?name=Admin&background=c41e3a&color=fff" alt="Admin">
-    86	                    <span>관리자</span>
-    87	                    <i class="fas fa-sign-out-alt"></i>
-    88	                </div>
-    89	            </div>
-    90	        </header>
-    91	
-    92	        <!-- 대시보드 섹션 -->
-    93	        <section class="admin-section active" id="dashboardSection">
-    94	            <div class="container-fluid">
-    95	                <!-- 통계 카드 -->
-    96	                <div class="stats-grid">
-    97	                    <div class="stat-card">
-    98	                        <div class="stat-icon revenue">
-    99	                            <i class="fas fa-won-sign"></i>
-   100	                        </div>
-   101	                        <div class="stat-content">
-   102	                            <h3>오늘 매출</h3>
-   103	                            <p class="stat-value" id="todayRevenue">₩1,234,000</p>
-   104	                            <span class="stat-change positive">
-   105	                                <i class="fas fa-arrow-up"></i> 12.5%
-   106	                            </span>
-   107	                        </div>
-   108	                    </div>
-   109	
-   110	                    <div class="stat-card">
-   111	                        <div class="stat-icon users">
-   112	                            <i class="fas fa-users"></i>
-   113	                        </div>
-   114	                        <div class="stat-content">
-   115	                            <h3>신규 사용자</h3>
-   116	                            <p class="stat-value" id="newUsers">328</p>
-   117	                            <span class="stat-change positive">
-   118	                                <i class="fas fa-arrow-up"></i> 8.2%
-   119	                            </span>
-   120	                        </div>
-   121	                    </div>
-   122	
-   123	                    <div class="stat-card">
-   124	                        <div class="stat-icon orders">
-   125	                            <i class="fas fa-shopping-cart"></i>
-   126	                        </div>
-   127	                        <div class="stat-content">
-   128	                            <h3>오늘 주문</h3>
-   129	                            <p class="stat-value" id="todayOrders">142</p>
-   130	                            <span class="stat-change negative">
-   131	                                <i class="fas fa-arrow-down"></i> 3.1%
-   132	                            </span>
-   133	                        </div>
-   134	                    </div>
-   135	
-   136	                    <div class="stat-card">
-   137	                        <div class="stat-icon conversion">
-   138	                            <i class="fas fa-percentage"></i>
-   139	                        </div>
-   140	                        <div class="stat-content">
-   141	                            <h3>전환율</h3>
-   142	                            <p class="stat-value" id="conversionRate">3.8%</p>
-   143	                            <span class="stat-change positive">
-   144	                                <i class="fas fa-arrow-up"></i> 0.4%
-   145	                            </span>
-   146	                        </div>
-   147	                    </div>
-   148	                </div>
-   149	
-   150	                <!-- 차트 -->
-   151	                <div class="charts-grid">
-   152	                    <div class="chart-card">
-   153	                        <div class="card-header">
-   154	                            <h3>매출 추이 (최근 7일)</h3>
-   155	                            <select class="chart-select">
-   156	                                <option>최근 7일</option>
-   157	                                <option>최근 30일</option>
-   158	                                <option>최근 90일</option>
-   159	                            </select>
-   160	                        </div>
-   161	                        <div class="chart-container">
-   162	                            <canvas id="revenueChart"></canvas>
-   163	                        </div>
-   164	                    </div>
-   165	
-   166	                    <div class="chart-card">
-   167	                        <div class="card-header">
-   168	                            <h3>상품별 판매 비율</h3>
-   169	                        </div>
-   170	                        <div class="chart-container">
-   171	                            <canvas id="productChart"></canvas>
-   172	                        </div>
-   173	                    </div>
-   174	                </div>
-   175	
-   176	                <!-- 최근 주문 -->
-   177	                <div class="table-card">
-   178	                    <div class="card-header">
-   179	                        <h3>최근 주문</h3>
-   180	                        <button class="btn-secondary">전체 보기</button>
-   181	                    </div>
-   182	                    <div class="table-responsive">
-   183	                        <table class="admin-table">
-   184	                            <thead>
-   185	                                <tr>
-   186	                                    <th>주문번호</th>
-   187	                                    <th>고객명</th>
-   188	                                    <th>상품</th>
-   189	                                    <th>금액</th>
-   190	                                    <th>상태</th>
-   191	                                    <th>일시</th>
-   192	                                    <th>액션</th>
-   193	                                </tr>
-   194	                            </thead>
-   195	                            <tbody id="recentOrdersTable">
-   196	                                <!-- JavaScript로 채워짐 -->
-   197	                            </tbody>
-   198	                        </table>
-   199	                    </div>
-   200	                </div>
-   201	            </div>
-   202	        </section>
-   203	
-   204	        <!-- 사용자 관리 섹션 -->
-   205	        <section class="admin-section" id="usersSection">
-   206	            <div class="container-fluid">
-   207	                <div class="section-header">
-   208	                    <h2>사용자 관리</h2>
-   209	                    <div class="header-actions">
-   210	                        <button class="btn-secondary">
-   211	                            <i class="fas fa-download"></i> CSV 내보내기
-   212	                        </button>
-   213	                        <button class="btn-primary">
-   214	                            <i class="fas fa-plus"></i> 사용자 추가
-   215	                        </button>
-   216	                    </div>
-   217	                </div>
-   218	
-   219	                <!-- 필터 -->
-   220	                <div class="filters">
-   221	                    <input type="text" class="filter-input" placeholder="이름, 이메일 검색...">
-   222	                    <select class="filter-select">
-   223	                        <option>전체 구독</option>
-   224	                        <option>무료</option>
-   225	                        <option>월 구독</option>
-   226	                        <option>연 구독</option>
-   227	                    </select>
-   228	                    <select class="filter-select">
-   229	                        <option>가입일순</option>
-   230	                        <option>최근 활동순</option>
-   231	                        <option>구매액순</option>
-   232	                    </select>
-   233	                </div>
-   234	
-   235	                <!-- 사용자 테이블 -->
-   236	                <div class="table-card">
-   237	                    <div class="table-responsive">
-   238	                        <table class="admin-table">
-   239	                            <thead>
-   240	                                <tr>
-   241	                                    <th><input type="checkbox" id="selectAll"></th>
-   242	                                    <th>ID</th>
-   243	                                    <th>이름</th>
-   244	                                    <th>이메일</th>
-   245	                                    <th>구독</th>
-   246	                                    <th>가입일</th>
-   247	                                    <th>총 구매액</th>
-   248	                                    <th>상태</th>
-   249	                                    <th>액션</th>
-   250	                                </tr>
-   251	                            </thead>
-   252	                            <tbody id="usersTable">
-   253	                                <!-- JavaScript로 채워짐 -->
-   254	                            </tbody>
-   255	                        </table>
-   256	                    </div>
-   257	                    <div class="pagination" id="usersPagination">
-   258	                        <!-- JavaScript로 채워짐 -->
-   259	                    </div>
-   260	                </div>
-   261	            </div>
-   262	        </section>
-   263	
-   264	        <!-- 주문 관리 섹션 -->
-   265	        <section class="admin-section" id="ordersSection">
-   266	            <div class="container-fluid">
-   267	                <div class="section-header">
-   268	                    <h2>주문 관리</h2>
-   269	                    <div class="header-actions">
-   270	                        <button class="btn-secondary">
-   271	                            <i class="fas fa-download"></i> CSV 내보내기
-   272	                        </button>
-   273	                    </div>
-   274	                </div>
-   275	
-   276	                <!-- 주문 통계 -->
-   277	                <div class="order-stats">
-   278	                    <div class="order-stat-item">
-   279	                        <h4>대기중</h4>
-   280	                        <p class="stat-number">12</p>
-   281	                    </div>
-   282	                    <div class="order-stat-item">
-   283	                        <h4>처리중</h4>
-   284	                        <p class="stat-number">28</p>
-   285	                    </div>
-   286	                    <div class="order-stat-item">
-   287	                        <h4>완료</h4>
-   288	                        <p class="stat-number">1,234</p>
-   289	                    </div>
-   290	                    <div class="order-stat-item">
-   291	                        <h4>환불</h4>
-   292	                        <p class="stat-number">5</p>
-   293	                    </div>
-   294	                </div>
-   295	
-   296	                <!-- 주문 테이블 -->
-   297	                <div class="table-card">
-   298	                    <div class="filters">
-   299	                        <input type="text" class="filter-input" placeholder="주문번호, 고객명 검색...">
-   300	                        <select class="filter-select">
-   301	                            <option>전체 상태</option>
-   302	                            <option>대기중</option>
-   303	                            <option>처리중</option>
-   304	                            <option>완료</option>
-   305	                            <option>환불</option>
-   306	                        </select>
-   307	                        <input type="date" class="filter-input" placeholder="시작일">
-   308	                        <input type="date" class="filter-input" placeholder="종료일">
-   309	                    </div>
-   310	
-   311	                    <div class="table-responsive">
-   312	                        <table class="admin-table">
-   313	                            <thead>
-   314	                                <tr>
-   315	                                    <th>주문번호</th>
-   316	                                    <th>고객</th>
-   317	                                    <th>상품</th>
-   318	                                    <th>금액</th>
-   319	                                    <th>결제방법</th>
-   320	                                    <th>상태</th>
-   321	                                    <th>주문일시</th>
-   322	                                    <th>액션</th>
-   323	                                </tr>
-   324	                            </thead>
-   325	                            <tbody id="ordersTable">
-   326	                                <!-- JavaScript로 채워짐 -->
-   327	                            </tbody>
-   328	                        </table>
-   329	                    </div>
-   330	                    <div class="pagination" id="ordersPagination"></div>
-   331	                </div>
-   332	            </div>
-   333	        </section>
-   334	
-   335	        <!-- 상품 관리 섹션 -->
-   336	        <section class="admin-section" id="productsSection">
-   337	            <div class="container-fluid">
-   338	                <div class="section-header">
-   339	                    <h2>상품 관리</h2>
-   340	                    <button class="btn-primary">
-   341	                        <i class="fas fa-plus"></i> 상품 추가
-   342	                    </button>
-   343	                </div>
-   344	
-   345	                <div class="products-grid">
-   346	                    <div class="product-card">
-   347	                        <div class="product-header">
-   348	                            <span class="badge badge-success">활성</span>
-   349	                        </div>
-   350	                        <h3>AI 운세 상담</h3>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+                <span>관리자</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span>대시보드</span>
+            </a>
+            <a href="#users" class="nav-item" data-section="users">
+                <i class="fas fa-users"></i>
+                <span>사용자 관리</span>
+            </a>
+            <a href="#orders" class="nav-item" data-section="orders">
+                <i class="fas fa-shopping-cart"></i>
+                <span>주문 관리</span>
+            </a>
+            <a href="#products" class="nav-item" data-section="products">
+                <i class="fas fa-box"></i>
+                <span>상품 관리</span>
+            </a>
+            <a href="#promotions" class="nav-item" data-section="promotions">
+                <i class="fas fa-gift"></i>
+                <span>프로모션</span>
+            </a>
+            <a href="#analytics" class="nav-item" data-section="analytics">
+                <i class="fas fa-chart-pie"></i>
+                <span>분석 리포트</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>설정</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button onclick="handleLogout()" class="btn-back" style="width: 100%; border: none; background: rgba(255,255,255,0.1); cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>로그아웃</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">대시보드</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="검색...">
+                </div>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">5</span>
+                </button>
+                <div class="user-menu" onclick="handleLogout()" style="cursor: pointer;" title="로그아웃">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=c41e3a&color=fff" alt="Admin">
+                    <span>관리자</span>
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- 대시보드 섹션 -->
+        <section class="admin-section active" id="dashboardSection">
+            <div class="container-fluid">
+                <!-- 통계 카드 -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-won-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>오늘 매출</h3>
+                            <p class="stat-value" id="todayRevenue">₩1,234,000</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 12.5%
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>신규 사용자</h3>
+                            <p class="stat-value" id="newUsers">328</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 8.2%
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orders">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>오늘 주문</h3>
+                            <p class="stat-value" id="todayOrders">142</p>
+                            <span class="stat-change negative">
+                                <i class="fas fa-arrow-down"></i> 3.1%
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon conversion">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>전환율</h3>
+                            <p class="stat-value" id="conversionRate">3.8%</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 0.4%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 차트 -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>매출 추이 (최근 7일)</h3>
+                            <select class="chart-select">
+                                <option>최근 7일</option>
+                                <option>최근 30일</option>
+                                <option>최근 90일</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>상품별 판매 비율</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="productChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 최근 주문 -->
+                <div class="table-card">
+                    <div class="card-header">
+                        <h3>최근 주문</h3>
+                        <button class="btn-secondary">전체 보기</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>주문번호</th>
+                                    <th>고객명</th>
+                                    <th>상품</th>
+                                    <th>금액</th>
+                                    <th>상태</th>
+                                    <th>일시</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable">
+                                <!-- JavaScript로 채워짐 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 사용자 관리 섹션 -->
+        <section class="admin-section" id="usersSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>사용자 관리</h2>
+                    <div class="header-actions">
+                        <button class="btn-secondary">
+                            <i class="fas fa-download"></i> CSV 내보내기
+                        </button>
+                        <button class="btn-primary">
+                            <i class="fas fa-plus"></i> 사용자 추가
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 필터 -->
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="이름, 이메일 검색...">
+                    <select class="filter-select">
+                        <option>전체 구독</option>
+                        <option>무료</option>
+                        <option>월 구독</option>
+                        <option>연 구독</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>가입일순</option>
+                        <option>최근 활동순</option>
+                        <option>구매액순</option>
+                    </select>
+                </div>
+
+                <!-- 사용자 테이블 -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll"></th>
+                                    <th>ID</th>
+                                    <th>이름</th>
+                                    <th>이메일</th>
+                                    <th>구독</th>
+                                    <th>가입일</th>
+                                    <th>총 구매액</th>
+                                    <th>상태</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <!-- JavaScript로 채워짐 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="usersPagination">
+                        <!-- JavaScript로 채워짐 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 주문 관리 섹션 -->
+        <section class="admin-section" id="ordersSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>주문 관리</h2>
+                    <div class="header-actions">
+                        <button class="btn-secondary">
+                            <i class="fas fa-download"></i> CSV 내보내기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 주문 통계 -->
+                <div class="order-stats">
+                    <div class="order-stat-item">
+                        <h4>대기중</h4>
+                        <p class="stat-number">12</p>
+                    </div>
+                    <div class="order-stat-item">
+                        <h4>처리중</h4>
+                        <p class="stat-number">28</p>
+                    </div>
+                    <div class="order-stat-item">
+                        <h4>완료</h4>
+                        <p class="stat-number">1,234</p>
+                    </div>
+                    <div class="order-stat-item">
+                        <h4>환불</h4>
+                        <p class="stat-number">5</p>
+                    </div>
+                </div>
+
+                <!-- 주문 테이블 -->
+                <div class="table-card">
+                    <div class="filters">
+                        <input type="text" class="filter-input" placeholder="주문번호, 고객명 검색...">
+                        <select class="filter-select">
+                            <option>전체 상태</option>
+                            <option>대기중</option>
+                            <option>처리중</option>
+                            <option>완료</option>
+                            <option>환불</option>
+                        </select>
+                        <input type="date" class="filter-input" placeholder="시작일">
+                        <input type="date" class="filter-input" placeholder="종료일">
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>주문번호</th>
+                                    <th>고객</th>
+                                    <th>상품</th>
+                                    <th>금액</th>
+                                    <th>결제방법</th>
+                                    <th>상태</th>
+                                    <th>주문일시</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <!-- JavaScript로 채워짐 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="ordersPagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 상품 관리 섹션 -->
+        <section class="admin-section" id="productsSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>상품 관리</h2>
+                    <button class="btn-primary">
+                        <i class="fas fa-plus"></i> 상품 추가
+                    </button>
+                </div>
+
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-header">
+                            <span class="badge badge-success">활성</span>
+                        </div>
+                        <h3>AI 운세 상담</h3>
+                        <p class="product-price">₩9,900 / 월</p>
+                        <div class="product-stats">
+                            <div>
+                                <span>판매량</span>
+                                <strong>1,234</strong>
+                            </div>
+                            <div>
+                                <span>매출</span>
+                                <strong>₩12.2M</strong>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-sm btn-secondary">수정</button>
+                            <button class="btn-sm btn-danger">비활성</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <span class="badge badge-success">활성</span>
+                        </div>
+                        <h3>상세 사주팔자</h3>
+                        <p class="product-price">₩4,900</p>
+                        <div class="product-stats">
+                            <div>
+                                <span>판매량</span>
+                                <strong>2,567</strong>
+                            </div>
+                            <div>
+                                <span>매출</span>
+                                <strong>₩12.6M</strong>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-sm btn-secondary">수정</button>
+                            <button class="btn-sm btn-danger">비활성</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <span class="badge badge-success">활성</span>
+                        </div>
+                        <h3>이사/결혼 택일</h3>
+                        <p class="product-price">₩5,900</p>
+                        <div class="product-stats">
+                            <div>
+                                <span>판매량</span>
+                                <strong>892</strong>
+                            </div>
+                            <div>
+                                <span>매출</span>
+                                <strong>₩5.3M</strong>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-sm btn-secondary">수정</button>
+                            <button class="btn-sm btn-danger">비활성</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <span class="badge badge-success">활성</span>
+                        </div>
+                        <h3>정밀 궁합</h3>
+                        <p class="product-price">₩9,900</p>
+                        <div class="product-stats">
+                            <div>
+                                <span>판매량</span>
+                                <strong>1,456</strong>
+                            </div>
+                            <div>
+                                <span>매출</span>
+                                <strong>₩14.4M</strong>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-sm btn-secondary">수정</button>
+                            <button class="btn-sm btn-danger">비활성</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 프로모션 섹션 -->
+        <section class="admin-section" id="promotionsSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>프로모션 관리</h2>
+                    <button class="btn-primary" id="createPromoBtn">
+                        <i class="fas fa-plus"></i> 프로모션 생성
+                    </button>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>코드</th>
+                                    <th>설명</th>
+                                    <th>할인</th>
+                                    <th>사용/제한</th>
+                                    <th>시작일</th>
+                                    <th>종료일</th>
+                                    <th>상태</th>
+                                    <th>액션</th>
+                                </tr>
+                            </thead>
+                            <tbody id="promotionsTable">
+                                <!-- JavaScript로 채워짐 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 분석 리포트 섹션 -->
+        <section class="admin-section" id="analyticsSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>분석 리포트</h2>
+                    <div class="header-actions">
+                        <select class="filter-select">
+                            <option>오늘</option>
+                            <option>최근 7일</option>
+                            <option>최근 30일</option>
+                            <option>최근 90일</option>
+                        </select>
+                        <button class="btn-secondary">
+                            <i class="fas fa-download"></i> 리포트 다운로드
+                        </button>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>트래픽 분석</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trafficChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>사용자 활동</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주요 지표 -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>평균 세션 시간</h4>
+                        <p class="metric-value">4분 32초</p>
+                        <span class="metric-trend positive">+12%</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>이탈률</h4>
+                        <p class="metric-value">42.5%</p>
+                        <span class="metric-trend negative">-5%</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>페이지뷰</h4>
+                        <p class="metric-value">52,340</p>
+                        <span class="metric-trend positive">+18%</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>방문자수</h4>
+                        <p class="metric-value">12,456</p>
+                        <span class="metric-trend positive">+8%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 설정 섹션 -->
+        <section class="admin-section" id="settingsSection">
+            <div class="container-fluid">
+                <div class="section-header">
+                    <h2>설정</h2>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-globe"></i> 사이트 설정</h3>
+                        <div class="form-group">
+                            <label>사이트 이름</label>
+                            <input type="text" value="AI 사주 천년지기" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>사이트 URL</label>
+                            <input type="text" value="https://saju2026.com" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>관리자 이메일</label>
+                            <input type="email" value="admin@saju2026.com" class="form-control">
+                        </div>
+                        <button class="btn-primary">저장</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-credit-card"></i> 결제 설정</h3>
+                        <div class="form-group">
+                            <label>토스페이먼츠 클라이언트 키</label>
+                            <input type="text" placeholder="test_ck_..." class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>토스페이먼츠 시크릿 키</label>
+                            <input type="password" placeholder="test_sk_..." class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> 테스트 모드
+                            </label>
+                        </div>
+                        <button class="btn-primary">저장</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-envelope"></i> 이메일 설정</h3>
+                        <div class="form-group">
+                            <label>SMTP 호스트</label>
+                            <input type="text" placeholder="smtp.gmail.com" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>SMTP 포트</label>
+                            <input type="number" value="587" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>발신 이메일</label>
+                            <input type="email" placeholder="noreply@saju2026.com" class="form-control">
+                        </div>
+                        <button class="btn-primary">저장</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-robot"></i> AI 설정</h3>
+                        <div class="form-group">
+                            <label>OpenAI API 키</label>
+                            <input type="password" placeholder="sk-..." class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>모델</label>
+                            <select class="form-control">
+                                <option>gpt-4</option>
+                                <option selected>gpt-3.5-turbo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>무료 질문 수</label>
+                            <input type="number" value="3" class="form-control">
+                        </div>
+                        <button class="btn-primary">저장</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 프로모션 생성 모달 -->
+    <div class="modal" id="promoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>프로모션 생성</h2>
+                <button class="modal-close" id="closePromoModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>프로모션 코드</label>
+                    <input type="text" class="form-control" placeholder="WELCOME2026">
+                </div>
+                <div class="form-group">
+                    <label>설명</label>
+                    <input type="text" class="form-control" placeholder="신규 가입 환영 할인">
+                </div>
+                <div class="form-group">
+                    <label>할인 유형</label>
+                    <select class="form-control">
+                        <option>퍼센트 할인</option>
+                        <option>고정 금액 할인</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>할인 값</label>
+                    <input type="number" class="form-control" placeholder="30">
+                </div>
+                <div class="form-group">
+                    <label>사용 제한</label>
+                    <input type="number" class="form-control" placeholder="100">
+                </div>
+                <div class="form-group">
+                    <label>시작일</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>종료일</label>
+                    <input type="date" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelPromoModal">취소</button>
+                <button class="btn-primary">생성</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 세션 체크 스크립트 (admin.js 이전에 실행) -->
+    <script>
+        /**
+         * 관리자 세션 체크
+         * 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+         */
+        (function() {
+            // 세션 확인
+            const session = localStorage.getItem('adminSession') || 
+                           sessionStorage.getItem('adminSession');
+            
+            if (!session) {
+                // 세션 없음 - 로그인 페이지로
+                alert('⚠️ 관리자 로그인이 필요합니다.');
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            try {
+                const data = JSON.parse(session);
+                const expiresAt = new Date(data.expiresAt);
+                
+                // 세션 만료 체크
+                if (expiresAt <= new Date()) {
+                    localStorage.removeItem('adminSession');
+                    sessionStorage.removeItem('adminSession');
+                    alert('⏰ 세션이 만료되었습니다. 다시 로그인해주세요.');
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+
+                // 세션 유효 - 사용자 정보 표시
+                console.log('✅ 관리자 로그인 확인:', data.name, `(${data.role})`);
+                
+                // 헤더에 사용자 이름 표시
+                document.addEventListener('DOMContentLoaded', () => {
+                    const userMenu = document.querySelector('.user-menu span');
+                    if (userMenu) {
+                        userMenu.textContent = data.name;
+                    }
+                });
+
+            } catch (error) {
+                console.error('세션 파싱 오류:', error);
+                localStorage.removeItem('adminSession');
+                sessionStorage.removeItem('adminSession');
+                window.location.href = 'admin-login.html';
+            }
+        })();
+
+        /**
+         * 로그아웃 처리
+         */
+        function handleLogout() {
+            if (confirm('정말 로그아웃하시겠습니까?')) {
+                localStorage.removeItem('adminSession');
+                sessionStorage.removeItem('adminSession');
+                alert('✅ 로그아웃되었습니다.');
+                window.location.href = 'admin-login.html';
+            }
+        }
+    </script>
+
+    <!-- RESTful Table API 연동 스크립트 -->
+    <script>
+        /**
+         * RESTful Table API 헬퍼 함수
+         */
+        const API = {
+            async get(table, params = {}) {
+                const query = new URLSearchParams(params).toString();
+                const url = `tables/${table}${query ? '?' + query : ''}`;
+                const response = await fetch(url);
+                return await response.json();
+            },
+            
+            async getById(table, id) {
+                const response = await fetch(`tables/${table}/${id}`);
+                return await response.json();
+            },
+            
+            async create(table, data) {
+                const response = await fetch(`tables/${table}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                return await response.json();
+            },
+            
+            async update(table, id, data) {
+                const response = await fetch(`tables/${table}/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                return await response.json();
+            },
+            
+            async delete(table, id) {
+                const response = await fetch(`tables/${table}/${id}`, {
+                    method: 'DELETE'
+                });
+                return response.ok;
+            }
+        };
+
+        /**
+         * 대시보드 데이터 로드
+         */
+        async function loadDashboardData() {
+            try {
+                // 오늘 통계 로드
+                const today = new Date().toISOString().split('T')[0];
+                const todayStats = await API.get('daily_stats', { search: today, limit: 1 });
+                
+                if (todayStats.data && todayStats.data.length > 0) {
+                    const stats = todayStats.data[0];
+                    document.getElementById('todayRevenue').textContent = `₩${stats.daily_revenue.toLocaleString()}`;
+                    document.getElementById('newUsers').textContent = stats.daily_new_users;
+                    document.getElementById('todayOrders').textContent = stats.daily_orders;
+                    document.getElementById('conversionRate').textContent = `${stats.conversion_rate}%`;
+                }
+
+                // 최근 7일 통계 로드 (차트용)
+                const last7Days = await API.get('daily_stats', { limit: 7, sort: '-date' });
+                if (last7Days.data) {
+                    updateRevenueChart(last7Days.data.reverse());
+                }
+
+                // 최근 주문 로드
+                const recentOrders = await API.get('orders', { limit: 10, sort: '-order_date' });
+                if (recentOrders.data) {
+                    updateRecentOrdersTable(recentOrders.data);
+                }
+
+                // 서비스별 판매 통계
+                const services = await API.get('services');
+                if (services.data) {
+                    updateProductChart(services.data);
+                }
+
+            } catch (error) {
+                console.error('대시보드 데이터 로드 오류:', error);
+                alert('❌ 데이터를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+
+        /**
+         * 매출 차트 업데이트 (Chart.js)
+         */
+        function updateRevenueChart(data) {
+            const ctx = document.getElementById('revenueChart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => {
+                        const date = new Date(d.date);
+                        return `${date.getMonth() + 1}/${date.getDate()}`;
+                    }),
+                    datasets: [{
+                        label: '매출 (₩)',
+                        data: data.map(d => d.daily_revenue),
+                        borderColor: '#c41e3a',
+                        backgroundColor: 'rgba(196, 30, 58, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₩' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 상품별 판매 비율 차트 업데이트
+         */
+        function updateProductChart(services) {
+            const ctx = document.getElementById('productChart');
+            if (!ctx) return;
+
+            const paidServices = services.filter(s => s.price > 0);
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: paidServices.map(s => s.name),
+                    datasets: [{
+                        data: paidServices.map(s => s.total_sales),
+                        backgroundColor: [
+                            '#c41e3a',
+                            '#d4af37',
+                            '#4CAF50',
+                            '#2196F3',
+                            '#FF9800',
+                            '#9C27B0'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 최근 주문 테이블 업데이트
+         */
+        function updateRecentOrdersTable(orders) {
+            const tbody = document.getElementById('recentOrdersTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>${order.order_number}</td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.service_name}</td>
+                    <td>₩${order.amount.toLocaleString()}</td>
+                    <td><span class="badge badge-${getStatusBadgeClass(order.status)}">${order.status}</span></td>
+                    <td>${formatDate(order.order_date)}</td>
+                    <td>
+                        <button class="btn-icon" onclick="viewOrder('${order.id}')" title="보기">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-icon" onclick="editOrder('${order.id}')" title="수정">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        /**
+         * 상태별 뱃지 클래스 반환
+         */
+        function getStatusBadgeClass(status) {
+            const statusMap = {
+                '완료': 'success',
+                '처리중': 'warning',
+                '취소': 'danger',
+                '환불': 'secondary'
+            };
+            return statusMap[status] || 'secondary';
+        }
+
+        /**
+         * 날짜 포맷팅
+         */
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        /**
+         * 주문 보기
+         */
+        function viewOrder(orderId) {
+            alert(`주문 ID: ${orderId} 상세 보기 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 주문 수정
+         */
+        function editOrder(orderId) {
+            alert(`주문 ID: ${orderId} 수정 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 페이지 로드 시 데이터 로드
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 관리자 대시보드 초기화');
+            loadDashboardData();
+            
+            // 사이드바 네비게이션 이벤트
+            setupNavigation();
+        });
+
+        /**
+         * 사이드바 네비게이션 설정
+         */
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 활성 상태 변경
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 섹션 전환
+                    const sectionName = this.getAttribute('data-section');
+                    showSection(sectionName);
+                });
+            });
+        }
+
+        /**
+         * 섹션 표시
+         */
+        function showSection(sectionName) {
+            // 모든 섹션 숨김
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 선택한 섹션 표시
+            const targetSection = document.getElementById(sectionName + 'Section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // 페이지 제목 변경
+                const titles = {
+                    'dashboard': '대시보드',
+                    'users': '사용자 관리',
+                    'orders': '주문 관리',
+                    'products': '상품 관리',
+                    'promotions': '프로모션',
+                    'analytics': '분석 리포트',
+                    'settings': '설정'
+                };
+                document.getElementById('pageTitle').textContent = titles[sectionName] || '관리자';
+                
+                // 섹션별 데이터 로드
+                switch(sectionName) {
+                    case 'users':
+                        loadUsersData();
+                        break;
+                    case 'orders':
+                        loadOrdersData();
+                        break;
+                    case 'products':
+                        loadProductsData();
+                        break;
+                }
+            }
+        }
+
+        /**
+         * 사용자 관리 데이터 로드
+         */
+        async function loadUsersData() {
+            try {
+                const usersData = await API.get('users', { limit: 20, sort: '-created_at' });
+                
+                if (usersData.data) {
+                    updateUsersTable(usersData.data);
+                }
+            } catch (error) {
+                console.error('사용자 데이터 로드 오류:', error);
+            }
+        }
+
+        /**
+         * 사용자 테이블 업데이트
+         */
+        function updateUsersTable(users) {
+            const tbody = document.getElementById('usersTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td><input type="checkbox" value="${user.id}"></td>
+                    <td>${user.id.substring(0, 8)}...</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td><span class="badge badge-${getMembershipBadge(user.membership)}">${user.membership}</span></td>
+                    <td>${formatDateShort(user.created_at)}</td>
+                    <td>₩${user.total_spent.toLocaleString()}</td>
+                    <td><span class="badge badge-${user.status === '활성' ? 'success' : 'secondary'}">${user.status}</span></td>
+                    <td>
+                        <button class="btn-icon" onclick="viewUser('${user.id}')" title="보기">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-icon" onclick="editUser('${user.id}')" title="수정">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" onclick="deleteUser('${user.id}')" title="삭제">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        /**
+         * 회원등급별 뱃지 클래스
+         */
+        function getMembershipBadge(membership) {
+            const badgeMap = {
+                '무료': 'secondary',
+                '프리미엄': 'warning',
+                'VIP': 'success'
+            };
+            return badgeMap[membership] || 'secondary';
+        }
+
+        /**
+         * 날짜 포맷팅 (짧게)
+         */
+        function formatDateShort(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        /**
+         * 사용자 보기
+         */
+        function viewUser(userId) {
+            alert(`사용자 ID: ${userId} 상세 보기 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 사용자 수정
+         */
+        function editUser(userId) {
+            alert(`사용자 ID: ${userId} 수정 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 사용자 삭제
+         */
+        async function deleteUser(userId) {
+            if (confirm('정말 이 사용자를 삭제하시겠습니까?')) {
+                try {
+                    await API.delete('users', userId);
+                    alert('✅ 사용자가 삭제되었습니다.');
+                    loadUsersData();
+                } catch (error) {
+                    console.error('사용자 삭제 오류:', error);
+                    alert('❌ 사용자 삭제에 실패했습니다.');
+                }
+            }
+        }
+
+        /**
+         * 주문 관리 데이터 로드
+         */
+        async function loadOrdersData() {
+            try {
+                const ordersData = await API.get('orders', { limit: 50, sort: '-order_date' });
+                
+                if (ordersData.data) {
+                    updateOrdersTable(ordersData.data);
+                }
+            } catch (error) {
+                console.error('주문 데이터 로드 오류:', error);
+            }
+        }
+
+        /**
+         * 주문 테이블 업데이트
+         */
+        function updateOrdersTable(orders) {
+            const tbody = document.querySelector('#ordersSection .admin-table tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td><input type="checkbox" value="${order.id}"></td>
+                    <td>${order.order_number}</td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.service_name}</td>
+                    <td>₩${order.amount.toLocaleString()}</td>
+                    <td><span class="badge badge-${getStatusBadgeClass(order.status)}">${order.status}</span></td>
+                    <td>${formatDate(order.order_date)}</td>
+                    <td>
+                        <button class="btn-icon" onclick="viewOrder('${order.id}')" title="보기">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-icon" onclick="updateOrderStatus('${order.id}')" title="상태 변경">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        /**
+         * 주문 상태 변경
+         */
+        function updateOrderStatus(orderId) {
+            alert(`주문 ID: ${orderId} 상태 변경 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 상품 관리 데이터 로드
+         */
+        async function loadProductsData() {
+            try {
+                const productsData = await API.get('services');
+                
+                if (productsData.data) {
+                    updateProductsTable(productsData.data);
+                }
+            } catch (error) {
+                console.error('상품 데이터 로드 오류:', error);
+            }
+        }
+
+        /**
+         * 상품 테이블 업데이트
+         */
+        function updateProductsTable(products) {
+            const tbody = document.querySelector('#productsSection .admin-table tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td><input type="checkbox" value="${product.id}"></td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>₩${product.price.toLocaleString()}</td>
+                    <td>₩${product.discount_price.toLocaleString()}</td>
+                    <td>${product.total_sales}</td>
+                    <td>₩${product.total_revenue.toLocaleString()}</td>
+                    <td><span class="badge badge-${product.status === '활성' ? 'success' : 'secondary'}">${product.status}</span></td>
+                    <td>
+                        <button class="btn-icon" onclick="editProduct('${product.id}')" title="수정">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" onclick="toggleProductStatus('${product.id}')" title="활성화/비활성화">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        /**
+         * 상품 수정
+         */
+        function editProduct(productId) {
+            alert(`상품 ID: ${productId} 수정 기능은 곧 추가됩니다.`);
+        }
+
+        /**
+         * 상품 활성화/비활성화
+         */
+        function toggleProductStatus(productId) {
+            alert(`상품 ID: ${productId} 상태 변경 기능은 곧 추가됩니다.`);
+        }
+    </script>
+
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
