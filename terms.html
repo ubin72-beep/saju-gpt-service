@@ -1,239 +1,163 @@
-# 📋 terms.html 완전 교체 가이드
+# 🧹 모든 법적 페이지 줄 번호 제거 완료 가이드
 
-## 🚨 문제 원인 확인됨!
+## 📋 **작업 대상 파일**
 
-**원인**: terms.html 파일에 줄 번호가 실제 텍스트로 포함되어 있음
+1. ✅ **terms.html** (이용약관) - 완료
+2. ⏳ **privacy.html** (개인정보처리방침) - 대기
+3. ⏳ **refund.html** (환불정책) - 대기
 
 ---
 
-## 🛠️ 해결 방법
+## 🎯 **해결 방법**
 
-### 1단계: 기존 파일 확인
+### **방법 1: 먼저 확인하기**
 
-https://github.com/ubin72-beep/saju-gpt-service/blob/main/terms.html
+각 페이지를 시크릿 모드로 열어서 줄 번호가 보이는지 확인:
 
-"Raw" 버튼을 눌러서 원본 파일을 확인하세요.
+```
+Ctrl + Shift + N (시크릿 모드)
+```
 
-**만약 이렇게 보인다면 문제 확인**:
+**확인 URL:**
+- https://ubin72-beep.github.io/saju-gpt-service/privacy.html
+- https://ubin72-beep.github.io/saju-gpt-service/refund.html
+
+**만약 줄 번호가 보이면** → 아래 방법으로 수정
+
+**만약 정상이면** → 수정 불필요! ✅
+
+---
+
+### **방법 2: GitHub에서 파일 교체**
+
+#### **privacy.html 교체:**
+
+1. https://github.com/ubin72-beep/saju-gpt-service/blob/main/privacy.html
+2. **연필 아이콘 (Edit)** 클릭
+3. **전체 내용 삭제** (Ctrl + A → Delete)
+4. **privacy-CLEAN.html 내용 복사 붙여넣기**
+5. **"Commit changes"** 클릭
+
+#### **refund.html 교체:**
+
+1. https://github.com/ubin72-beep/saju-gpt-service/blob/main/refund.html
+2. **연필 아이콘 (Edit)** 클릭
+3. **전체 내용 삭제** (Ctrl + A → Delete)
+4. **refund-CLEAN.html 내용 복사 붙여넣기**
+5. **"Commit changes"** 클릭
+
+---
+
+## 📁 **생성된 깨끗한 파일**
+
+### 1️⃣ **privacy-CLEAN.html**
+- ✅ 줄 번호 없음
+- ✅ 보라색 그라데이션 배경
+- ✅ 8개 조항 포함
+- ✅ 목차 링크 작동
+- ✅ 연락처 정보 포함
+
+### 2️⃣ **refund-CLEAN.html**
+- ✅ 줄 번호 없음
+- ✅ 보라색 그라데이션 배경
+- ✅ 환불 기준 표 포함
+- ✅ 8개 조항 포함
+- ✅ 연락처 정보 포함
+
+---
+
+## 🚀 **배포 순서**
+
+### **1단계: 확인**
+```
+시크릿 모드로 각 페이지 확인
+줄 번호가 보이는 페이지만 수정
+```
+
+### **2단계: 수정**
+```
+GitHub에서 파일 Edit
+전체 내용 삭제
+깨끗한 코드 붙여넣기
+Commit
+```
+
+### **3단계: 배포 대기**
+```
+GitHub Actions 실행 (1-2분)
+✅ 초록색 체크 확인
+```
+
+### **4단계: 최종 확인**
+```
+Ctrl + Shift + R (강제 새로고침)
+시크릿 모드로 다시 확인
+줄 번호 사라짐 확인 ✅
+```
+
+---
+
+## ✅ **체크리스트**
+
+### **수정 전 확인:**
+- [ ] privacy.html 줄 번호 확인
+- [ ] refund.html 줄 번호 확인
+
+### **수정 필요 시:**
+- [ ] privacy.html 파일 교체
+- [ ] refund.html 파일 교체
+- [ ] GitHub Actions ✅ 확인
+- [ ] 배포 완료 대기 (1-2분)
+
+### **수정 후 확인:**
+- [ ] privacy.html 정상 렌더링
+- [ ] refund.html 정상 렌더링
+- [ ] 줄 번호 사라짐
+- [ ] 스타일 정상 적용
+- [ ] 목차 링크 작동
+
+---
+
+## 🎨 **예상 결과**
+
+### **Before (문제):**
 ```
 18
 19        AI 사주 천년지기
 20
 21
+...
+개인정보처리방침
+```
+
+### **After (해결):**
+```
+[보라색 그라데이션 배경]
+[하얀 카드]
+[빨간색 제목: 개인정보처리방침]
+[시행일자: 2025년 1월 1일]
+[목차 (회색 박스)]
+[깔끔한 조항들]
 ```
 
 ---
 
-### 2단계: 파일 교체
+## 📞 **문의**
 
-#### 방법 A: GitHub 웹에서 직접 수정
+만약 수정 중 문제가 발생하면:
 
-1. https://github.com/ubin72-beep/saju-gpt-service/blob/main/terms.html
-2. **연필 아이콘** (Edit) 클릭
-3. **전체 내용 삭제** (Ctrl + A → Delete)
-4. **아래의 깨끗한 코드 복사해서 붙여넣기**
-5. **"Commit changes"** 클릭
+1. **GitHub Actions 탭 확인**
+   - https://github.com/ubin72-beep/saju-gpt-service/actions
+   - 빨간색 X가 있는지 확인
 
-#### 방법 B: 파일 삭제 후 재생성
+2. **에러 메시지 확인**
+   - Actions에서 실패한 워크플로우 클릭
+   - 에러 로그 확인
 
-1. terms.html 삭제
-2. "Create new file" 클릭
-3. 파일 이름: `terms.html`
-4. 아래 코드 복사 붙여넣기
-5. "Commit new file" 클릭
-
----
-
-## ✅ 깨끗한 terms.html 코드
-
-```html
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이용약관 - AI 사주 천년지기</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 60px 50px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 3px solid #c41e3a;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            color: #c41e3a;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        .header p { color: #666; font-size: 1.1rem; }
-        .toc {
-            background: #f8f9fa;
-            border-left: 5px solid #c41e3a;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-        }
-        .toc h3 {
-            color: #c41e3a;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        .toc ol { padding-left: 20px; }
-        .toc li { margin-bottom: 12px; line-height: 1.6; }
-        .toc a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .toc a:hover { color: #c41e3a; }
-        .content h2 {
-            color: #333;
-            font-size: 1.8rem;
-            margin: 40px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
-            font-weight: 600;
-        }
-        .content p {
-            color: #666;
-            line-height: 1.9;
-            margin-bottom: 15px;
-            font-size: 1.05rem;
-        }
-        .footer {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 2px solid #e0e0e0;
-            text-align: center;
-        }
-        .footer p { color: #999; margin-bottom: 15px; }
-        .footer a {
-            color: #c41e3a;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 12px 30px;
-            background: #f8f9fa;
-            border-radius: 50px;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        .footer a:hover {
-            background: #c41e3a;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
-        }
-        @media (max-width: 768px) {
-            .container { padding: 40px 30px; }
-            .header h1 { font-size: 2rem; }
-            .content h2 { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>이용약관</h1>
-            <p><strong>시행일자:</strong> 2025년 1월 1일</p>
-        </div>
-
-        <div class="toc">
-            <h3>📜 목차</h3>
-            <ol>
-                <li><a href="#article1">제1조 (목적)</a></li>
-                <li><a href="#article2">제2조 (정의)</a></li>
-                <li><a href="#article3">제3조 (약관의 효력 및 변경)</a></li>
-                <li><a href="#article4">제4조 (서비스의 제공)</a></li>
-                <li><a href="#article5">제5조 (이용자의 의무)</a></li>
-                <li><a href="#article6">제6조 (개인정보 보호)</a></li>
-                <li><a href="#article7">제7조 (면책조항)</a></li>
-                <li><a href="#article8">제8조 (준거법 및 재판관할)</a></li>
-            </ol>
-        </div>
-
-        <div class="content">
-            <h2 id="article1">제1조 (목적)</h2>
-            <p>이 약관은 AI 사주 천년지기(이하 "회사")가 제공하는 사주팔자 운세 서비스(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
-
-            <h2 id="article2">제2조 (정의)</h2>
-            <p>1. "서비스"란 회사가 제공하는 사주팔자, AI 상담, 토정비결, 궁합 등 명리학 기반 운세 콘텐츠를 의미합니다.</p>
-            <p>2. "이용자"란 본 약관에 동의하고 회사가 제공하는 서비스를 이용하는 회원 및 비회원을 말합니다.</p>
-            <p>3. "회원"이란 회사와 서비스 이용계약을 체결하고 아이디와 비밀번호를 부여받은 자를 말합니다.</p>
-
-            <h2 id="article3">제3조 (약관의 효력 및 변경)</h2>
-            <p>1. 본 약관은 서비스 화면에 게시하거나 기타의 방법으로 공지함으로써 효력이 발생합니다.</p>
-            <p>2. 회사는 필요한 경우 관련 법령을 위배하지 않는 범위에서 본 약관을 변경할 수 있습니다.</p>
-
-            <h2 id="article4">제4조 (서비스의 제공)</h2>
-            <p>회사는 다음과 같은 서비스를 제공합니다:</p>
-            <p>• 사주팔자 자동 계산 및 해석</p>
-            <p>• AI 기반 운세 상담</p>
-            <p>• 토정비결, 궁합, 신년운세</p>
-            <p>• 기타 명리학 관련 콘텐츠</p>
-
-            <h2 id="article5">제5조 (이용자의 의무)</h2>
-            <p>이용자는 서비스 이용 시 다음 행위를 하여서는 안 됩니다:</p>
-            <p>• 타인의 정보 도용</p>
-            <p>• 허위 정보 입력</p>
-            <p>• 회사의 지적 재산권 침해</p>
-            <p>• 서비스 운영 방해</p>
-
-            <h2 id="article6">제6조 (개인정보 보호)</h2>
-            <p>회사는 관련 법령이 정하는 바에 따라 이용자의 개인정보를 보호하기 위해 노력합니다. 개인정보의 처리는 별도의 개인정보처리방침에 따릅니다.</p>
-
-            <h2 id="article7">제7조 (면책조항)</h2>
-            <p>1. 본 서비스에서 제공하는 운세 정보는 참고 자료이며, 회사는 이를 통해 발생하는 어떠한 결과에 대해서도 책임을 지지 않습니다.</p>
-            <p>2. 이용자는 본인의 판단과 책임하에 서비스를 이용하여야 합니다.</p>
-
-            <h2 id="article8">제8조 (준거법 및 재판관할)</h2>
-            <p>1. 본 약관의 해석 및 적용은 대한민국 법령을 따릅니다.</p>
-            <p>2. 서비스 이용과 관련한 분쟁은 회사 본사 소재지 관할 법원의 전속관할로 합니다.</p>
-        </div>
-
-        <div class="footer">
-            <p><strong>문의:</strong> privacy@aisaju1000.com | 전화: 02-1234-5678</p>
-            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
-            <a href="index.html">← 메인으로 돌아가기</a>
-        </div>
-    </div>
-</body>
-</html>
-```
-
----
-
-## 🚀 배포 후 확인
-
-1-2분 후 다시 접속:
-```
-https://ubin72-beep.github.io/saju-gpt-service/terms.html
-```
-
-**예상 결과**:
-- ❌ 줄 번호 사라짐
-- ✅ 보라색 그라데이션 배경
-- ✅ 하얀 카드 형태
-- ✅ 빨간색 제목
-- ✅ 깔끔한 레이아웃
-
----
-
-**이 방법으로 100% 해결됩니다!** 🎉
+3. **브라우저 캐시 완전 삭제**
+   ```
+   Chrome: Ctrl + Shift + Delete
+   → 전체 기간 선택
+   → "캐시된 이미지 및 파일" 체크
+   → "데이터 삭제"
+   ```
