@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 등록 - AI 궁합 매칭 | AI 사주 천년지기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .step-circle {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .progress-step.completed .step-circle {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gender-option:hover {
+            border-color: #f5576c;
+            background: #fff5f5;
+        }
+
+        .gender-option input {
+            display: none;
+        }
+
+        .gender-option.selected {
+            border-color: #f5576c;
+            background: #fff5f5;
+        }
+
+        .photo-upload {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .photo-upload:hover {
+            border-color: #f5576c;
+            background: #fff5f5;
+        }
+
+        .photo-upload i {
+            font-size: 3rem;
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+
+        .photo-preview {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .photo-preview img {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-prev:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-next,
+        .btn-submit {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-next:hover,
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        .saju-result {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .saju-result h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .saju-pillars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pillar {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .pillar-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .pillar-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f5576c;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .saju-pillars {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💑 궁합 매칭 프로필 등록</h1>
+            <p>운명의 짝을 만나기 위한 첫 걸음!</p>
+        </div>
+
+        <!-- 진행 상태 바 -->
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">기본정보</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">사주정보</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">자기소개</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">사진등록</div>
+            </div>
+        </div>
+
+        <form id="registerForm">
+            <!-- Step 1: 기본정보 -->
+            <div class="form-section active" data-section="1">
+                <h2>기본정보</h2>
+                <div class="form-group">
+                    <label>닉네임 *</label>
+                    <input type="text" id="nickname" required placeholder="궁합 매칭에 사용될 닉네임">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>나이 *</label>
+                        <input type="number" id="age" required placeholder="예: 28">
+                    </div>
+                    <div class="form-group">
+                        <label>지역 *</label>
+                        <select id="region" required>
+                            <option value="">선택하세요</option>
+                            <option value="서울">서울</option>
+                            <option value="경기">경기</option>
+                            <option value="인천">인천</option>
+                            <option value="부산">부산</option>
+                            <option value="대구">대구</option>
+                            <option value="광주">광주</option>
+                            <option value="대전">대전</option>
+                            <option value="울산">울산</option>
+                            <option value="세종">세종</option>
+                            <option value="강원">강원</option>
+                            <option value="충북">충북</option>
+                            <option value="충남">충남</option>
+                            <option value="전북">전북</option>
+                            <option value="전남">전남</option>
+                            <option value="경북">경북</option>
+                            <option value="경남">경남</option>
+                            <option value="제주">제주</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>성별 *</label>
+                    <div class="gender-options">
+                        <div class="gender-option" onclick="selectGender('male')">
+                            <input type="radio" name="gender" value="male" id="male">
+                            <label for="male" style="cursor: pointer;">👨 남성</label>
+                        </div>
+                        <div class="gender-option" onclick="selectGender('female')">
+                            <input type="radio" name="gender" value="female" id="female">
+                            <label for="female" style="cursor: pointer;">👩 여성</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: 사주정보 -->
+            <div class="form-section" data-section="2">
+                <h2>사주정보</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>생년월일 *</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>출생시간 *</label>
+                        <select id="birthHour" required>
+                            <option value="">선택하세요</option>
+                            <option value="23">자시 (23:30~01:29)</option>
+                            <option value="01">축시 (01:30~03:29)</option>
+                            <option value="03">인시 (03:30~05:29)</option>
+                            <option value="05">묘시 (05:30~07:29)</option>
+                            <option value="07">진시 (07:30~09:29)</option>
+                            <option value="09">사시 (09:30~11:29)</option>
+                            <option value="11">오시 (11:30~13:29)</option>
+                            <option value="13">미시 (13:30~15:29)</option>
+                            <option value="15">신시 (15:30~17:29)</option>
+                            <option value="17">유시 (17:30~19:29)</option>
+                            <option value="19">술시 (19:30~21:29)</option>
+                            <option value="21">해시 (21:30~23:29)</option>
+                            <option value="unknown">모름</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>음력/양력 *</label>
+                    <div class="gender-options">
+                        <div class="gender-option" onclick="selectCalendar('solar')">
+                            <input type="radio" name="calendar" value="solar" id="solar">
+                            <label for="solar" style="cursor: pointer;">☀️ 양력</label>
+                        </div>
+                        <div class="gender-option" onclick="selectCalendar('lunar')">
+                            <input type="radio" name="calendar" value="lunar" id="lunar">
+                            <label for="lunar" style="cursor: pointer;">🌙 음력</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-next" onclick="calculateSaju()" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-calculator"></i> 사주 계산하기
+                </button>
+                <div id="sajuResult" class="saju-result" style="display: none;">
+                    <h3>🔮 사주팔자 결과</h3>
+                    <div class="saju-pillars">
+                        <div class="pillar">
+                            <div class="pillar-label">년주</div>
+                            <div class="pillar-value" id="yearPillar">-</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">월주</div>
+                            <div class="pillar-value" id="monthPillar">-</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">일주</div>
+                            <div class="pillar-value" id="dayPillar">-</div>
+                        </div>
+                        <div class="pillar">
+                            <div class="pillar-label">시주</div>
+                            <div class="pillar-value" id="hourPillar">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: 자기소개 -->
+            <div class="form-section" data-section="3">
+                <h2>자기소개</h2>
+                <div class="form-group">
+                    <label>한 줄 소개 *</label>
+                    <input type="text" id="shortIntro" required placeholder="나를 한 줄로 표현해주세요" maxlength="50">
+                    <small style="color: #999;">최대 50자</small>
+                </div>
+                <div class="form-group">
+                    <label>상세 소개 *</label>
+                    <textarea id="longIntro" required placeholder="나의 성격, 취미, 이상형 등을 자유롭게 작성해주세요" maxlength="500"></textarea>
+                    <small style="color: #999;">최대 500자</small>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>직업</label>
+                        <input type="text" id="job" placeholder="예: IT 개발자">
+                    </div>
+                    <div class="form-group">
+                        <label>취미</label>
+                        <input type="text" id="hobby" placeholder="예: 등산, 독서, 영화">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: 사진등록 -->
+            <div class="form-section" data-section="4">
+                <h2>프로필 사진</h2>
+                <div class="form-group">
+                    <label>대표 사진 *</label>
+                    <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+                        <i class="fas fa-camera"></i>
+                        <p>클릭하여 사진 업로드</p>
+                        <small style="color: #999;">얼굴이 잘 보이는 사진을 권장합니다</small>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="previewPhoto(this)">
+                    <div class="photo-preview" id="photoPreview">
+                        <img id="previewImg" src="" alt="미리보기">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        개인정보 수집 및 이용에 동의합니다
+                    </label>
+                </div>
+            </div>
+
+            <!-- 버튼 그룹 -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-prev" onclick="prevStep()" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> 이전
+                </button>
+                <button type="button" class="btn btn-next" onclick="nextStep()">
+                    다음 <i class="fas fa-arrow-right"></i>
+                </button>
+                <button type="submit" class="btn btn-submit" style="display: none;">
+                    <i class="fas fa-check"></i> 프로필 등록 완료
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let sajuData = null;
+
+        // 성별 선택
+        function selectGender(gender) {
+            document.getElementById(gender).checked = true;
+            document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.closest('.gender-option').classList.add('selected');
+        }
+
+        // 음력/양력 선택
+        function selectCalendar(type) {
+            document.getElementById(type).checked = true;
+            document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.closest('.gender-option').classList.add('selected');
+        }
+
+        // 사주 계산
+        function calculateSaju() {
+            const birthDate = document.getElementById('birthDate').value;
+            const birthHour = document.getElementById('birthHour').value;
+            const calendar = document.querySelector('input[name="calendar"]:checked')?.value;
+
+            if (!birthDate || !birthHour || !calendar) {
+                alert('생년월일, 출생시간, 음력/양력을 모두 선택해주세요.');
+                return;
+            }
+
+            // 간단한 사주 계산 (실제로는 복잡한 계산 필요)
+            const heavenlyStems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+            const earthlyBranches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+            
+            const year = new Date(birthDate).getFullYear();
+            const month = new Date(birthDate).getMonth();
+            const day = new Date(birthDate).getDate();
+            
+            sajuData = {
+                year: heavenlyStems[year % 10] + earthlyBranches[year % 12],
+                month: heavenlyStems[month % 10] + earthlyBranches[month % 12],
+                day: heavenlyStems[day % 10] + earthlyBranches[day % 12],
+                hour: heavenlyStems[parseInt(birthHour) % 10] + earthlyBranches[parseInt(birthHour) / 2 % 12]
+            };
+
+            document.getElementById('yearPillar').textContent = sajuData.year;
+            document.getElementById('monthPillar').textContent = sajuData.month;
+            document.getElementById('dayPillar').textContent = sajuData.day;
+            document.getElementById('hourPillar').textContent = sajuData.hour;
+            document.getElementById('sajuResult').style.display = 'block';
+        }
+
+        // 다음 단계
+        function nextStep() {
+            // 현재 단계 유효성 검사
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            if (currentStep < 4) {
+                currentStep++;
+                updateStep();
+            }
+        }
+
+        // 이전 단계
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+            }
+        }
+
+        // 단계 업데이트
+        function updateStep() {
+            // 섹션 표시/숨김
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelector(`.form-section[data-section="${currentStep}"]`).classList.add('active');
+
+            // 진행 상태 업데이트
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 < currentStep) {
+                    step.classList.add('completed');
+                } else if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // 버튼 표시/숨김
+            document.querySelector('.btn-prev').style.display = currentStep > 1 ? 'block' : 'none';
+            document.querySelector('.btn-next').style.display = currentStep < 4 ? 'block' : 'none';
+            document.querySelector('.btn-submit').style.display = currentStep === 4 ? 'block' : 'none';
+
+            // 스크롤 상단으로
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 단계별 유효성 검사
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    if (!document.getElementById('nickname').value) {
+                        alert('닉네임을 입력해주세요.');
+                        return false;
+                    }
+                    if (!document.getElementById('age').value) {
+                        alert('나이를 입력해주세요.');
+                        return false;
+                    }
+                    if (!document.getElementById('region').value) {
+                        alert('지역을 선택해주세요.');
+                        return false;
+                    }
+                    if (!document.querySelector('input[name="gender"]:checked')) {
+                        alert('성별을 선택해주세요.');
+                        return false;
+                    }
+                    break;
+                case 2:
+                    if (!sajuData) {
+                        alert('사주를 계산해주세요.');
+                        return false;
+                    }
+                    break;
+                case 3:
+                    if (!document.getElementById('shortIntro').value) {
+                        alert('한 줄 소개를 입력해주세요.');
+                        return false;
+                    }
+                    if (!document.getElementById('longIntro').value) {
+                        alert('상세 소개를 입력해주세요.');
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
+
+        // 사진 미리보기
+        function previewPhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('photoPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 폼 제출
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!document.getElementById('photoInput').files[0]) {
+                alert('프로필 사진을 등록해주세요.');
+                return;
+            }
+
+            if (!document.getElementById('agreeTerms').checked) {
+                alert('개인정보 수집 및 이용에 동의해주세요.');
+                return;
+            }
+
+            // 데이터 수집
+            const formData = {
+                nickname: document.getElementById('nickname').value,
+                age: document.getElementById('age').value,
+                region: document.getElementById('region').value,
+                gender: document.querySelector('input[name="gender"]:checked').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthHour: document.getElementById('birthHour').value,
+                calendar: document.querySelector('input[name="calendar"]:checked').value,
+                saju: sajuData,
+                shortIntro: document.getElementById('shortIntro').value,
+                longIntro: document.getElementById('longIntro').value,
+                job: document.getElementById('job').value,
+                hobby: document.getElementById('hobby').value
+            };
+
+            console.log('등록 데이터:', formData);
+
+            // 실제 구현 시 API 호출
+            alert('프로필이 등록되었습니다!\n매칭 목록 페이지로 이동합니다.');
+            // window.location.href = 'matching-list.html';
+        });
+    </script>
+</body>
+</html>
