@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 상세 - AI 궁합 매칭 | AI 사주 천년지기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 프로필 헤더 */
+        .profile-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        .profile-top {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .profile-photo {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #333;
+        }
+
+        .profile-age {
+            font-size: 1.5rem;
+            color: #666;
+            margin-left: 15px;
+        }
+
+        .compatibility-score-big {
+            text-align: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            min-width: 150px;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .info-item i {
+            color: #f5576c;
+            font-size: 1.2rem;
+        }
+
+        .info-item .label {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .info-item .value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-intro {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            padding: 15px 30px;
+            background: white;
+            border: 2px solid #f5576c;
+            color: #f5576c;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #f5576c;
+            color: white;
+        }
+
+        /* 사주 섹션 */
+        .saju-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .saju-pillars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pillar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .pillar-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .pillar-value {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .pillar-element {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* 궁합 분석 섹션 */
+        .compatibility-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        .compatibility-chart {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-item {
+            text-align: center;
+        }
+
+        .chart-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chart-circle::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .chart-score {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #f5576c;
+        }
+
+        .chart-label {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .chart-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .compatibility-detail {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-content {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transition: width 0.5s;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .profile-top {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-photo {
+                width: 100%;
+                height: 300px;
+            }
+
+            .saju-pillars {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="matching-list.html" class="nav-brand">
+                💑 AI 궁합 매칭
+            </a>
+            <a href="matching-list.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> 목록으로
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 프로필 헤더 -->
+        <div class="profile-header">
+            <div class="profile-top">
+                <div class="profile-photo">
+                    👩
+                    <div class="premium-badge">👑 VIP</div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-title">
+                        <div>
+                            <span class="profile-name">봄날의햇살</span>
+                            <span class="profile-age">28세</span>
+                        </div>
+                        <div class="compatibility-score-big">
+                            <div class="score-label">우리의 궁합</div>
+                            <div class="score-value">95%</div>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <div class="label">지역</div>
+                                <div class="value">서울 강남구</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <div class="label">직업</div>
+                                <div class="value">IT 개발자</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <div class="label">취미</div>
+                                <div class="value">음악, 영화</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <div class="label">학력</div>
+                                <div class="value">대학교 졸업</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-intro">
+                        <strong>💬 자기소개</strong><br><br>
+                        안녕하세요! 음악과 영화를 좋아하는 개발자입니다. 주말에는 카페에서 책을 읽거나 영화관에 가는 걸 즐겨요. 
+                        진지하고 따뜻한 분을 만나고 싶습니다. 서로의 꿈을 응원해주고 함께 성장할 수 있는 관계를 원해요. 
+                        솔직하고 유머 있는 대화를 나누고 싶어요. 😊
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="sendMessage()">
+                            <i class="fas fa-comment"></i> 메시지 보내기
+                        </button>
+                        <button class="btn-secondary" onclick="toggleLike()">
+                            <i class="fas fa-heart"></i> 관심 표현
+                        </button>
+                        <button class="btn-secondary" onclick="reportProfile()">
+                            <i class="fas fa-flag"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 사주팔자 -->
+        <div class="saju-section">
+            <h2 class="section-title">🔮 사주팔자</h2>
+            <div class="saju-pillars">
+                <div class="pillar">
+                    <div class="pillar-label">년주</div>
+                    <div class="pillar-value">갑자</div>
+                    <div class="pillar-element">木水</div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-label">월주</div>
+                    <div class="pillar-value">병인</div>
+                    <div class="pillar-element">火木</div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-label">일주</div>
+                    <div class="pillar-value">무진</div>
+                    <div class="pillar-element">土土</div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-label">시주</div>
+                    <div class="pillar-value">경오</div>
+                    <div class="pillar-element">金火</div>
+                </div>
+            </div>
+            <div class="compatibility-detail">
+                <div class="detail-title">🌟 사주 특징</div>
+                <div class="detail-content">
+                    일간이 무토(戊土)로 안정적이고 포용력 있는 성격입니다. 
+                    목(木)과 화(火)의 기운이 강해 창의적이고 활동적이며, 
+                    금(金)과 수(水)의 조화로 논리적 사고와 감성을 모두 갖추고 있습니다.
+                    리더십이 뛰어나고 책임감이 강한 편입니다.
+                </div>
+            </div>
+        </div>
+
+        <!-- 궁합 분석 -->
+        <div class="compatibility-section">
+            <h2 class="section-title">💕 상세 궁합 분석</h2>
+            
+            <div class="compatibility-chart">
+                <div class="chart-item">
+                    <div class="chart-circle">
+                        <div class="chart-score">95</div>
+                        <div class="chart-label">%</div>
+                    </div>
+                    <div class="chart-title">종합 궁합</div>
+                    <div class="chart-desc">매우 좋은 궁합입니다</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-circle">
+                        <div class="chart-score">92</div>
+                        <div class="chart-label">%</div>
+                    </div>
+                    <div class="chart-title">애정운</div>
+                    <div class="chart-desc">서로를 깊이 이해합니다</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-circle">
+                        <div class="chart-score">88</div>
+                        <div class="chart-label">%</div>
+                    </div>
+                    <div class="chart-title">재물운</div>
+                    <div class="chart-desc">경제적으로 안정적</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-circle">
+                        <div class="chart-score">94</div>
+                        <div class="chart-label">%</div>
+                    </div>
+                    <div class="chart-title">자녀운</div>
+                    <div class="chart-desc">좋은 부모가 될 것입니다</div>
+                </div>
+            </div>
+
+            <div class="compatibility-detail">
+                <div class="detail-title">❤️ 애정 궁합 (92%)</div>
+                <div class="detail-content">
+                    두 분의 오행이 매우 조화롭게 상생하는 관계입니다. 
+                    상대방의 부족한 부분을 채워주고 서로를 성장시키는 관계가 될 것입니다.
+                    특히 일주의 조화가 뛰어나 평생 좋은 동반자가 될 수 있습니다.
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 92%"></div>
+                </div>
+            </div>
+
+            <div class="compatibility-detail">
+                <div class="detail-title">💰 재물 궁합 (88%)</div>
+                <div class="detail-content">
+                    재성과 식신의 배치가 좋아 함께 재물을 모으는 데 유리합니다.
+                    서로의 재물관이 비슷하고 합리적인 소비 습관을 가지고 있어 경제적으로 안정적인 가정을 꾸릴 수 있습니다.
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 88%"></div>
+                </div>
+            </div>
+
+            <div class="compatibility-detail">
+                <div class="detail-title">👶 자녀 궁합 (94%)</div>
+                <div class="detail-content">
+                    자녀운이 매우 좋습니다. 두 분 모두 책임감이 강하고 교육에 대한 가치관이 비슷합니다.
+                    자녀에게 안정적이고 따뜻한 환경을 제공할 수 있으며, 좋은 부모가 될 것입니다.
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 94%"></div>
+                </div>
+            </div>
+
+            <div class="compatibility-detail">
+                <div class="detail-title">💡 궁합 조언</div>
+                <div class="detail-content">
+                    <strong>장점:</strong><br>
+                    • 서로의 부족한 면을 채워주는 완벽한 조합입니다<br>
+                    • 가치관과 인생 목표가 비슷해 갈등이 적습니다<br>
+                    • 의사소통이 원활하고 서로를 존중합니다<br><br>
+                    
+                    <strong>주의할 점:</strong><br>
+                    • 때로는 서로에게 더 솔직한 감정 표현이 필요합니다<br>
+                    • 각자의 개인 시간을 존중해주는 것이 좋습니다<br>
+                    • 사소한 것도 대화로 풀어가는 습관을 기르세요<br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 메시지 보내기
+        function sendMessage() {
+            alert('메시지 기능은 프리미엄 회원만 이용 가능합니다.\n프리미엄으로 업그레이드하시겠습니까?');
+            // 실제로는 프리미엄 여부 확인 후 메시지 페이지로 이동
+        }
+
+        // 관심 표현
+        function toggleLike() {
+            alert('관심 표현을 보냈습니다! ❤️\n상대방이 나에게도 관심을 표현하면 메시지를 주고받을 수 있습니다.');
+        }
+
+        // 신고하기
+        function reportProfile() {
+            const reason = prompt('신고 사유를 입력해주세요:');
+            if (reason) {
+                alert('신고가 접수되었습니다. 검토 후 조치하겠습니다.');
+            }
+        }
+
+        // 애니메이션 효과
+        document.addEventListener('DOMContentLoaded', function() {
+            // 프로그레스 바 애니메이션
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
