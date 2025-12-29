@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏢 B2B 기업 서비스 - HR·마케팅·웨딩 솔루션 | AI 사주 천년지기</title>
+    <meta name="description" content="사주 기반 HR 솔루션, 마케팅 자문, 웨딩 플래너 연동 등 기업 맞춤형 서비스를 제공합니다.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .hero-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+            padding: 60px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+        }
+        
+        .service-item:nth-child(even) {
+            flex-direction: row-reverse;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        
+        .service-icon {
+            font-size: 6rem;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .service-content {
+            flex: 1;
+        }
+        
+        .service-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .service-price {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .service-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .service-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .service-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .btn-consult {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .btn-consult:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+        }
+        
+        /* Case Studies */
+        .case-section {
+            padding: 80px 20px;
+            background: #f9f9f9;
+        }
+        
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .case-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .case-company {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .case-tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .case-content {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .case-result {
+            background: #e8f8f5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .case-result strong {
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+        
+        /* Contact Form Section */
+        .contact-section {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px;
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn-submit {
+            padding: 15px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .benefit-description {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .service-item {
+                flex-direction: column !important;
+                padding: 30px 20px;
+            }
+            
+            .service-icon {
+                font-size: 4rem;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-matching.html">궁합 매칭</a></li>
+                <li><a href="community.html">커뮤니티</a></li>
+                <li><a href="b2b.html">기업 서비스</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">🏢 B2B 기업 서비스</h1>
+            <p class="hero-subtitle">사주 기반 HR·마케팅·웨딩 솔루션으로 비즈니스 성공을 도와드립니다</p>
+            <a href="#contact" class="hero-cta">무료 상담 신청</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">💼 기업 맞춤형 솔루션</h2>
+            
+            <div class="service-item">
+                <div class="service-icon">👔</div>
+                <div class="service-content">
+                    <h3 class="service-name">HR 솔루션</h3>
+                    <div class="service-price">₩500,000~/월</div>
+                    <p class="service-description">
+                        직원들의 사주를 분석하여 최적의 팀 배치, 채용 후보자 궁합 분석, 조직 문화 진단 등을 제공합니다. 
+                        과학적인 사주 분석으로 팀 생산성을 최대 40% 향상시킬 수 있습니다.
+                    </p>
+                    <ul class="service-features">
+                        <li>직원 사주 기반 팀 배치 최적화</li>
+                        <li>채용 후보자 궁합 분석 (팀원과의 궁합)</li>
+                        <li>조직 문화 진단 리포트</li>
+                        <li>리더십 역량 사주 분석</li>
+                        <li>월간 HR 컨설팅 (4회)</li>
+                        <li>전용 관리자 대시보드</li>
+                    </ul>
+                    <a href="#contact" class="btn-consult">상담 신청</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-icon">📊</div>
+                <div class="service-content">
+                    <h3 class="service-name">마케팅 에이전시 솔루션</h3>
+                    <div class="service-price">₩1,000,000~/프로젝트</div>
+                    <p class="service-description">
+                        타겟 고객의 사주를 분석하여 제품 런칭 길일 선택, 브랜드 네이밍 자문, 
+                        마케팅 캠페인 최적 시기 등을 제공합니다.
+                    </p>
+                    <ul class="service-features">
+                        <li>타겟 고객 사주 분석 (페르소나 기반)</li>
+                        <li>제품 런칭 길일 선택 (최대 3개 후보)</li>
+                        <li>브랜드 네이밍 자문 (5개 후보 제시)</li>
+                        <li>마케팅 캠페인 최적 시기 분석</li>
+                        <li>경쟁사 사주 분석 (창업자/대표)</li>
+                        <li>100페이지 상세 리포트</li>
+                    </ul>
+                    <a href="#contact" class="btn-consult">상담 신청</a>
+                </div>
+            </div>
+            
+            <div class="service-item">
+                <div class="service-icon">💒</div>
+                <div class="service-content">
+                    <h3 class="service-name">웨딩 플래너 연동</h3>
+                    <div class="service-price">₩50,000/건</div>
+                    <p class="service-description">
+                        예비 부부의 사주를 분석하여 최적의 예식 날짜를 추천하고, 
+                        하객 좌석 배치(궁합 기반), 신혼여행 길일 등을 제공합니다.
+                    </p>
+                    <ul class="service-features">
+                        <li>예식 날짜 추천 (최대 5개 후보)</li>
+                        <li>하객 좌석 배치 (궁합 기반 최적화)</li>
+                        <li>신혼여행 길일 추천</li>
+                        <li>부부 궁합 상세 분석</li>
+                        <li>자녀운 및 재물운 분석</li>
+                        <li>예쁜 PDF 리포트 제공</li>
+                    </ul>
+                    <a href="#contact" class="btn-consult">상담 신청</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="case-section">
+        <div class="container">
+            <h2 class="section-title">📈 성공 사례</h2>
+            <div class="case-grid">
+                <div class="case-card">
+                    <h3 class="case-company">A 스타트업 (IT 기업)</h3>
+                    <span class="case-tag">HR 솔루션</span>
+                    <p class="case-content">
+                        "개발팀과 디자인팀의 갈등이 심했는데, 사주 기반 팀 재배치 후 협업이 훨씬 원활해졌어요. 
+                        프로젝트 완료 속도가 40% 빨라졌습니다!"
+                    </p>
+                    <div class="case-result">
+                        <strong>결과:</strong> 팀 생산성 40% 향상, 직원 만족도 85% → 95%
+                    </div>
+                </div>
+                
+                <div class="case-card">
+                    <h3 class="case-company">B 화장품 브랜드</h3>
+                    <span class="case-tag">마케팅 솔루션</span>
+                    <p class="case-content">
+                        "신제품 런칭 날짜를 사주로 선택했더니 첫날 매출이 예상의 3배! 
+                        브랜드 네이밍도 사주 기반으로 받아서 고객 반응이 정말 좋아요."
+                    </p>
+                    <div class="case-result">
+                        <strong>결과:</strong> 런칭 첫날 매출 300% 달성, SNS 입소문 효과
+                    </div>
+                </div>
+                
+                <div class="case-card">
+                    <h3 class="case-company">C 웨딩홀</h3>
+                    <span class="case-tag">웨딩 플래너</span>
+                    <p class="case-content">
+                        "예식 날짜 사주 서비스를 추가 옵션으로 제공한 후 매출이 20% 증가했어요. 
+                        고객 만족도도 높아서 재방문율이 올랐습니다."
+                    </p>
+                    <div class="case-result">
+                        <strong>결과:</strong> 월 매출 20% 증가, 고객 재방문율 65% → 82%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">✨ 왜 AI 사주 천년지기인가?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">검증된 정확도</h3>
+                    <p class="benefit-description">10년 이상 경력의 명리학 전문가와 AI가 협업하여 96% 이상의 정확도를 자랑합니다.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">빠른 납품</h3>
+                    <p class="benefit-description">계약 후 3-5일 내로 리포트를 납품하여 빠른 의사결정을 도와드립니다.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💎</div>
+                    <h3 class="benefit-title">합리적 가격</h3>
+                    <p class="benefit-description">오프라인 전문가 대비 50% 저렴한 가격으로 동일한 퀄리티의 서비스를 제공합니다.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3 class="benefit-title">데이터 기반</h3>
+                    <p class="benefit-description">수천 건의 사례를 학습한 AI가 통계적으로 검증된 인사이트를 제공합니다.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔒</div>
+                    <h3 class="benefit-title">보안 보장</h3>
+                    <p class="benefit-description">모든 기업 정보와 직원 데이터는 암호화되어 철저히 보호됩니다.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">👨‍💼</div>
+                    <h3 class="benefit-title">전담 매니저</h3>
+                    <p class="benefit-description">계약 기간 동안 전담 매니저가 배정되어 언제든지 상담 가능합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <h2 class="section-title" style="color: white;">📞 무료 상담 신청</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyName">기업명 *</label>
+                            <input type="text" id="companyName" name="companyName" required placeholder="예: ㈜에이아이사주">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactName">담당자명 *</label>
+                            <input type="text" id="contactName" name="contactName" required placeholder="예: 홍길동">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">이메일 *</label>
+                            <input type="email" id="email" name="email" required placeholder="example@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">연락처 *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="010-1234-5678">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">관심 서비스 *</label>
+                        <select id="service" name="service" required>
+                            <option value="">선택해주세요</option>
+                            <option value="hr">HR 솔루션 (₩500,000~/월)</option>
+                            <option value="marketing">마케팅 에이전시 (₩1,000,000~/프로젝트)</option>
+                            <option value="wedding">웨딩 플래너 연동 (₩50,000/건)</option>
+                            <option value="custom">맞춤형 서비스</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget">예산 범위</label>
+                        <select id="budget" name="budget">
+                            <option value="">선택해주세요</option>
+                            <option value="under50">50만원 이하</option>
+                            <option value="50to100">50만원 - 100만원</option>
+                            <option value="100to300">100만원 - 300만원</option>
+                            <option value="300to500">300만원 - 500만원</option>
+                            <option value="over500">500만원 이상</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">문의 내용 *</label>
+                        <textarea id="message" name="message" required placeholder="문의하실 내용을 자유롭게 작성해주세요."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">무료 상담 신청하기</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="terms.html">이용약관</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="refund.html">환불정책</a>
+                <a href="admin-login.html">Admin</a>
+            </div>
+            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('상담 신청이 접수되었습니다!\n담당자가 영업일 기준 1-2일 내로 연락드리겠습니다.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
