@@ -1,1350 +1,1319 @@
-  1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>AI 사주 천년지기 - 2026 병오년 사주팔자 운세</title>
-     7	    <meta name="description" content="2026 병오년! 정통 명리학과 AI 기술로 무료 사주팔자 상담">
-     8	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     9	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    10	    <style>
-    11	        * {
-    12	            margin: 0;
-    13	            padding: 0;
-    14	            box-sizing: border-box;
-    15	        }
-    16	        
-    17	        body {
-    18	            font-family: 'Noto Sans KR', sans-serif;
-    19	            line-height: 1.6;
-    20	            color: #333;
-    21	            background: #f5f5f5;
-    22	        }
-    23	        
-    24	        .container {
-    25	            max-width: 1200px;
-    26	            margin: 0 auto;
-    27	            padding: 0 20px;
-    28	        }
-    29	        
-    30	        /* 네비게이션 */
-    31	        .navbar {
-    32	            background: #1a1a1a;
-    33	            padding: 1rem 0;
-    34	            position: sticky;
-    35	            top: 0;
-    36	            z-index: 1000;
-    37	            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    38	        }
-    39	        
-    40	        .nav-container {
-    41	            max-width: 1200px;
-    42	            margin: 0 auto;
-    43	            padding: 0 20px;
-    44	            display: flex;
-    45	            justify-content: space-between;
-    46	            align-items: center;
-    47	        }
-    48	        
-    49	        .nav-brand {
-    50	            color: #d4af37;
-    51	            font-size: 1.5rem;
-    52	            font-weight: 700;
-    53	            text-decoration: none;
-    54	            display: flex;
-    55	            align-items: center;
-    56	            gap: 10px;
-    57	        }
-    58	        
-    59	        .nav-menu {
-    60	            display: flex;
-    61	            list-style: none;
-    62	            gap: 2rem;
-    63	        }
-    64	        
-    65	        .nav-menu a {
-    66	            color: rgba(255,255,255,0.9);
-    67	            text-decoration: none;
-    68	            transition: color 0.3s;
-    69	        }
-    70	        
-    71	        .nav-menu a:hover {
-    72	            color: #d4af37;
-    73	        }
-    74	        
-    75	        /* 언어 선택기 */
-    76	        .language-switcher {
-    77	            position: relative;
-    78	            margin-left: auto;
-    79	        }
-    80	        
-    81	        .lang-btn {
-    82	            background: transparent;
-    83	            border: 2px solid #d4af37;
-    84	            color: #d4af37;
-    85	            padding: 8px 16px;
-    86	            border-radius: 25px;
-    87	            cursor: pointer;
-    88	            display: flex;
-    89	            align-items: center;
-    90	            gap: 8px;
-    91	            font-size: 14px;
-    92	            font-weight: 600;
-    93	            transition: all 0.3s;
-    94	        }
-    95	        
-    96	        .lang-btn:hover {
-    97	            background: rgba(212, 175, 55, 0.1);
-    98	            transform: translateY(-2px);
-    99	        }
-   100	        
-   101	        .lang-flag { font-size: 18px; }
-   102	        
-   103	        .lang-dropdown {
-   104	            position: absolute;
-   105	            top: 120%;
-   106	            right: 0;
-   107	            background: white;
-   108	            border: 2px solid #d4af37;
-   109	            border-radius: 15px;
-   110	            min-width: 180px;
-   111	            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-   112	            opacity: 0;
-   113	            visibility: hidden;
-   114	            transform: translateY(-10px);
-   115	            transition: all 0.3s;
-   116	            z-index: 1000;
-   117	        }
-   118	        
-   119	        .lang-dropdown.active {
-   120	            opacity: 1;
-   121	            visibility: visible;
-   122	            transform: translateY(0);
-   123	        }
-   124	        
-   125	        .lang-option {
-   126	            width: 100%;
-   127	            padding: 12px 20px;
-   128	            border: none;
-   129	            background: white;
-   130	            text-align: left;
-   131	            cursor: pointer;
-   132	            display: flex;
-   133	            align-items: center;
-   134	            gap: 10px;
-   135	            font-size: 14px;
-   136	            transition: all 0.2s;
-   137	            color: #333;
-   138	        }
-   139	        
-   140	        .lang-option:first-child { border-radius: 13px 13px 0 0; }
-   141	        .lang-option:last-child { border-radius: 0 0 13px 13px; }
-   142	        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
-   143	        .lang-option.active { 
-   144	            background: rgba(212, 175, 55, 0.2); 
-   145	            font-weight: 700; 
-   146	            color: #c41e3a; 
-   147	        }
-   148	        .lang-option i { margin-left: auto; color: #c41e3a; }
-   149	        
-   150	        /* 히어로 섹션 */
-   151	        .hero {
-   152	            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
-   153	            color: white;
-   154	            padding: 80px 20px;
-   155	            position: relative;
-   156	            overflow: hidden;
-   157	        }
-   158	        
-   159	        .hero-container {
-   160	            max-width: 1200px;
-   161	            margin: 0 auto;
-   162	            display: grid;
-   163	            grid-template-columns: 1fr 1fr;
-   164	            gap: 3rem;
-   165	            align-items: center;
-   166	        }
-   167	        
-   168	        .hero-content {
-   169	            text-align: left;
-   170	        }
-   171	        
-   172	        .hero-image {
-   173	            display: flex;
-   174	            justify-content: center;
-   175	            align-items: center;
-   176	        }
-   177	        
-   178	        .hero-image img {
-   179	            max-width: 100%;
-   180	            height: auto;
-   181	            filter: drop-shadow(0 0 30px rgba(212,175,55,0.5));
-   182	            animation: float 3s ease-in-out infinite;
-   183	        }
-   184	        
-   185	        @keyframes float {
-   186	            0%, 100% { transform: translateY(0); }
-   187	            50% { transform: translateY(-20px); }
-   188	        }
-   189	        
-   190	        .hero-title {
-   191	            font-size: 3rem;
-   192	            margin-bottom: 1rem;
-   193	        }
-   194	        
-   195	        .year-number {
-   196	            display: block;
-   197	            font-size: 4rem;
-   198	            font-weight: 900;
-   199	            color: #d4af37;
-   200	            text-shadow: 0 0 20px rgba(212,175,55,0.5);
-   201	        }
-   202	        
-   203	        .year-name {
-   204	            font-family: 'Noto Serif KR', serif;
-   205	            font-size: 2.5rem;
-   206	            display: block;
-   207	            margin: 1rem 0;
-   208	        }
-   209	        
-   210	        .subtitle {
-   211	            display: block;
-   212	            font-size: 1.8rem;
-   213	            color: #f4e5b5;
-   214	        }
-   215	        
-   216	        .hero-description {
-   217	            font-size: 1.2rem;
-   218	            margin: 2rem 0;
-   219	            line-height: 1.8;
-   220	        }
-   221	        
-   222	        .btn-group {
-   223	            display: flex;
-   224	            gap: 1rem;
-   225	            justify-content: flex-start;
-   226	            margin-top: 2rem;
-   227	        }
-   228	        
-   229	        .btn {
-   230	            padding: 15px 40px;
-   231	            font-size: 1.1rem;
-   232	            font-weight: 600;
-   233	            border: none;
-   234	            border-radius: 50px;
-   235	            cursor: pointer;
-   236	            text-decoration: none;
-   237	            transition: all 0.3s;
-   238	            display: inline-flex;
-   239	            align-items: center;
-   240	            gap: 10px;
-   241	        }
-   242	        
-   243	        .btn-primary {
-   244	            background: linear-gradient(135deg, #d4af37, #f4e5b5);
-   245	            color: #1a1a1a;
-   246	        }
-   247	        
-   248	        .btn-primary:hover {
-   249	            transform: translateY(-3px);
-   250	            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
-   251	        }
-   252	        
-   253	        .btn-secondary {
-   254	            background: rgba(255,255,255,0.2);
-   255	            color: white;
-   256	            border: 2px solid white;
-   257	        }
-   258	        
-   259	        .btn-secondary:hover {
-   260	            background: white;
-   261	            color: #c41e3a;
-   262	        }
-   263	        
-   264	        /* 신뢰 지표 */
-   265	        .trust-section {
-   266	            background: white;
-   267	            padding: 40px 20px;
-   268	        }
-   269	        
-   270	        .trust-container {
-   271	            max-width: 1200px;
-   272	            margin: 0 auto;
-   273	            display: grid;
-   274	            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   275	            gap: 2rem;
-   276	        }
-   277	        
-   278	        .trust-item {
-   279	            text-align: center;
-   280	            padding: 2rem;
-   281	        }
-   282	        
-   283	        .trust-icon {
-   284	            font-size: 3rem;
-   285	            color: #c41e3a;
-   286	            margin-bottom: 1rem;
-   287	        }
-   288	        
-   289	        .trust-number {
-   290	            font-size: 2.5rem;
-   291	            font-weight: 700;
-   292	            color: #1a1a1a;
-   293	            margin-bottom: 0.5rem;
-   294	        }
-   295	        
-   296	        .trust-label {
-   297	            font-size: 1.1rem;
-   298	            color: #666;
-   299	        }
-   300	             /* 사주 입력 폼 */
-   301	        .saju-section {
-   302	            max-width: 800px;
-   303	            margin: 60px auto;
-   304	            padding: 0 20px;
-   305	        }
-   306	        
-   307	        .section-title {
-   308	            text-align: center;
-   309	            font-size: 2rem;
-   310	            margin-bottom: 2rem;
-   311	            color: #1a1a1a;
-   312	        }
-   313	        
-   314	        .saju-form {
-   315	            background: white;
-   316	            padding: 3rem;
-   317	            border-radius: 20px;
-   318	            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-   319	        }
-   320	        
-   321	        .form-group {
-   322	            margin-bottom: 1.5rem;
-   323	        }
-   324	        
-   325	        .form-group label {
-   326	            display: block;
-   327	            margin-bottom: 0.5rem;
-   328	            font-weight: 600;
-   329	            color: #333;
-   330	        }
-   331	        
-   332	        .form-group input,
-   333	        .form-group select {
-   334	            width: 100%;
-   335	            padding: 12px;
-   336	            border: 2px solid #e0e0e0;
-   337	            border-radius: 10px;
-   338	            font-size: 1rem;
-   339	            transition: border-color 0.3s;
-   340	        }
-   341	        
-   342	        .form-group input:focus,
-   343	        .form-group select:focus {
-   344	            outline: none;
-   345	            border-color: #d4af37;
-   346	        }
-   347	        
-   348	        .submit-btn {
-   349	            width: 100%;
-   350	            padding: 15px;
-   351	            background: linear-gradient(135deg, #c41e3a, #8b0000);
-   352	            color: white;
-   353	            border: none;
-   354	            border-radius: 10px;
-   355	            font-size: 1.2rem;
-   356	            font-weight: 700;
-   357	            cursor: pointer;
-   358	            transition: all 0.3s;
-   359	        }
-   360	        
-   361	        .submit-btn:hover {
-   362	            transform: translateY(-2px);
-   363	            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
-   364	        }
-   365	        
-   366	        /* 프리미엄 서비스 */
-   367	        .services-section {
-   368	            background: #f5f5f5;
-   369	            padding: 60px 20px;
-   370	        }
-   371	        
-   372	        .services-grid {
-   373	            display: grid;
-   374	            grid-template-columns: repeat(3, 1fr);
-   375	            gap: 2rem;
-   376	            margin-top: 3rem;
-   377	            max-width: 1200px;
-   378	            margin-left: auto;
-   379	            margin-right: auto;
-   380	        }
-   381	        
-   382	        .service-card {
-   383	            background: white;
-   384	            padding: 2rem;
-   385	            border-radius: 15px;
-   386	            text-align: center;
-   387	            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-   388	            transition: transform 0.3s;
-   389	            cursor: pointer;
-   390	        }
-   391	        
-   392	        .service-card:hover {
-   393	            transform: translateY(-10px);
-   394	        }
-   395	        
-   396	        .service-icon {
-   397	            font-size: 3rem;
-   398	            margin-bottom: 1rem;
-   399	        }
-   400	        
-   401	        .service-title {
-   402	            font-size: 1.3rem;
-   403	            margin-bottom: 1rem;
-   404	            color: #1a1a1a;
-   405	            font-weight: 600;
-   406	        }
-   407	        
-   408	        .service-description {
-   409	            color: #666;
-   410	            margin-bottom: 1rem;
-   411	            font-size: 0.95rem;
-   412	        }
-   413	        
-   414	        .service-price {
-   415	            font-size: 1.2rem;
-   416	            font-weight: 700;
-   417	            color: #c41e3a;
-   418	        }
-   419	        
-   420	        /* 반응형: 태블릿 */
-   421	        @media (max-width: 1024px) {
-   422	            .services-grid {
-   423	                grid-template-columns: repeat(2, 1fr);
-   424	                gap: 1.5rem;
-   425	            }
-   426	        }
-   427	        
-   428	        /* 반응형: 모바일 */
-   429	        @media (max-width: 768px) {
-   430	            .services-grid {
-   431	                grid-template-columns: 1fr;
-   432	                gap: 1.5rem;
-   433	            }
-   434	            
-   435	            .section-title {
-   436	                font-size: 1.5rem;
-   437	            }
-   438	            
-   439	            .service-card {
-   440	                padding: 1.5rem;
-   441	            }
-   442	        }
-   443	       
-   444	        /* 유명인 섹션 */
-   445	        .celebrity-section {
-   446	            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-   447	            padding: 60px 20px;
-   448	        }
-   449	        
-   450	        .celebrity-grid {
-   451	            display: grid;
-   452	            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-   453	            gap: 2rem;
-   454	            margin-top: 3rem;
-   455	        }
-   456	        
-   457	        .celebrity-card {
-   458	            background: rgba(255,255,255,0.05);
-   459	            padding: 2rem;
-   460	            border-radius: 15px;
-   461	            text-align: center;
-   462	            border: 1px solid rgba(212,175,55,0.2);
-   463	            transition: all 0.3s;
-   464	        }
-   465	        
-   466	        .celebrity-card:hover {
-   467	            background: rgba(255,255,255,0.1);
-   468	            transform: translateY(-5px);
-   469	        }
-   470	        
-   471	        .celebrity-avatar {
-   472	            font-size: 3rem;
-   473	            margin-bottom: 1rem;
-   474	        }
-   475	        
-   476	        .celebrity-name {
-   477	            font-size: 1.3rem;
-   478	            font-weight: 700;
-   479	            color: #d4af37;
-   480	            margin-bottom: 0.5rem;
-   481	        }
-   482	        
-   483	        .celebrity-info {
-   484	            color: rgba(255,255,255,0.7);
-   485	            font-size: 0.9rem;
-   486	            margin-bottom: 1rem;
-   487	        }
-   488	        
-   489	        .celebrity-saju {
-   490	            color: rgba(255,255,255,0.9);
-   491	            text-align: left;
-   492	            font-size: 0.9rem;
-   493	            line-height: 1.8;
-   494	        }
-   495	        
-   496	        /* 리뷰 섹션 */
-   497	        .review-section {
-   498	            background: white;
-   499	            padding: 60px 20px;
-   500	        }
-   501	        
-   502	        .review-stats {
-   503	            text-align: center;
-   504	            margin-bottom: 3rem;
-   505	        }
-   506	        
-   507	        .review-score {
-   508	            font-size: 4rem;
-   509	            font-weight: 900;
-   510	            color: #c41e3a;
-   511	        }
-   512	        
-   513	        .review-stars {
-   514	            font-size: 2rem;
-   515	            margin: 1rem 0;
-   516	        }
-   517	        
-   518	        .review-count {
-   519	            color: #666;
-   520	            font-size: 1.1rem;
-   521	        }
-   522	        
-   523	        .review-grid {
-   524	            display: grid;
-   525	            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-   526	            gap: 2rem;
-   527	        }
-   528	        
-   529	        .review-card {
-   530	            background: #f9f9f9;
-   531	            padding: 2rem;
-   532	            border-radius: 15px;
-   533	            border-left: 4px solid #d4af37;
-   534	        }
-   535	        
-   536	        .review-header {
-   537	            display: flex;
-   538	            justify-content: space-between;
-   539	            margin-bottom: 1rem;
-   540	        }
-   541	        
-   542	        .review-author {
-   543	            font-weight: 600;
-   544	        }
-   545	        
-   546	        .review-rating {
-   547	            color: #ffc107;
-   548	        }
-   549	        
-   550	        .review-text {
-   551	            color: #333;
-   552	            line-height: 1.6;
-   553	            margin-bottom: 1rem;
-   554	        }
-   555	        
-   556	        .review-date {
-   557	            color: #999;
-   558	            font-size: 0.9rem;
-   559	        }
-   560	        
-   561	        /* FAQ 섹션 */
-   562	        .faq-section {
-   563	            background: #f5f5f5;
-   564	            padding: 60px 20px;
-   565	        }
-   566	        
-   567	        .faq-container {
-   568	            max-width: 800px;
-   569	            margin: 3rem auto 0;
-   570	        }
-   571	        
-   572	        .faq-item {
-   573	            background: white;
-   574	            margin-bottom: 1rem;
-   575	            border-radius: 10px;
-   576	            overflow: hidden;
-   577	        }
-   578	        
-   579	        .faq-question {
-   580	            padding: 1.5rem;
-   581	            font-weight: 600;
-   582	            cursor: pointer;
-   583	            display: flex;
-   584	            justify-content: space-between;
-   585	            align-items: center;
-   586	            transition: background 0.3s;
-   587	        }
-   588	        
-   589	        .faq-question:hover {
-   590	            background: #f9f9f9;
-   591	        }
-   592	        
-   593	        .faq-answer {
-   594	            padding: 0 1.5rem 1.5rem;
-   595	            color: #666;
-   596	            line-height: 1.8;
-   597	            display: none;
-   598	        }
-   599	        
-   600	        /* 푸터 */
-   601	        .footer {
-   602	            background: #1a1a1a;
-   603	            color: rgba(255,255,255,0.7);
-   604	            padding: 40px 20px;
-   605	            text-align: center;
-   606	        }
-   607	        
-   608	        /* 반응형 */
-   609	        @media (max-width: 768px) {
-   610	            .hero-container {
-   611	                grid-template-columns: 1fr;
-   612	            }
-   613	            
-   614	            .hero-content {
-   615	                text-align: center;
-   616	            }
-   617	            
-   618	            .hero-image {
-   619	                order: -1;
-   620	            }
-   621	            
-   622	            .hero-title {
-   623	                font-size: 2rem;
-   624	            }
-   625	            
-   626	            .year-number {
-   627	                font-size: 3rem;
-   628	            }
-   629	            
-   630	            .year-name {
-   631	                font-size: 1.8rem;
-   632	            }
-   633	            
-   634	            .subtitle {
-   635	                font-size: 1.3rem;
-   636	            }
-   637	            
-   638	            .btn-group {
-   639	                flex-direction: column;
-   640	                align-items: center;
-   641	            }
-   642	            
-   643	            .nav-menu {
-   644	                display: none;
-   645	            }
-   646	            
-   647	            .saju-form {
-   648	                padding: 2rem 1.5rem;
-   649	            }
-   650	        }
-   651	        
-   652	        /* 음력/양력 선택 - 가로 한 줄 배치 */
-   653	        .calendar-options {
-   654	            display: flex;
-   655	            flex-direction: row;
-   656	            gap: 15px;
-   657	            width: 100%;
-   658	        }
-   659	
-   660	        .calendar-option {
-   661	            flex: 1;
-   662	            padding: 15px;
-   663	            border: 2px solid #e0e0e0;
-   664	            border-radius: 10px;
-   665	            text-align: center;
-   666	            cursor: pointer;
-   667	            transition: all 0.3s;
-   668	            position: relative;
-   669	        }
-   670	
-   671	        .calendar-option:hover {
-   672	            border-color: #c41e3a;
-   673	            background: #fff5f5;
-   674	        }
-   675	
-   676	        .calendar-option input[type="radio"] {
-   677	            position: absolute;
-   678	            opacity: 0;
-   679	            pointer-events: none;
-   680	        }
-   681	
-   682	        .calendar-option label {
-   683	            cursor: pointer;
-   684	            margin: 0;
-   685	            display: block;
-   686	            font-size: 16px;
-   687	        }
-   688	
-   689	        .calendar-option:has(input[type="radio"]:checked) {
-   690	            border-color: #c41e3a;
-   691	            background: #fff5f5;
-   692	        }
-   693	
-   694	        .calendar-option:has(input[type="radio"]:checked) label {
-   695	            color: #c41e3a;
-   696	            font-weight: 700;
-   697	        }
-   698	
-   699	        /* 성별 선택 - 가로 한 줄 배치 */
-   700	        .gender-options {
-   701	            display: flex;
-   702	            flex-direction: row;
-   703	            gap: 15px;
-   704	            width: 100%;
-   705	        }
-   706	
-   707	        .gender-option {
-   708	            flex: 1;
-   709	            padding: 15px;
-   710	            border: 2px solid #e0e0e0;
-   711	            border-radius: 10px;
-   712	            text-align: center;
-   713	            cursor: pointer;
-   714	            transition: all 0.3s;
-   715	            position: relative;
-   716	        }
-   717	
-   718	        .gender-option:hover {
-   719	            border-color: #c41e3a;
-   720	            background: #fff5f5;
-   721	        }
-   722	
-   723	        .gender-option input[type="radio"] {
-   724	            position: absolute;
-   725	            opacity: 0;
-   726	            pointer-events: none;
-   727	        }
-   728	
-   729	        .gender-option label {
-   730	            cursor: pointer;
-   731	            margin: 0;
-   732	            display: block;
-   733	            font-size: 16px;
-   734	        }
-   735	
-   736	        .gender-option:has(input[type="radio"]:checked) {
-   737	            border-color: #c41e3a;
-   738	            background: #fff5f5;
-   739	        }
-   740	
-   741	        .gender-option:has(input[type="radio"]:checked) label {
-   742	            color: #c41e3a;
-   743	            font-weight: 700;
-   744	        }
-   745	
-   746	        /* 모바일 반응형 - 가로 배치 유지 */
-   747	        @media (max-width: 768px) {
-   748	            .calendar-options,
-   749	            .gender-options {
-   750	                gap: 10px;
-   751	            }
-   752	            
-   753	            .calendar-option,
-   754	            .gender-option {
-   755	                padding: 12px 8px;
-   756	                font-size: 14px;
-   757	            }
-   758	        }
-   759	    </style>
-   760	</head>
-   761	<body>
-   762	    <!-- 네비게이션 -->
-   763	    <nav class="navbar">
-   764	        <div class="nav-container">
-   765	            <a href="index.html" class="nav-brand">
-   766	                <i class="fas fa-yin-yang"></i>
-   767	                AI 사주 천년지기
-   768	            </a>
-   769	            <ul class="nav-menu">
-   770	                <li><a href="index.html" data-i18n="nav.home">홈</a></li>
-   771	                <li><a href="pricing.html" data-i18n="nav.pricing">가격표</a></li>
-   772	                <li><a href="ai-chat.html" data-i18n="nav.aiChat">AI 상담</a></li>
-   773	                <li><a href="mypage.html" data-i18n="nav.mypage">마이페이지</a></li>
-   774	            </ul>
-   775	            <div class="language-switcher">
-   776	                <button class="lang-btn" id="langBtn">
-   777	                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
-   778	                    <span id="currentLang">한국어</span>
-   779	                    <i class="fas fa-chevron-down"></i>
-   780	                </button>
-   781	                <div class="lang-dropdown" id="langDropdown">
-   782	                    <button class="lang-option active" data-lang="ko">
-   783	                        <span class="lang-flag">🇰🇷</span> 한국어
-   784	                        <i class="fas fa-check"></i>
-   785	                    </button>
-   786	                    <button class="lang-option" data-lang="en">
-   787	                        <span class="lang-flag">🇺🇸</span> English
-   788	                    </button>
-   789	                    <button class="lang-option" data-lang="zh">
-   790	                        <span class="lang-flag">🇨🇳</span> 中文
-   791	                    </button>
-   792	                    <button class="lang-option" data-lang="ja">
-   793	                        <span class="lang-flag">🇯🇵</span> 日本語
-   794	                    </button>
-   795	                </div>
-   796	            </div>
-   797	        </div>
-   798	    </nav>
-   799	
-   800	    <!-- 히어로 섹션 -->
-   801	    <section class="hero">
-   802	        <div class="hero-container">
-   803	            <div class="hero-content">
-   804	                <h1 class="hero-title">
-   805	                    <span class="year-number" data-i18n="hero.year">2026</span>
-   806	                    <span class="year-name" data-i18n-html="hero.yearName">병오년 <span style="color:#f4e5b5;">丙午年</span></span>
-   807	                    <span class="subtitle" data-i18n="hero.subtitle">붉은 불의 말띠 해</span>
-   808	                </h1>
-   809	                <p class="hero-description" data-i18n-html="hero.description">
-   810	                    1000년의 지혜와 함께하는 명리학의 만세력<br>
-   811	                    정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다
-   812	                </p>
-   813	                <div class="btn-group">
-   814	                    <a href="#saju-form" class="btn btn-primary">
-   815	                        <i class="fas fa-star"></i> <span data-i18n="hero.freeSaju">무료로 사주 보기</span>
-   816	                    </a>
-   817	                    <a href="ai-chat.html" class="btn btn-secondary">
-   818	                        <i class="fas fa-robot"></i> <span data-i18n="hero.aiConsult">AI 상담 시작</span>
-   819	                    </a>
-   820	                </div>
-   821	            </div>
-   822	            <div class="hero-image">
-   823	                <img src="https://github.com/user-attachments/assets/4877f933-0876-4a21-9d88-7ce24903c050" alt="2026 병오년 말띠">
-   824	            </div>
-   825	        </div>
-   826	    </section>
-   827	
-   828	    <!-- 신뢰 지표 -->
-   829	    <section class="trust-section">
-   830	        <div class="trust-container">
-   831	            <div class="trust-item">
-   832	                <div class="trust-icon"><i class="fas fa-users"></i></div>
-   833	                <div class="trust-number">1,879</div>
-   834	                <div class="trust-label">명이 지금 이용중</div>
-   835	            </div>
-   836	            <div class="trust-item">
-   837	                <div class="trust-icon"><i class="fas fa-comments"></i></div>
-   838	                <div class="trust-number">3,261</div>
-   839	                <div class="trust-label">오늘 상담 완료</div>
-   840	            </div>
-   841	            <div class="trust-item">
-   842	                <div class="trust-icon"><i class="fas fa-star"></i></div>
-   843	                <div class="trust-number">98.7%</div>
-   844	                <div class="trust-label">고객 만족도</div>
-   845	            </div>
-   846	        </div>
-   847	    </section>
-   848	
-   849	    <!-- 사주 입력 폼 -->
-   850	    <section class="saju-section" id="saju-form">
-   851	        <div class="container">
-   852	            <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
-   853	            <form class="saju-form" id="sajuForm">
-   854	                <!-- 1. 생년월일 입력 -->
-   855	                <div class="form-group">
-   856	                    <label><i class="fas fa-calendar"></i> 생년월일</label>
-   857	                    <input type="date" name="birthdate" required>
-   858	                </div>
-   859	                
-   860	                <!-- 2. 음력/양력 선택 (한 줄) -->
-   861	                <div class="form-group">
-   862	                    <label>음력/양력</label>
-   863	                    <div class="calendar-options">
-   864	                        <div class="calendar-option" onclick="document.getElementById('solar').checked=true">
-   865	                            <input type="radio" id="solar" name="calendar" value="solar" checked>
-   866	                            <label for="solar">양력 🌞</label>
-   867	                        </div>
-   868	                        <div class="calendar-option" onclick="document.getElementById('lunar').checked=true">
-   869	                            <input type="radio" id="lunar" name="calendar" value="lunar">
-   870	                            <label for="lunar">음력 🌙</label>
-   871	                        </div>
-   872	                    </div>
-   873	                </div>
-   874	                
-   875	                <!-- 3. 태어난 시간 -->
-   876	                <div class="form-group">
-   877	                    <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
-   878	                    <select name="birthtime">
-   879	                        <option value="">모름</option>
-   880	                        <option value="23-01">자시 (23:00-01:00)</option>
-   881	                        <option value="01-03">축시 (01:00-03:00)</option>
-   882	                        <option value="03-05">인시 (03:00-05:00)</option>
-   883	                        <option value="05-07">묘시 (05:00-07:00)</option>
-   884	                        <option value="07-09">진시 (07:00-09:00)</option>
-   885	                        <option value="09-11">사시 (09:00-11:00)</option>
-   886	                        <option value="11-13">오시 (11:00-13:00)</option>
-   887	                        <option value="13-15">미시 (13:00-15:00)</option>
-   888	                        <option value="15-17">신시 (15:00-17:00)</option>
-   889	                        <option value="17-19">유시 (17:00-19:00)</option>
-   890	                        <option value="19-21">술시 (19:00-21:00)</option>
-   891	                        <option value="21-23">해시 (21:00-23:00)</option>
-   892	                    </select>
-   893	                </div>
-   894	                
-   895	                <!-- 4. 성별 선택 (한 줄) -->
-   896	                <div class="form-group">
-   897	                    <label><i class="fas fa-venus-mars"></i> 성별</label>
-   898	                    <div class="gender-options">
-   899	                        <div class="gender-option" onclick="document.getElementById('male').checked=true">
-   900	                            <input type="radio" id="male" name="gender" value="male" required>
-   901	                            <label for="male">남성 👨</label>
-   902	                        </div>
-   903	                        <div class="gender-option" onclick="document.getElementById('female').checked=true">
-   904	                            <input type="radio" id="female" name="gender" value="female">
-   905	                            <label for="female">여성 👩</label>
-   906	                        </div>
-   907	                    </div>
-   908	                </div>
-   909	                
-   910	                <!-- 5. 제출 버튼 -->
-   911	                <button type="submit" class="submit-btn">
-   912	                    <i class="fas fa-magic"></i> 내 운세 확인하기
-   913	                </button>
-   914	            </form>
-   915	        </div>
-   916	    </section>
-   917	
-   918	    <!-- 프리미엄 서비스 -->
-   919	    <section class="services-section">
-   920	        <div class="container">
-   921	            <h2 class="section-title">프리미엄 서비스</h2>
-   922	            <div class="services-grid">
-   923	                <div class="service-card" onclick="location.href='compatibility.html'">
-   924	                    <div class="service-icon">💕</div>
-   925	                    <div class="service-title">궁합 분석</div>
-   926	                    <div class="service-description">두 사람의 사주를 비교하여 궁합을 상세히 분석해드립니다</div>
-   927	                    <div class="service-price">무료</div>
-   928	                </div>
-   929	                <div class="service-card" onclick="location.href='tojeong.html'">
-   930	                    <div class="service-icon">🎴</div>
-   931	                    <div class="service-title">토정비결 2026</div>
-   932	                    <div class="service-description">2026년 병오년 신년운세를 토정비결로 확인하세요</div>
-   933	                    <div class="service-price">무료</div>
-   934	                </div>
-   935	                <div class="service-card" onclick="location.href='dream.html'">
-   936	                    <div class="service-icon">🌙</div>
-   937	                    <div class="service-title">AI 꿈해몽</div>
-   938	                    <div class="service-description">AI가 당신의 꿈을 분석하고 의미를 해석해드립니다</div>
-   939	                    <div class="service-price">무료</div>
-   940	                </div>
-   941	                <div class="service-card" onclick="location.href='naming.html'">
-   942	                    <div class="service-icon">✍️</div>
-   943	                    <div class="service-title">작명/개명</div>
-   944	                    <div class="service-description">사주에 맞는 최적의 이름을 추천해드립니다</div>
-   945	                    <div class="service-price">₩19,000</div>
-   946	                </div>
-   947	                <div class="service-card" onclick="location.href='wealth-forecast.html'">
-   948	                    <div class="service-icon">💰</div>
-   949	                    <div class="service-title">재물운 그래프</div>
-   950	                    <div class="service-description">평생 재물운의 흐름을 그래프로 확인하세요</div>
-   951	                    <div class="service-price">₩9,900</div>
-   952	                </div>
-   953	                <div class="service-card" onclick="location.href='career-match.html'">
-   954	                    <div class="service-icon">💼</div>
-   955	                    <div class="service-title">직업 적성 매칭</div>
-   956	                    <div class="service-description">사주로 보는 나에게 맞는 직업과 진로</div>
-   957	                    <div class="service-price">₩14,900</div>
-   958	                </div>
-   959	                <div class="service-card" onclick="location.href='taekil.html'">
-   960	                    <div class="service-icon">📅</div>
-   961	                    <div class="service-title">이사/결혼 택일</div>
-   962	                    <div class="service-description">중요한 날을 위한 최적의 날짜를 찾아드립니다</div>
-   963	                    <div class="service-price">₩14,900</div>
-   964	                </div>
-   965	                <div class="service-card" onclick="location.href='premium-features.html'">
-   966	                    <div class="service-icon">👑</div>
-   967	                    <div class="service-title">프리미엄 분석</div>
-   968	                    <div class="service-description">9가지 분석 포함 · 100p PDF 리포트</div>
-   969	                    <div class="service-price" style="text-align: center;">
-   970	                        <div style="margin-bottom: 5px;">
-   971	                            <span style="text-decoration: line-through; color: #999; font-size: 0.85rem;">₩99,000</span>
-   972	                            <span style="color: #e74c3c; font-weight: 700; font-size: 1.2rem; margin-left: 5px;">₩49,000</span>
-   973	                        </div>
-   974	                        <span style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">50% OFF</span>
-   975	                    </div>
-   976	                </div>
-   977	                <div class="service-card" onclick="location.href='ai-chat.html'">
-   978	                    <div class="service-icon">🤖</div>
-   979	                    <div class="service-title">24시간 AI 상담</div>
-   980	                    <div class="service-description">언제든지 AI와 실시간으로 운세 상담</div>
-   981	                    <div class="service-price">무료</div>
-   982	                </div>
-   983	                <div class="service-card" onclick="location.href='saju-matching.html'" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
-   984	                    <div class="service-icon">💑</div>
-   985	                    <div class="service-title" style="color: white;">궁합 매칭</div>
-   986	                    <div class="service-description" style="color: rgba(255,255,255,0.95);">AI가 찾아주는 운명의 짝 - 사주 기반 소셜 매칭</div>
-   987	                    <div class="service-price" style="color: white;">
-   988	                        <div style="margin-bottom: 5px;">
-   989	                            <span style="text-decoration: line-through; opacity: 0.7; font-size: 0.85rem;">무료 체험</span>
-   990	                            <span style="font-weight: 700; font-size: 1.2rem; margin-left: 5px;">₩9,900/월</span>
-   991	                        </div>
-   992	                        <span style="display: inline-block; background: rgba(255,255,255,0.3); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">🔥 NEW</span>
-   993	                    </div>
-   994	                </div>
-   995	                <div class="service-card" onclick="location.href='community.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-   996	                    <div class="service-icon">🎯</div>
-   997	                    <div class="service-title" style="color: white;">커뮤니티 프리미엄</div>
-   998	                    <div class="service-description" style="color: rgba(255,255,255,0.95);">운세 고민 나누고 인기글로 수익까지</div>
-   999	                    <div class="service-price" style="color: white; font-weight: 700; font-size: 1.2rem;">₩4,900/월</div>
-  1000	                </div>
-  1001	                <div class="service-card" onclick="location.href='hr-solution.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-  1002	                    <div class="service-icon">👔</div>
-  1003	                    <div class="service-title" style="color: white;">HR 솔루션</div>
-  1004	                    <div class="service-description" style="color: rgba(255,255,255,0.95);">사주 기반 팀 배치·채용·조직 문화 진단</div>
-  1005	                    <div class="service-price" style="color: white; font-weight: 700; font-size: 1.2rem;">₩500,000~/월</div>
-  1006	                </div>
-  1007	                <div class="service-card" onclick="location.href='b2b.html'" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: white;">
-  1008	                    <div class="service-icon">🏢</div>
-  1009	                    <div class="service-title" style="color: white;">B2B 기업 서비스</div>
-  1010	                    <div class="service-description" style="color: rgba(255,255,255,0.95);">마케팅·웨딩 기업 맞춤형 솔루션</div>
-  1011	                    <div class="service-price" style="color: white; font-weight: 700; font-size: 1.2rem;">₩50,000~/건</div>
-  1012	                </div>
-  1013	            </div>
-  1014	        </div>
-  1015	    </section>
-  1016	
-  1017	
-  1018	    <!-- 유명인 사주 -->
-  1019	    <section class="celebrity-section">
-  1020	        <div class="container">
-  1021	            <h2 class="section-title" style="color: white;">유명인 사주 보기</h2>
-  1022	            <div class="celebrity-grid">
-  1023	                <div class="celebrity-card">
-  1024	                    <div class="celebrity-avatar">🎤</div>
-  1025	                    <div class="celebrity-name">BTS RM</div>
-  1026	                    <div class="celebrity-info">1994.09.12 | 갑술년 계유월 계사일</div>
-  1027	                    <div class="celebrity-saju">
-  1028	                        <strong>일간:</strong> 계수(癸水)<br>
-  1029	                        <strong>특징:</strong> 리더십과 창의성이 뛰어난 사주<br>
-  1030	                        <strong>재능:</strong> 예술·문학·철학 분야
-  1031	                    </div>
-  1032	                </div>
-  1033	                <div class="celebrity-card">
-  1034	                    <div class="celebrity-avatar">🎵</div>
-  1035	                    <div class="celebrity-name">아이유 (IU)</div>
-  1036	                    <div class="celebrity-info">1993.05.16 | 계유년 정사월 정축일</div>
-  1037	                    <div class="celebrity-saju">
-  1038	                        <strong>일간:</strong> 정화(丁火)<br>
-  1039	                        <strong>특징:</strong> 섬세하고 감성적인 사주<br>
-  1040	                        <strong>재능:</strong> 예술·음악·감성 표현
-  1041	                    </div>
-  1042	                </div>
-  1043	                <div class="celebrity-card">
-  1044	                    <div class="celebrity-avatar">⚽</div>
-  1045	                    <div class="celebrity-name">손흥민</div>
-  1046	                    <div class="celebrity-info">1992.07.08 | 임신년 정미월 신사일</div>
-  1047	                    <div class="celebrity-saju">
-  1048	                        <strong>일간:</strong> 신금(辛金)<br>
-  1049	                        <strong>특징:</strong> 강인한 정신력과 집중력<br>
-  1050	                        <strong>재능:</strong> 스포츠·경쟁 분야
-  1051	                    </div>
-  1052	                </div>
-  1053	                <div class="celebrity-card">
-  1054	                    <div class="celebrity-avatar">🎬</div>
-  1055	                    <div class="celebrity-name">유재석</div>
-  1056	                    <div class="celebrity-info">1972.08.14 | 임자년 무신월 병진일</div>
-  1057	                    <div class="celebrity-saju">
-  1058	                        <strong>일간:</strong> 병화(丙火)<br>
-  1059	                        <strong>특징:</strong> 밝고 긍정적인 에너지<br>
-  1060	                        <strong>재능:</strong> 소통·리더십·엔터테인먼트
-  1061	                    </div>
-  1062	                </div>
-  1063	            </div>
-  1064	        </div>
-  1065	    </section>
-  1066	
-  1067	    <!-- 리뷰 섹션 -->
-  1068	    <section class="review-section">
-  1069	        <div class="container">
-  1070	            <h2 class="section-title">고객 후기</h2>
-  1071	            <div class="review-stats">
-  1072	                <div class="review-score">4.9</div>
-  1073	                <div class="review-stars">⭐⭐⭐⭐⭐</div>
-  1074	                <div class="review-count">12,847개의 리뷰</div>
-  1075	            </div>
-  1076	            <div class="review-grid">
-  1077	                <div class="review-card">
-  1078	                    <div class="review-header">
-  1079	                        <div class="review-author">김** 님</div>
-  1080	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1081	                    </div>
-  1082	                    <div class="review-text">
-  1083	                        "정말 정확해서 깜짝 놀랐어요! AI인데도 이렇게 상세하고 정확하게 분석해주다니... 특히 제 성격과 적성이 딱 맞아서 진로 고민하는데 큰 도움이 됐습니다."
-  1084	                    </div>
-  1085	                    <div class="review-date">2025.12.18</div>
-  1086	                </div>
-  1087	                <div class="review-card">
-  1088	                    <div class="review-header">
-  1089	                        <div class="review-author">이** 님</div>
-  1090	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1091	                    </div>
-  1092	                    <div class="review-text">
-  1093	                        "궁합 보러 왔다가 다른 서비스도 이용했는데, 너무 만족스러워요. 프리미엄 분석 리포트는 PDF로 저장해서 계속 볼 수 있어서 좋아요!"
-  1094	                    </div>
-  1095	                    <div class="review-date">2025.12.17</div>
-  1096	                </div>
-  1097	                <div class="review-card">
-  1098	                    <div class="review-header">
-  1099	                        <div class="review-author">박** 님</div>
-  1100	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1101	                    </div>
-  1102	                    <div class="review-text">
-  1103	                        "2026년 운세가 궁금해서 토정비결 봤는데, 해석이 정말 자세하고 이해하기 쉽게 설명해주셔서 좋았습니다. 내년 계획 세우는데 참고할게요."
-  1104	                    </div>
-  1105	                    <div class="review-date">2025.12.16</div>
-  1106	                </div>
-  1107	                <div class="review-card">
-  1108	                    <div class="review-header">
-  1109	                        <div class="review-author">최** 님</div>
-  1110	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1111	                    </div>
-  1112	                    <div class="review-text">
-  1113	                        "AI 상담이 24시간 무료라니! 밤늦게 고민될 때마다 바로 상담받을 수 있어서 너무 좋아요. 답변도 빠르고 정확합니다."
-  1114	                    </div>
-  1115	                    <div class="review-date">2025.12.15</div>
-  1116	                </div>
-  1117	                <div class="review-card">
-  1118	                    <div class="review-header">
-  1119	                        <div class="review-author">정** 님</div>
-  1120	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1121	                    </div>
-  1122	                    <div class="review-text">
-  1123	                        "결혼 날짜 정하려고 택일 서비스 이용했는데, 정말 세심하게 좋은 날짜를 찾아주셨어요. 덕분에 행복한 결혼식을 올렸습니다!"
-  1124	                    </div>
-  1125	                    <div class="review-date">2025.12.14</div>
-  1126	                </div>
-  1127	                <div class="review-card">
-  1128	                    <div class="review-header">
-  1129	                        <div class="review-author">장** 님</div>
-  1130	                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
-  1131	                    </div>
-  1132	                    <div class="review-text">
-  1133	                        "직업 적성 매칭 서비스로 제 진로를 다시 생각해보게 됐어요. 제가 몰랐던 제 장점을 알게 되어서 감사합니다."
-  1134	                    </div>
-  1135	                    <div class="review-date">2025.12.13</div>
-  1136	                </div>
-  1137	            </div>
-  1138	        </div>
-  1139	    </section>
-  1140	
-  1141	    <!-- FAQ 섹션 -->
-  1142	    <section class="faq-section">
-  1143	        <div class="container">
-  1144	            <h2 class="section-title">자주 묻는 질문</h2>
-  1145	            <div class="faq-container">
-  1146	                <div class="faq-item">
-  1147	                    <div class="faq-question">
-  1148	                        무료 서비스는 어떤 것들이 있나요?
-  1149	                        <i class="fas fa-chevron-down"></i>
-  1150	                    </div>
-  1151	                    <div class="faq-answer">
-  1152	                        기본 사주팔자 보기, 궁합 분석, 토정비결 2026, AI 꿈해몽, 24시간 AI 상담이 모두 무료로 제공됩니다.
-  1153	                    </div>
-  1154	                </div>
-  1155	                <div class="faq-item">
-  1156	                    <div class="faq-question">
-  1157	                        AI 사주는 얼마나 정확한가요?
-  1158	                        <i class="fas fa-chevron-down"></i>
-  1159	                    </div>
-  1160	                    <div class="faq-answer">
-  1161	                        20년 경력의 명리학 전문가가 검증한 알고리즘을 기반으로 하며, 98.7%의 고객 만족도를 기록하고 있습니다.
-  1162	                    </div>
-  1163	                </div>
-  1164	                <div class="faq-item">
-  1165	                    <div class="faq-question">
-  1166	                        태어난 시간을 모르면 어떻게 하나요?
-  1167	                        <i class="fas fa-chevron-down"></i>
-  1168	                    </div>
-  1169	                    <div class="faq-answer">
-  1170	                        태어난 시간을 모르셔도 기본 사주 분석이 가능합니다. 다만, 더 정확한 분석을 위해서는 시주(時柱)가 필요합니다.
-  1171	                    </div>
-  1172	                </div>
-  1173	                <div class="faq-item">
-  1174	                    <div class="faq-question">
-  1175	                        결제는 어떻게 하나요?
-  1176	                        <i class="fas fa-chevron-down"></i>
-  1177	                    </div>
-  1178	                    <div class="faq-answer">
-  1179	                        신용카드, 계좌이체, 카카오페이, 네이버페이 등 다양한 결제 수단을 지원합니다. 모든 결제는 안전하게 암호화되어 처리됩니다.
-  1180	                    </div>
-  1181	                </div>
-  1182	                <div class="faq-item">
-  1183	                    <div class="faq-question">
-  1184	                        환불 정책은 어떻게 되나요?
-  1185	                        <i class="fas fa-chevron-down"></i>
-  1186	                    </div>
-  1187	                    <div class="faq-answer">
-  1188	                        서비스 이용 전에는 100% 환불이 가능하며, 이용 후에는 콘텐츠의 특성상 환불이 어렵습니다. 자세한 내용은 이용약관을 참고해주세요.
-  1189	                    </div>
-  1190	                </div>
-  1191	            </div>
-  1192	        </div>
-  1193	    </section>
-  1194	
-  1195	    <!-- 푸터 -->
-  1196	    <footer class="footer">
-  1197	        <div class="container">
-  1198	            <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
-  1199	            <p style="margin-top: 15px; font-size: 13px;">
-  1200	                <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
-  1201	                <span style="margin: 0 5px; color: rgba(255,255,255,0.5);">|</span>
-  1202	                <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
-  1203	                <span style="margin: 0 5px; color: rgba(255,255,255,0.5);">|</span>
-  1204	                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
-  1205	                <span style="margin: 0 5px; color: rgba(255,255,255,0.3);">|</span>
-  1206	                <a href="admin-login.html" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; font-size: 12px;">Admin</a>
-  1207	            </p>
-  1208	        </div>
-  1209	    </footer>
-  1210	
-  1211	    <script>
-  1212	        // 다국어 시스템
-  1213	        const translations = {
-  1214	            ko: {
-  1215	                nav: { home: '홈', pricing: '가격표', aiChat: 'AI 상담', mypage: '마이페이지' },
-  1216	                hero: {
-  1217	                    year: '2026',
-  1218	                    yearName: '병오년 <span style="color:#f4e5b5;">丙午年</span>',
-  1219	                    subtitle: '붉은 불의 말띠 해',
-  1220	                    description: '1000년의 지혜와 함께하는 명리학의 만세력<br>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다',
-  1221	                    freeSaju: '무료로 사주 보기',
-  1222	                    aiConsult: 'AI 상담 시작'
-  1223	                }
-  1224	            },
-  1225	            en: {
-  1226	                nav: { home: 'Home', pricing: 'Pricing', aiChat: 'AI Chat', mypage: 'My Page' },
-  1227	                hero: {
-  1228	                    year: '2026',
-  1229	                    yearName: 'Byeong-O Year <span style="color:#f4e5b5;">丙午年</span>',
-  1230	                    subtitle: 'Year of the Red Fire Horse',
-  1231	                    description: 'The 10,000-year calendar with 1000 years of wisdom<br>Discover your destiny with authentic astrology and AI technology',
-  1232	                    freeSaju: 'Free Saju Reading',
-  1233	                    aiConsult: 'Start AI Chat'
-  1234	                }
-  1235	            },
-  1236	            zh: {
-  1237	                nav: { home: '首页', pricing: '价格', aiChat: 'AI咨询', mypage: '我的信息' },
-  1238	                hero: {
-  1239	                    year: '2026',
-  1240	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
-  1241	                    subtitle: '红火马年',
-  1242	                    description: '拥有千年智慧的万年历<br>用正统命理学和AI技术揭示您的命运',
-  1243	                    freeSaju: '免费查看四柱',
-  1244	                    aiConsult: '开始AI咨询'
-  1245	                }
-  1246	            },
-  1247	            ja: {
-  1248	                nav: { home: 'ホーム', pricing: '価格表', aiChat: 'AI相談', mypage: 'マイページ' },
-  1249	                hero: {
-  1250	                    year: '2026',
-  1251	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
-  1252	                    subtitle: '赤い火の馬年',
-  1253	                    description: '千年の知恵とともに歩む命理学の万歳暦<br>正統派命理学とAI技術であなたの運命を明らかにします',
-  1254	                    freeSaju: '無料で四柱推命',
-  1255	                    aiConsult: 'AI相談開始'
-  1256	                }
-  1257	            }
-  1258	        };
-  1259	        
-  1260	        const langData = {
-  1261	            ko: { name: '한국어', flag: '🇰🇷' },
-  1262	            en: { name: 'English', flag: '🇺🇸' },
-  1263	            zh: { name: '中文', flag: '🇨🇳' },
-  1264	            ja: { name: '日本語', flag: '🇯🇵' }
-  1265	        };
-  1266	        
-  1267	        let currentLang = localStorage.getItem('saju_language') || 'ko';
-  1268	        
-  1269	        function updateLanguage(lang) {
-  1270	            currentLang = lang;
-  1271	            localStorage.setItem('saju_language', lang);
-  1272	            
-  1273	            document.querySelectorAll('[data-i18n]').forEach(el => {
-  1274	                const key = el.getAttribute('data-i18n');
-  1275	                const keys = key.split('.');
-  1276	                let value = translations[lang];
-  1277	                keys.forEach(k => value = value[k]);
-  1278	                el.textContent = value;
-  1279	            });
-  1280	            
-  1281	            document.querySelectorAll('[data-i18n-html]').forEach(el => {
-  1282	                const key = el.getAttribute('data-i18n-html');
-  1283	                const keys = key.split('.');
-  1284	                let value = translations[lang];
-  1285	                keys.forEach(k => value = value[k]);
-  1286	                el.innerHTML = value;
-  1287	            });
-  1288	            
-  1289	            document.getElementById('currentFlag').textContent = langData[lang].flag;
-  1290	            document.getElementById('currentLang').textContent = langData[lang].name;
-  1291	            
-  1292	            document.querySelectorAll('.lang-option').forEach(opt => {
-  1293	                opt.classList.remove('active');
-  1294	                if (opt.getAttribute('data-lang') === lang) {
-  1295	                    opt.classList.add('active');
-  1296	                }
-  1297	            });
-  1298	        }
-  1299	        
-  1300	        document.getElementById('langBtn').addEventListener('click', () => {
-  1301	            document.getElementById('langDropdown').classList.toggle('active');
-  1302	        });
-  1303	        
-  1304	        document.querySelectorAll('.lang-option').forEach(option => {
-  1305	            option.addEventListener('click', (e) => {
-  1306	                const lang = e.currentTarget.getAttribute('data-lang');
-  1307	                updateLanguage(lang);
-  1308	                document.getElementById('langDropdown').classList.remove('active');
-  1309	            });
-  1310	        });
-  1311	        
-  1312	        document.addEventListener('click', (e) => {
-  1313	            if (!e.target.closest('.language-switcher')) {
-  1314	                document.getElementById('langDropdown').classList.remove('active');
-  1315	            }
-  1316	        });
-  1317	        
-  1318	        updateLanguage(currentLang);
-  1319	        
-  1320	        // 폼 제출
-  1321	        document.getElementById('sajuForm').addEventListener('submit', function(e) {
-  1322	            e.preventDefault();
-  1323	            const formData = new FormData(e.target);
-  1324	            const data = Object.fromEntries(formData);
-  1325	            localStorage.setItem('sajuData', JSON.stringify(data));
-  1326	            window.location.href = 'result.html';
-  1327	        });
-  1328	        
-  1329	        // FAQ 토글
-  1330	        document.querySelectorAll('.faq-question').forEach(question => {
-  1331	            question.addEventListener('click', function() {
-  1332	                const answer = this.nextElementSibling;
-  1333	                const isOpen = answer.style.display === 'block';
-  1334	                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-  1335	                if (!isOpen) answer.style.display = 'block';
-  1336	            });
-  1337	        });
-  1338	        
-  1339	        // 부드러운 스크롤
-  1340	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  1341	            anchor.addEventListener('click', function (e) {
-  1342	                e.preventDefault();
-  1343	                const target = document.querySelector(this.getAttribute('href'));
-  1344	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  1345	            });
-  1346	        });
-  1347	    </script>
-  1348	</body>
-  1349	</html>
-  1350	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 사주 천년지기 - 2026 병오년 사주팔자 운세</title>
+    <meta name="description" content="2026 병오년! 정통 명리학과 AI 기술로 무료 사주팔자 상담">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+            margin-left: auto;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .lang-flag { font-size: 18px; }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        
+        .lang-option:first-child { border-radius: 13px 13px 0 0; }
+        .lang-option:last-child { border-radius: 0 0 13px 13px; }
+        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
+        .lang-option.active { 
+            background: rgba(212, 175, 55, 0.2); 
+            font-weight: 700; 
+            color: #c41e3a; 
+        }
+        .lang-option i { margin-left: auto; color: #c41e3a; }
+        
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+            color: white;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .hero-content {
+            text-align: left;
+        }
+        
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(212,175,55,0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .year-number {
+            display: block;
+            font-size: 4rem;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
+        }
+        
+        .year-name {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            display: block;
+            margin: 1rem 0;
+        }
+        
+        .subtitle {
+            display: block;
+            font-size: 1.8rem;
+            color: #f4e5b5;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #c41e3a;
+        }
+        
+        /* 신뢰 지표 */
+        .trust-section {
+            background: white;
+            padding: 40px 20px;
+        }
+        
+        .trust-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .trust-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .trust-icon {
+            font-size: 3rem;
+            color: #c41e3a;
+            margin-bottom: 1rem;
+        }
+        
+        .trust-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .trust-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+             /* 사주 입력 폼 */
+        .saju-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+        
+        .saju-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
+        }
+        
+        /* 프리미엄 서비스 */
+        .services-section {
+            background: #f5f5f5;
+            padding: 60px 20px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .service-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .service-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #c41e3a;
+        }
+        
+        /* 반응형: 태블릿 */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        /* 반응형: 모바일 */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
+       
+        /* 유명인 섹션 */
+        .celebrity-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 60px 20px;
+        }
+        
+        .celebrity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .celebrity-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(212,175,55,0.2);
+            transition: all 0.3s;
+        }
+        
+        .celebrity-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .celebrity-avatar {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .celebrity-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+        
+        .celebrity-info {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .celebrity-saju {
+            color: rgba(255,255,255,0.9);
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        
+        /* 리뷰 섹션 */
+        .review-section {
+            background: white;
+            padding: 60px 20px;
+        }
+        
+        .review-stats {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .review-score {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #c41e3a;
+        }
+        
+        .review-stars {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .review-count {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .review-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .review-author {
+            font-weight: 600;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+        }
+        
+        .review-text {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .review-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* FAQ 섹션 */
+        .faq-section {
+            background: #f5f5f5;
+            padding: 60px 20px;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f9f9f9;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            line-height: 1.8;
+            display: none;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: #1a1a1a;
+            color: rgba(255,255,255,0.7);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-image {
+                order: -1;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .year-number {
+                font-size: 3rem;
+            }
+            
+            .year-name {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .saju-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+        
+        /* 음력/양력 선택 - 가로 한 줄 배치 */
+        .calendar-options {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .calendar-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .calendar-option:hover {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+
+        .calendar-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .calendar-option label {
+            cursor: pointer;
+            margin: 0;
+            display: block;
+            font-size: 16px;
+        }
+
+        .calendar-option:has(input[type="radio"]:checked) {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+
+        .calendar-option:has(input[type="radio"]:checked) label {
+            color: #c41e3a;
+            font-weight: 700;
+        }
+
+        /* 성별 선택 - 가로 한 줄 배치 */
+        .gender-options {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .gender-option:hover {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+
+        .gender-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gender-option label {
+            cursor: pointer;
+            margin: 0;
+            display: block;
+            font-size: 16px;
+        }
+
+        .gender-option:has(input[type="radio"]:checked) {
+            border-color: #c41e3a;
+            background: #fff5f5;
+        }
+
+        .gender-option:has(input[type="radio"]:checked) label {
+            color: #c41e3a;
+            font-weight: 700;
+        }
+
+        /* 모바일 반응형 - 가로 배치 유지 */
+        @media (max-width: 768px) {
+            .calendar-options,
+            .gender-options {
+                gap: 10px;
+            }
+            
+            .calendar-option,
+            .gender-option {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" data-i18n="nav.home">홈</a></li>
+                <li><a href="pricing.html" data-i18n="nav.pricing">가격표</a></li>
+                <li><a href="ai-chat.html" data-i18n="nav.aiChat">AI 상담</a></li>
+                <li><a href="mypage.html" data-i18n="nav.mypage">마이페이지</a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="year-number" data-i18n="hero.year">2026</span>
+                    <span class="year-name" data-i18n-html="hero.yearName">병오년 <span style="color:#f4e5b5;">丙午年</span></span>
+                    <span class="subtitle" data-i18n="hero.subtitle">붉은 불의 말띠 해</span>
+                </h1>
+                <p class="hero-description" data-i18n-html="hero.description">
+                    1000년의 지혜와 함께하는 명리학의 만세력<br>
+                    정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다
+                </p>
+                <div class="btn-group">
+                    <a href="#saju-form" class="btn btn-primary">
+                        <i class="fas fa-star"></i> <span data-i18n="hero.freeSaju">무료로 사주 보기</span>
+                    </a>
+                    <a href="ai-chat.html" class="btn btn-secondary">
+                        <i class="fas fa-robot"></i> <span data-i18n="hero.aiConsult">AI 상담 시작</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://github.com/user-attachments/assets/4877f933-0876-4a21-9d88-7ce24903c050" alt="2026 병오년 말띠">
+            </div>
+        </div>
+    </section>
+
+    <!-- 신뢰 지표 -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-users"></i></div>
+                <div class="trust-number">1,879</div>
+                <div class="trust-label">명이 지금 이용중</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-comments"></i></div>
+                <div class="trust-number">3,261</div>
+                <div class="trust-label">오늘 상담 완료</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fas fa-star"></i></div>
+                <div class="trust-number">98.7%</div>
+                <div class="trust-label">고객 만족도</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 사주 입력 폼 -->
+    <section class="saju-section" id="saju-form">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-yin-yang"></i> 사주팔자 무료 보기</h2>
+            <form class="saju-form" id="sajuForm">
+                <!-- 1. 생년월일 입력 -->
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> 생년월일</label>
+                    <input type="date" name="birthdate" required>
+                </div>
+                
+                <!-- 2. 음력/양력 선택 (한 줄) -->
+                <div class="form-group">
+                    <label>음력/양력</label>
+                    <div class="calendar-options">
+                        <div class="calendar-option" onclick="document.getElementById('solar').checked=true">
+                            <input type="radio" id="solar" name="calendar" value="solar" checked>
+                            <label for="solar">양력 🌞</label>
+                        </div>
+                        <div class="calendar-option" onclick="document.getElementById('lunar').checked=true">
+                            <input type="radio" id="lunar" name="calendar" value="lunar">
+                            <label for="lunar">음력 🌙</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. 태어난 시간 -->
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
+                    <select name="birthtime">
+                        <option value="">모름</option>
+                        <option value="23-01">자시 (23:00-01:00)</option>
+                        <option value="01-03">축시 (01:00-03:00)</option>
+                        <option value="03-05">인시 (03:00-05:00)</option>
+                        <option value="05-07">묘시 (05:00-07:00)</option>
+                        <option value="07-09">진시 (07:00-09:00)</option>
+                        <option value="09-11">사시 (09:00-11:00)</option>
+                        <option value="11-13">오시 (11:00-13:00)</option>
+                        <option value="13-15">미시 (13:00-15:00)</option>
+                        <option value="15-17">신시 (15:00-17:00)</option>
+                        <option value="17-19">유시 (17:00-19:00)</option>
+                        <option value="19-21">술시 (19:00-21:00)</option>
+                        <option value="21-23">해시 (21:00-23:00)</option>
+                    </select>
+                </div>
+                
+                <!-- 4. 성별 선택 (한 줄) -->
+                <div class="form-group">
+                    <label><i class="fas fa-venus-mars"></i> 성별</label>
+                    <div class="gender-options">
+                        <div class="gender-option" onclick="document.getElementById('male').checked=true">
+                            <input type="radio" id="male" name="gender" value="male" required>
+                            <label for="male">남성 👨</label>
+                        </div>
+                        <div class="gender-option" onclick="document.getElementById('female').checked=true">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">여성 👩</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5. 제출 버튼 -->
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-magic"></i> 내 운세 확인하기
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 프리미엄 서비스 -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">프리미엄 서비스</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="location.href='compatibility.html'">
+                    <div class="service-icon">💕</div>
+                    <div class="service-title">궁합 분석</div>
+                    <div class="service-description">두 사람의 사주를 비교하여 궁합을 상세히 분석해드립니다</div>
+                    <div class="service-price">무료</div>
+                </div>
+                <div class="service-card" onclick="location.href='tojeong.html'">
+                    <div class="service-icon">🎴</div>
+                    <div class="service-title">토정비결 2026</div>
+                    <div class="service-description">2026년 병오년 신년운세를 토정비결로 확인하세요</div>
+                    <div class="service-price">무료</div>
+                </div>
+                <div class="service-card" onclick="location.href='dream.html'">
+                    <div class="service-icon">🌙</div>
+                    <div class="service-title">AI 꿈해몽</div>
+                    <div class="service-description">AI가 당신의 꿈을 분석하고 의미를 해석해드립니다</div>
+                    <div class="service-price">무료</div>
+                </div>
+                <div class="service-card" onclick="location.href='naming.html'">
+                    <div class="service-icon">✍️</div>
+                    <div class="service-title">작명/개명</div>
+                    <div class="service-description">사주에 맞는 최적의 이름을 추천해드립니다</div>
+                    <div class="service-price">₩19,000</div>
+                </div>
+                <div class="service-card" onclick="location.href='wealth-forecast.html'">
+                    <div class="service-icon">💰</div>
+                    <div class="service-title">재물운 그래프</div>
+                    <div class="service-description">평생 재물운의 흐름을 그래프로 확인하세요</div>
+                    <div class="service-price">₩9,900</div>
+                </div>
+                <div class="service-card" onclick="location.href='career-match.html'">
+                    <div class="service-icon">💼</div>
+                    <div class="service-title">직업 적성 매칭</div>
+                    <div class="service-description">사주로 보는 나에게 맞는 직업과 진로</div>
+                    <div class="service-price">₩14,900</div>
+                </div>
+                <div class="service-card" onclick="location.href='taekil.html'">
+                    <div class="service-icon">📅</div>
+                    <div class="service-title">이사/결혼 택일</div>
+                    <div class="service-description">중요한 날을 위한 최적의 날짜를 찾아드립니다</div>
+                    <div class="service-price">₩14,900</div>
+                </div>
+                <div class="service-card" onclick="location.href='premium-features.html'">
+                    <div class="service-icon">👑</div>
+                    <div class="service-title">프리미엄 분석</div>
+                    <div class="service-description">9가지 분석 포함 · 100p PDF 리포트</div>
+                    <div class="service-price" style="text-align: center;">
+                        <div style="margin-bottom: 5px;">
+                            <span style="text-decoration: line-through; color: #999; font-size: 0.85rem;">₩99,000</span>
+                            <span style="color: #e74c3c; font-weight: 700; font-size: 1.2rem; margin-left: 5px;">₩49,000</span>
+                        </div>
+                        <span style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">50% OFF</span>
+                    </div>
+                </div>
+                <div class="service-card" onclick="location.href='ai-chat.html'">
+                    <div class="service-icon">🤖</div>
+                    <div class="service-title">24시간 AI 상담</div>
+                    <div class="service-description">언제든지 AI와 실시간으로 운세 상담</div>
+                    <div class="service-price">무료</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 유명인 사주 -->
+    <section class="celebrity-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">유명인 사주 보기</h2>
+            <div class="celebrity-grid">
+                <div class="celebrity-card">
+                    <div class="celebrity-avatar">🎤</div>
+                    <div class="celebrity-name">BTS RM</div>
+                    <div class="celebrity-info">1994.09.12 | 갑술년 계유월 계사일</div>
+                    <div class="celebrity-saju">
+                        <strong>일간:</strong> 계수(癸水)<br>
+                        <strong>특징:</strong> 리더십과 창의성이 뛰어난 사주<br>
+                        <strong>재능:</strong> 예술·문학·철학 분야
+                    </div>
+                </div>
+                <div class="celebrity-card">
+                    <div class="celebrity-avatar">🎵</div>
+                    <div class="celebrity-name">아이유 (IU)</div>
+                    <div class="celebrity-info">1993.05.16 | 계유년 정사월 정축일</div>
+                    <div class="celebrity-saju">
+                        <strong>일간:</strong> 정화(丁火)<br>
+                        <strong>특징:</strong> 섬세하고 감성적인 사주<br>
+                        <strong>재능:</strong> 예술·음악·감성 표현
+                    </div>
+                </div>
+                <div class="celebrity-card">
+                    <div class="celebrity-avatar">⚽</div>
+                    <div class="celebrity-name">손흥민</div>
+                    <div class="celebrity-info">1992.07.08 | 임신년 정미월 신사일</div>
+                    <div class="celebrity-saju">
+                        <strong>일간:</strong> 신금(辛金)<br>
+                        <strong>특징:</strong> 강인한 정신력과 집중력<br>
+                        <strong>재능:</strong> 스포츠·경쟁 분야
+                    </div>
+                </div>
+                <div class="celebrity-card">
+                    <div class="celebrity-avatar">🎬</div>
+                    <div class="celebrity-name">유재석</div>
+                    <div class="celebrity-info">1972.08.14 | 임자년 무신월 병진일</div>
+                    <div class="celebrity-saju">
+                        <strong>일간:</strong> 병화(丙火)<br>
+                        <strong>특징:</strong> 밝고 긍정적인 에너지<br>
+                        <strong>재능:</strong> 소통·리더십·엔터테인먼트
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 리뷰 섹션 -->
+    <section class="review-section">
+        <div class="container">
+            <h2 class="section-title">고객 후기</h2>
+            <div class="review-stats">
+                <div class="review-score">4.9</div>
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <div class="review-count">12,847개의 리뷰</div>
+            </div>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">김** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "정말 정확해서 깜짝 놀랐어요! AI인데도 이렇게 상세하고 정확하게 분석해주다니... 특히 제 성격과 적성이 딱 맞아서 진로 고민하는데 큰 도움이 됐습니다."
+                    </div>
+                    <div class="review-date">2025.12.18</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">이** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "궁합 보러 왔다가 다른 서비스도 이용했는데, 너무 만족스러워요. 프리미엄 분석 리포트는 PDF로 저장해서 계속 볼 수 있어서 좋아요!"
+                    </div>
+                    <div class="review-date">2025.12.17</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">박** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "2026년 운세가 궁금해서 토정비결 봤는데, 해석이 정말 자세하고 이해하기 쉽게 설명해주셔서 좋았습니다. 내년 계획 세우는데 참고할게요."
+                    </div>
+                    <div class="review-date">2025.12.16</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">최** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "AI 상담이 24시간 무료라니! 밤늦게 고민될 때마다 바로 상담받을 수 있어서 너무 좋아요. 답변도 빠르고 정확합니다."
+                    </div>
+                    <div class="review-date">2025.12.15</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">정** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "결혼 날짜 정하려고 택일 서비스 이용했는데, 정말 세심하게 좋은 날짜를 찾아주셨어요. 덕분에 행복한 결혼식을 올렸습니다!"
+                    </div>
+                    <div class="review-date">2025.12.14</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">장** 님</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="review-text">
+                        "직업 적성 매칭 서비스로 제 진로를 다시 생각해보게 됐어요. 제가 몰랐던 제 장점을 알게 되어서 감사합니다."
+                    </div>
+                    <div class="review-date">2025.12.13</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ 섹션 -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        무료 서비스는 어떤 것들이 있나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        기본 사주팔자 보기, 궁합 분석, 토정비결 2026, AI 꿈해몽, 24시간 AI 상담이 모두 무료로 제공됩니다.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        AI 사주는 얼마나 정확한가요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        20년 경력의 명리학 전문가가 검증한 알고리즘을 기반으로 하며, 98.7%의 고객 만족도를 기록하고 있습니다.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        태어난 시간을 모르면 어떻게 하나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        태어난 시간을 모르셔도 기본 사주 분석이 가능합니다. 다만, 더 정확한 분석을 위해서는 시주(時柱)가 필요합니다.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        결제는 어떻게 하나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        신용카드, 계좌이체, 카카오페이, 네이버페이 등 다양한 결제 수단을 지원합니다. 모든 결제는 안전하게 암호화되어 처리됩니다.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        환불 정책은 어떻게 되나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        서비스 이용 전에는 100% 환불이 가능하며, 이용 후에는 콘텐츠의 특성상 환불이 어렵습니다. 자세한 내용은 이용약관을 참고해주세요.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
+            <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
+                <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
+                <span style="margin: 0 5px;">|</span>
+                <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
+                <span style="margin: 0 5px;">|</span>
+                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
+                <span style="margin: 0 5px; color: rgba(255,255,255,0.3);">|</span>
+<a href="admin-login.html" style="color: rgba(255,255,255,0.5); text-decoration: none; margin: 0 10px; font-size: 12px;">Admin</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 다국어 시스템
+        const translations = {
+            ko: {
+                nav: { home: '홈', pricing: '가격표', aiChat: 'AI 상담', mypage: '마이페이지' },
+                hero: {
+                    year: '2026',
+                    yearName: '병오년 <span style="color:#f4e5b5;">丙午年</span>',
+                    subtitle: '붉은 불의 말띠 해',
+                    description: '1000년의 지혜와 함께하는 명리학의 만세력<br>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다',
+                    freeSaju: '무료로 사주 보기',
+                    aiConsult: 'AI 상담 시작'
+                }
+            },
+            en: {
+                nav: { home: 'Home', pricing: 'Pricing', aiChat: 'AI Chat', mypage: 'My Page' },
+                hero: {
+                    year: '2026',
+                    yearName: 'Byeong-O Year <span style="color:#f4e5b5;">丙午年</span>',
+                    subtitle: 'Year of the Red Fire Horse',
+                    description: 'The 10,000-year calendar with 1000 years of wisdom<br>Discover your destiny with authentic astrology and AI technology',
+                    freeSaju: 'Free Saju Reading',
+                    aiConsult: 'Start AI Chat'
+                }
+            },
+            zh: {
+                nav: { home: '首页', pricing: '价格', aiChat: 'AI咨询', mypage: '我的信息' },
+                hero: {
+                    year: '2026',
+                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
+                    subtitle: '红火马年',
+                    description: '拥有千年智慧的万年历<br>用正统命理学和AI技术揭示您的命运',
+                    freeSaju: '免费查看四柱',
+                    aiConsult: '开始AI咨询'
+                }
+            },
+            ja: {
+                nav: { home: 'ホーム', pricing: '価格表', aiChat: 'AI相談', mypage: 'マイページ' },
+                hero: {
+                    year: '2026',
+                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
+                    subtitle: '赤い火の馬年',
+                    description: '千年の知恵とともに歩む命理学の万歳暦<br>正統派命理学とAI技術であなたの運命を明らかにします',
+                    freeSaju: '無料で四柱推命',
+                    aiConsult: 'AI相談開始'
+                }
+            }
+        };
+        
+        const langData = {
+            ko: { name: '한국어', flag: '🇰🇷' },
+            en: { name: 'English', flag: '🇺🇸' },
+            zh: { name: '中文', flag: '🇨🇳' },
+            ja: { name: '日本語', flag: '🇯🇵' }
+        };
+        
+        let currentLang = localStorage.getItem('saju_language') || 'ko';
+        
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('saju_language', lang);
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let value = translations[lang];
+                keys.forEach(k => value = value[k]);
+                el.textContent = value;
+            });
+            
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                const keys = key.split('.');
+                let value = translations[lang];
+                keys.forEach(k => value = value[k]);
+                el.innerHTML = value;
+            });
+            
+            document.getElementById('currentFlag').textContent = langData[lang].flag;
+            document.getElementById('currentLang').textContent = langData[lang].name;
+            
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.getAttribute('data-lang') === lang) {
+                    opt.classList.add('active');
+                }
+            });
+        }
+        
+        document.getElementById('langBtn').addEventListener('click', () => {
+            document.getElementById('langDropdown').classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const lang = e.currentTarget.getAttribute('data-lang');
+                updateLanguage(lang);
+                document.getElementById('langDropdown').classList.remove('active');
+            });
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) {
+                document.getElementById('langDropdown').classList.remove('active');
+            }
+        });
+        
+        updateLanguage(currentLang);
+        
+        // 폼 제출
+        document.getElementById('sajuForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            localStorage.setItem('sajuData', JSON.stringify(data));
+            window.location.href = 'result.html';
+        });
+        
+        // FAQ 토글
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                if (!isOpen) answer.style.display = 'block';
+            });
+        });
+        
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
