@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏢 B2B 기업 서비스 - 마케팅 & 웨딩 플래너 솔루션 | AI 사주 천년지기</title>
+    <meta name="description" content="기업을 위한 사주 기반 마케팅 솔루션과 웨딩 플래너 연동 서비스. 런칭 길일 분석, 브랜드 네이밍, 예식 날짜 선정까지 AI와 명리학이 만난 B2B 솔루션.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 네비게이션 */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* 서비스 카드 */
+        .services {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            color: #e74c3c;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        .service-features i {
+            color: #667eea;
+        }
+
+        /* 성공 사례 */
+        .success-stories {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .success-stories h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .story-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .story-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .story-problem {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .story-solution {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .story-result {
+            background: rgba(255,215,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* 기대 효과 */
+        .benefits {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .benefit-card i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .benefit-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* 문의 폼 */
+        .contact-form {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .contact-form h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .service-grid,
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🔮 AI 사주 천년지기</a>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-matching.html">궁합 매칭</a></li>
+                <li><a href="community.html">커뮤니티</a></li>
+                <li><a href="b2b.html">B2B</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>🏢 B2B 기업 서비스</h1>
+            <p>사주 기반 마케팅 솔루션과 웨딩 플래너 연동</p>
+            <p>런칭 길일부터 예식 날짜까지, AI와 명리학이 만난 기업 솔루션</p>
+        </div>
+    </section>
+
+    <!-- 서비스 소개 -->
+    <section class="services">
+        <div class="container">
+            <h2>💼 B2B 서비스</h2>
+            <div class="service-grid">
+                <!-- 마케팅 에이전시 -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">📊</div>
+                        <div>
+                            <div class="service-title">마케팅 에이전시 솔루션</div>
+                            <div class="service-price">₩1,000,000~/프로젝트</div>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> 타깃 고객 사주 분석</li>
+                        <li><i class="fas fa-check-circle"></i> 런칭 길일 후보 최대 3개</li>
+                        <li><i class="fas fa-check-circle"></i> 브랜드 네이밍 자문 5개 후보</li>
+                        <li><i class="fas fa-check-circle"></i> 마케팅 캠페인 최적 시기 분석</li>
+                        <li><i class="fas fa-check-circle"></i> 경쟁사 사주 분석 (창업자/대표)</li>
+                        <li><i class="fas fa-check-circle"></i> 100페이지 상세 리포트</li>
+                    </ul>
+                </div>
+
+                <!-- 웨딩 플래너 -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon">💒</div>
+                        <div>
+                            <div class="service-title">웨딩 플래너 연동</div>
+                            <div class="service-price">₩50,000/건</div>
+                        </div>
+                    </div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> 예식 날짜 후보 최대 5개</li>
+                        <li><i class="fas fa-check-circle"></i> 하객 좌석 배치 (궁합 기반 최적화)</li>
+                        <li><i class="fas fa-check-circle"></i> 신혼여행 길일</li>
+                        <li><i class="fas fa-check-circle"></i> 부부 궁합 상세 분석</li>
+                        <li><i class="fas fa-check-circle"></i> 자녀운 및 재물운 분석</li>
+                        <li><i class="fas fa-check-circle"></i> 예쁜 PDF 리포트 제공</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 성공 사례 -->
+    <section class="success-stories">
+        <div class="container">
+            <h2>📈 성공 사례</h2>
+            <div class="story-grid">
+                <div class="story-card">
+                    <h3>🏭 B 화장품 브랜드</h3>
+                    <div class="story-problem">
+                        <strong>문제:</strong> 신제품 런칭 날짜 선정 고민
+                    </div>
+                    <div class="story-solution">
+                        <strong>솔루션:</strong> 타깃 고객 사주 분석 후 최적 길일 선정
+                    </div>
+                    <div class="story-result">
+                        <strong>결과:</strong> 런칭 첫날 매출 3배 증가, SNS 바이럴 성공
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <h3>💒 C 웨딩홀</h3>
+                    <div class="story-problem">
+                        <strong>문제:</strong> 예식 날짜 추천 서비스 부족
+                    </div>
+                    <div class="story-solution">
+                        <strong>솔루션:</strong> 사주 기반 예식 날짜 추천 서비스 도입
+                    </div>
+                    <div class="story-result">
+                        <strong>결과:</strong> 매출 20% 증가, 고객 재방문율 65%→82%
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <h3>🏢 D 스타트업</h3>
+                    <div class="story-problem">
+                        <strong>문제:</strong> 회사 창립일과 브랜드명 선정
+                    </div>
+                    <div class="story-solution">
+                        <strong>솔루션:</strong> CEO 사주 분석 + 브랜드 네이밍 컨설팅
+                    </div>
+                    <div class="story-result">
+                        <strong>결과:</strong> 투자 유치 성공, 브랜드 인지도 상승
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 기대 효과 -->
+    <section class="benefits">
+        <div class="container">
+            <h2>✨ 기대 효과</h2>
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>96% 정확도</h3>
+                    <p>10년 경력 명리학 전문가와 AI 협업</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>빠른 납품</h3>
+                    <p>3-5일 내 리포트 제공</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-won-sign"></i>
+                    <h3>합리적 가격</h3>
+                    <p>오프라인 대비 50% 저렴</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-database"></i>
+                    <h3>데이터 기반</h3>
+                    <p>수천 건의 사례 분석 결과</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>보안 강화</h3>
+                    <p>기업 정보 암호화 보관</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>전담 매니저</h3>
+                    <p>프로젝트 전담 매니저 배정</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 문의 폼 -->
+    <section class="contact-form">
+        <div class="container">
+            <h2>📞 무료 상담 신청</h2>
+            <div class="form-container">
+                <form id="b2bForm">
+                    <div class="form-group">
+                        <label for="companyName">기업명 *</label>
+                        <input type="text" id="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactName">담당자명 *</label>
+                        <input type="text" id="contactName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일 *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">연락처 *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">관심 서비스 *</label>
+                        <select id="service" required>
+                            <option value="">선택하세요</option>
+                            <option value="marketing">마케팅 에이전시 솔루션</option>
+                            <option value="wedding">웨딩 플래너 연동</option>
+                            <option value="custom">맞춤형 서비스</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">예산 범위</label>
+                        <select id="budget">
+                            <option value="">선택하세요</option>
+                            <option value="under1m">100만원 이하</option>
+                            <option value="1m-3m">100만원 ~ 300만원</option>
+                            <option value="3m-5m">300만원 ~ 500만원</option>
+                            <option value="over5m">500만원 이상</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">문의 내용</label>
+                        <textarea id="message"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">무료 상담 신청하기</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI 사주 천년지기</h3>
+                    <p>AI와 명리학이 만나<br>더 정확한 운세를 제공합니다</p>
+                </div>
+                <div class="footer-section">
+                    <h3>서비스</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">메인 홈</a></li>
+                        <li><a href="pricing.html">가격 안내</a></li>
+                        <li><a href="ai-chat.html">AI 상담</a></li>
+                        <li><a href="saju-matching.html">궁합 매칭</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>고객지원</h3>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                        <li><a href="refund.html">환불정책</a></li>
+                        <li><a href="admin-login.html">Admin</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 폼 제출
+        document.getElementById('b2bForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                companyName: document.getElementById('companyName').value,
+                contactName: document.getElementById('contactName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                budget: document.getElementById('budget').value,
+                message: document.getElementById('message').value
+            };
+
+            // 실제 구현 시 여기에 API 호출 추가
+            console.log('B2B 문의:', formData);
+            alert('상담 신청이 완료되었습니다!\n담당자가 영업일 기준 1-2일 내에 연락드리겠습니다.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
