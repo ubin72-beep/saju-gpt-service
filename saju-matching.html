@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💑 AI 궁합 매칭 - 운명의 짝을 찾아드립니다 | AI 사주 천년지기</title>
+    <meta name="description" content="사주 오행 기반 AI 매칭 서비스! 과학적인 궁합 분석으로 당신의 운명의 짝을 찾아드립니다.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #ffd700;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+        
+        /* How It Works */
+        .how-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .steps-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .step-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .pricing-card.popular {
+            border: 3px solid #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .pricing-badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-period {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features i {
+            color: #4caf50;
+            margin-right: 10px;
+        }
+        
+        .pricing-card.popular .pricing-features i {
+            color: #ffd700;
+        }
+        
+        .btn-pricing {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .btn-pricing:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.popular .btn-pricing {
+            background: white;
+            color: #667eea;
+        }
+        
+        /* Success Stories */
+        .success-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-match {
+            font-size: 0.9rem;
+            color: #e74c3c;
+            font-weight: 700;
+        }
+        
+        .testimonial-content {
+            line-height: 1.8;
+            color: #666;
+        }
+        
+        .testimonial-rating {
+            color: #ffd700;
+            margin-top: 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .step-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-matching.html">궁합 매칭</a></li>
+                <li><a href="b2b.html">기업 서비스</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">💑 AI 궁합 매칭</h1>
+            <p class="hero-subtitle">사주 오행 기반 과학적 매칭으로 운명의 짝을 찾아드립니다</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1,247</span>
+                    <span class="stat-label">성공 매칭</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">92%</span>
+                    <span class="stat-label">궁합 만족도</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3,580</span>
+                    <span class="stat-label">활성 회원</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">✨ 왜 AI 궁합 매칭인가?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">과학적 궁합 분석</h3>
+                    <p class="feature-description">사주 오행, 십이지, 천간지지를 종합적으로 분석하여 96% 이상의 정확도로 궁합을 예측합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💖</div>
+                    <h3 class="feature-title">AI 추천 매칭</h3>
+                    <p class="feature-description">인공지능이 수천 개의 프로필을 분석하여 당신에게 가장 잘 맞는 상대를 추천해드립니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">안전한 프라이버시</h3>
+                    <p class="feature-description">모든 개인정보는 암호화되어 보호되며, 승인된 상대에게만 공개됩니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">실시간 메시지</h3>
+                    <p class="feature-description">궁합이 맞는 상대와 즉시 대화를 시작할 수 있습니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">상세 궁합 리포트</h3>
+                    <p class="feature-description">애정운, 재물운, 자녀운, 건강운 등 다각도로 분석한 궁합 리포트를 제공합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎁</div>
+                    <h3 class="feature-title">무료 체험</h3>
+                    <p class="feature-description">프로필 등록과 내 궁합 점수 확인은 완전 무료!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section">
+        <div class="container">
+            <h2 class="section-title">🚀 이용 방법</h2>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>프로필 등록</h3>
+                        <p>사주 정보 (생년월일, 출생 시간)와 자기소개를 입력하세요. 프로필 사진은 선택사항입니다.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI 궁합 분석</h3>
+                        <p>인공지능이 당신의 사주를 분석하고 최적의 궁합 상대를 찾아드립니다.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>매칭 확인</h3>
+                        <p>추천된 상대의 프로필과 궁합 점수를 확인하세요. 궁합 점수는 0~100점으로 표시됩니다.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>대화 시작</h3>
+                        <p>마음에 드는 상대에게 좋아요를 보내고, 서로 매칭되면 즉시 대화를 시작할 수 있습니다!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">💎 요금제</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">무료</div>
+                    <div class="pricing-price">₩0</div>
+                    <div class="pricing-period">평생 무료</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 프로필 등록</li>
+                        <li><i class="fas fa-check"></i> 내 궁합 점수 확인</li>
+                        <li><i class="fas fa-check"></i> 일일 3명 프로필 열람</li>
+                        <li><i class="fas fa-times"></i> AI 추천 매칭</li>
+                        <li><i class="fas fa-times"></i> 실시간 메시지</li>
+                    </ul>
+                    <a href="#" class="btn-pricing">무료 시작</a>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">가장 인기!</div>
+                    <div class="pricing-name">베이직</div>
+                    <div class="pricing-price">₩9,900</div>
+                    <div class="pricing-period">월 구독</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 무료 플랜 모든 기능</li>
+                        <li><i class="fas fa-check"></i> 무제한 프로필 열람</li>
+                        <li><i class="fas fa-check"></i> AI 추천 매칭 10명/일</li>
+                        <li><i class="fas fa-check"></i> 상세 궁합 리포트</li>
+                        <li><i class="fas fa-times"></i> 실시간 메시지</li>
+                    </ul>
+                    <a href="#" class="btn-pricing">지금 시작</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-name">프리미엄</div>
+                    <div class="pricing-price">₩19,900</div>
+                    <div class="pricing-period">월 구독</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 베이직 플랜 모든 기능</li>
+                        <li><i class="fas fa-check"></i> AI 추천 매칭 무제한</li>
+                        <li><i class="fas fa-check"></i> 실시간 메시지 무제한</li>
+                        <li><i class="fas fa-check"></i> 프로필 우선 노출</li>
+                        <li><i class="fas fa-check"></i> 전문가 상담 (월 1회)</li>
+                    </ul>
+                    <a href="#" class="btn-pricing">VIP 되기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="success-section">
+        <div class="container">
+            <h2 class="section-title">💕 성공 사례</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👨</div>
+                        <div class="testimonial-info">
+                            <h4>김**님 (34세, 남)</h4>
+                            <div class="testimonial-match">궁합 점수: 94점</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        "3년간 소개팅만 30번 넘게 했는데 번번이 실패했어요. AI 궁합 매칭으로 만난 지금 여자친구와는 정말 잘 맞아요. 사주가 이렇게 정확할 줄 몰랐습니다!"
+                    </div>
+                    <div class="testimonial-rating">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👩</div>
+                        <div class="testimonial-info">
+                            <h4>이**님 (29세, 여)</h4>
+                            <div class="testimonial-match">궁합 점수: 91점</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        "다른 매칭 앱들은 외모만 보고 선택하는 느낌이었는데, 여기는 사주로 성격까지 잘 맞춰줘서 대화가 정말 잘 통해요. 6개월째 만나고 있습니다!"
+                    </div>
+                    <div class="testimonial-rating">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">💑</div>
+                        <div class="testimonial-info">
+                            <h4>박**님 커플 (36세/33세)</h4>
+                            <div class="testimonial-match">궁합 점수: 96점</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        "작년에 매칭으로 만나서 올해 결혼했어요! 사주 궁합이 96점이라고 해서 반신반의했는데, 정말 모든 게 잘 맞아요. 감사합니다!"
+                    </div>
+                    <div class="testimonial-rating">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="terms.html">이용약관</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="refund.html">환불정책</a>
+                <a href="admin-login.html">Admin</a>
+            </div>
+            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
