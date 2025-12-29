@@ -4,166 +4,256 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💑 AI 궁합 매칭 - 운명의 짝을 찾아드립니다 | AI 사주 천년지기</title>
-    <meta name="description" content="사주 오행 기반 AI 매칭 서비스! 과학적인 궁합 분석으로 당신의 운명의 짝을 찾아드립니다.">
+    <meta name="description" content="사주 기반 AI 궁합 매칭 서비스. 오행 균형을 고려한 과학적 궁합 분석으로 운명의 짝을 만나보세요. 실시간 메시지, 상세 리포트 제공.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        .navbar {
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+
+        /* 네비게이션 */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+
+        nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .nav-brand {
-            color: white;
+
+        .logo {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
+            color: #fff;
             text-decoration: none;
         }
-        
-        .nav-menu {
+
+        .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
         }
-        
-        .nav-menu a {
-            color: rgba(255,255,255,0.9);
+
+        .nav-links a {
+            color: #fff;
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s;
         }
-        
-        .nav-menu a:hover {
+
+        .nav-links a:hover {
             color: #ffd700;
         }
-        
-        .hero-section {
-            text-align: center;
-            padding: 80px 20px;
+
+        /* Hero 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
+            padding: 100px 0;
+            text-align: center;
         }
-        
-        .hero-title {
+
+        .hero h1 {
             font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+            font-weight: 800;
+            margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* 통계 섹션 */
+        .stats {
+            background: white;
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
             opacity: 0.9;
         }
-        
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
+
+        /* 특징 섹션 */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
         }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            display: block;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-        
-        .features-section {
-            padding: 80px 20px;
-            background: white;
-        }
-        
-        .section-title {
+
+        .features h2 {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 60px;
+            margin-bottom: 3rem;
             color: #333;
         }
-        
-        .features-grid {
+
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-bottom: 60px;
         }
-        
+
         .feature-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 40px;
+            background: white;
             border-radius: 20px;
+            padding: 40px;
             text-align: center;
-            color: white;
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        
+
         .feature-icon {
             font-size: 4rem;
             margin-bottom: 20px;
+            color: #f5576c;
         }
-        
+
         .feature-title {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 15px;
+            color: #333;
         }
-        
-        .feature-description {
-            font-size: 1rem;
+
+        .feature-desc {
+            color: #666;
             line-height: 1.8;
-            opacity: 0.9;
         }
-        
-        .pricing-section {
-            padding: 80px 20px;
+
+        /* How it works */
+        .how-it-works {
+            padding: 80px 0;
             background: white;
         }
-        
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .step-desc {
+            color: #666;
+        }
+
+        /* 가격표 */
+        .pricing {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -171,285 +261,388 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-        
+
         .pricing-card {
             background: white;
-            border: 2px solid #e0e0e0;
             border-radius: 20px;
             padding: 40px;
             text-align: center;
-            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
-        
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 3px solid #f5576c;
+        }
+
         .pricing-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        
-        .pricing-card.popular {
-            border: 3px solid #667eea;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: scale(1.05);
-        }
-        
+
         .pricing-badge {
-            display: inline-block;
-            background: #ffd700;
-            color: #333;
-            padding: 5px 15px;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 20px;
             border-radius: 20px;
-            font-size: 0.9rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
-        
-        .pricing-name {
+
+        .pricing-title {
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 20px;
+            color: #333;
         }
-        
+
         .pricing-price {
             font-size: 3rem;
-            font-weight: 700;
+            font-weight: 800;
+            color: #f5576c;
             margin-bottom: 10px;
         }
-        
+
         .pricing-period {
-            font-size: 1rem;
-            opacity: 0.7;
+            color: #666;
             margin-bottom: 30px;
         }
-        
+
         .pricing-features {
             list-style: none;
             margin-bottom: 30px;
             text-align: left;
         }
-        
+
         .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
+
         .pricing-features li:last-child {
             border-bottom: none;
         }
-        
+
         .pricing-features i {
-            color: #4caf50;
-            margin-right: 10px;
+            color: #f5576c;
         }
-        
-        .pricing-card.popular .pricing-features i {
-            color: #ffd700;
-        }
-        
-        .pricing-card.popular .pricing-features li {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .btn-pricing {
-            display: inline-block;
-            padding: 15px 40px;
-            background: #667eea;
+
+        .pricing-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: 700;
-            transition: all 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        
-        .btn-pricing:hover {
-            background: #5568d3;
-            transform: scale(1.05);
+
+        .pricing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
         }
-        
-        .pricing-card.popular .btn-pricing {
-            background: white;
-            color: #667eea;
-        }
-        
-        .footer {
+
+        /* Footer */
+        footer {
             background: #1a1a1a;
             color: white;
-            padding: 40px 20px;
-            text-align: center;
+            padding: 40px 0 20px;
         }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
-        
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
         .footer-links a {
-            color: rgba(255,255,255,0.7);
+            color: #ccc;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-links a:hover {
-            color: white;
+            color: #ffd700;
         }
-        
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* 반응형 */
         @media (max-width: 768px) {
-            .hero-title {
+            .hero h1 {
                 font-size: 2rem;
             }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
+
+            .hero p {
+                font-size: 1rem;
             }
-            
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
+
+            .stat-number {
+                font-size: 2rem;
             }
-            
-            .nav-menu {
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-            </a>
-            <ul class="nav-menu">
+    <!-- 네비게이션 -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🔮 AI 사주 천년지기</a>
+            <ul class="nav-links">
                 <li><a href="index.html">홈</a></li>
-                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="pricing.html">가격</a></li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
                 <li><a href="saju-matching.html">궁합 매칭</a></li>
-                <li><a href="b2b.html">기업 서비스</a></li>
+                <li><a href="community.html">커뮤니티</a></li>
+                <li><a href="b2b.html">B2B</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero-section">
+    <!-- Hero -->
+    <section class="hero">
         <div class="container">
-            <h1 class="hero-title">💑 AI 궁합 매칭</h1>
-            <p class="hero-subtitle">사주 오행 기반 과학적 매칭으로 운명의 짝을 찾아드립니다</p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number">1,247</span>
-                    <span class="stat-label">성공 매칭</span>
+            <h1>💑 AI 궁합 매칭</h1>
+            <p>사주 기반 과학적 궁합 분석으로 운명의 짝을 만나보세요</p>
+            <a href="#pricing" class="cta-button">무료로 시작하기</a>
+        </div>
+    </section>
+
+    <!-- 통계 -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">성공 매칭</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">92%</span>
-                    <span class="stat-label">궁합 만족도</span>
+                <div class="stat-card">
+                    <div class="stat-number">92%</div>
+                    <div class="stat-label">궁합 만족도</div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">3,580</span>
-                    <span class="stat-label">활성 회원</span>
+                <div class="stat-card">
+                    <div class="stat-number">3,580</div>
+                    <div class="stat-label">활성 회원</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features-section">
+    <!-- 특징 -->
+    <section class="features">
         <div class="container">
-            <h2 class="section-title">✨ 왜 AI 궁합 매칭인가?</h2>
-            <div class="features-grid">
+            <h2>💖 특별한 매칭 시스템</h2>
+            <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
                     <h3 class="feature-title">과학적 궁합 분석</h3>
-                    <p class="feature-description">사주 오행, 십이지, 천간지지를 종합적으로 분석하여 96% 이상의 정확도로 궁합을 예측합니다.</p>
+                    <p class="feature-desc">사주 오행을 기반으로 96% 정확도의 궁합 점수를 제공합니다</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💖</div>
+                    <div class="feature-icon">🤖</div>
                     <h3 class="feature-title">AI 추천 매칭</h3>
-                    <p class="feature-description">인공지능이 수천 개의 프로필을 분석하여 당신에게 가장 잘 맞는 상대를 추천해드립니다.</p>
+                    <p class="feature-desc">AI가 매일 최적의 매칭 후보를 자동으로 추천해드립니다</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
                     <h3 class="feature-title">안전한 프라이버시</h3>
-                    <p class="feature-description">모든 개인정보는 암호화되어 보호되며, 승인된 상대에게만 공개됩니다.</p>
+                    <p class="feature-desc">모든 개인정보는 암호화되어 안전하게 보호됩니다</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
                     <h3 class="feature-title">실시간 메시지</h3>
-                    <p class="feature-description">궁합이 맞는 상대와 즉시 대화를 시작할 수 있습니다.</p>
+                    <p class="feature-desc">매칭된 상대와 즉시 대화를 시작할 수 있습니다</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3 class="feature-title">상세 궁합 리포트</h3>
-                    <p class="feature-description">애정운, 재물운, 자녀운, 건강운 등 다각도로 분석한 궁합 리포트를 제공합니다.</p>
+                    <p class="feature-desc">애정운, 재물운, 자녀운까지 상세한 궁합 분석 제공</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎁</div>
                     <h3 class="feature-title">무료 체험</h3>
-                    <p class="feature-description">프로필 등록과 내 궁합 점수 확인은 완전 무료!</p>
+                    <p class="feature-desc">매일 3명의 프로필을 무료로 확인할 수 있습니다</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="pricing-section">
+    <!-- How It Works -->
+    <section class="how-it-works">
         <div class="container">
-            <h2 class="section-title">💎 요금제</h2>
+            <h2>🚀 이용 방법</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">프로필 등록</h3>
+                    <p class="step-desc">생년월일시와 간단한 자기소개를 등록하세요</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">AI 궁합 분석</h3>
+                    <p class="step-desc">AI가 사주를 분석하여 최적의 상대를 찾아드립니다</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">매칭 확인</h3>
+                    <p class="step-desc">추천받은 프로필과 궁합 점수를 확인하세요</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">대화 시작</h3>
+                    <p class="step-desc">마음에 드는 상대에게 메시지를 보내보세요</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 가격표 -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>💰 요금제</h2>
             <div class="pricing-grid">
+                <!-- 무료 -->
                 <div class="pricing-card">
-                    <div class="pricing-name">무료</div>
+                    <h3 class="pricing-title">무료</h3>
                     <div class="pricing-price">₩0</div>
                     <div class="pricing-period">평생 무료</div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 프로필 등록</li>
-                        <li><i class="fas fa-check"></i> 내 궁합 점수 확인</li>
+                        <li><i class="fas fa-check"></i> 기본 궁합 점수 확인</li>
                         <li><i class="fas fa-check"></i> 일일 3명 프로필 열람</li>
-                        <li><i class="fas fa-times"></i> AI 추천 매칭</li>
+                        <li><i class="fas fa-times"></i> 무제한 프로필 열람</li>
+                        <li><i class="fas fa-times"></i> AI 매칭 추천</li>
                         <li><i class="fas fa-times"></i> 실시간 메시지</li>
                     </ul>
-                    <a href="#" class="btn-pricing">무료 시작</a>
+                    <a href="#" class="pricing-button">무료 시작하기</a>
                 </div>
-                
-                <div class="pricing-card popular">
-                    <div class="pricing-badge">가장 인기!</div>
-                    <div class="pricing-name">베이직</div>
+
+                <!-- 베이직 -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">인기</div>
+                    <h3 class="pricing-title">베이직</h3>
                     <div class="pricing-price">₩9,900</div>
-                    <div class="pricing-period">월 구독</div>
+                    <div class="pricing-period">/월</div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 무료 플랜 모든 기능</li>
+                        <li><i class="fas fa-check"></i> 무료 기능 포함</li>
                         <li><i class="fas fa-check"></i> 무제한 프로필 열람</li>
-                        <li><i class="fas fa-check"></i> AI 추천 매칭 10명/일</li>
+                        <li><i class="fas fa-check"></i> AI 매칭 추천 (10명/일)</li>
                         <li><i class="fas fa-check"></i> 상세 궁합 리포트</li>
-                        <li><i class="fas fa-times"></i> 실시간 메시지</li>
+                        <li><i class="fas fa-times"></i> 실시간 메시지 무제한</li>
+                        <li><i class="fas fa-times"></i> 프로필 우선 노출</li>
                     </ul>
-                    <a href="#" class="btn-pricing">지금 시작</a>
+                    <a href="#" class="pricing-button">시작하기</a>
                 </div>
-                
+
+                <!-- 프리미엄 -->
                 <div class="pricing-card">
-                    <div class="pricing-name">프리미엄</div>
+                    <h3 class="pricing-title">프리미엄</h3>
                     <div class="pricing-price">₩19,900</div>
-                    <div class="pricing-period">월 구독</div>
+                    <div class="pricing-period">/월</div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 베이직 플랜 모든 기능</li>
-                        <li><i class="fas fa-check"></i> AI 추천 매칭 무제한</li>
+                        <li><i class="fas fa-check"></i> 베이직 기능 포함</li>
+                        <li><i class="fas fa-check"></i> AI 매칭 추천 무제한</li>
                         <li><i class="fas fa-check"></i> 실시간 메시지 무제한</li>
                         <li><i class="fas fa-check"></i> 프로필 우선 노출</li>
-                        <li><i class="fas fa-check"></i> 전문가 상담 (월 1회)</li>
+                        <li><i class="fas fa-check"></i> 전문가 상담 (1회/월)</li>
+                        <li><i class="fas fa-check"></i> VIP 배지</li>
                     </ul>
-                    <a href="#" class="btn-pricing">VIP 되기</a>
+                    <a href="#" class="pricing-button">시작하기</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer">
+    <!-- Footer -->
+    <footer>
         <div class="container">
-            <div class="footer-links">
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
-                <a href="refund.html">환불정책</a>
-                <a href="admin-login.html">Admin</a>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI 사주 천년지기</h3>
+                    <p>AI와 명리학이 만나<br>더 정확한 운세를 제공합니다</p>
+                </div>
+                <div class="footer-section">
+                    <h3>서비스</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">메인 홈</a></li>
+                        <li><a href="pricing.html">가격 안내</a></li>
+                        <li><a href="ai-chat.html">AI 상담</a></li>
+                        <li><a href="community.html">커뮤니티</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>고객지원</h3>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">이용약관</a></li>
+                        <li><a href="privacy.html">개인정보처리방침</a></li>
+                        <li><a href="refund.html">환불정책</a></li>
+                        <li><a href="admin-login.html">Admin</a></li>
+                    </ul>
+                </div>
             </div>
-            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 가격표 버튼 클릭
+        document.querySelectorAll('.pricing-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('회원가입 페이지로 이동합니다.\n(실제 구현 시 회원가입 페이지로 연결)');
+            });
+        });
+    </script>
 </body>
 </html>
