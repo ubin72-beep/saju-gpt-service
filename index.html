@@ -1,4 +1,4 @@
- 1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -1332,54 +1332,59 @@
   1332	            });
   1333	        }
   1334	        
-  1335	        document.getElementById('langBtn').addEventListener('click', () => {
-  1336	            document.getElementById('langDropdown').classList.toggle('active');
-  1337	        });
-  1338	        
-  1339	        document.querySelectorAll('.lang-option').forEach(option => {
-  1340	            option.addEventListener('click', (e) => {
-  1341	                const lang = e.currentTarget.getAttribute('data-lang');
-  1342	                updateLanguage(lang);
-  1343	                document.getElementById('langDropdown').classList.remove('active');
-  1344	            });
-  1345	        });
-  1346	        
-  1347	        document.addEventListener('click', (e) => {
-  1348	            if (!e.target.closest('.language-switcher')) {
-  1349	                document.getElementById('langDropdown').classList.remove('active');
-  1350	            }
-  1351	        });
-  1352	        
-  1353	        updateLanguage(currentLang);
-  1354	        
-  1355	        // 폼 제출
-  1356	        document.getElementById('sajuForm').addEventListener('submit', function(e) {
-  1357	            e.preventDefault();
-  1358	            const formData = new FormData(e.target);
-  1359	            const data = Object.fromEntries(formData);
-  1360	            localStorage.setItem('sajuData', JSON.stringify(data));
-  1361	            window.location.href = 'result.html';
-  1362	        });
-  1363	        
-  1364	        // FAQ 토글
-  1365	        document.querySelectorAll('.faq-question').forEach(question => {
-  1366	            question.addEventListener('click', function() {
-  1367	                const answer = this.nextElementSibling;
-  1368	                const isOpen = answer.style.display === 'block';
-  1369	                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-  1370	                if (!isOpen) answer.style.display = 'block';
-  1371	            });
-  1372	        });
-  1373	        
-  1374	        // 부드러운 스크롤
-  1375	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  1376	            anchor.addEventListener('click', function (e) {
-  1377	                e.preventDefault();
-  1378	                const target = document.querySelector(this.getAttribute('href'));
-  1379	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  1380	            });
-  1381	        });
-  1382	    </script>
-  1383	</body>
-  1384	</html>
-  1385	
+  1335	        const langBtn = document.getElementById('langBtn');
+  1336	        const langDropdown = document.getElementById('langDropdown');
+  1337	        
+  1338	        if (langBtn && langDropdown) {
+  1339	            langBtn.addEventListener('click', () => {
+  1340	                langDropdown.classList.toggle('active');
+  1341	            });
+  1342	            
+  1343	            document.querySelectorAll('.lang-option').forEach(option => {
+  1344	                option.addEventListener('click', (e) => {
+  1345	                    const lang = e.currentTarget.getAttribute('data-lang');
+  1346	                    updateLanguage(lang);
+  1347	                    langDropdown.classList.remove('active');
+  1348	                });
+  1349	            });
+  1350	            
+  1351	            document.addEventListener('click', (e) => {
+  1352	                if (!e.target.closest('.language-switcher')) {
+  1353	                    langDropdown.classList.remove('active');
+  1354	                }
+  1355	            });
+  1356	        }
+  1357	        
+  1358	        updateLanguage(currentLang);
+  1359	        
+  1360	        // 폼 제출
+  1361	        document.getElementById('sajuForm').addEventListener('submit', function(e) {
+  1362	            e.preventDefault();
+  1363	            const formData = new FormData(e.target);
+  1364	            const data = Object.fromEntries(formData);
+  1365	            localStorage.setItem('sajuData', JSON.stringify(data));
+  1366	            window.location.href = 'result.html';
+  1367	        });
+  1368	        
+  1369	        // FAQ 토글
+  1370	        document.querySelectorAll('.faq-question').forEach(question => {
+  1371	            question.addEventListener('click', function() {
+  1372	                const answer = this.nextElementSibling;
+  1373	                const isOpen = answer.style.display === 'block';
+  1374	                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+  1375	                if (!isOpen) answer.style.display = 'block';
+  1376	            });
+  1377	        });
+  1378	        
+  1379	        // 부드러운 스크롤
+  1380	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  1381	            anchor.addEventListener('click', function (e) {
+  1382	                e.preventDefault();
+  1383	                const target = document.querySelector(this.getAttribute('href'));
+  1384	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  1385	            });
+  1386	        });
+  1387	    </script>
+  1388	</body>
+  1389	</html>
+  1390	
