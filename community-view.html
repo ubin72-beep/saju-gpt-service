@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세 - 커뮤니티 | AI 사주 천년지기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .btn-list {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .btn-list:hover {
+            opacity: 0.8;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 게시글 카드 */
+        .post-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 카테고리 배지 */
+        .category-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* 제목 */
+        .post-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #333;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .best-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: linear-gradient(135deg, #FF1744 0%, #FF5722 100%);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        /* 메타 정보 */
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .post-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .post-stats {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* 본문 */
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+        }
+
+        .post-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        /* 액션 버튼 */
+        .post-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            padding: 30px 0;
+            border-top: 2px solid #f0f0f0;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.liked {
+            background: linear-gradient(135deg, #FF1744 0%, #FF5722 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+        }
+
+        .action-count {
+            font-weight: 700;
+        }
+
+        /* 작성자 정보 카드 */
+        .author-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .author-card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .author-card-info {
+            flex: 1;
+        }
+
+        .author-card-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .author-card-stats {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .btn-follow {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-follow:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 댓글 섹션 */
+        .comments-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .comments-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .comments-count {
+            color: #667eea;
+        }
+
+        .sort-select {
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            font-family: 'Noto Sans KR', sans-serif;
+            cursor: pointer;
+        }
+
+        /* 댓글 작성 */
+        .comment-write {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .comment-write-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .char-count {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .btn-submit-comment {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-submit-comment:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 댓글 목록 */
+        .comment-item {
+            padding: 25px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comment-date {
+            color: #999;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .comment-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            padding-left: 55px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            padding-left: 55px;
+        }
+
+        .comment-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .comment-btn:hover {
+            color: #667eea;
+        }
+
+        .comment-btn.liked {
+            color: #FF1744;
+        }
+
+        /* 답글 */
+        .reply-item {
+            margin-left: 55px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* 더보기 버튼 */
+        .load-more {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-load-more {
+            padding: 12px 40px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            color: #666;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-load-more:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        /* 공유 모달 */
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .share-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .share-btn {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .share-btn i {
+            font-size: 2rem;
+        }
+
+        .btn-close-modal {
+            width: 100%;
+            padding: 12px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 1.5rem;
+            }
+
+            .post-meta {
+                flex-wrap: wrap;
+            }
+
+            .post-actions {
+                flex-wrap: wrap;
+            }
+
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .share-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="community-board.html" class="nav-brand">
+                🎯 커뮤니티
+            </a>
+            <a href="community-board.html" class="btn-list">
+                <i class="fas fa-list"></i> 목록
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 게시글 -->
+        <div class="post-card">
+            <div class="category-badge">🔮 사주 상담</div>
+            <h1 class="post-title">
+                <span class="best-badge">BEST</span>
+                2026년 재물운이 대박이라는데 진짜였어요!
+            </h1>
+            
+            <div class="post-meta">
+                <div class="author-info">
+                    <div class="author-avatar">김</div>
+                    <div>
+                        <div class="author-name">김**</div>
+                        <div class="post-date">2시간 전</div>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span class="stat-item"><i class="fas fa-eye"></i> 3,247</span>
+                    <span class="stat-item"><i class="fas fa-heart"></i> 247</span>
+                    <span class="stat-item"><i class="fas fa-comment"></i> 58</span>
+                </div>
+            </div>
+
+            <div class="post-content">
+                <p>안녕하세요! 오늘 제 경험을 공유하려고 합니다.</p>
+                
+                <p><strong>작년 12월에 AI 사주를 봤는데요</strong>, 2026년 병오년에 재물운이 최고라고 해서 처음에는 반신반의했어요. 그냥 재미로 본 건데 이렇게 정확할 줄이야...</p>
+                
+                <p><strong>🎯 실제로 일어난 일들:</strong></p>
+                <p>1. 1월에 진행하던 사업이 갑자기 대박이 났어요. 매출이 전년 대비 3배 증가!</p>
+                <p>2. 2월에는 투자했던 주식이 예상치 못하게 상승했습니다.</p>
+                <p>3. 3월에는 예상치 못한 보너스를 받았어요. 회사 실적이 좋아서라는데, 타이밍이 딱 맞았어요.</p>
+                
+                <p><strong>💰 결과:</strong></p>
+                <p>정말 믿기지 않지만, 덕분에 집도 장만했습니다! 서울 근교에 작은 아파트지만 제 명의로 된 집이 생겼다는 게 너무 뿌듯해요.</p>
+                
+                <p><strong>💡 여러분께 드리는 팁:</strong></p>
+                <p>사주는 절대적인 미래를 알려주는 게 아니라, 흐름을 읽고 준비하는 데 도움을 준다고 생각해요. 저도 재물운이 좋다고 해서 더 열심히 일했고, 투자 기회가 왔을 때 과감하게 결정했어요.</p>
+                
+                <p>여러분도 AI 사주로 올해 운세를 확인해보시고, 좋은 흐름을 타보세요! 😊</p>
+            </div>
+
+            <!-- 액션 버튼 -->
+            <div class="post-actions">
+                <button class="action-btn" id="likeBtn" onclick="toggleLike()">
+                    <i class="fas fa-heart"></i>
+                    <span>좋아요 <span class="action-count">247</span></span>
+                </button>
+                <button class="action-btn" onclick="scrollToComment()">
+                    <i class="fas fa-comment"></i>
+                    <span>댓글 <span class="action-count">58</span></span>
+                </button>
+                <button class="action-btn" onclick="openShareModal()">
+                    <i class="fas fa-share-alt"></i>
+                    <span>공유</span>
+                </button>
+                <button class="action-btn" onclick="bookmarkPost()">
+                    <i class="fas fa-bookmark"></i>
+                    <span>저장</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 작성자 정보 -->
+        <div class="author-card">
+            <div class="author-card-avatar">김</div>
+            <div class="author-card-info">
+                <div class="author-card-name">김**</div>
+                <div class="author-card-stats">작성글 23개 · 받은 좋아요 1,247개</div>
+            </div>
+            <button class="btn-follow">팔로우</button>
+        </div>
+
+        <!-- 댓글 섹션 -->
+        <div class="comments-section" id="commentsSection">
+            <div class="comments-header">
+                <h2 class="comments-title">댓글 <span class="comments-count">58</span></h2>
+                <select class="sort-select">
+                    <option value="latest">최신순</option>
+                    <option value="popular">인기순</option>
+                </select>
+            </div>
+
+            <!-- 댓글 작성 -->
+            <div class="comment-write">
+                <textarea class="comment-textarea" placeholder="댓글을 입력하세요..." maxlength="500" oninput="updateCharCount(this)"></textarea>
+                <div class="comment-write-footer">
+                    <span class="char-count">0 / 500</span>
+                    <button class="btn-submit-comment" onclick="submitComment()">댓글 등록</button>
+                </div>
+            </div>
+
+            <!-- 댓글 목록 -->
+            <div class="comments-list">
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar">이</div>
+                        <span class="comment-author">이**</span>
+                        <span class="comment-date">1시간 전</span>
+                    </div>
+                    <div class="comment-content">
+                        와 정말 대박이시네요! 축하드립니다! 저도 올해 사주 봐야겠어요 ㅎㅎ
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-btn" onclick="toggleCommentLike(this)">
+                            <i class="fas fa-heart"></i> 좋아요 <span>12</span>
+                        </button>
+                        <button class="comment-btn" onclick="replyComment(this)">
+                            <i class="fas fa-reply"></i> 답글
+                        </button>
+                        <button class="comment-btn">
+                            <i class="fas fa-flag"></i> 신고
+                        </button>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar">박</div>
+                        <span class="comment-author">박**</span>
+                        <span class="comment-date">30분 전</span>
+                    </div>
+                    <div class="comment-content">
+                        진짜 부러워요 ㅠㅠ 저도 이런 날이 올까요? 어디서 사주 보셨나요?
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-btn" onclick="toggleCommentLike(this)">
+                            <i class="fas fa-heart"></i> 좋아요 <span>8</span>
+                        </button>
+                        <button class="comment-btn" onclick="replyComment(this)">
+                            <i class="fas fa-reply"></i> 답글
+                        </button>
+                        <button class="comment-btn">
+                            <i class="fas fa-flag"></i> 신고
+                        </button>
+                    </div>
+
+                    <!-- 답글 -->
+                    <div class="reply-item">
+                        <div class="comment-header">
+                            <div class="comment-avatar">김</div>
+                            <span class="comment-author">김** (작성자)</span>
+                            <span class="comment-date">20분 전</span>
+                        </div>
+                        <div class="comment-content">
+                            여기 AI 사주 천년지기에서 봤어요! 정확하고 상세해서 좋았어요 👍
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar">최</div>
+                        <span class="comment-author">최**</span>
+                        <span class="comment-date">10분 전</span>
+                    </div>
+                    <div class="comment-content">
+                        저도 비슷한 경험 있어요! 사주가 정말 신기한 것 같아요 ㅎㅎ
+                    </div>
+                    <div class="comment-actions">
+                        <button class="comment-btn" onclick="toggleCommentLike(this)">
+                            <i class="fas fa-heart"></i> 좋아요 <span>5</span>
+                        </button>
+                        <button class="comment-btn" onclick="replyComment(this)">
+                            <i class="fas fa-reply"></i> 답글
+                        </button>
+                        <button class="comment-btn">
+                            <i class="fas fa-flag"></i> 신고
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 더보기 -->
+            <div class="load-more">
+                <button class="btn-load-more" onclick="loadMoreComments()">
+                    댓글 더보기 (55개 남음)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공유 모달 -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-content">
+            <h3 class="share-title">공유하기</h3>
+            <div class="share-buttons">
+                <button class="share-btn" onclick="shareKakao()">
+                    <i class="fas fa-comment" style="color: #FEE500;"></i>
+                    <span>카카오톡</span>
+                </button>
+                <button class="share-btn" onclick="shareFacebook()">
+                    <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                    <span>페이스북</span>
+                </button>
+                <button class="share-btn" onclick="shareTwitter()">
+                    <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                    <span>트위터</span>
+                </button>
+                <button class="share-btn" onclick="copyLink()">
+                    <i class="fas fa-link" style="color: #667eea;"></i>
+                    <span>링크 복사</span>
+                </button>
+            </div>
+            <button class="btn-close-modal" onclick="closeShareModal()">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        // 좋아요 토글
+        function toggleLike() {
+            const btn = document.getElementById('likeBtn');
+            btn.classList.toggle('liked');
+            const count = btn.querySelector('.action-count');
+            const currentCount = parseInt(count.textContent);
+            count.textContent = btn.classList.contains('liked') ? currentCount + 1 : currentCount - 1;
+        }
+
+        // 댓글로 스크롤
+        function scrollToComment() {
+            document.getElementById('commentsSection').scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('.comment-textarea').focus();
+        }
+
+        // 북마크
+        function bookmarkPost() {
+            alert('게시글이 저장되었습니다! 📌\n마이페이지에서 확인할 수 있습니다.');
+        }
+
+        // 공유 모달
+        function openShareModal() {
+            document.getElementById('shareModal').style.display = 'flex';
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+        }
+
+        function shareKakao() {
+            alert('카카오톡 공유 기능입니다.\n(실제로는 카카오톡 SDK 연동 필요)');
+        }
+
+        function shareFacebook() {
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href));
+        }
+
+        function shareTwitter() {
+            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href));
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('링크가 복사되었습니다! 📋');
+                closeShareModal();
+            });
+        }
+
+        // 댓글 글자수
+        function updateCharCount(textarea) {
+            const count = textarea.value.length;
+            textarea.parentElement.querySelector('.char-count').textContent = `${count} / 500`;
+        }
+
+        // 댓글 등록
+        function submitComment() {
+            const textarea = document.querySelector('.comment-textarea');
+            if (!textarea.value.trim()) {
+                alert('댓글 내용을 입력해주세요.');
+                return;
+            }
+            alert('댓글이 등록되었습니다! 💬');
+            textarea.value = '';
+            updateCharCount(textarea);
+        }
+
+        // 댓글 좋아요
+        function toggleCommentLike(btn) {
+            btn.classList.toggle('liked');
+            const count = btn.querySelector('span');
+            const currentCount = parseInt(count.textContent);
+            count.textContent = btn.classList.contains('liked') ? currentCount + 1 : currentCount - 1;
+        }
+
+        // 답글 작성
+        function replyComment(btn) {
+            const commentItem = btn.closest('.comment-item');
+            const author = commentItem.querySelector('.comment-author').textContent;
+            const textarea = document.querySelector('.comment-textarea');
+            textarea.value = `@${author} `;
+            textarea.focus();
+            scrollToComment();
+        }
+
+        // 댓글 더보기
+        function loadMoreComments() {
+            alert('댓글을 더 불러옵니다.\n(실제로는 API로 추가 댓글 로드)');
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+    </script>
+</body>
+</html>
