@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기 - 커뮤니티 | AI 사주 천년지기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .btn-back:hover {
+            opacity: 0.8;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 헤더 */
+        .page-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        /* 폼 */
+        .write-form {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .form-group .required {
+            color: #f5576c;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 300px;
+            resize: vertical;
+            line-height: 1.8;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .category-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .category-option:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .category-option input {
+            display: none;
+        }
+
+        .category-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* 이미지 업로드 */
+        .image-upload {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .image-upload i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .image-upload p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .image-upload small {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 에디터 툴바 */
+        .editor-toolbar {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .editor-btn {
+            padding: 8px 15px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .editor-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* 작성 팁 */
+        .writing-tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .writing-tips h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .writing-tips ul {
+            list-style-position: inside;
+            color: #856404;
+            font-size: 0.9rem;
+        }
+
+        .writing-tips li {
+            margin-bottom: 5px;
+        }
+
+        /* 버튼 그룹 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-submit,
+        .btn-draft,
+        .btn-cancel {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-draft {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-draft:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-cancel {
+            background: white;
+            color: #f5576c;
+            border: 2px solid #f5576c;
+        }
+
+        .btn-cancel:hover {
+            background: #f5576c;
+            color: white;
+        }
+
+        /* 제한 안내 */
+        .limit-notice {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .limit-notice i {
+            color: #2196f3;
+            font-size: 1.5rem;
+        }
+
+        .limit-notice p {
+            color: #1565c0;
+            font-weight: 500;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .write-form {
+                padding: 20px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .editor-toolbar {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="community-board.html" class="nav-brand">
+                🎯 커뮤니티
+            </a>
+            <a href="community-board.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> 목록으로
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="page-header">
+            <h1>✍️ 글쓰기</h1>
+            <p>운세 고민을 자유롭게 공유하고 소통해보세요!</p>
+        </div>
+
+        <!-- 무료 회원 제한 안내 -->
+        <div class="limit-notice">
+            <i class="fas fa-info-circle"></i>
+            <p>무료 회원은 하루 3개까지 작성 가능합니다. (오늘 남은 횟수: 2회)</p>
+        </div>
+
+        <!-- 작성 팁 -->
+        <div class="writing-tips">
+            <h3>💡 인기글 작성 팁</h3>
+            <ul>
+                <li>구체적인 경험담을 공유하세요 (날짜, 상황, 결과)</li>
+                <li>감정을 솔직하게 표현하세요</li>
+                <li>사진이나 증거를 첨부하면 신뢰도가 올라갑니다</li>
+                <li>다른 사람에게 도움이 되는 정보를 포함하세요</li>
+                <li>제목은 핵심 키워드를 포함해 간결하게!</li>
+            </ul>
+        </div>
+
+        <!-- 작성 폼 -->
+        <form class="write-form" id="writeForm">
+            <!-- 카테고리 -->
+            <div class="form-group">
+                <label>카테고리 <span class="required">*</span></label>
+                <div class="category-grid">
+                    <div class="category-option" onclick="selectCategory('saju', this)">
+                        <input type="radio" name="category" value="saju" required>
+                        🔮 사주 상담
+                    </div>
+                    <div class="category-option" onclick="selectCategory('tarot', this)">
+                        <input type="radio" name="category" value="tarot">
+                        🎴 타로 해석
+                    </div>
+                    <div class="category-option" onclick="selectCategory('compatibility', this)">
+                        <input type="radio" name="category" value="compatibility">
+                        💕 궁합 후기
+                    </div>
+                    <div class="category-option" onclick="selectCategory('wealth', this)">
+                        <input type="radio" name="category" value="wealth">
+                        💰 재물운 자랑
+                    </div>
+                    <div class="category-option" onclick="selectCategory('dream', this)">
+                        <input type="radio" name="category" value="dream">
+                        🌙 꿈해몽
+                    </div>
+                    <div class="category-option" onclick="selectCategory('newyear', this)">
+                        <input type="radio" name="category" value="newyear">
+                        🎊 신년운세
+                    </div>
+                </div>
+            </div>
+
+            <!-- 제목 -->
+            <div class="form-group">
+                <label>제목 <span class="required">*</span></label>
+                <input type="text" id="title" placeholder="제목을 입력하세요 (최대 100자)" maxlength="100" required>
+                <small style="color: #999;">0 / 100</small>
+            </div>
+
+            <!-- 에디터 툴바 -->
+            <div class="form-group">
+                <label>내용 <span class="required">*</span></label>
+                <div class="editor-toolbar">
+                    <button type="button" class="editor-btn" onclick="formatText('bold')">
+                        <i class="fas fa-bold"></i> 굵게
+                    </button>
+                    <button type="button" class="editor-btn" onclick="formatText('italic')">
+                        <i class="fas fa-italic"></i> 기울임
+                    </button>
+                    <button type="button" class="editor-btn" onclick="formatText('underline')">
+                        <i class="fas fa-underline"></i> 밑줄
+                    </button>
+                    <button type="button" class="editor-btn" onclick="insertEmoji()">
+                        <i class="fas fa-smile"></i> 이모지
+                    </button>
+                    <button type="button" class="editor-btn" onclick="insertLink()">
+                        <i class="fas fa-link"></i> 링크
+                    </button>
+                </div>
+                <textarea id="content" placeholder="내용을 입력하세요 (최대 5000자)&#10;&#10;예시:&#10;안녕하세요! 오늘 제 경험을 공유하려고 합니다.&#10;작년 12월에 AI 사주를 봤는데요...&#10;&#10;[구체적인 상황 설명]&#10;[느낀 점]&#10;[다른 분들께 도움이 될 만한 팁]" maxlength="5000" required></textarea>
+                <small style="color: #999;">0 / 5000</small>
+            </div>
+
+            <!-- 이미지 업로드 -->
+            <div class="form-group">
+                <label>이미지 첨부 (선택)</label>
+                <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+                    <i class="fas fa-images"></i>
+                    <p>클릭하여 이미지 업로드</p>
+                    <small>최대 5개, 각 10MB 이하</small>
+                </div>
+                <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" onchange="previewImages(this)">
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+
+            <!-- 공개 설정 -->
+            <div class="form-group">
+                <label>공개 설정</label>
+                <select id="privacy">
+                    <option value="public">전체 공개</option>
+                    <option value="members">회원 공개</option>
+                    <option value="premium">프리미엄 회원만</option>
+                </select>
+            </div>
+
+            <!-- 버튼 그룹 -->
+            <div class="button-group">
+                <button type="button" class="btn-cancel" onclick="cancelWrite()">
+                    <i class="fas fa-times"></i> 취소
+                </button>
+                <button type="button" class="btn-draft" onclick="saveDraft()">
+                    <i class="fas fa-save"></i> 임시저장
+                </button>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check"></i> 등록하기
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let uploadedImages = [];
+
+        // 카테고리 선택
+        function selectCategory(value, element) {
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        // 제목 글자수 카운트
+        document.getElementById('title').addEventListener('input', function() {
+            const count = this.value.length;
+            this.nextElementSibling.textContent = `${count} / 100`;
+        });
+
+        // 내용 글자수 카운트
+        document.getElementById('content').addEventListener('input', function() {
+            const count = this.value.length;
+            this.nextElementSibling.textContent = `${count} / 5000`;
+        });
+
+        // 텍스트 포맷
+        function formatText(command) {
+            const textarea = document.getElementById('content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            
+            if (selectedText) {
+                let formatted = selectedText;
+                switch(command) {
+                    case 'bold':
+                        formatted = `**${selectedText}**`;
+                        break;
+                    case 'italic':
+                        formatted = `*${selectedText}*`;
+                        break;
+                    case 'underline':
+                        formatted = `__${selectedText}__`;
+                        break;
+                }
+                textarea.value = textarea.value.substring(0, start) + formatted + textarea.value.substring(end);
+            } else {
+                alert('포맷을 적용할 텍스트를 선택해주세요.');
+            }
+        }
+
+        // 이모지 삽입
+        function insertEmoji() {
+            const emojis = ['😊', '😂', '🥰', '😍', '🤔', '😮', '😢', '😭', '🙏', '👍', '❤️', '🎉', '🔥', '⭐', '💰', '🍀'];
+            const emoji = prompt('이모지를 선택하세요:\n' + emojis.join(' '));
+            if (emoji && emojis.includes(emoji)) {
+                const textarea = document.getElementById('content');
+                const pos = textarea.selectionStart;
+                textarea.value = textarea.value.substring(0, pos) + emoji + textarea.value.substring(pos);
+            }
+        }
+
+        // 링크 삽입
+        function insertLink() {
+            const url = prompt('링크 URL을 입력하세요:');
+            if (url) {
+                const textarea = document.getElementById('content');
+                const pos = textarea.selectionStart;
+                textarea.value = textarea.value.substring(0, pos) + `[링크](${url})` + textarea.value.substring(pos);
+            }
+        }
+
+        // 이미지 미리보기
+        function previewImages(input) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            preview.style.display = 'flex';
+            
+            uploadedImages = Array.from(input.files);
+            
+            if (uploadedImages.length > 5) {
+                alert('이미지는 최대 5개까지 업로드 가능합니다.');
+                uploadedImages = uploadedImages.slice(0, 5);
+            }
+            
+            uploadedImages.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'preview-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview ${index + 1}">
+                        <button class="preview-remove" onclick="removeImage(${index})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 이미지 제거
+        function removeImage(index) {
+            uploadedImages.splice(index, 1);
+            const input = document.getElementById('imageInput');
+            const dt = new DataTransfer();
+            uploadedImages.forEach(file => dt.items.add(file));
+            input.files = dt.files;
+            previewImages(input);
+        }
+
+        // 임시저장
+        function saveDraft() {
+            const formData = {
+                category: document.querySelector('input[name="category"]:checked')?.value,
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                privacy: document.getElementById('privacy').value,
+                savedAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('communityDraft', JSON.stringify(formData));
+            alert('임시저장되었습니다! 😊');
+        }
+
+        // 취소
+        function cancelWrite() {
+            if (confirm('작성 중인 내용이 사라집니다.\n정말 취소하시겠습니까?')) {
+                window.location.href = 'community-board.html';
+            }
+        }
+
+        // 폼 제출
+        document.getElementById('writeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const category = document.querySelector('input[name="category"]:checked');
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            
+            if (!category) {
+                alert('카테고리를 선택해주세요.');
+                return;
+            }
+            
+            if (!title.trim()) {
+                alert('제목을 입력해주세요.');
+                return;
+            }
+            
+            if (!content.trim()) {
+                alert('내용을 입력해주세요.');
+                return;
+            }
+            
+            const formData = {
+                category: category.value,
+                title: title,
+                content: content,
+                privacy: document.getElementById('privacy').value,
+                images: uploadedImages.map(f => f.name),
+                createdAt: new Date().toISOString()
+            };
+            
+            console.log('등록 데이터:', formData);
+            
+            // 실제로는 API 호출
+            alert('게시글이 등록되었습니다! 🎉\n인기글로 선정되면 수익을 받을 수 있어요!');
+            
+            // 임시저장 삭제
+            localStorage.removeItem('communityDraft');
+            
+            // 목록으로 이동
+            window.location.href = 'community-board.html';
+        });
+
+        // 페이지 로드 시 임시저장 복구
+        window.addEventListener('load', function() {
+            const draft = localStorage.getItem('communityDraft');
+            if (draft) {
+                if (confirm('임시저장된 글이 있습니다.\n불러오시겠습니까?')) {
+                    const data = JSON.parse(draft);
+                    if (data.category) {
+                        const option = document.querySelector(`input[name="category"][value="${data.category}"]`);
+                        if (option) {
+                            option.checked = true;
+                            option.closest('.category-option').classList.add('selected');
+                        }
+                    }
+                    if (data.title) document.getElementById('title').value = data.title;
+                    if (data.content) document.getElementById('content').value = data.content;
+                    if (data.privacy) document.getElementById('privacy').value = data.privacy;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
