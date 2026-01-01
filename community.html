@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎯 커뮤니티 프리미엄 - 운세 고민 나누고 수익까지 | AI 사주 천년지기</title>
-    <meta name="description" content="사주·타로 고민을 나누고, 인기글을 작성하면 수익도 얻을 수 있는 프리미엄 커뮤니티!">
+    <title>커뮤니티 프리미엄 - AI 사주 천년지기</title>
+    <meta name="description" content="사주 전문가와 함께하는 커뮤니티! 궁금한 점을 묻고 경험을 공유하며 수익도 얻으세요">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -27,6 +27,7 @@
             padding: 0 20px;
         }
         
+        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -50,137 +51,232 @@
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .nav-menu {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
+            margin-left: 6rem;
+        }
+        
+        .nav-menu li {
+            position: relative;
         }
         
         .nav-menu a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .nav-menu a:hover {
             color: #d4af37;
         }
         
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 80px 20px;
-            text-align: center;
-            color: white;
+        .nav-menu a.active {
+            color: #d4af37;
+            font-weight: 600;
         }
         
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: relative;
         }
         
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
-        .hero-cta {
-            display: inline-block;
-            padding: 15px 40px;
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
             background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.2rem;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            padding: 1rem 0;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #333;
             transition: all 0.3s;
         }
         
-        .hero-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
         }
         
-        .categories-section {
-            padding: 80px 20px;
-            background: white;
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+        
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '💬';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Noto Serif KR', serif;
+            position: relative;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+        }
+        
+        /* 섹션 공통 */
+        section {
+            padding: 5rem 0;
         }
         
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: #333;
-        }
-        
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .category-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .category-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .category-name {
-            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
+            font-family: 'Noto Serif KR', serif;
+            color: #1a1a1a;
         }
         
-        .category-count {
-            font-size: 1rem;
-            opacity: 0.9;
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 4rem;
+            line-height: 1.8;
         }
         
-        .features-section {
-            padding: 80px 20px;
-            background: white;
-        }
-        
+        /* 서비스 소개 */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
         .feature-card {
-            text-align: center;
-            padding: 40px;
-            background: #f9f9f9;
+            background: white;
+            padding: 2.5rem;
             border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(196, 30, 58, 0.2);
         }
         
         .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
         }
         
         .feature-title {
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #333;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
         }
         
         .feature-description {
@@ -188,119 +284,361 @@
             line-height: 1.8;
         }
         
-        .pricing-section {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        /* 인기 게시글 */
+        .posts-section {
+            background: white;
         }
         
-        .pricing-container {
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .post-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .post-category {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .post-premium {
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        .post-preview {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .post-author-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 1rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .post-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 수익 배분 */
+        .revenue-section {
+            background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%);
+        }
+        
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .revenue-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .revenue-card:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+        }
+        
+        .revenue-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .revenue-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .revenue-label {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* 가격 플랜 */
+        .pricing-section {
+            background: #f9f9f9;
+        }
+        
+        .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 800px;
-            margin: 0 auto;
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
         .pricing-card {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
+            border-radius: 15px;
+            padding: 2.5rem;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            border: 3px solid transparent;
         }
         
-        .pricing-card.premium {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border-color: #d4af37;
             transform: scale(1.05);
         }
         
         .pricing-badge {
-            display: inline-block;
-            background: #ffd700;
-            color: #333;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
             font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
         
-        .pricing-name {
+        .pricing-plan-name {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
         }
         
         .pricing-price {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price span {
+            font-size: 1.2rem;
+            color: #666;
         }
         
         .pricing-period {
-            font-size: 1rem;
-            opacity: 0.7;
-            margin-bottom: 30px;
+            color: #666;
+            margin-bottom: 2rem;
         }
         
         .pricing-features {
             list-style: none;
-            margin-bottom: 30px;
+            margin: 2rem 0;
             text-align: left;
         }
         
         .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .pricing-card.premium .pricing-features li {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .pricing-features i {
+        .pricing-features li i.fa-check {
             color: #4caf50;
-            margin-right: 10px;
         }
         
-        .pricing-card.premium .pricing-features i {
-            color: #ffd700;
+        .pricing-features li i.fa-times {
+            color: #ccc;
         }
         
-        .btn-pricing {
-            display: inline-block;
-            padding: 15px 40px;
-            background: #667eea;
+        .pricing-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .pricing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.4);
+        }
+        
+        .pricing-card.featured .pricing-button {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        /* FAQ */
+        .faq-section {
+            background: white;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        
+        .faq-item {
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             transition: all 0.3s;
         }
         
-        .btn-pricing:hover {
-            background: #5568d3;
-            transform: scale(1.05);
+        .faq-question:hover {
+            background: rgba(196, 30, 58, 0.05);
         }
         
-        .pricing-card.premium .btn-pricing {
-            background: white;
-            color: #667eea;
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            color: #666;
+            line-height: 1.8;
         }
         
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        /* CTA 섹션 */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+        
+        /* Footer */
         .footer {
             background: #1a1a1a;
-            color: white;
-            padding: 40px 20px;
+            color: rgba(255,255,255,0.7);
+            padding: 3rem 0 1.5rem;
             text-align: center;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
@@ -310,173 +648,440 @@
         }
         
         .footer-links a:hover {
-            color: white;
+            color: #d4af37;
         }
         
+        .footer-copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* 반응형 */
         @media (max-width: 768px) {
-            .hero-title {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .hero-stat-number {
                 font-size: 2rem;
             }
             
-            .hero-subtitle {
-                font-size: 1.2rem;
+            .section-title {
+                font-size: 2rem;
             }
             
             .nav-menu {
-                display: none;
+                margin-left: 0;
+                gap: 1rem;
+            }
+            
+            .features-grid,
+            .pricing-grid,
+            .posts-grid,
+            .revenue-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
+    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+                🔮 AI 사주 천년지기
             </a>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
-                <li><a href="pricing.html">가격표</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active">
+                        서비스 <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티 프리미엄</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                        <a href="b2b.html">🏢 B2B 기업 서비스</a>
+                    </div>
+                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-matching.html">궁합 매칭</a></li>
-                <li><a href="community.html">커뮤니티</a></li>
-                <li><a href="b2b.html">기업 서비스</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li class="language-switcher">
+                    <button class="lang-btn">한국어 🇰🇷</button>
+                </li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero-section">
+    <!-- 히어로 섹션 -->
+    <section class="hero">
         <div class="container">
-            <h1 class="hero-title">🎯 커뮤니티 프리미엄</h1>
-            <p class="hero-subtitle">운세 고민을 나누고, 인기글로 수익도 벌어보세요!</p>
-            <a href="#" class="hero-cta">무료로 시작하기</a>
-        </div>
-    </section>
-
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">📚 인기 카테고리</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">🔮</div>
-                    <div class="category-name">사주 상담</div>
-                    <div class="category-count">1,247개 게시글</div>
+            <h1>💬 함께 만드는 사주 커뮤니티</h1>
+            <p class="subtitle">
+                궁금한 점을 묻고, 경험을 공유하고, 수익도 얻으세요<br>
+                5만 명의 사주 애호가들과 함께하는 프리미엄 커뮤니티
+            </p>
+            <a href="#pricing" class="cta-button">
+                <i class="fas fa-users"></i> 지금 가입하기
+            </a>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">52,847</span>
+                    <span class="hero-stat-label">커뮤니티 회원</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">🃏</div>
-                    <div class="category-name">타로 해석</div>
-                    <div class="category-count">892개 게시글</div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">1,234</span>
+                    <span class="hero-stat-label">일일 게시글</span>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">💕</div>
-                    <div class="category-name">궁합 후기</div>
-                    <div class="category-count">654개 게시글</div>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">💰</div>
-                    <div class="category-name">재물운 자랑</div>
-                    <div class="category-count">423개 게시글</div>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🌙</div>
-                    <div class="category-name">꿈해몽</div>
-                    <div class="category-count">1,156개 게시글</div>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🎯</div>
-                    <div class="category-name">신년운세</div>
-                    <div class="category-count">789개 게시글</div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">₩125만</span>
+                    <span class="hero-stat-label">최고 월 수익</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features-section">
+    <!-- 서비스 소개 -->
+    <section>
         <div class="container">
-            <h2 class="section-title">✨ 커뮤니티 프리미엄 특징</h2>
+            <h2 class="section-title">왜 커뮤니티 프리미엄인가요?</h2>
+            <p class="section-subtitle">
+                단순한 게시판이 아닙니다. 함께 성장하고 수익을 나누는 공간입니다
+            </p>
+            
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3 class="feature-title">자유로운 소통</h3>
-                    <p class="feature-description">사주, 타로, 궁합 등 모든 운세 관련 고민을 자유롭게 나눌 수 있습니다.</p>
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">실시간 질문 & 답변</h3>
+                    <p class="feature-description">
+                        사주에 대해 궁금한 점이 있다면 언제든지 질문하세요. 전문가와 경험자들이 24시간 내에 답변해드립니다.
+                    </p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3 class="feature-title">베스트 작성자</h3>
-                    <p class="feature-description">인기글을 작성하면 베스트 배지와 함께 특별한 혜택을 받을 수 있습니다.</p>
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">경험 공유 & 후기</h3>
+                    <p class="feature-description">
+                        실제 사주 상담 경험, 운세가 맞았던 순간, 인생의 전환점 등을 공유하며 서로에게 영감을 줍니다.
+                    </p>
                 </div>
+                
                 <div class="feature-card">
                     <div class="feature-icon">💰</div>
-                    <h3 class="feature-title">수익 배분</h3>
-                    <p class="feature-description">프리미엄 회원은 인기글 작성 시 광고 수익의 일부를 배분받습니다!</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚫</div>
-                    <h3 class="feature-title">광고 제거</h3>
-                    <p class="feature-description">프리미엄 회원은 모든 광고 없이 깔끔한 화면으로 이용할 수 있습니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👑</div>
-                    <h3 class="feature-title">VIP 라운지</h3>
-                    <p class="feature-description">프리미엄 회원 전용 VIP 라운지에서 고급 정보를 나눌 수 있습니다.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎁</div>
-                    <h3 class="feature-title">월간 이벤트</h3>
-                    <p class="feature-description">매월 인기 작성자에게 특별한 상품과 혜택을 제공합니다.</p>
+                    <h3 class="feature-title">수익 배분 시스템</h3>
+                    <p class="feature-description">
+                        인기 게시글 작성자에게 광고 수익을 배분합니다. 좋은 콘텐츠를 만들면 월 100만원 이상도 가능!
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="pricing-section">
+    <!-- 인기 게시글 -->
+    <section class="posts-section">
         <div class="container">
-            <h2 class="section-title">💎 요금제</h2>
-            <div class="pricing-container">
+            <h2 class="section-title">인기 게시글</h2>
+            <p class="section-subtitle">
+                커뮤니티에서 가장 인기 있는 게시글을 확인하세요
+            </p>
+            
+            <div class="posts-grid">
+                <div class="post-card" onclick="alert('게시글 상세 페이지로 이동')">
+                    <div class="post-header">
+                        <span class="post-category">💬 질문</span>
+                        <span class="post-premium">🔥 HOT</span>
+                    </div>
+                    <h3 class="post-title">2026 병오년, 무슨 일이 일어날까요?</h3>
+                    <p class="post-preview">
+                        60년 만에 돌아오는 붉은 말의 해라고 하는데, 실제로 어떤 변화가 올지 궁금합니다. 
+                        과거 병오년(1966년)에는 어떤 일들이 있었나요?
+                    </p>
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <div class="post-author-avatar">김</div>
+                            <span>김민수</span>
+                        </div>
+                        <div class="post-stats">
+                            <span><i class="fas fa-eye"></i> 12,847</span>
+                            <span><i class="fas fa-comment"></i> 234</span>
+                            <span><i class="fas fa-heart"></i> 1,456</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post-card" onclick="alert('게시글 상세 페이지로 이동')">
+                    <div class="post-header">
+                        <span class="post-category">📝 후기</span>
+                        <span class="post-premium">💰 수익 ₩50만</span>
+                    </div>
+                    <h3 class="post-title">사주 봤더니 인생이 바뀌었어요</h3>
+                    <p class="post-preview">
+                        작년 이맘때 사주 상담을 받았는데, 정말 신기하게도 다 맞더라고요. 
+                        특히 직업 적성 부분이 너무 정확해서 이직을 결심했고, 지금은...
+                    </p>
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <div class="post-author-avatar">박</div>
+                            <span>박지혜</span>
+                        </div>
+                        <div class="post-stats">
+                            <span><i class="fas fa-eye"></i> 8,234</span>
+                            <span><i class="fas fa-comment"></i> 156</span>
+                            <span><i class="fas fa-heart"></i> 987</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="post-card" onclick="alert('게시글 상세 페이지로 이동')">
+                    <div class="post-header">
+                        <span class="post-category">🔮 정보</span>
+                        <span class="post-premium">⭐ 베스트</span>
+                    </div>
+                    <h3 class="post-title">초보자를 위한 사주 용어 정리</h3>
+                    <p class="post-preview">
+                        십신, 대운, 세운, 천간지지... 사주 용어가 너무 어렵죠? 
+                        10년간 사주를 공부한 제가 쉽게 정리해드립니다. 이 글 하나면 기초 마스터!
+                    </p>
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <div class="post-author-avatar">이</div>
+                            <span>이명리</span>
+                        </div>
+                        <div class="post-stats">
+                            <span><i class="fas fa-eye"></i> 15,678</span>
+                            <span><i class="fas fa-comment"></i> 345</span>
+                            <span><i class="fas fa-heart"></i> 2,134</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 수익 배분 -->
+    <section class="revenue-section">
+        <div class="container">
+            <h2 class="section-title">수익 배분 시스템</h2>
+            <p class="section-subtitle">
+                좋은 콘텐츠를 만들면 수익도 함께! 실제 작성자들의 월 수익
+            </p>
+            
+            <div class="revenue-grid">
+                <div class="revenue-card">
+                    <div class="revenue-icon">🥇</div>
+                    <div class="revenue-amount">₩125만</div>
+                    <div class="revenue-label">상위 1% 작성자</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-icon">🥈</div>
+                    <div class="revenue-amount">₩65만</div>
+                    <div class="revenue-label">상위 5% 작성자</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-icon">🥉</div>
+                    <div class="revenue-amount">₩28만</div>
+                    <div class="revenue-label">상위 10% 작성자</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-icon">📊</div>
+                    <div class="revenue-amount">₩8만</div>
+                    <div class="revenue-label">평균 프리미엄 회원</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 가격 플랜 -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">가격 플랜</h2>
+            <p class="section-subtitle">
+                나에게 맞는 플랜을 선택하세요
+            </p>
+            
+            <div class="pricing-grid">
+                <!-- 무료 플랜 -->
                 <div class="pricing-card">
-                    <div class="pricing-name">무료</div>
+                    <h3 class="pricing-plan-name">무료 회원</h3>
                     <div class="pricing-price">₩0</div>
                     <div class="pricing-period">평생 무료</div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 게시글 읽기</li>
-                        <li><i class="fas fa-check"></i> 게시글 작성 (일 3개)</li>
-                        <li><i class="fas fa-check"></i> 댓글 작성</li>
+                        <li><i class="fas fa-check"></i> 게시글 읽기 (무제한)</li>
+                        <li><i class="fas fa-check"></i> 게시글 작성 (일 5개)</li>
+                        <li><i class="fas fa-check"></i> 댓글 작성 (무제한)</li>
                         <li><i class="fas fa-times"></i> 광고 제거</li>
                         <li><i class="fas fa-times"></i> 수익 배분</li>
-                        <li><i class="fas fa-times"></i> VIP 라운지</li>
                     </ul>
-                    <a href="#" class="btn-pricing">무료 시작</a>
+                    <button class="pricing-button" onclick="alert('무료 회원 시작!')">
+                        무료 시작하기
+                    </button>
                 </div>
                 
-                <div class="pricing-card premium">
-                    <div class="pricing-badge">추천!</div>
-                    <div class="pricing-name">프리미엄</div>
-                    <div class="pricing-price">₩4,900</div>
-                    <div class="pricing-period">월 구독</div>
+                <!-- 프리미엄 플랜 (추천) -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">🔥 추천</div>
+                    <h3 class="pricing-plan-name">프리미엄</h3>
+                    <div class="pricing-price">₩4,900<span>/월</span></div>
+                    <div class="pricing-period">월 단위 결제</div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 무료 플랜 모든 기능</li>
-                        <li><i class="fas fa-check"></i> 게시글 무제한 작성</li>
-                        <li><i class="fas fa-check"></i> 광고 완전 제거</li>
-                        <li><i class="fas fa-check"></i> 인기글 수익 배분</li>
-                        <li><i class="fas fa-check"></i> VIP 라운지 이용</li>
-                        <li><i class="fas fa-check"></i> 프리미엄 배지</li>
+                        <li><i class="fas fa-check"></i> 게시글 읽기 (무제한)</li>
+                        <li><i class="fas fa-check"></i> 게시글 작성 (무제한)</li>
+                        <li><i class="fas fa-check"></i> 댓글 작성 (무제한)</li>
+                        <li><i class="fas fa-check"></i> 광고 제거</li>
+                        <li><i class="fas fa-check"></i> 수익 배분 참여</li>
                     </ul>
-                    <a href="#" class="btn-pricing">지금 시작하기</a>
+                    <button class="pricing-button" onclick="alert('프리미엄 결제 페이지로 이동')">
+                        프리미엄 시작하기
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <p class="section-subtitle">
+                커뮤니티 프리미엄에 대해 궁금한 점을 확인하세요
+            </p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>수익 배분은 어떻게 이루어지나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        프리미엄 회원이 작성한 게시글의 조회수, 댓글, 좋아요를 기반으로 인기도를 계산하여 광고 수익의 70%를 배분합니다. 
+                        매월 1일 전월 수익이 자동으로 정산되며, 계좌로 입금됩니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>정말 월 100만원 이상 벌 수 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네! 실제로 상위 1% 작성자는 월 125만원 이상의 수익을 올리고 있습니다. 
+                        핵심은 '양질의 콘텐츠'입니다. 실제 경험담, 전문 지식, 유용한 정보를 담은 글이 높은 수익을 만듭니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>무료 회원도 게시글을 작성할 수 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네, 무료 회원도 일 5개의 게시글을 작성할 수 있습니다. 
+                        단, 광고 수익 배분은 프리미엄 회원만 가능하며, 무료 회원은 광고가 표시됩니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>커뮤니티 규칙이 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네, 건전한 커뮤니티를 위해 기본 규칙이 있습니다. 
+                        욕설, 비방, 허위 정보, 상업적 광고는 금지되며, 위반 시 경고 없이 게시글이 삭제되고 계정이 정지될 수 있습니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>프리미엄 구독을 언제든지 취소할 수 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네, 마이페이지에서 언제든지 구독을 해지할 수 있습니다. 
+                        해지 후에도 결제한 기간까지는 프리미엄 혜택이 유지되며, 다음 결제일에 자동 갱신되지 않습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>지금 바로 커뮤니티에 참여하세요!</h2>
+            <p>5만 명의 사주 애호가들이 기다리고 있습니다</p>
+            <a href="#pricing" class="cta-button">
+                <i class="fas fa-users"></i> 무료로 시작하기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
                 <a href="terms.html">이용약관</a>
                 <a href="privacy.html">개인정보처리방침</a>
                 <a href="refund.html">환불정책</a>
-                <a href="admin-login.html">Admin</a>
+                <a href="index.html#faq">FAQ</a>
             </div>
-            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+            <div class="footer-copyright">
+                <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+                <p>사업자등록번호: 123-45-67890 | 통신판매업신고: 2024-서울강남-12345</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // FAQ 토글
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // 모든 FAQ 닫기
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 클릭한 FAQ만 열기
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+        
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
