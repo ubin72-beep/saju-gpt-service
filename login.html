@@ -1,189 +1,577 @@
- 1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
      5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>로그인 - AI 사주 천년지기</title>
-     7	    <link rel="stylesheet" href="css/style.css">
-     8	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     9	    
-    10	    <!-- Monitoring -->
-    11	    <script src="js/analytics.js"></script>
-    12	    <script src="js/sentry-init.js"></script>
-    13	    
-    14	    <style>
-    15	        .login-page { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 100%); padding: 2rem 0; }
-    16	        .login-container { max-width: 450px; margin: 0 auto; background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 60px rgba(0,0,0,0.3); }
-    17	        .login-header { text-align: center; margin-bottom: 2rem; }
-    18	        .login-header h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #1a1a1a; }
-    19	        .login-tabs { display: flex; margin-bottom: 2rem; border-bottom: 2px solid #eee; }
-    20	        .tab-btn { flex: 1; padding: 1rem; background: none; border: none; font-weight: bold; cursor: pointer; color: #666; transition: all 0.3s; }
-    21	        .tab-btn.active { color: #c41e3a; border-bottom: 3px solid #c41e3a; margin-bottom: -2px; }
-    22	        .form-group { margin-bottom: 1.5rem; }
-    23	        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
-    24	        .form-group input { width: 100%; padding: 1rem; border: 2px solid #eee; border-radius: 10px; font-size: 1rem; transition: all 0.3s; }
-    25	        .form-group input:focus { outline: none; border-color: #c41e3a; }
-    26	        .btn-submit { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #c41e3a, #8b0000); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
-    27	        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(196,30,58,0.4); }
-    28	        .divider { text-align: center; margin: 2rem 0; color: #999; }
-    29	        .social-login { display: flex; gap: 1rem; }
-    30	        .btn-social { flex: 1; padding: 1rem; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-    31	        .btn-kakao { background: #FEE500; color: #000; }
-    32	        .btn-naver { background: #03C75A; color: white; }
-    33	        .links { text-align: center; margin-top: 1.5rem; }
-    34	        .links a { color: #c41e3a; text-decoration: none; }
-    35	        .tab-content { display: none; }
-    36	        .tab-content.active { display: block; }
-    37	    </style>
-    38	</head>
-    39	<body>
-    40	    <div class="login-page">
-    41	        <div class="login-container">
-    42	            <div class="login-header">
-    43	                <h1><i class="fas fa-yin-yang"></i> AI 사주 천년지기</h1>
-    44	                <p>일반 회원 로그인</p>
-    45	                <p style="font-size: 0.875rem; margin-top: 0.5rem; opacity: 0.8;">
-    46	                    <i class="fas fa-info-circle"></i> 관리자이신가요? 
-    47	                    <a href="admin-login.html" style="color: #fff; text-decoration: underline;">관리자 로그인 페이지로 이동</a>
-    48	                </p>
-    49	            </div>
-    50	
-    51	            <div class="login-tabs">
-    52	                <button class="tab-btn active" onclick="switchTab('login')">로그인</button>
-    53	                <button class="tab-btn" onclick="switchTab('signup')">회원가입</button>
-    54	            </div>
-    55	
-    56	            <!-- 로그인 폼 -->
-    57	            <div id="loginTab" class="tab-content active">
-    58	                <form id="loginForm" onsubmit="handleLogin(event)">
-    59	                    <div class="form-group">
-    60	                        <label>이메일</label>
-    61	                        <input type="email" placeholder="example@email.com" required>
-    62	                    </div>
-    63	                    <div class="form-group">
-    64	                        <label>비밀번호</label>
-    65	                        <input type="password" placeholder="비밀번호 입력" required>
-    66	                    </div>
-    67	                    <button type="submit" class="btn-submit">로그인</button>
-    68	                </form>
-    69	
-    70	                <div class="divider">또는</div>
-    71	
-    72	                <div class="social-login">
-    73	                    <button class="btn-social btn-kakao"><i class="fab fa-kickstarter"></i> 카카오</button>
-    74	                    <button class="btn-social btn-naver">N 네이버</button>
-    75	                </div>
-    76	
-    77	                <div class="links">
-    78	                    <a href="#">비밀번호 찾기</a> | <a href="#">이메일 찾기</a>
-    79	                </div>
-    80	            </div>
-    81	
-    82	            <!-- 회원가입 폼 -->
-    83	            <div id="signupTab" class="tab-content">
-    84	                <form id="signupForm" onsubmit="handleSignup(event)">
-    85	                    <div class="form-group">
-    86	                        <label>이름</label>
-    87	                        <input type="text" placeholder="홍길동" required>
-    88	                    </div>
-    89	                    <div class="form-group">
-    90	                        <label>이메일</label>
-    91	                        <input type="email" placeholder="example@email.com" required>
-    92	                    </div>
-    93	                    <div class="form-group">
-    94	                        <label>비밀번호</label>
-    95	                        <input type="password" placeholder="8자 이상 입력" required minlength="8">
-    96	                    </div>
-    97	                    <div class="form-group">
-    98	                        <label>비밀번호 확인</label>
-    99	                        <input type="password" placeholder="비밀번호 재입력" required minlength="8">
-   100	                    </div>
- 101	                    <div class="form-group">
-   102	                        <label><input type="checkbox" required> 이용약관 및 개인정보처리방침에 동의합니다</label>
-   103	                    </div>
-   104	                    <button type="submit" class="btn-submit">회원가입</button>
-   105	                </form>
-   106	            </div>
-   107	        </div>
-   108	    </div>
-   109	
-   110	    <script src="js/auth.js"></script>
-   111	    <script>
-   112	        function switchTab(tab) {
-   113	            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-   114	            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-   115	            
-   116	            if (tab === 'login') {
-   117	                document.querySelector('.tab-btn:first-child').classList.add('active');
-   118	                document.getElementById('loginTab').classList.add('active');
-   119	            } else {
-   120	                document.querySelector('.tab-btn:last-child').classList.add('active');
-   121	                document.getElementById('signupTab').classList.add('active');
-   122	            }
+     6	    <title>로그인 - AI 사주 천년지기 | Ultra Modern Design</title>
+     7	    
+     8	    <!-- Styles -->
+     9	    <link rel="stylesheet" href="css/style-modern.css">
+    10	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    11	    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    12	    
+    13	    <style>
+    14	        /* ===== Modern Login Page ===== */
+    15	        .login-page {
+    16	            min-height: 100vh;
+    17	            display: flex;
+    18	            align-items: center;
+    19	            justify-content: center;
+    20	            padding: var(--spacing-2xl) var(--spacing-lg);
+    21	            position: relative;
+    22	            overflow: hidden;
+    23	        }
+    24	        
+    25	        /* Animated Background */
+    26	        .login-background {
+    27	            position: absolute;
+    28	            top: 0;
+    29	            left: 0;
+    30	            width: 100%;
+    31	            height: 100%;
+    32	            background: var(--gradient-mesh);
+    33	            z-index: -1;
+    34	        }
+    35	        
+    36	        .login-background::before {
+    37	            content: '';
+    38	            position: absolute;
+    39	            width: 500px;
+    40	            height: 500px;
+    41	            background: radial-gradient(circle, rgba(147, 51, 234, 0.2), transparent);
+    42	            top: -100px;
+    43	            left: -100px;
+    44	            animation: float 20s ease-in-out infinite;
+    45	        }
+    46	        
+    47	        .login-background::after {
+    48	            content: '';
+    49	            position: absolute;
+    50	            width: 400px;
+    51	            height: 400px;
+    52	            background: radial-gradient(circle, rgba(255, 51, 102, 0.2), transparent);
+    53	            bottom: -100px;
+    54	            right: -100px;
+    55	            animation: float 20s ease-in-out infinite reverse;
+    56	        }
+    57	        
+    58	        /* Login Container */
+    59	        .login-container {
+    60	            max-width: 480px;
+    61	            width: 100%;
+    62	            background: var(--glass-bg);
+    63	            backdrop-filter: blur(20px) saturate(180%);
+    64	            -webkit-backdrop-filter: blur(20px) saturate(180%);
+    65	            border: 1px solid var(--glass-border);
+    66	            border-radius: var(--radius-2xl);
+    67	            padding: var(--spacing-2xl);
+    68	            box-shadow: var(--shadow-2xl);
+    69	            animation: slideInUp 0.6s ease;
+    70	        }
+    71	        
+    72	        .login-header {
+    73	            text-align: center;
+    74	            margin-bottom: var(--spacing-xl);
+    75	        }
+    76	        
+    77	        .login-logo {
+    78	            font-size: 3rem;
+    79	            margin-bottom: var(--spacing-md);
+    80	            animation: rotate360 10s linear infinite;
+    81	        }
+    82	        
+    83	        .login-header h1 {
+    84	            font-size: 2rem;
+    85	            margin-bottom: var(--spacing-xs);
+    86	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
+    87	            -webkit-background-clip: text;
+    88	            -webkit-text-fill-color: transparent;
+    89	        }
+    90	        
+    91	        .login-subtitle {
+    92	            color: var(--text-secondary);
+    93	            font-size: 0.938rem;
+    94	        }
+    95	        
+    96	        /* Tabs */
+    97	        .login-tabs {
+    98	            display: grid;
+    99	            grid-template-columns: 1fr 1fr;
+   100	            gap: var(--spacing-sm);
+   101	            margin-bottom: var(--spacing-xl);
+   102	            background: var(--bg-tertiary);
+   103	            padding: 6px;
+   104	            border-radius: var(--radius-lg);
+   105	        }
+   106	        
+   107	        .tab-btn {
+   108	            padding: var(--spacing-md);
+   109	            background: transparent;
+   110	            border: none;
+   111	            border-radius: var(--radius-md);
+   112	            font-weight: 700;
+   113	            font-size: 1rem;
+   114	            color: var(--text-secondary);
+   115	            cursor: pointer;
+   116	            transition: all var(--transition-normal);
+   117	        }
+   118	        
+   119	        .tab-btn.active {
+   120	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
+   121	            color: white;
+   122	            box-shadow: var(--shadow-lg);
    123	        }
-   124	
-   125	        function handleLogin(e) {
-   126	            e.preventDefault();
-   127	            const email = e.target[0].value;
-   128	            const password = e.target[1].value;
-   129	            
-   130	            // auth.js의 login 함수 사용
-   131	            const result = login(email, password);
-   132	            
-   133	            if (result.success) {
-   134	                alert(result.message);
-   135	                // 이전 페이지로 돌아가거나 메인으로 이동
-   136	                const returnUrl = sessionStorage.getItem('returnUrl') || 'index.html';
-   137	                sessionStorage.removeItem('returnUrl');
-   138	                window.location.href = returnUrl;
-   139	            } else {
-   140	                alert(result.message);
-   141	            }
-   142	        }
-   143	
-   144	        function handleSignup(e) {
-   145	            e.preventDefault();
-   146	            const name = e.target[0].value;
-   147	            const email = e.target[1].value;
-   148	            const password = e.target[2].value;
-   149	            const confirmPassword = e.target[3].value;
-   150	            
-   151	            if (password !== confirmPassword) {
-   152	                alert('비밀번호가 일치하지 않습니다.');
-   153	                return;
-   154	            }
-   155	            
-   156	            // auth.js의 register 함수 사용
-   157	            const result = register({
-   158	                email,
-   159	                password,
-   160	                name,
-   161	                phone: '', // 추후 입력 받을 수 있음
-   162	                birthDate: null,
-   163	                birthTime: null,
-   164	                gender: null,
-   165	                calendarType: 'solar'
-   166	            });
-   167	            
-   168	            if (result.success) {
-   169	                alert(result.message);
-   170	                // 자동 로그인
-   171	                login(email, password);
-   172	                window.location.href = 'index.html';
-   173	            } else {
-   174	                alert(result.message);
-   175	            }
+   124	        
+   125	        .tab-btn:hover:not(.active) {
+   126	            color: var(--text-primary);
+   127	            background: var(--bg-secondary);
+   128	        }
+   129	        
+   130	        /* Form */
+   131	        .tab-content {
+   132	            display: none;
+   133	        }
+   134	        
+   135	        .tab-content.active {
+   136	            display: block;
+   137	            animation: fadeIn 0.4s ease;
+   138	        }
+   139	        
+   140	        @keyframes fadeIn {
+   141	            from { opacity: 0; transform: translateY(10px); }
+   142	            to { opacity: 1; transform: translateY(0); }
+   143	        }
+   144	        
+   145	        .form-group {
+   146	            margin-bottom: var(--spacing-md);
+   147	        }
+   148	        
+   149	        .form-group label {
+   150	            display: block;
+   151	            margin-bottom: var(--spacing-xs);
+   152	            font-weight: 600;
+   153	            color: var(--text-primary);
+   154	            font-size: 0.938rem;
+   155	        }
+   156	        
+   157	        .form-group input {
+   158	            width: 100%;
+   159	            padding: var(--spacing-md);
+   160	            background: var(--bg-secondary);
+   161	            border: 2px solid var(--border-color);
+   162	            border-radius: var(--radius-md);
+   163	            font-size: 1rem;
+   164	            color: var(--text-primary);
+   165	            transition: all var(--transition-normal);
+   166	        }
+   167	        
+   168	        .form-group input:focus {
+   169	            outline: none;
+   170	            border-color: var(--primary-purple);
+   171	            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
+   172	        }
+   173	        
+   174	        .form-group input::placeholder {
+   175	            color: var(--text-muted);
    176	        }
-   177	
-   178	        // 페이지 로드 시 이미 로그인되어 있으면 메인으로 리다이렉트
-   179	        if (isLoggedIn()) {
-   180	            window.location.href = 'index.html';
-   181	        }
-   182	    </script>
-         <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
-
-   183	</body>
-   184	</html>
-
-   185	
+   177	        
+   178	        .form-check {
+   179	            display: flex;
+   180	            align-items: center;
+   181	            gap: var(--spacing-xs);
+   182	        }
+   183	        
+   184	        .form-check input[type="checkbox"] {
+   185	            width: 20px;
+   186	            height: 20px;
+   187	            cursor: pointer;
+   188	        }
+   189	        
+   190	        .form-check label {
+   191	            margin: 0;
+   192	            font-weight: 400;
+   193	            font-size: 0.875rem;
+   194	            cursor: pointer;
+   195	        }
+   196	        
+   197	        .btn-submit {
+   198	            width: 100%;
+   199	            padding: var(--spacing-md);
+   200	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
+   201	            color: white;
+   202	            border: none;
+   203	            border-radius: var(--radius-full);
+   204	            font-size: 1.125rem;
+   205	            font-weight: 700;
+   206	            cursor: pointer;
+   207	            transition: all var(--transition-normal);
+   208	            box-shadow: var(--shadow-glow);
+   209	            margin-bottom: var(--spacing-lg);
+   210	            position: relative;
+   211	            overflow: hidden;
+   212	        }
+   213	        
+   214	        .btn-submit::before {
+   215	            content: '';
+   216	            position: absolute;
+   217	            top: 0;
+   218	            left: -100%;
+   219	            width: 100%;
+   220	            height: 100%;
+   221	            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+   222	            transition: left 0.5s;
+   223	        }
+   224	        
+   225	        .btn-submit:hover::before {
+   226	            left: 100%;
+   227	        }
+   228	        
+   229	        .btn-submit:hover {
+   230	            transform: translateY(-3px);
+   231	            box-shadow: var(--shadow-2xl), 0 0 40px rgba(147, 51, 234, 0.6);
+   232	        }
+   233	        
+   234	        /* Divider */
+   235	        .divider {
+   236	            text-align: center;
+   237	            margin: var(--spacing-xl) 0;
+   238	            color: var(--text-muted);
+   239	            position: relative;
+   240	        }
+   241	        
+   242	        .divider::before,
+   243	        .divider::after {
+   244	            content: '';
+   245	            position: absolute;
+   246	            top: 50%;
+   247	            width: 40%;
+   248	            height: 1px;
+   249	            background: var(--border-color);
+   250	        }
+   251	        
+   252	        .divider::before { left: 0; }
+   253	        .divider::after { right: 0; }
+   254	        
+   255	        /* Social Login */
+   256	        .social-login {
+   257	            display: grid;
+   258	            grid-template-columns: 1fr 1fr;
+   259	            gap: var(--spacing-md);
+   260	            margin-bottom: var(--spacing-lg);
+   261	        }
+   262	        
+   263	        .btn-social {
+   264	            padding: var(--spacing-md);
+   265	            border-radius: var(--radius-md);
+   266	            border: none;
+   267	            font-weight: 700;
+   268	            cursor: pointer;
+   269	            transition: all var(--transition-normal);
+   270	            display: flex;
+   271	            align-items: center;
+   272	            justify-content: center;
+   273	            gap: var(--spacing-xs);
+   274	        }
+   275	        
+   276	        .btn-kakao {
+   277	            background: #FEE500;
+   278	            color: #000000;
+   279	        }
+   280	        
+   281	        .btn-kakao:hover {
+   282	            background: #FDD800;
+   283	            transform: translateY(-2px);
+   284	            box-shadow: var(--shadow-lg);
+   285	        }
+   286	        
+   287	        .btn-naver {
+   288	            background: #03C75A;
+   289	            color: white;
+   290	        }
+   291	        
+   292	        .btn-naver:hover {
+   293	            background: #02B350;
+   294	            transform: translateY(-2px);
+   295	            box-shadow: var(--shadow-lg);
+   296	        }
+   297	        
+   298	        /* Links */
+   299	        .links {
+   300	            text-align: center;
+   301	            font-size: 0.875rem;
+   302	        }
+   303	        
+   304	        .links a {
+   305	            color: var(--primary-purple);
+   306	            text-decoration: none;
+   307	            font-weight: 600;
+   308	            transition: color var(--transition-fast);
+   309	        }
+   310	        
+   311	        .links a:hover {
+   312	            color: var(--primary-red);
+   313	            text-decoration: underline;
+   314	        }
+   315	        
+   316	        /* Admin Link */
+   317	        .admin-link {
+   318	            text-align: center;
+   319	            margin-top: var(--spacing-md);
+   320	            padding: var(--spacing-md);
+   321	            background: var(--bg-tertiary);
+   322	            border-radius: var(--radius-md);
+   323	            font-size: 0.875rem;
+   324	        }
+   325	        
+   326	        .admin-link a {
+   327	            color: var(--primary-purple);
+   328	            font-weight: 700;
+   329	            text-decoration: none;
+   330	        }
+   331	        
+   332	        .admin-link a:hover {
+   333	            color: var(--primary-red);
+   334	        }
+   335	        
+   336	        /* Back Button */
+   337	        .back-btn {
+   338	            position: absolute;
+   339	            top: var(--spacing-lg);
+   340	            left: var(--spacing-lg);
+   341	            padding: var(--spacing-md) var(--spacing-lg);
+   342	            background: var(--glass-bg);
+   343	            backdrop-filter: blur(10px);
+   344	            border: 1px solid var(--glass-border);
+   345	            border-radius: var(--radius-full);
+   346	            text-decoration: none;
+   347	            color: var(--text-primary);
+   348	            font-weight: 600;
+   349	            transition: all var(--transition-normal);
+   350	            display: inline-flex;
+   351	            align-items: center;
+   352	            gap: var(--spacing-xs);
+   353	        }
+   354	        
+   355	        .back-btn:hover {
+   356	            transform: translateY(-2px);
+   357	            box-shadow: var(--shadow-lg);
+   358	        }
+   359	        
+   360	        /* Responsive */
+   361	        @media (max-width: 640px) {
+   362	            .login-container {
+   363	                padding: var(--spacing-lg);
+   364	            }
+   365	            
+   366	            .social-login {
+   367	                grid-template-columns: 1fr;
+   368	            }
+   369	        }
+   370	    </style>
+   371	</head>
+   372	<body>
+   373	    <div class="login-page">
+   374	        <div class="login-background"></div>
+   375	        
+   376	        <a href="index.html" class="back-btn">
+   377	            <i class="fas fa-arrow-left"></i> 홈으로
+   378	        </a>
+   379	        
+   380	        <div class="login-container">
+   381	            <div class="login-header">
+   382	                <div class="login-logo">
+   383	                    <i class="fas fa-yin-yang"></i>
+   384	                </div>
+   385	                <h1>AI 사주 천년지기</h1>
+   386	                <p class="login-subtitle">정통 명리학과 AI 기술의 만남</p>
+   387	            </div>
+   388	
+   389	            <div class="login-tabs">
+   390	                <button class="tab-btn active" onclick="switchTab('login')">로그인</button>
+   391	                <button class="tab-btn" onclick="switchTab('signup')">회원가입</button>
+   392	            </div>
+   393	
+   394	            <!-- 로그인 폼 -->
+   395	            <div id="loginTab" class="tab-content active">
+   396	                <form id="loginForm" onsubmit="handleLogin(event)">
+   397	                    <div class="form-group">
+   398	                        <label>이메일</label>
+   399	                        <input type="email" name="email" placeholder="example@email.com" required>
+   400	                    </div>
+   401	                    <div class="form-group">
+   402	                        <label>비밀번호</label>
+   403	                        <input type="password" name="password" placeholder="비밀번호 입력" required>
+   404	                    </div>
+   405	                    <div class="form-group form-check">
+   406	                        <input type="checkbox" id="rememberMe">
+   407	                        <label for="rememberMe">로그인 상태 유지</label>
+   408	                    </div>
+   409	                    <button type="submit" class="btn-submit">
+   410	                        <i class="fas fa-sign-in-alt"></i> 로그인
+   411	                    </button>
+   412	                </form>
+   413	
+   414	                <div class="divider">또는</div>
+   415	
+   416	                <div class="social-login">
+   417	                    <button class="btn-social btn-kakao">
+   418	                        <i class="fab fa-kickstarter-k"></i> 카카오
+   419	                    </button>
+   420	                    <button class="btn-social btn-naver">
+   421	                        N 네이버
+   422	                    </button>
+   423	                </div>
+   424	
+   425	                <div class="links">
+   426	                    <a href="#forgot-password">비밀번호 찾기</a> | 
+   427	                    <a href="#forgot-email">이메일 찾기</a>
+   428	                </div>
+   429	                
+   430	                <div class="admin-link">
+   431	                    <i class="fas fa-user-shield"></i> 관리자이신가요? 
+   432	                    <a href="admin-login.html">관리자 로그인</a>
+   433	                </div>
+   434	            </div>
+   435	
+   436	            <!-- 회원가입 폼 -->
+   437	            <div id="signupTab" class="tab-content">
+   438	                <form id="signupForm" onsubmit="handleSignup(event)">
+   439	                    <div class="form-group">
+   440	                        <label>이름</label>
+   441	                        <input type="text" name="name" placeholder="홍길동" required>
+   442	                    </div>
+   443	                    <div class="form-group">
+   444	                        <label>이메일</label>
+   445	                        <input type="email" name="email" placeholder="example@email.com" required>
+   446	                    </div>
+   447	                    <div class="form-group">
+   448	                        <label>비밀번호</label>
+   449	                        <input type="password" name="password" placeholder="8자 이상 입력" required minlength="8">
+   450	                    </div>
+   451	                    <div class="form-group">
+   452	                        <label>비밀번호 확인</label>
+   453	                        <input type="password" name="passwordConfirm" placeholder="비밀번호 재입력" required minlength="8">
+   454	                    </div>
+   455	                    <div class="form-group form-check">
+   456	                        <input type="checkbox" id="agreeTerms" required>
+   457	                        <label for="agreeTerms">이용약관 및 개인정보처리방침에 동의합니다</label>
+   458	                    </div>
+   459	                    <button type="submit" class="btn-submit">
+   460	                        <i class="fas fa-user-plus"></i> 회원가입
+   461	                    </button>
+   462	                </form>
+   463	            </div>
+   464	        </div>
+   465	    </div>
+   466	
+   467	    <!-- API 클라이언트 -->
+   468	    <script src="js/api.js"></script>
+   469	    
+   470	    <script>
+   471	        function switchTab(tab) {
+   472	            // Remove active class from all tabs
+   473	            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+   474	            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+   475	            
+   476	            // Add active class to selected tab
+   477	            if (tab === 'login') {
+   478	                document.querySelector('.tab-btn:first-child').classList.add('active');
+   479	                document.getElementById('loginTab').classList.add('active');
+   480	            } else {
+   481	                document.querySelector('.tab-btn:last-child').classList.add('active');
+   482	                document.getElementById('signupTab').classList.add('active');
+   483	            }
+   484	        }
+   485	
+   486	        // 로그인 처리
+   487	        async function handleLogin(e) {
+   488	            e.preventDefault();
+   489	            const formData = new FormData(e.target);
+   490	            const email = formData.get('email');
+   491	            const password = formData.get('password');
+   492	            
+   493	            // 로딩 표시
+   494	            const submitBtn = e.target.querySelector('button[type="submit"]');
+   495	            const originalText = submitBtn.innerHTML;
+   496	            submitBtn.disabled = true;
+   497	            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
+   498	            
+   499	            try {
+   500	                const result = await login(email, password);
+   501	                
+   502	                if (result.success) {
+   503	                    alert('✅ ' + result.message);
+   504	                    
+   505	                    // 마이페이지 또는 이전 페이지로 이동
+   506	                    const returnUrl = sessionStorage.getItem('returnUrl') || 'mypage.html';
+   507	                    sessionStorage.removeItem('returnUrl');
+   508	                    window.location.href = returnUrl;
+   509	                } else {
+   510	                    alert('❌ ' + result.message);
+   511	                    submitBtn.disabled = false;
+   512	                    submitBtn.innerHTML = originalText;
+   513	                }
+   514	            } catch (error) {
+   515	                console.error('로그인 에러:', error);
+   516	                alert('❌ 로그인 중 오류가 발생했습니다: ' + error.message);
+   517	                submitBtn.disabled = false;
+   518	                submitBtn.innerHTML = originalText;
+   519	            }
+   520	        }
+   521	
+   522	        // 회원가입 처리
+   523	        async function handleSignup(e) {
+   524	            e.preventDefault();
+   525	            const formData = new FormData(e.target);
+   526	            const name = formData.get('name');
+   527	            const email = formData.get('email');
+   528	            const password = formData.get('password');
+   529	            const passwordConfirm = formData.get('passwordConfirm');
+   530	            
+   531	            // 비밀번호 확인
+   532	            if (password !== passwordConfirm) {
+   533	                alert('❌ 비밀번호가 일치하지 않습니다.');
+   534	                return;
+   535	            }
+   536	            
+   537	            // 비밀번호 길이 확인
+   538	            if (password.length < 6) {
+   539	                alert('❌ 비밀번호는 최소 6자 이상이어야 합니다.');
+   540	                return;
+   541	            }
+   542	            
+   543	            // 로딩 표시
+   544	            const submitBtn = e.target.querySelector('button[type="submit"]');
+   545	            const originalText = submitBtn.innerHTML;
+   546	            submitBtn.disabled = true;
+   547	            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 가입 중...';
+   548	            
+   549	            try {
+   550	                const result = await signup(email, password, name);
+   551	                
+   552	                if (result.success) {
+   553	                    alert('✅ ' + result.message + '\n\n자동으로 로그인되었습니다!');
+   554	                    
+   555	                    // 회원가입 성공 시 마이페이지로 이동
+   556	                    window.location.href = 'mypage.html';
+   557	                } else {
+   558	                    alert('❌ ' + result.message);
+   559	                    submitBtn.disabled = false;
+   560	                    submitBtn.innerHTML = originalText;
+   561	                }
+   562	            } catch (error) {
+   563	                console.error('회원가입 에러:', error);
+   564	                alert('❌ 회원가입 중 오류가 발생했습니다: ' + error.message);
+   565	                submitBtn.disabled = false;
+   566	                submitBtn.innerHTML = originalText;
+   567	            }
+   568	        }
+   569	
+   570	        // 이미 로그인되어 있으면 마이페이지로 리다이렉트
+   571	        if (localStorage.getItem('authToken')) {
+   572	            window.location.href = 'mypage.html';
+   573	        }
+   574	    </script>
+   575	</body>
+   576	</html>
+   577	
