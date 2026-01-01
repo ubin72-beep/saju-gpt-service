@@ -6,284 +6,255 @@
     <title>사주팔자 결과 - AI 사주 천년지기</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- 음력 변환 라이브러리 -->
-    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            line-height: 1.6;
             color: #333;
+            background: #f5f5f5;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
+        
         /* 네비게이션 */
         .navbar {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: #1a1a1a;
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        .navbar .container {
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .nav-brand a {
-            color: white;
-            text-decoration: none;
+        
+        .nav-brand {
+            color: #d4af37;
             font-size: 1.5rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .nav-menu {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-menu li a {
-            color: white;
             text-decoration: none;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.1);
         }
-        .nav-menu li a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
         }
-
-        /* 로딩 */
-        .loading {
-            text-align: center;
+        
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+        
+        /* 결과 헤더 */
+        .result-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
             color: white;
-            padding: 3rem;
-            font-size: 1.2rem;
-        }
-        .loading i {
-            font-size: 3rem;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 결과 히어로 */
-        .result-hero {
-            padding: 3rem 0 2rem;
+            padding: 60px 20px;
             text-align: center;
-            color: white;
         }
-        .result-hero h1 {
+        
+        .result-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            font-family: 'Noto Serif KR', serif;
         }
-        .result-info {
-            font-size: 1.1rem;
+        
+        .result-header .user-info {
+            font-size: 1.2rem;
             opacity: 0.9;
         }
-        .calendar-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            font-size: 0.85rem;
-            margin-left: 0.5rem;
+        
+        /* 메인 컨텐츠 */
+        .result-container {
+            max-width: 1000px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
         }
-
-        /* 사주 요약 */
-        .saju-summary {
-            padding: 2rem 0;
-        }
-        .summary-card {
+        
+        .result-card {
             background: white;
             border-radius: 20px;
-            padding: 2rem;
+            padding: 3rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-        .summary-item {
-            text-align: center;
-            padding: 1rem;
-        }
-        .summary-label {
-            font-size: 1rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
-        }
-        .summary-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        /* 사주명식 */
-        .saju-pillars {
-            padding: 2rem 0;
-        }
-        .section-title-box {
-            text-align: center;
-            color: white;
             margin-bottom: 2rem;
         }
-        .section-title-box h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #d4af37;
+            font-family: 'Noto Serif KR', serif;
         }
-        .section-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        .pillars-grid {
+        
+        .saju-table {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-        .pillar-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem 1rem;
+        
+        .saju-column {
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-radius: 10px;
+            border: 2px solid #d4af37;
         }
-        .pillar-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .pillar-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 1rem;
-        }
-        .pillar-value {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+        
+        .saju-column h3 {
+            font-size: 1.1rem;
             color: #c41e3a;
             margin-bottom: 0.5rem;
         }
-        .pillar-subvalue {
-            font-size: 1rem;
-            color: #64748b;
+        
+        .saju-column .hanja {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0.5rem 0;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .saju-column .element {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .analysis-section {
+            margin-top: 2rem;
+        }
+        
+        .analysis-item {
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 10px;
             margin-bottom: 1rem;
+            border-left: 4px solid #d4af37;
         }
-        .pillar-desc {
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-
-        /* 일간 성격 분석 */
-        .daymaster-analysis {
-            padding: 2rem 0;
-        }
-        .analysis-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        .analysis-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .analysis-content {
-            line-height: 1.8;
-            color: #475569;
-        }
-        .analysis-content p {
-            margin-bottom: 1rem;
-        }
-        .analysis-content ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .analysis-content li {
+        
+        .analysis-item h4 {
+            font-size: 1.2rem;
+            color: #c41e3a;
             margin-bottom: 0.5rem;
         }
-
-        /* 버튼 */
-        .action-buttons {
+        
+        .analysis-item p {
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        .fortune-bar {
+            margin-top: 1rem;
+        }
+        
+        .fortune-bar-label {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
-        .btn {
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
+        
+        .fortune-bar-bg {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .fortune-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4e5b5);
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: #1a1a1a;
+            font-weight: 700;
+            transition: width 1s ease;
         }
+        
+        /* 액션 버튼 */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
             color: white;
         }
+        
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
         }
+        
         .btn-secondary {
             background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            color: #c41e3a;
+            border: 2px solid #c41e3a;
         }
+        
         .btn-secondary:hover {
-            background: #667eea;
+            background: #c41e3a;
             color: white;
         }
-
+        
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: #1a1a1a;
+            color: rgba(255,255,255,0.7);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .result-hero h1 {
-                font-size: 1.8rem;
-            }
-            .pillars-grid {
+            .saju-table {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .summary-card {
-                grid-template-columns: 1fr;
+            
+            .result-card {
+                padding: 2rem 1.5rem;
             }
         }
     </style>
@@ -291,404 +262,204 @@
 <body>
     <!-- 네비게이션 -->
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="index.html">
-                    <i class="fas fa-yin-yang"></i>
-                    <span>AI 사주 천년지기</span>
-                </a>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="pricing.html">가격표</a>
+                <a href="mypage.html">마이페이지</a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-            </ul>
         </div>
     </nav>
 
-    <!-- 로딩 -->
-    <div class="loading" id="loading">
-        <i class="fas fa-spinner"></i>
-        <p>사주팔자를 계산하고 있습니다...</p>
-    </div>
+    <!-- 결과 헤더 -->
+    <section class="result-header">
+        <h1>🎴 사주팔자 결과</h1>
+        <div class="user-info" id="userInfo">
+            생년월일: <span id="birthdate"></span> (<span id="calendar"></span>) | 
+            성별: <span id="gender"></span>
+        </div>
+    </section>
 
-    <!-- 결과 컨테이너 -->
-    <div id="resultContainer" style="display: none;">
-        <!-- 결과 히어로 -->
-        <section class="result-hero">
-            <div class="container">
-                <h1>
-                    <i class="fas fa-star"></i>
-                    사주팔자 결과
-                </h1>
-                <div class="result-info">
-                    <span id="userInfo"></span>
-                    <span class="calendar-badge" id="calendarBadge"></span>
+    <!-- 결과 컨텐츠 -->
+    <div class="result-container">
+        <!-- 사주팔자 -->
+        <div class="result-card">
+            <h2 class="section-title"><i class="fas fa-star"></i> 당신의 사주팔자</h2>
+            <div class="saju-table">
+                <div class="saju-column">
+                    <h3>時柱 (시주)</h3>
+                    <div class="hanja" id="time-sky">甲</div>
+                    <div class="hanja" id="time-ground">子</div>
+                    <div class="element">木 水</div>
+                </div>
+                <div class="saju-column">
+                    <h3>日柱 (일주)</h3>
+                    <div class="hanja" id="day-sky">丙</div>
+                    <div class="hanja" id="day-ground">午</div>
+                    <div class="element">火 火</div>
+                </div>
+                <div class="saju-column">
+                    <h3>月柱 (월주)</h3>
+                    <div class="hanja" id="month-sky">戊</div>
+                    <div class="hanja" id="month-ground">寅</div>
+                    <div class="element">土 木</div>
+                </div>
+                <div class="saju-column">
+                    <h3>年柱 (연주)</h3>
+                    <div class="hanja" id="year-sky">庚</div>
+                    <div class="hanja" id="year-ground">申</div>
+                    <div class="element">金 金</div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 사주 요약 -->
-        <section class="saju-summary">
-            <div class="container">
-                <div class="summary-card">
-                    <div class="summary-item">
-                        <div class="summary-label">📅 출생 정보</div>
-                        <div class="summary-value" id="summaryBasic">-</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">🌟 일간(日干)</div>
-                        <div class="summary-value" id="summaryDayMaster">-</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">🔮 오행 분석</div>
-                        <div class="summary-value" id="summaryElements">-</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-label">⚖️ 균형도</div>
-                        <div class="summary-value" id="summaryBalance">75점</div>
-                    </div>
+        <!-- 일간 분석 -->
+        <div class="result-card">
+            <h2 class="section-title"><i class="fas fa-user"></i> 일간 (日干) 분석</h2>
+            <div class="analysis-section">
+                <div class="analysis-item">
+                    <h4>🔥 당신의 일간: 丙火 (병화)</h4>
+                    <p>병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다. 주변을 환하게 밝히는 따뜻한 성품을 가지고 있으며, 많은 사람들에게 영향을 미치는 카리스마가 있습니다.</p>
+                </div>
+                <div class="analysis-item">
+                    <h4>💪 성격 및 특성</h4>
+                    <p>• 긍정적이고 낙천적인 성격<br>
+                    • 강한 리더십과 추진력<br>
+                    • 정의감이 강하고 의리를 중시<br>
+                    • 예술적 감각과 창의성이 뛰어남<br>
+                    • 때로는 성급하고 고집이 센 면도 있음</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 사주명식 -->
-        <section class="saju-pillars">
-            <div class="container">
-                <div class="section-title-box">
-                    <h2><i class="fas fa-yin-yang"></i> 사주명식 (四柱命式)</h2>
-                    <p class="section-subtitle">평생의 운명을 담은 사주팔자 구조</p>
+        <!-- 오행 분석 -->
+        <div class="result-card">
+            <h2 class="section-title"><i class="fas fa-chart-pie"></i> 오행 (五行) 균형</h2>
+            <div class="analysis-section">
+                <div class="fortune-bar">
+                    <div class="fortune-bar-label">
+                        <span>🌳 木 (목)</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width: 20%;">20%</div>
+                    </div>
                 </div>
-                
-                <div class="pillars-grid">
-                    <div class="pillar-card">
-                        <div class="pillar-label">년주 (年柱)</div>
-                        <div class="pillar-value" id="yearPillar">-</div>
-                        <div class="pillar-subvalue" id="yearPillarKor">-</div>
-                        <div class="pillar-desc">조상, 가문</div>
+                <div class="fortune-bar">
+                    <div class="fortune-bar-label">
+                        <span>🔥 火 (화)</span>
+                        <span>35%</span>
                     </div>
-                    <div class="pillar-card">
-                        <div class="pillar-label">월주 (月柱)</div>
-                        <div class="pillar-value" id="monthPillar">-</div>
-                        <div class="pillar-subvalue" id="monthPillarKor">-</div>
-                        <div class="pillar-desc">부모, 직업</div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width: 35%;">35%</div>
                     </div>
-                    <div class="pillar-card">
-                        <div class="pillar-label">일주 (日柱)</div>
-                        <div class="pillar-value" id="dayPillar">-</div>
-                        <div class="pillar-subvalue" id="dayPillarKor">-</div>
-                        <div class="pillar-desc">나, 배우자</div>
+                </div>
+                <div class="fortune-bar">
+                    <div class="fortune-bar-label">
+                        <span>🏔️ 土 (토)</span>
+                        <span>15%</span>
                     </div>
-                    <div class="pillar-card">
-                        <div class="pillar-label">시주 (時柱)</div>
-                        <div class="pillar-value" id="hourPillar">-</div>
-                        <div class="pillar-subvalue" id="hourPillarKor">-</div>
-                        <div class="pillar-desc">자녀, 말년</div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width: 15%;">15%</div>
                     </div>
+                </div>
+                <div class="fortune-bar">
+                    <div class="fortune-bar-label">
+                        <span>⚙️ 金 (금)</span>
+                        <span>20%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width: 20%;">20%</div>
+                    </div>
+                </div>
+                <div class="fortune-bar">
+                    <div class="fortune-bar-label">
+                        <span>💧 水 (수)</span>
+                        <span>10%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width: 10%;">10%</div>
+                    </div>
+                </div>
+                <div class="analysis-item" style="margin-top: 1.5rem;">
+                    <h4>📊 오행 분석</h4>
+                    <p>화(火) 기운이 가장 강하여 열정적이고 활동적인 성향이 두드러집니다. 수(水) 기운이 약하여 침착함을 기르는 것이 필요하며, 물과 관련된 취미나 활동이 도움이 될 수 있습니다.</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 일간 성격 분석 -->
-        <section class="daymaster-analysis">
-            <div class="container">
-                <div class="section-title-box">
-                    <h2><i class="fas fa-user-circle"></i> 일간 성격 분석</h2>
-                    <p class="section-subtitle">당신의 타고난 성격과 특성</p>
+        <!-- 운세 분석 -->
+        <div class="result-card">
+            <h2 class="section-title"><i class="fas fa-sparkles"></i> 종합 운세</h2>
+            <div class="analysis-section">
+                <div class="analysis-item">
+                    <h4>💼 직업운</h4>
+                    <p>리더십과 창의성을 발휘할 수 있는 분야에서 두각을 나타냅니다. 경영, 교육, 예술, 미디어 분야가 적합하며, 특히 많은 사람들과 소통하는 직업에서 성공 가능성이 높습니다.</p>
                 </div>
-                <div class="analysis-card" id="daymasterAnalysis"></div>
+                <div class="analysis-item">
+                    <h4>💰 재물운</h4>
+                    <p>큰 재물을 얻을 수 있는 사주이나, 지출도 많은 편입니다. 계획적인 재테크와 저축 습관이 중요하며, 투자보다는 안정적인 자산 관리가 권장됩니다.</p>
+                </div>
+                <div class="analysis-item">
+                    <h4>❤️ 애정운</h4>
+                    <p>열정적이고 적극적인 사랑을 하는 타입입니다. 상대방에게 따뜻함을 주지만, 때로는 자기중심적일 수 있어 배려심을 기르는 것이 좋습니다. 화(火)와 수(水)의 조화가 있는 상대와 궁합이 좋습니다.</p>
+                </div>
+                <div class="analysis-item">
+                    <h4>🏥 건강운</h4>
+                    <p>화(火) 기운이 강해 심장, 혈압, 눈 건강에 주의가 필요합니다. 규칙적인 운동과 충분한 수분 섭취, 스트레스 관리가 중요합니다.</p>
+                </div>
             </div>
-        </section>
+        </div>
 
         <!-- 액션 버튼 -->
-        <section style="padding: 3rem 0;">
-            <div class="container">
-                <div class="action-buttons">
-                    <a href="premium-features.html" class="btn btn-primary">
-                        <i class="fas fa-crown"></i>
-                        프리미엄 분석 받기 (₩49,000)
-                    </a>
-                    <a href="ai-chat.html" class="btn btn-secondary">
-                        <i class="fas fa-comments"></i>
-                        AI 상담하기
-                    </a>
-                    <button onclick="window.print()" class="btn btn-secondary">
-                        <i class="fas fa-print"></i>
-                        PDF 저장
-                    </button>
-                    <a href="index.html" class="btn btn-secondary">
-                        <i class="fas fa-home"></i>
-                        홈으로
-                    </a>
-                </div>
-            </div>
-        </section>
+        <div class="action-buttons">
+            <a href="index.html" class="action-btn btn-secondary">
+                <i class="fas fa-home"></i> 홈으로
+            </a>
+            <a href="premium-features.html" class="action-btn btn-gold">
+                <i class="fas fa-crown"></i> 프리미엄 분석
+            </a>
+            <a href="ai-chat.html" class="action-btn btn-primary">
+                <i class="fas fa-robot"></i> AI 상담하기
+            </a>
+        </div>
     </div>
 
+    <!-- 푸터 -->
+    <footer class="footer">
+        <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+
     <script>
-        // 천간지지 데이터
-        const CHEONGAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
-        const CHEONGAN_KOR = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
-        const JIJI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-        const JIJI_KOR = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
-
-        // 음력 -> 양력 변환
-        function convertLunarToSolar(year, month, day) {
-            try {
-                if (typeof Lunar !== 'undefined') {
-                    const lunar = Lunar.fromYmd(year, month, day);
-                    const solar = lunar.getSolar();
-                    return {
-                        year: solar.getYear(),
-                        month: solar.getMonth(),
-                        day: solar.getDay()
-                    };
-                }
-            } catch (error) {
-                console.error('음력 변환 오류:', error);
-            }
-            return { year, month, day }; // 실패 시 원본 반환
-        }
-
-        // 사주 계산
-        function calculateSaju(year, month, day, hour) {
-            // 년주
-            const yearGan = CHEONGAN[(year - 4) % 10];
-            const yearJi = JIJI[(year - 4) % 12];
-            const yearGanKor = CHEONGAN_KOR[(year - 4) % 10];
-            const yearJiKor = JIJI_KOR[(year - 4) % 12];
-
-            // 월주
-            const monthGan = CHEONGAN[(year * 2 + month) % 10];
-            const monthJi = JIJI[(month + 1) % 12];
-            const monthGanKor = CHEONGAN_KOR[(year * 2 + month) % 10];
-            const monthJiKor = JIJI_KOR[(month + 1) % 12];
-
-            // 일주
-            const dayOffset = Math.floor((new Date(year, month - 1, day) - new Date(1900, 0, 1)) / 86400000);
-            const dayGan = CHEONGAN[dayOffset % 10];
-            const dayJi = JIJI[dayOffset % 12];
-            const dayGanKor = CHEONGAN_KOR[dayOffset % 10];
-            const dayJiKor = JIJI_KOR[dayOffset % 12];
-
-            // 시주
-            const hourIndex = Math.floor((hour + 1) / 2) % 12;
-            const hourGan = CHEONGAN[(dayOffset * 2 + hourIndex) % 10];
-            const hourJi = JIJI[hourIndex];
-            const hourGanKor = CHEONGAN_KOR[(dayOffset * 2 + hourIndex) % 10];
-            const hourJiKor = JIJI_KOR[hourIndex];
-
-            return {
-                year: yearGan + yearJi,
-                yearKor: yearGanKor + yearJiKor,
-                month: monthGan + monthJi,
-                monthKor: monthGanKor + monthJiKor,
-                day: dayGan + dayJi,
-                dayKor: dayGanKor + dayJiKor,
-                hour: hourGan + hourJi,
-                hourKor: hourGanKor + hourJiKor,
-                dayMaster: dayGan,
-                dayMasterKor: dayGanKor
-            };
-        }
-
-        // localStorage에서 데이터 가져오기
-        const savedData = localStorage.getItem('sajuData');
-        let userData = {};
-
-        if (savedData) {
-            userData = JSON.parse(savedData);
+        // localStorage에서 사주 데이터 가져오기
+        const sajuData = JSON.parse(localStorage.getItem('sajuData') || '{}');
+        
+        // 사용자 정보 표시
+        if (sajuData.birthdate) {
+            document.getElementById('birthdate').textContent = sajuData.birthdate;
+            document.getElementById('calendar').textContent = sajuData.calendar === 'solar' ? '양력' : '음력';
+            document.getElementById('gender').textContent = sajuData.gender === 'male' ? '남성' : '여성';
         } else {
-            // 데이터가 없으면 기본값
-            userData = {
-                birthdate: '1990-05-15',
-                calendar: 'solar',
-                birthtime: '09-11',
-                gender: 'male'
-            };
+            // 데이터가 없으면 샘플 데이터 표시
+            document.getElementById('birthdate').textContent = '1990-01-01';
+            document.getElementById('calendar').textContent = '양력';
+            document.getElementById('gender').textContent = '남성';
         }
-
-        // 날짜 파싱
-        const birthParts = userData.birthdate.split('-');
-        let year = parseInt(birthParts[0]);
-        let month = parseInt(birthParts[1]);
-        let day = parseInt(birthParts[2]);
-
-        // 시간 파싱
-        const timeRange = userData.birthtime || '09-11';
-        const hour = parseInt(timeRange.split('-')[0]);
-
-        // 음력인 경우 양력으로 변환
-        const isLunar = userData.calendar === 'lunar';
-        let convertedDate = { year, month, day };
-
-        if (isLunar) {
-            convertedDate = convertLunarToSolar(year, month, day);
-            console.log(`음력 ${year}-${month}-${day} → 양력 ${convertedDate.year}-${convertedDate.month}-${convertedDate.day}`);
-        }
-
-        // 변환된 날짜로 사주 계산
-        setTimeout(() => {
-            try {
-                const saju = calculateSaju(convertedDate.year, convertedDate.month, convertedDate.day, hour);
-
-                // 사용자 정보 표시
-                const originalDate = `${year}년 ${month}월 ${day}일`;
-                const calendarType = isLunar ? '🌙 음력' : '🌞 양력';
-                
-                document.getElementById('userInfo').textContent = originalDate;
-                document.getElementById('calendarBadge').textContent = calendarType;
-
-                // 양력 변환 정보 추가
-                if (isLunar) {
-                    document.getElementById('summaryBasic').innerHTML = 
-                        `음력 ${originalDate}<br><small style="color: #94a3b8;">(양력 ${convertedDate.year}년 ${convertedDate.month}월 ${convertedDate.day}일)</small>`;
-                } else {
-                    document.getElementById('summaryBasic').textContent = originalDate;
-                }
-
-                // 사주명식 표시
-                document.getElementById('yearPillar').textContent = saju.year;
-                document.getElementById('yearPillarKor').textContent = saju.yearKor;
-                document.getElementById('monthPillar').textContent = saju.month;
-                document.getElementById('monthPillarKor').textContent = saju.monthKor;
-                document.getElementById('dayPillar').textContent = saju.day;
-                document.getElementById('dayPillarKor').textContent = saju.dayKor;
-                document.getElementById('hourPillar').textContent = saju.hour;
-                document.getElementById('hourPillarKor').textContent = saju.hourKor;
-
-                // 일간 정보
-                document.getElementById('summaryDayMaster').textContent = 
-                    `${saju.dayMaster} (${saju.dayMasterKor})`;
-
-                // 오행 분석 (간단)
-                const element = getElement(saju.dayMaster);
-                document.getElementById('summaryElements').textContent = element;
-
-                // 일간 분석 표시
-                displayDayMasterAnalysis(saju.dayMaster);
-
-                // 로딩 숨기고 결과 표시
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('resultContainer').style.display = 'block';
-
-                // 애니메이션
-                animateCards();
-
-            } catch (error) {
-                console.error('계산 오류:', error);
-                document.getElementById('loading').innerHTML = `
-                    <i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i>
-                    <p>사주 계산 중 오류가 발생했습니다.</p>
-                    <p style="font-size: 0.9rem; margin-top: 1rem;">
-                        <a href="index.html" style="color: white; text-decoration: underline;">
-                            메인 페이지로 돌아가기
-                        </a>
-                    </p>
-                `;
-            }
-        }, 1000);
-
-        // 오행 판별
-        function getElement(cheongan) {
-            const elements = {
-                '甲': '목(木)', '乙': '목(木)',
-                '丙': '화(火)', '丁': '화(火)',
-                '戊': '토(土)', '己': '토(土)',
-                '庚': '금(金)', '辛': '금(金)',
-                '壬': '수(水)', '癸': '수(水)'
-            };
-            return elements[cheongan] + ' 강함';
-        }
-
-        // 애니메이션
-        function animateCards() {
-            const cards = document.querySelectorAll('.pillar-card, .summary-item, .analysis-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+        
+        // 막대 그래프 애니메이션
+        window.addEventListener('load', function() {
+            const bars = document.querySelectorAll('.fortune-bar-fill');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
                 setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease-out';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
+                    bar.style.width = width;
+                }, 100);
             });
-        }
-
-        // 일간 성격 분석
-        function displayDayMasterAnalysis(dayMaster) {
-            const analyses = {
-                '甲': { icon: '🌲', name: '甲木 (갑목)', title: '큰 나무의 기운', 
-                    desc: '갑목은 큰 나무와 같은 존재입니다. 곧고 정직하며 우직한 에너지를 지니고 있습니다.',
-                    personality: ['정직하고 원칙적', '리더십이 강함', '끈기와 인내심', '성실하고 책임감', '다소 완고할 수 있음'],
-                    jobs: '경영자, 교육자, 공무원, 건축가, 법률가',
-                    love: '진지하고 헌신적인 사랑. 천천히 깊어지는 관계를 선호합니다.' },
-                '乙': { icon: '🌿', name: '乙木 (을목)', title: '부드러운 풀의 기운',
-                    desc: '을목은 유연한 풀과 같습니다. 부드럽고 온화하며 적응력이 뛰어납니다.',
-                    personality: ['온화하고 친절함', '예술적 감각', '유연하고 적응력', '섬세하고 배려심', '우유부단할 수 있음'],
-                    jobs: '예술가, 디자이너, 상담사, 간호사, 플로리스트',
-                    love: '로맨틱하고 감성적인 사랑. 배려와 이해를 중시합니다.' },
-                '丙': { icon: '🔥', name: '丙火 (병화)', title: '태양의 기운',
-                    desc: '병화는 태양과 같은 존재입니다. 밝고 따뜻하며 활발한 에너지를 지니고 있습니다.',
-                    personality: ['긍정적이고 낙천적', '표현력이 풍부함', '추진력과 실행력', '리더십과 카리스마', '성급할 수 있음'],
-                    jobs: '연예인, 방송인, 교육자, 마케터, 영업, 정치인',
-                    love: '열정적이고 적극적인 애정 표현. 주도적인 연애를 선호합니다.' },
-                '丁': { icon: '🕯️', name: '丁火 (정화)', title: '촛불의 기운',
-                    desc: '정화는 촛불처럼 작지만 밝은 빛을 냅니다. 섬세하고 예리한 통찰력을 지녔습니다.',
-                    personality: ['예민하고 섬세함', '직관력이 뛰어남', '예술적 재능', '따뜻한 마음씨', '감정 기복이 있음'],
-                    jobs: '작가, 예술가, 상담사, 요리사, 의료인',
-                    love: '세심하고 배려 깊은 사랑. 감정적 교감을 중요하게 생각합니다.' },
-                '戊': { icon: '⛰️', name: '戊土 (무토)', title: '큰 산의 기운',
-                    desc: '무토는 산과 같이 든든하고 안정적입니다. 믿음직하고 신뢰감을 줍니다.',
-                    personality: ['안정적이고 신뢰감', '포용력이 넓음', '현실적이고 실용적', '책임감이 강함', '고집이 셀 수 있음'],
-                    jobs: '부동산, 건설업, 금융, 공무원, 농업',
-                    love: '안정적이고 현실적인 사랑. 가정을 중시하는 성향입니다.' },
-                '己': { icon: '🌾', name: '己土 (기토)', title: '밭흙의 기운',
-                    desc: '기토는 비옥한 밭흙처럼 생산적이고 포용력이 있습니다.',
-                    personality: ['온화하고 포용력', '배려심이 깊음', '실용적이고 검소함', '인내심이 강함', '걱정이 많을 수 있음'],
-                    jobs: '교육자, 사회복지사, 요리사, 농업, 유통업',
-                    love: '헌신적이고 희생적인 사랑. 상대방을 돌보는 것을 좋아합니다.' },
-                '庚': { icon: '⚔️', name: '庚金 (경금)', title: '강철의 기운',
-                    desc: '경금은 강철처럼 강하고 단단합니다. 결단력과 추진력이 뛰어납니다.',
-                    personality: ['강인하고 결단력', '정의감이 강함', '솔직하고 직설적', '추진력이 강함', '융통성이 부족할 수 있음'],
-                    jobs: '군인, 경찰, 운동선수, 기계공학, 외과의사',
-                    love: '직선적이고 솔직한 사랑. 명확한 관계를 선호합니다.' },
-                '辛': { icon: '💎', name: '辛金 (신금)', title: '보석의 기운',
-                    desc: '신금은 보석처럼 세련되고 아름답습니다. 섬세하고 완벽주의적 성향이 있습니다.',
-                    personality: ['세련되고 우아함', '예민하고 섬세함', '완벽주의 성향', '미적 감각', '비판적일 수 있음'],
-                    jobs: '디자이너, 보석상, 예술가, 미용사, 패션업',
-                    love: '로맨틱하고 이상적인 사랑. 아름다운 관계를 추구합니다.' },
-                '壬': { icon: '🌊', name: '壬水 (임수)', title: '큰 바다의 기운',
-                    desc: '임수는 바다처럼 넓고 깊습니다. 지혜롭고 포용력이 넓습니다.',
-                    personality: ['지혜롭고 통찰력', '포용력이 넓음', '유연하고 적응력', '창의적 사고', '우유부단할 수 있음'],
-                    jobs: '연구원, 철학자, 작가, 여행업, 무역업',
-                    love: '자유롭고 이해심 깊은 사랑. 서로의 공간을 존중합니다.' },
-                '癸': { icon: '💧', name: '癸水 (계수)', title: '이슬비의 기운',
-                    desc: '계수는 이슬이나 비와 같습니다. 부드럽고 순수하며 정화의 힘을 지녔습니다.',
-                    personality: ['순수하고 깨끗함', '직관력이 뛰어남', '감수성이 풍부함', '신비로운 매력', '소심할 수 있음'],
-                    jobs: '예술가, 영매, 심리상담사, 의료인, 연구원',
-                    love: '순수하고 깊은 사랑. 영혼의 교감을 중시합니다.' }
-            };
-
-            const a = analyses[dayMaster] || analyses['丙'];
-            document.getElementById('daymasterAnalysis').innerHTML = `
-                <h3>${a.icon} ${a.name} - ${a.title}</h3>
-                <div class="analysis-content">
-                    <p><strong>기본 특성:</strong></p>
-                    <p>${a.desc}</p>
-                    <p><strong>성격:</strong></p>
-                    <ul>${a.personality.map(p => `<li>✨ ${p}</li>`).join('')}</ul>
-                    <p><strong>💼 적합한 직업:</strong></p>
-                    <p>${a.jobs}</p>
-                    <p><strong>💕 연애 스타일:</strong></p>
-                    <p>${a.love}</p>
-                    <p><strong>🎯 2026년 병오년 운세:</strong></p>
-                    <p>2026년은 특별한 한 해입니다. 60년 만에 찾아오는 붉은 불의 말띠 해로, 
-                    새로운 시작과 변화의 기회가 찾아옵니다. 당신의 에너지를 현명하게 활용하세요.</p>
-                </div>
-            `;
-        }
+        });
     </script>
 </body>
 </html>
