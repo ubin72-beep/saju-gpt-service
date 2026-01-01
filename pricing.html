@@ -1,411 +1,525 @@
-1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>가격표 - AI 사주 천년지기</title>
-     7	    <meta name="description" content="사주팔자, AI 상담, 택일 서비스 가격 안내. 합리적인 가격으로 정통 운세 서비스를 이용하세요.">
-     8	    <link rel="stylesheet" href="css/style.css">
-     9	    <link rel="stylesheet" href="css/modal.css">
-    10	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    11	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    12	    <style>
-    13	        .pricing-hero { background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%); color: white; padding: 120px 0 80px; text-align: center; }
-    14	        .pricing-hero h1 { font-family: 'Noto Serif KR', serif; font-size: 3rem; margin-bottom: 1rem; }
-    15	        .pricing-container { max-width: 1200px; margin: -50px auto 50px; padding: 2rem; }
-    16	        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
-    17	        .pricing-card { background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: all 0.3s; position: relative; }
-    18	        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-    19	        .pricing-card.featured { border: 3px solid #d4af37; }
-    20	        .pricing-card.featured::before { content: "BEST"; position: absolute; top: -15px; right: 20px; background: #d4af37; color: white; padding: 0.5rem 1.5rem; border-radius: 20px; font-weight: bold; }
-    21	        .plan-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; color: #1a1a1a; }
-    22	        .plan-price { font-size: 3rem; font-weight: bold; color: #c41e3a; margin: 1rem 0; }
-    23	        .plan-price span { font-size: 1rem; color: #666; }
-    24	        .plan-features { list-style: none; padding: 0; margin: 2rem 0; }
-    25	        .plan-features li { padding: 0.7rem 0; display: flex; align-items: center; gap: 10px; }
-    26	        .plan-features li i { color: #4CAF50; }
-    27	        .plan-btn { width: 100%; padding: 1rem; background: #c41e3a; color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
-    28	        .plan-btn:hover { background: #a01830; transform: scale(1.05); }
-    29	        .compare-table { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin: 3rem 0; }
-    30	        .compare-table table { width: 100%; border-collapse: collapse; }
-    31	        .compare-table th, .compare-table td { padding: 1rem; text-align: center; border-bottom: 1px solid #eee; }
-    32	        .compare-table th { background: #f5f5f5; font-weight: bold; }
-    33	        .compare-table .check { color: #4CAF50; font-size: 1.2rem; }
-    34	        .compare-table .cross { color: #F44336; font-size: 1.2rem; }
-    35	        .faq-section { max-width: 800px; margin: 0 auto 3rem; }
-    36	        .faq-item { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    37	        .faq-question { font-weight: bold; margin-bottom: 0.5rem; color: #1a1a1a; }
-    38	        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
-    39	    </style>
-    40	</head>
-    41	<body>
-    42	    <!-- 네비게이션 -->
-    43	    <nav class="navbar">
-    44	        <div class="container">
-    45	            <div class="nav-brand">
-    46	                <a href="index.html">
-    47	                    <i class="fas fa-yin-yang"></i>
-    48	                    <span>AI 사주 천년지기</span>
-    49	                </a>
-    50	            </div>
-    51	            <ul class="nav-menu">
-    52	                <li><a href="index.html">홈</a></li>
-    53	                <li><a href="pricing.html" class="active">가격표</a></li>
-    54	                <li><a href="ai-chat.html">AI 상담</a></li>
-    55	                <li><a href="taekil.html">택일</a></li>
-    56	                <li><a href="kakao-alarm-bot.html" class="nav-highlight"><i class="fas fa-bell"></i> 알람</a></li>
-    57	                <li><a href="mypage.html">마이페이지</a></li>
-    58	            </ul>
-    59	        </div>
-    60	    </nav>
-    61	
-    62	    <!-- 히어로 -->
-    63	    <section class="pricing-hero">
-    64	        <div class="container">
-    65	            <h1>💎 가격표</h1>
-    66	            <p style="font-size: 1.3rem; opacity: 0.9;">합리적인 가격으로 만나는 정통 운세 서비스</p>
-    67	        </div>
-    68	    </section>
-    69	
-    70	    <!-- 가격 카드 -->
-    71	    <div class="pricing-container">
-    72	        <div class="pricing-grid">
-    73	            <!-- 무료 플랜 -->
-    74	            <div class="pricing-card">
-    75	                <div class="plan-name">무료 체험</div>
-    76	                <div class="plan-price">₩0<span>/평생</span></div>
-    77	                <ul class="plan-features">
-    78	                    <li><i class="fas fa-check"></i> 기본 사주 확인</li>
-    79	                    <li><i class="fas fa-check"></i> AI 상담 3회/일</li>
-    80	                    <li><i class="fas fa-check"></i> 오늘의 운세</li>
-    81	                    <li><i class="fas fa-check"></i> 띠별 운세</li>
-    82	                    <li style="opacity: 0.5;"><i class="fas fa-times"></i> 상세 사주팔자</li>
-    83	                    <li style="opacity: 0.5;"><i class="fas fa-times"></i> 택일 서비스</li>
-    84	                </ul>
-    85	                <button class="plan-btn" onclick="location.href='index.html'">시작하기</button>
-    86	            </div>
-    87	
-    88	            <!-- 월간 플랜 -->
-    89	            <div class="pricing-card featured">
-    90	                <div class="plan-name">월간 프리미엄</div>
-    91	                <div class="plan-price">₩19,900<span>/월</span></div>
-    92	                <ul class="plan-features">
-    93	                    <li><i class="fas fa-check"></i> 무료 플랜 모든 기능</li>
-    94	                    <li><i class="fas fa-check"></i> AI 상담 무제한</li>
-    95	                    <li><i class="fas fa-check"></i> 상세 사주팔자</li>
-    96	                    <li><i class="fas fa-check"></i> 맞춤 연애운</li>
-    97	                    <li><i class="fas fa-check"></i> 정밀 궁합</li>
-    98	                    <li><i class="fas fa-check"></i> 이사/결혼 택일</li>
-    99	                    <li><i class="fas fa-check"></i> PDF 다운로드</li>
-   100	                    <li><i class="fas fa-check"></i> 우선 지원</li>
-   101	                </ul>
-   102	                <button class="plan-btn" onclick="location.href='login.html'">구독하기</button>
-   103	            </div>
-   104	
-   105	            <!-- 연간 플랜 -->
-   106	            <div class="pricing-card">
-   107	                <div class="plan-name">연간 프리미엄</div>
-   108	                <div class="plan-price">₩199,000<span>/년</span></div>
-   109	                <div style="text-align: center; color: #4CAF50; font-weight: bold; margin: -1rem 0 1rem 0;">
-   110	                    월 ₩16,583 (16% 할인!)
-   111	                </div>
-   112	                <ul class="plan-features">
-   113	                    <li><i class="fas fa-check"></i> 월간 플랜 모든 기능</li>
-   114	                    <li><i class="fas fa-check"></i> 2개월 무료 (16% 할인)</li>
-   115	                    <li><i class="fas fa-check"></i> AI 무제한 상담</li>
-   116	                    <li><i class="fas fa-check"></i> 맞춤 운세 리포트</li>
-   117	                    <li><i class="fas fa-check"></i> VIP 전용 서비스</li>
-   118	                    <li><i class="fas fa-check"></i> 평생 기록 보관</li>
-   119	                </ul>
-   120	                <button class="plan-btn" onclick="location.href='login.html'">구독하기</button>
-   121	            </div>
-   122	        </div>
-   123	
-   124	        <!-- 개별 상품 -->
-   125	        <h2 style="text-align: center; font-family: 'Noto Serif KR', serif; margin: 4rem 0 2rem 0;">개별 구매 상품</h2>
-   126	        <div class="pricing-grid">
-   127	            <div class="pricing-card" id="premium-saju">
-   128	                <div class="plan-name">상세 사주팔자</div>
-   129	                <div class="plan-price">₩4,900</div>
-   130	                <ul class="plan-features" style="text-align: left; margin: 1.5rem 0;">
-   131	                    <li><i class="fas fa-check"></i> 십신(십성) 상세 분석</li>
-   132	                    <li><i class="fas fa-check"></i> 대운 타임라인</li>
-   133	                    <li><i class="fas fa-check"></i> 성격/직업 분석</li>
-   134	                    <li><i class="fas fa-check"></i> 재물/연애/건강 해석</li>
-   135	                    <li><i class="fas fa-check"></i> PDF 다운로드</li>
-   136	                </ul>
-   137	                <button class="plan-btn" onclick="purchaseProduct('premium_saju', '상세 사주팔자 해석', 4900)">구매하기</button>
-   138	            </div>
-   139	
-   140	            <div class="pricing-card" id="taekil">
-   141	                <div class="plan-name">이사/결혼 택일</div>
-   142	                <div class="plan-price">₩5,900</div>
-   143	                <p style="color: #666; margin: 1rem 0;">명리학 기반 길일 선택</p>
-   144	                <button class="plan-btn" onclick="location.href='taekil.html'">바로 이용하기</button>
-   145	            </div>
-   146	
-   147	            <div class="pricing-card" id="compatibility">
-   148	                <div class="plan-name">정밀 궁합</div>
-   149	                <div class="plan-price">₩9,900</div>
-   150	                <p style="color: #666; margin: 1rem 0;">두 사람의 천생연분 확인</p>
-   151	                <button class="plan-btn" onclick="purchaseProduct('compatibility', '정밀 궁합', 9900)">구매하기</button>
-   152	            </div>
-   153	
-   154	            <div class="pricing-card" id="love-fortune">
-   155	                <div class="plan-name">맞춤 연애운</div>
-   156	                <div class="plan-price">₩3,900</div>
-   157	                <p style="color: #666; margin: 1rem 0;">2026년 사랑의 흐름 분석</p>
-   158	                <button class="plan-btn" onclick="purchaseProduct('love_fortune', '맞춤 연애운', 3900)">구매하기</button>
-   159	            </div>
-   160	
-   161	            <div class="pricing-card" id="tojeong">
-   162	                <div class="plan-name">토정비결</div>
-   163	                <div class="plan-price">₩3,900</div>
-   164	                <p style="color: #666; margin: 1rem 0;">전통 토정 점괘</p>
-   165	                <button class="plan-btn" onclick="purchaseProduct('tojeong', '토정비결', 3900)">구매하기</button>
-   166	            </div>
-   167	
-   168	            <div class="pricing-card" id="year-fortune">
-   169	                <div class="plan-name">2026 신년운세</div>
-   170	                <div class="plan-price">₩4,900</div>
-   171	                <p style="color: #666; margin: 1rem 0;">병오년 12띠별 운세</p>
-   172	                <button class="plan-btn" onclick="purchaseProduct('year_2026', '2026 신년운세', 4900)">구매하기</button>
-   173	            </div>
-   174	        </div>
-   175	
-   176	        <!-- 비교 테이블 -->
-   177	        <div class="compare-table">
-   178	            <h2 style="text-align: center; margin-bottom: 2rem;">상세 기능 비교</h2>
-   179	            <table>
-   180	                <thead>
-   181	                    <tr>
-   182	                        <th>기능</th>
-   183	                        <th>무료</th>
-   184	                        <th>월간</th>
-   185	                        <th>연간</th>
-   186	                    </tr>
-   187	                </thead>
-   188	                <tbody>
-   189	                    <tr>
-   190	                        <td>기본 사주 확인</td>
-   191	                        <td><span class="check">✓</span></td>
-   192	                        <td><span class="check">✓</span></td>
-   193	                        <td><span class="check">✓</span></td>
-   194	                    </tr>
-   195	                    <tr>
-   196	                        <td>AI 상담</td>
-   197	                        <td>3회/일</td>
-   198	                        <td>무제한</td>
-   199	                        <td>무제한</td>
-   200	                    </tr>
-   201	                    <tr>
-   202	                        <td>상세 사주팔자</td>
-   203	                        <td><span class="cross">✗</span></td>
-   204	                        <td><span class="check">✓</span></td>
-   205	                        <td><span class="check">✓</span></td>
-   206	                    </tr>
-   207	                    <tr>
-   208	                        <td>택일 서비스</td>
-   209	                        <td><span class="cross">✗</span></td>
-   210	                        <td><span class="check">✓</span></td>
-   211	                        <td><span class="check">✓</span></td>
-   212	                    </tr>
-   213	                    <tr>
-   214	                        <td>정밀 궁합</td>
-   215	                        <td><span class="cross">✗</span></td>
-   216	                        <td><span class="check">✓</span></td>
-   217	                        <td><span class="check">✓</span></td>
-   218	                    </tr>
-   219	                    <tr>
-   220	                        <td>AI 고급 분석</td>
-   221	                        <td><span class="cross">✗</span></td>
-   222	                        <td><span class="check">✓</span></td>
-   223	                        <td><span class="check">✓</span></td>
-   224	                    </tr>
-   225	                    <tr>
-   226	                        <td>VIP 서비스</td>
-   227	                        <td><span class="cross">✗</span></td>
-   228	                        <td><span class="cross">✗</span></td>
-   229	                        <td><span class="check">✓</span></td>
-   230	                    </tr>
-   231	                </tbody>
-   232	            </table>
-   233	        </div>
-   234	
-   235	        <!-- FAQ -->
-   236	        <div class="faq-section">
-   237	            <h2 style="text-align: center; margin-bottom: 2rem;">자주 묻는 질문</h2>
-   238	            
-   239	            <div class="faq-item">
-   240	                <div class="faq-question">Q. 무료 체험 후 자동 결제되나요?</div>
-   241	                <p style="color: #666; margin: 0.5rem 0 0 0;">아니요. 무료 플랜은 영구 무료이며, 유료 플랜은 사용자가 직접 구독해야 합니다.</p>
-   242	            </div>
-   243	
-   244	            <div class="faq-item">
-   245	                <div class="faq-question">Q. 구독은 언제든지 취소할 수 있나요?</div>
-   246	                <p style="color: #666; margin: 0.5rem 0 0 0;">네, 마이페이지에서 언제든지 취소 가능하며, 다음 갱신일 전까지 서비스 이용이 가능합니다.</p>
-   247	            </div>
-   248	
-   249	            <div class="faq-item">
-   250	                <div class="faq-question">Q. 환불 정책은 어떻게 되나요?</div>
-   251	                <p style="color: #666; margin: 0.5rem 0 0 0;">결제 후 7일 이내, 서비스를 이용하지 않은 경우 전액 환불이 가능합니다. 자세한 내용은 <a href="refund.html" style="color: #c41e3a;">환불 정책</a>을 확인하세요.</p>
-   252	            </div>
-   253	
-   254	            <div class="faq-item">
-   255	                <div class="faq-question">Q. 결제 방법은 무엇이 있나요?</div>
-   256	                <p style="color: #666; margin: 0.5rem 0 0 0;">신용카드, 체크카드, 토스페이, 카카오페이, 네이버페이 등 다양한 결제 수단을 지원합니다.</p>
-   257	            </div>
-   258	        </div>
-   259	    </div>
-   260	
-   261	    <footer class="footer">
-   262	        <div class="container">
-   263	            <p>&copy; AI 사주 천년지기. All rights reserved.</p>
-   264	            <div style="margin-top: 1rem;">
-   265	                <a href="terms.html" style="color: #666; margin: 0 10px;">이용약관</a>
-   266	                <a href="privacy.html" style="color: #666; margin: 0 10px;">개인정보처리방침</a>
-   267	                <a href="refund.html" style="color: #666; margin: 0 10px;">환불정책</a>
-   268	            </div>
-   269	        </div>
-   270	    </footer>
-   271	    <!-- Scripts -->
-   272	    <script src="js/page-handler.js"></script>
-   273	    <script>
-   274	        // 구매 함수
-   275	        function purchaseProduct(productId, productName, price) {
-   276	            console.log('상품 구매:', productId, productName, price);
-   277	            
-   278	            // 로그인 확인
-   279	            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-   280	            
-   281	            if (!currentUser.id) {
-   282	                // 비로그인 시 구매 정보 저장 후 로그인 페이지로
-   283	                sessionStorage.setItem('purchaseProduct', JSON.stringify({
-   284	                    id: productId,
-   285	                    name: productName,
-   286	                    price: price
-   287	                }));
-   288	                
-   289	                alert('로그인이 필요합니다. 로그인 후 구매를 진행해주세요.');
-   290	                window.location.href = 'login.html?redirect=pricing.html';
-   291	                return;
-   292	            }
-   293	            
-   294	            // 구매 정보 저장
-   295	            sessionStorage.setItem('purchaseProduct', JSON.stringify({
-   296	                id: productId,
-   297	                name: productName,
-   298	                price: price,
-   299	                userId: currentUser.id
-   300	            }));
-   301	            
-   302	            // 결제 모달 표시 (실제로는 결제 페이지나 결제 API 연동)
-   303	            showPurchaseModal(productName, price);
-   304	        }
-   305	        
-   306	        // 구매 모달 표시
-   307	        function showPurchaseModal(productName, price) {
-   308	            const modal = document.createElement('div');
-   309	            modal.style.cssText = `
-   310	                position: fixed;
-   311	                top: 0;
-   312	                left: 0;
-   313	                width: 100%;
-   314	                height: 100%;
-   315	                background: rgba(0,0,0,0.8);
-   316	                display: flex;
-   317	                align-items: center;
-   318	                justify-content: center;
-   319	                z-index: 10000;
-   320	            `;
-   321	            
-   322	            modal.innerHTML = `
-   323	                <div style="background: white; border-radius: 20px; padding: 3rem; max-width: 500px; width: 90%; text-align: center;">
-   324	                    <i class="fas fa-shopping-cart" style="font-size: 3rem; color: #c41e3a; margin-bottom: 1rem;"></i>
-   325	                    <h2 style="font-family: 'Noto Serif KR', serif; margin-bottom: 1rem;">구매 확인</h2>
-   326	                    <div style="background: #f5f5f5; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-   327	                        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">${productName}</div>
-   328	                        <div style="font-size: 2rem; color: #c41e3a; font-weight: bold;">₩${price.toLocaleString()}</div>
-   329	                    </div>
-   330	                    <p style="color: #666; margin-bottom: 2rem;">
-   331	                        결제 시스템은 준비 중입니다.<br>
-   332	                        실제 결제는 Toss Payments, 카카오페이 등을<br>
-   333	                        연동하여 제공될 예정입니다.
-   334	                    </p>
-   335	                    <div style="display: flex; gap: 1rem;">
-   336	                        <button onclick="this.closest('div').parentElement.remove()" 
-   337	                                style="flex: 1; padding: 1rem; background: #666; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 1rem;">
-   338	                            취소
-   339	                        </button>
-   340	                        <button onclick="completePurchase('${productName}', ${price})" 
-   341	                                style="flex: 1; padding: 1rem; background: #c41e3a; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: bold;">
-   342	                            결제 진행 (데모)
-   343	                        </button>
-   344	                    </div>
-   345	                </div>
-   346	            `;
-   347	            
-   348	            document.body.appendChild(modal);
-   349	        }
-   350	        
-   351	        // 구매 완료 (데모)
-   352	        function completePurchase(productName, price) {
-   353	            // 실제로는 결제 API 호출
-   354	            console.log('결제 완료 (데모):', productName, price);
-   355	            
-   356	            // 구매 내역 저장 (데모)
-   357	            const purchases = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
-   358	            purchases.unshift({
-   359	                id: Date.now(),
-   360	                productName: productName,
-   361	                price: price,
-   362	                date: new Date().toISOString(),
-   363	                status: 'completed'
-   364	            });
-   365	            localStorage.setItem('purchaseHistory', JSON.stringify(purchases));
-   366	            
-   367	            // 모달 닫기
-   368	            document.querySelectorAll('div[style*="position: fixed"]').forEach(el => el.remove());
-   369	            
-   370	            // 성공 메시지
-   371	            alert(`✅ 구매가 완료되었습니다!\n\n${productName}\n₩${price.toLocaleString()}\n\n마이페이지에서 확인하실 수 있습니다.`);
-   372	            
-   373	            // 마이페이지로 이동할지 물어보기
-   374	            if (confirm('마이페이지로 이동하시겠습니까?')) {
-   375	                window.location.href = 'mypage.html';
-   376	            }
-   377	        }
-   378	        
-   379	        // 페이지 로드 시 앵커로 스크롤
-   380	        window.addEventListener('load', () => {
-   381	            const hash = window.location.hash;
-   382	            if (hash) {
-   383	                setTimeout(() => {
-   384	                    const element = document.querySelector(hash);
-   385	                    if (element) {
-   386	                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-   387	                        
-   388	                        // 강조 효과
-   389	                        element.style.animation = 'highlight 2s ease-in-out';
-   390	                        element.style.boxShadow = '0 0 0 4px #c41e3a';
-   391	                        
-   392	                        setTimeout(() => {
-   393	                            element.style.boxShadow = '0 10px 40px rgba(0,0,0,0.1)';
-   394	                        }, 2000);
-   395	                    }
-   396	                }, 100);
-   397	            }
-   398	        });
-   399	    </script>
-   400	    <style>
-   401	        @keyframes highlight {
-   402	            0%, 100% { transform: scale(1); }
-   403	            50% { transform: scale(1.02); }
-   404	        }
-   405	    </style>
-             <!-- 고급 UI & 다크 모드 -->
-    <script src="js/theme-manager.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가격표 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+        
+        /* 헤더 */
+        .pricing-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .pricing-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .pricing-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 20px;
+        }
+        
+        /* 가격 카드 */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #d4af37;
+            box-shadow: 0 15px 50px rgba(212,175,55,0.3);
+        }
+        
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .pricing-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .pricing-title {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .pricing-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-price {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #c41e3a;
+        }
+        
+        .price-period {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .price-original {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .features-list i {
+            color: #d4af37;
+            margin-right: 10px;
+        }
+        
+        .pricing-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #c41e3a;
+            border: 2px solid #c41e3a;
+        }
+        
+        .btn-secondary:hover {
+            background: #c41e3a;
+            color: white;
+        }
+        
+        /* FAQ 섹션 */
+        .faq-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 4rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .faq-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f9f9f9;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            line-height: 1.8;
+            display: none;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: #1a1a1a;
+            color: rgba(255,255,255,0.7);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="pricing.html">가격표</a>
+                <a href="ai-chat.html">AI 상담</a>
+                <a href="mypage.html">마이페이지</a>
+            </div>
+        </div>
+    </nav>
 
-   406	</body>
-   407	</html>
-   408	
+    <!-- 헤더 -->
+    <section class="pricing-header">
+        <h1>💎 가격표</h1>
+        <p>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다</p>
+    </section>
+
+    <!-- 가격 카드 -->
+    <div class="container">
+        <div class="pricing-grid">
+            <!-- 무료 플랜 -->
+            <div class="pricing-card">
+                <div class="pricing-icon">🆓</div>
+                <h2 class="pricing-title">무료 서비스</h2>
+                <p class="pricing-subtitle">기본 사주팔자 분석</p>
+                <div class="pricing-price">
+                    <div class="price-amount">무료</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 기본 사주팔자 보기</li>
+                    <li><i class="fas fa-check"></i> 일간 분석</li>
+                    <li><i class="fas fa-check"></i> 오행 균형</li>
+                    <li><i class="fas fa-check"></i> 궁합 분석</li>
+                    <li><i class="fas fa-check"></i> 토정비결 2026</li>
+                    <li><i class="fas fa-check"></i> AI 꿈해몽</li>
+                    <li><i class="fas fa-check"></i> 24시간 AI 상담</li>
+                </ul>
+                <a href="index.html#saju-form" class="pricing-btn btn-secondary">무료로 시작하기</a>
+            </div>
+
+            <!-- 프리미엄 플랜 -->
+            <div class="pricing-card featured">
+                <div class="badge">👑 인기</div>
+                <div class="pricing-icon">💎</div>
+                <h2 class="pricing-title">프리미엄 분석</h2>
+                <p class="pricing-subtitle">9가지 상세 분석 + PDF 리포트</p>
+                <div class="pricing-price">
+                    <span class="price-original">₩99,000</span>
+                    <div class="price-amount">₩49,000</div>
+                    <div class="price-period">1회 결제 (50% 할인)</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 무료 서비스 전체 포함</li>
+                    <li><i class="fas fa-check"></i> 9가지 심층 분석</li>
+                    <li><i class="fas fa-check"></i> 100페이지 PDF 리포트</li>
+                    <li><i class="fas fa-check"></i> 평생 재물운 그래프</li>
+                    <li><i class="fas fa-check"></i> 직업 적성 매칭</li>
+                    <li><i class="fas fa-check"></i> 이사/결혼 택일</li>
+                    <li><i class="fas fa-check"></i> 작명/개명 서비스</li>
+                    <li><i class="fas fa-check"></i> 1:1 전문가 상담</li>
+                </ul>
+                <a href="premium-features.html" class="pricing-btn btn-gold">프리미엄 구매하기</a>
+            </div>
+
+            <!-- 기업 플랜 -->
+            <div class="pricing-card">
+                <div class="pricing-icon">🏢</div>
+                <h2 class="pricing-title">기업 솔루션</h2>
+                <p class="pricing-subtitle">HR 관리 & B2B 서비스</p>
+                <div class="pricing-price">
+                    <div class="price-amount">맞춤 견적</div>
+                    <div class="price-period">월 구독 또는 건당 과금</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 사주 기반 팀 배치</li>
+                    <li><i class="fas fa-check"></i> 채용 적합도 분석</li>
+                    <li><i class="fas fa-check"></i> 조직 문화 진단</li>
+                    <li><i class="fas fa-check"></i> API 연동 지원</li>
+                    <li><i class="fas fa-check"></i> 대량 분석 가능</li>
+                    <li><i class="fas fa-check"></i> 맞춤형 리포트</li>
+                    <li><i class="fas fa-check"></i> 전담 매니저 배정</li>
+                    <li><i class="fas fa-check"></i> 기술 지원</li>
+                </ul>
+                <a href="b2b.html" class="pricing-btn btn-primary">문의하기</a>
+            </div>
+        </div>
+
+        <!-- 추가 서비스 -->
+        <div class="pricing-grid" style="margin-top: 3rem;">
+            <!-- 궁합 매칭 -->
+            <div class="pricing-card">
+                <div class="badge">🔥 NEW</div>
+                <div class="pricing-icon">💑</div>
+                <h2 class="pricing-title">궁합 매칭</h2>
+                <p class="pricing-subtitle">AI가 찾아주는 운명의 짝</p>
+                <div class="pricing-price">
+                    <div class="price-amount">₩9,900</div>
+                    <div class="price-period">/ 월</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 사주 기반 매칭</li>
+                    <li><i class="fas fa-check"></i> 무제한 프로필 열람</li>
+                    <li><i class="fas fa-check"></i> 궁합 점수 확인</li>
+                    <li><i class="fas fa-check"></i> 메시지 무제한</li>
+                    <li><i class="fas fa-check"></i> 추천 알림</li>
+                </ul>
+                <a href="saju-matching.html" class="pricing-btn btn-primary">시작하기</a>
+            </div>
+
+            <!-- 커뮤니티 -->
+            <div class="pricing-card">
+                <div class="pricing-icon">💬</div>
+                <h2 class="pricing-title">커뮤니티 프리미엄</h2>
+                <p class="pricing-subtitle">운세 고민 나누고 수익까지</p>
+                <div class="pricing-price">
+                    <div class="price-amount">₩4,900</div>
+                    <div class="price-period">/ 월</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 광고 제거</li>
+                    <li><i class="fas fa-check"></i> 전용 배지</li>
+                    <li><i class="fas fa-check"></i> 인기글 수익 분배</li>
+                    <li><i class="fas fa-check"></i> 우선 답변</li>
+                    <li><i class="fas fa-check"></i> 전문가 Q&A</li>
+                </ul>
+                <a href="community.html" class="pricing-btn btn-primary">가입하기</a>
+            </div>
+
+            <!-- 개별 서비스 -->
+            <div class="pricing-card">
+                <div class="pricing-icon">🎯</div>
+                <h2 class="pricing-title">개별 서비스</h2>
+                <p class="pricing-subtitle">필요한 서비스만 선택</p>
+                <div class="pricing-price">
+                    <div class="price-amount">₩9,900~</div>
+                    <div class="price-period">/ 건</div>
+                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> 재물운 그래프 - ₩9,900</li>
+                    <li><i class="fas fa-check"></i> 직업 적성 - ₩14,900</li>
+                    <li><i class="fas fa-check"></i> 택일 서비스 - ₩14,900</li>
+                    <li><i class="fas fa-check"></i> 작명/개명 - ₩19,000</li>
+                </ul>
+                <a href="index.html#services" class="pricing-btn btn-secondary">서비스 보기</a>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2 class="faq-title">자주 묻는 질문</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    결제는 어떻게 하나요?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    신용카드, 계좌이체, 카카오페이, 네이버페이 등 다양한 결제 수단을 지원합니다. 모든 결제는 SSL로 암호화되어 안전하게 처리됩니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    환불은 가능한가요?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    서비스 이용 전에는 100% 환불이 가능합니다. 이용 후에는 콘텐츠의 특성상 환불이 어려우니 신중하게 선택해주세요.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    프리미엄 분석과 무료 서비스의 차이는?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    무료 서비스는 기본적인 사주 분석을 제공하며, 프리미엄은 9가지 심층 분석, 100페이지 PDF 리포트, 전문가 상담 등이 포함됩니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    기업 솔루션 견적은 어떻게 받나요?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    B2B 페이지에서 문의 양식을 작성하시면 영업일 기준 1~2일 내로 담당자가 연락드립니다.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    구독 해지는 어떻게 하나요?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    마이페이지에서 언제든지 구독을 해지할 수 있습니다. 해지 시 다음 결제일부터 요금이 청구되지 않습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
+        <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
+            <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
+            <span style="margin: 0 5px;">|</span>
+            <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
+            <span style="margin: 0 5px;">|</span>
+            <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
+        </p>
+    </footer>
+
+    <script>
+        // FAQ 토글
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                if (!isOpen) answer.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
