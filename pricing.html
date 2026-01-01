@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가격표 - AI 사주 천년지기</title>
+    <meta name="description" content="2026 병오년! AI 사주팔자 상담 가격표. 합리적인 가격으로 정통 운세 서비스를 만나보세요.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -18,6 +19,12 @@
             line-height: 1.6;
             color: #333;
             background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
         /* 네비게이션 */
@@ -44,51 +51,206 @@
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .nav-links a {
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            margin-left: 6rem;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
-            margin-left: 2rem;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        .nav-links a:hover {
+        .nav-menu a:hover,
+        .nav-menu a.active {
             color: #d4af37;
         }
         
-        /* 헤더 */
-        .pricing-header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dropdown-menu a:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #c41e3a;
+            padding-left: 25px;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+            margin-left: auto;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .lang-option:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .lang-option:last-child {
+            border-bottom: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .lang-option:hover {
+            background: rgba(212,175,55,0.1);
+            color: #c41e3a;
+        }
+        
+        .lang-option.active {
+            background: rgba(212,175,55,0.2);
+            color: #c41e3a;
+            font-weight: 600;
+        }
+        
+        /* 히어로 섹션 */
+        .pricing-hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
             color: white;
-            padding: 80px 20px;
+            padding: 120px 0 80px;
             text-align: center;
         }
         
-        .pricing-header h1 {
+        .pricing-hero h1 {
+            font-family: 'Noto Serif KR', serif;
             font-size: 3rem;
             margin-bottom: 1rem;
-            font-family: 'Noto Serif KR', serif;
         }
         
-        .pricing-header p {
-            font-size: 1.2rem;
+        .pricing-hero p {
+            font-size: 1.3rem;
             opacity: 0.9;
         }
         
-        /* 컨테이너 */
-        .container {
+        /* 가격 카드 섹션 */
+        .pricing-container {
             max-width: 1200px;
-            margin: -60px auto 60px;
-            padding: 0 20px;
+            margin: -50px auto 50px;
+            padding: 2rem;
         }
         
-        /* 가격 카드 */
+        .section-title {
+            text-align: center;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            margin: 4rem 0 2rem 0;
+            color: #1a1a1a;
+        }
+        
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin: 3rem 0;
         }
         
         .pricing-card {
@@ -96,200 +258,235 @@
             border-radius: 20px;
             padding: 2.5rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
             position: relative;
         }
         
         .pricing-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
         }
         
         .pricing-card.featured {
             border: 3px solid #d4af37;
-            box-shadow: 0 15px 50px rgba(212,175,55,0.3);
         }
         
-        .badge {
+        .pricing-card.featured::before {
+            content: "BEST";
             position: absolute;
             top: -15px;
             right: 20px;
-            background: linear-gradient(135deg, #d4af37, #f4e5b5);
-            color: #1a1a1a;
-            padding: 5px 15px;
+            background: #d4af37;
+            color: white;
+            padding: 0.5rem 1.5rem;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: bold;
         }
         
-        .pricing-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .pricing-title {
-            font-size: 1.8rem;
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
             color: #1a1a1a;
-            margin-bottom: 0.5rem;
-            text-align: center;
-            font-family: 'Noto Serif KR', serif;
         }
         
-        .pricing-subtitle {
-            color: #666;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .pricing-price {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .price-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
             color: #c41e3a;
+            margin: 1rem 0;
         }
         
-        .price-period {
-            color: #666;
+        .plan-price span {
             font-size: 1rem;
+            color: #666;
         }
         
-        .price-original {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 0.5rem;
+        .plan-discount {
+            text-align: center;
+            color: #4CAF50;
+            font-weight: bold;
+            margin: -1rem 0 1rem 0;
         }
         
-        .features-list {
+        .plan-features {
             list-style: none;
-            margin-bottom: 2rem;
+            padding: 0;
+            margin: 2rem 0;
         }
         
-        .features-list li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f0f0f0;
+        .plan-features li {
+            padding: 0.7rem 0;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
         
-        .features-list li:last-child {
-            border-bottom: none;
+        .plan-features li i {
+            color: #4CAF50;
         }
         
-        .features-list i {
-            color: #d4af37;
-            margin-right: 10px;
+        .plan-features li.disabled {
+            opacity: 0.5;
         }
         
-        .pricing-btn {
+        .plan-features li.disabled i {
+            color: #F44336;
+        }
+        
+        .plan-btn {
             width: 100%;
-            padding: 15px;
+            padding: 1rem;
+            background: #c41e3a;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            display: block;
             transition: all 0.3s;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #c41e3a, #8b0000);
-            color: white;
+        .plan-btn:hover {
+            background: #a01830;
+            transform: scale(1.05);
         }
         
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
+        /* 비교 테이블 */
+        .compare-table {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+            overflow-x: auto;
         }
         
-        .btn-gold {
-            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+        .compare-table h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .compare-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .compare-table th,
+        .compare-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .compare-table th {
+            background: #f5f5f5;
+            font-weight: bold;
             color: #1a1a1a;
         }
         
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        .compare-table .check {
+            color: #4CAF50;
+            font-size: 1.2rem;
         }
         
-        .btn-secondary {
-            background: white;
-            color: #c41e3a;
-            border: 2px solid #c41e3a;
-        }
-        
-        .btn-secondary:hover {
-            background: #c41e3a;
-            color: white;
+        .compare-table .cross {
+            color: #F44336;
+            font-size: 1.2rem;
         }
         
         /* FAQ 섹션 */
         .faq-section {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-top: 4rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        
-        .faq-title {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #1a1a1a;
-            font-family: 'Noto Serif KR', serif;
+            max-width: 800px;
+            margin: 4rem auto 3rem;
         }
         
         .faq-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
             margin-bottom: 1rem;
-            border-bottom: 1px solid #f0f0f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         
         .faq-question {
-            padding: 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            gap: 10px;
         }
         
-        .faq-question:hover {
-            background: #f9f9f9;
+        .faq-question i {
+            color: #c41e3a;
         }
         
         .faq-answer {
-            padding: 0 1.5rem 1.5rem;
             color: #666;
             line-height: 1.8;
             display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
         }
         
         /* 푸터 */
         .footer {
             background: #1a1a1a;
             color: rgba(255,255,255,0.7);
-            padding: 40px 20px;
+            padding: 3rem 0 1rem;
             text-align: center;
-            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #d4af37;
         }
         
         /* 반응형 */
         @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .pricing-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .pricing-hero p {
+                font-size: 1rem;
+            }
+            
             .pricing-grid {
                 grid-template-columns: 1fr;
             }
             
-            .pricing-header h1 {
+            .section-title {
                 font-size: 2rem;
             }
         }
@@ -300,199 +497,329 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
             </a>
-            <div class="nav-links">
-                <a href="index.html">홈</a>
-                <a href="pricing.html">가격표</a>
-                <a href="ai-chat.html">AI 상담</a>
-                <a href="mypage.html">마이페이지</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티 프리미엄</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                        <a href="b2b.html">🏢 B2B 기업 서비스</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="pricing.html" class="active">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- 헤더 -->
-    <section class="pricing-header">
-        <h1>💎 가격표</h1>
-        <p>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다</p>
+    <!-- 히어로 섹션 -->
+    <section class="pricing-hero">
+        <div class="container">
+            <h1>💎 가격표</h1>
+            <p>합리적인 가격으로 만나는 정통 운세 서비스</p>
+        </div>
     </section>
 
-    <!-- 가격 카드 -->
-    <div class="container">
+    <!-- 가격 카드 섹션 -->
+    <div class="pricing-container">
+        <!-- 정기 구독 플랜 -->
         <div class="pricing-grid">
             <!-- 무료 플랜 -->
             <div class="pricing-card">
-                <div class="pricing-icon">🆓</div>
-                <h2 class="pricing-title">무료 서비스</h2>
-                <p class="pricing-subtitle">기본 사주팔자 분석</p>
-                <div class="pricing-price">
-                    <div class="price-amount">무료</div>
-                </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 기본 사주팔자 보기</li>
-                    <li><i class="fas fa-check"></i> 일간 분석</li>
-                    <li><i class="fas fa-check"></i> 오행 균형</li>
-                    <li><i class="fas fa-check"></i> 궁합 분석</li>
-                    <li><i class="fas fa-check"></i> 토정비결 2026</li>
-                    <li><i class="fas fa-check"></i> AI 꿈해몽</li>
-                    <li><i class="fas fa-check"></i> 24시간 AI 상담</li>
+                <div class="plan-name">무료 체험</div>
+                <div class="plan-price">₩0<span>/평생</span></div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 기본 사주 확인</li>
+                    <li><i class="fas fa-check"></i> AI 상담 3회/일</li>
+                    <li><i class="fas fa-check"></i> 오늘의 운세</li>
+                    <li><i class="fas fa-check"></i> 띠별 운세</li>
+                    <li class="disabled"><i class="fas fa-times"></i> 상세 사주팔자</li>
+                    <li class="disabled"><i class="fas fa-times"></i> 택일 서비스</li>
+                    <li class="disabled"><i class="fas fa-times"></i> PDF 다운로드</li>
                 </ul>
-                <a href="index.html#saju-form" class="pricing-btn btn-secondary">무료로 시작하기</a>
+                <button class="plan-btn" onclick="location.href='index.html'">무료로 시작하기</button>
             </div>
 
-            <!-- 프리미엄 플랜 -->
+            <!-- 월간 플랜 (BEST) -->
             <div class="pricing-card featured">
-                <div class="badge">👑 인기</div>
-                <div class="pricing-icon">💎</div>
-                <h2 class="pricing-title">프리미엄 분석</h2>
-                <p class="pricing-subtitle">9가지 상세 분석 + PDF 리포트</p>
-                <div class="pricing-price">
-                    <span class="price-original">₩99,000</span>
-                    <div class="price-amount">₩49,000</div>
-                    <div class="price-period">1회 결제 (50% 할인)</div>
-                </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 무료 서비스 전체 포함</li>
-                    <li><i class="fas fa-check"></i> 9가지 심층 분석</li>
-                    <li><i class="fas fa-check"></i> 100페이지 PDF 리포트</li>
-                    <li><i class="fas fa-check"></i> 평생 재물운 그래프</li>
-                    <li><i class="fas fa-check"></i> 직업 적성 매칭</li>
+                <div class="plan-name">월간 프리미엄</div>
+                <div class="plan-price">₩19,900<span>/월</span></div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 무료 플랜 모든 기능</li>
+                    <li><i class="fas fa-check"></i> AI 상담 무제한</li>
+                    <li><i class="fas fa-check"></i> 상세 사주팔자</li>
+                    <li><i class="fas fa-check"></i> 맞춤 연애운</li>
+                    <li><i class="fas fa-check"></i> 정밀 궁합 분석</li>
                     <li><i class="fas fa-check"></i> 이사/결혼 택일</li>
-                    <li><i class="fas fa-check"></i> 작명/개명 서비스</li>
-                    <li><i class="fas fa-check"></i> 1:1 전문가 상담</li>
+                    <li><i class="fas fa-check"></i> PDF 다운로드</li>
+                    <li><i class="fas fa-check"></i> 우선 지원</li>
                 </ul>
-                <a href="premium-features.html" class="pricing-btn btn-gold">프리미엄 구매하기</a>
+                <button class="plan-btn" onclick="alert('로그인이 필요합니다.')">구독하기</button>
             </div>
 
-            <!-- 기업 플랜 -->
+            <!-- 연간 플랜 -->
             <div class="pricing-card">
-                <div class="pricing-icon">🏢</div>
-                <h2 class="pricing-title">기업 솔루션</h2>
-                <p class="pricing-subtitle">HR 관리 & B2B 서비스</p>
-                <div class="pricing-price">
-                    <div class="price-amount">맞춤 견적</div>
-                    <div class="price-period">월 구독 또는 건당 과금</div>
+                <div class="plan-name">연간 프리미엄</div>
+                <div class="plan-price">₩199,000<span>/년</span></div>
+                <div class="plan-discount">
+                    월 ₩16,583 (16% 할인!)
                 </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 사주 기반 팀 배치</li>
-                    <li><i class="fas fa-check"></i> 채용 적합도 분석</li>
-                    <li><i class="fas fa-check"></i> 조직 문화 진단</li>
-                    <li><i class="fas fa-check"></i> API 연동 지원</li>
-                    <li><i class="fas fa-check"></i> 대량 분석 가능</li>
-                    <li><i class="fas fa-check"></i> 맞춤형 리포트</li>
-                    <li><i class="fas fa-check"></i> 전담 매니저 배정</li>
-                    <li><i class="fas fa-check"></i> 기술 지원</li>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 월간 플랜 모든 기능</li>
+                    <li><i class="fas fa-check"></i> 2개월 무료 (16% 할인)</li>
+                    <li><i class="fas fa-check"></i> AI 무제한 상담</li>
+                    <li><i class="fas fa-check"></i> 맞춤 운세 리포트</li>
+                    <li><i class="fas fa-check"></i> VIP 전용 서비스</li>
+                    <li><i class="fas fa-check"></i> 평생 기록 보관</li>
+                    <li><i class="fas fa-check"></i> 전담 상담사 배정</li>
                 </ul>
-                <a href="b2b.html" class="pricing-btn btn-primary">문의하기</a>
+                <button class="plan-btn" onclick="alert('로그인이 필요합니다.')">연간 구독하기</button>
             </div>
         </div>
 
-        <!-- 추가 서비스 -->
-        <div class="pricing-grid" style="margin-top: 3rem;">
-            <!-- 궁합 매칭 -->
+        <!-- 개별 구매 상품 -->
+        <h2 class="section-title">개별 구매 서비스</h2>
+        <div class="pricing-grid">
             <div class="pricing-card">
-                <div class="badge">🔥 NEW</div>
-                <div class="pricing-icon">💑</div>
-                <h2 class="pricing-title">궁합 매칭</h2>
-                <p class="pricing-subtitle">AI가 찾아주는 운명의 짝</p>
-                <div class="pricing-price">
-                    <div class="price-amount">₩9,900</div>
-                    <div class="price-period">/ 월</div>
-                </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 사주 기반 매칭</li>
-                    <li><i class="fas fa-check"></i> 무제한 프로필 열람</li>
-                    <li><i class="fas fa-check"></i> 궁합 점수 확인</li>
-                    <li><i class="fas fa-check"></i> 메시지 무제한</li>
-                    <li><i class="fas fa-check"></i> 추천 알림</li>
+                <div class="plan-name">🔮 상세 사주팔자</div>
+                <div class="plan-price">₩4,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 십신(십성) 상세 분석</li>
+                    <li><i class="fas fa-check"></i> 대운 타임라인</li>
+                    <li><i class="fas fa-check"></i> 성격/직업 분석</li>
+                    <li><i class="fas fa-check"></i> 재물/연애/건강 해석</li>
+                    <li><i class="fas fa-check"></i> PDF 다운로드</li>
                 </ul>
-                <a href="saju-matching.html" class="pricing-btn btn-primary">시작하기</a>
+                <button class="plan-btn" onclick="location.href='result.html'">구매하기</button>
             </div>
 
-            <!-- 커뮤니티 -->
             <div class="pricing-card">
-                <div class="pricing-icon">💬</div>
-                <h2 class="pricing-title">커뮤니티 프리미엄</h2>
-                <p class="pricing-subtitle">운세 고민 나누고 수익까지</p>
-                <div class="pricing-price">
-                    <div class="price-amount">₩4,900</div>
-                    <div class="price-period">/ 월</div>
-                </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 광고 제거</li>
-                    <li><i class="fas fa-check"></i> 전용 배지</li>
-                    <li><i class="fas fa-check"></i> 인기글 수익 분배</li>
-                    <li><i class="fas fa-check"></i> 우선 답변</li>
-                    <li><i class="fas fa-check"></i> 전문가 Q&A</li>
+                <div class="plan-name">💑 정밀 궁합</div>
+                <div class="plan-price">₩9,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 천생연분 궁합 점수</li>
+                    <li><i class="fas fa-check"></i> 사주 상생상극 분석</li>
+                    <li><i class="fas fa-check"></i> 연애/결혼 적합도</li>
+                    <li><i class="fas fa-check"></i> 조화로운 날 추천</li>
+                    <li><i class="fas fa-check"></i> PDF 리포트 제공</li>
                 </ul>
-                <a href="community.html" class="pricing-btn btn-primary">가입하기</a>
+                <button class="plan-btn" onclick="location.href='compatibility.html'">구매하기</button>
             </div>
 
-            <!-- 개별 서비스 -->
             <div class="pricing-card">
-                <div class="pricing-icon">🎯</div>
-                <h2 class="pricing-title">개별 서비스</h2>
-                <p class="pricing-subtitle">필요한 서비스만 선택</p>
-                <div class="pricing-price">
-                    <div class="price-amount">₩9,900~</div>
-                    <div class="price-period">/ 건</div>
-                </div>
-                <ul class="features-list">
-                    <li><i class="fas fa-check"></i> 재물운 그래프 - ₩9,900</li>
-                    <li><i class="fas fa-check"></i> 직업 적성 - ₩14,900</li>
-                    <li><i class="fas fa-check"></i> 택일 서비스 - ₩14,900</li>
-                    <li><i class="fas fa-check"></i> 작명/개명 - ₩19,000</li>
+                <div class="plan-name">📅 이사/결혼 택일</div>
+                <div class="plan-price">₩5,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 명리학 기반 길일 선택</li>
+                    <li><i class="fas fa-check"></i> 이사 최적 날짜</li>
+                    <li><i class="fas fa-check"></i> 결혼 길일 추천</li>
+                    <li><i class="fas fa-check"></i> 개업/계약 길일</li>
+                    <li><i class="fas fa-check"></i> 맞춤 상담 포함</li>
                 </ul>
-                <a href="index.html#services" class="pricing-btn btn-secondary">서비스 보기</a>
+                <button class="plan-btn" onclick="location.href='taekil.html'">바로 이용하기</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">💖 맞춤 연애운</div>
+                <div class="plan-price">₩3,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 2026년 사랑의 흐름</li>
+                    <li><i class="fas fa-check"></i> 이상형 분석</li>
+                    <li><i class="fas fa-check"></i> 만남의 시기 예측</li>
+                    <li><i class="fas fa-check"></i> 연애 조언</li>
+                </ul>
+                <button class="plan-btn" onclick="alert('준비 중인 서비스입니다.')">구매하기</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">📖 토정비결 2026</div>
+                <div class="plan-price">₩3,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 전통 토정비결 점괘</li>
+                    <li><i class="fas fa-check"></i> 병오년 월별 운세</li>
+                    <li><i class="fas fa-check"></i> 재물/건강/사업운</li>
+                    <li><i class="fas fa-check"></i> 조심할 시기 안내</li>
+                </ul>
+                <button class="plan-btn" onclick="location.href='tojeong.html'">구매하기</button>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">🐴 2026 신년운세</div>
+                <div class="plan-price">₩4,900</div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 병오년 12띠별 운세</li>
+                    <li><i class="fas fa-check"></i> 월별 흐름 분석</li>
+                    <li><i class="fas fa-check"></i> 직업/재물/건강운</li>
+                    <li><i class="fas fa-check"></i> 길흉화복 예측</li>
+                </ul>
+                <button class="plan-btn" onclick="alert('준비 중인 서비스입니다.')">구매하기</button>
             </div>
         </div>
 
-        <!-- FAQ -->
+        <!-- 비교 테이블 -->
+        <div class="compare-table">
+            <h2>상세 기능 비교</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>기능</th>
+                        <th>무료</th>
+                        <th>월간</th>
+                        <th>연간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>기본 사주 확인</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI 상담</td>
+                        <td>3회/일</td>
+                        <td>무제한</td>
+                        <td>무제한</td>
+                    </tr>
+                    <tr>
+                        <td>상세 사주팔자</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>정밀 궁합 분석</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>이사/결혼 택일</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>토정비결</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>PDF 다운로드</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>맞춤 운세 리포트</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>VIP 전용 서비스</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>전담 상담사</td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="cross">✗</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FAQ 섹션 -->
         <div class="faq-section">
-            <h2 class="faq-title">자주 묻는 질문</h2>
+            <h2 class="section-title">자주 묻는 질문</h2>
+            
             <div class="faq-item">
                 <div class="faq-question">
-                    결제는 어떻게 하나요?
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-question-circle"></i>
+                    무료 체험과 유료 플랜의 차이는 무엇인가요?
                 </div>
                 <div class="faq-answer">
-                    신용카드, 계좌이체, 카카오페이, 네이버페이 등 다양한 결제 수단을 지원합니다. 모든 결제는 SSL로 암호화되어 안전하게 처리됩니다.
+                    무료 체험은 기본적인 사주 확인과 하루 3회의 AI 상담을 제공합니다. 
+                    유료 플랜에서는 AI 상담 무제한, 상세 사주팔자 해석, 정밀 궁합, 택일 서비스, 
+                    PDF 다운로드 등 프리미엄 기능을 모두 이용하실 수 있습니다.
                 </div>
             </div>
+
             <div class="faq-item">
                 <div class="faq-question">
-                    환불은 가능한가요?
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-question-circle"></i>
+                    월간 구독과 연간 구독 중 어떤 것을 선택해야 하나요?
                 </div>
                 <div class="faq-answer">
-                    서비스 이용 전에는 100% 환불이 가능합니다. 이용 후에는 콘텐츠의 특성상 환불이 어려우니 신중하게 선택해주세요.
+                    1~2개월만 사용하실 경우 월간 플랜을, 장기적으로 사용하실 계획이라면 
+                    연간 플랜을 추천드립니다. 연간 플랜은 2개월 무료 혜택으로 16% 할인된 가격에 
+                    이용하실 수 있으며, VIP 전용 서비스와 전담 상담사 배정 등 추가 혜택이 제공됩니다.
                 </div>
             </div>
+
             <div class="faq-item">
                 <div class="faq-question">
-                    프리미엄 분석과 무료 서비스의 차이는?
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-question-circle"></i>
+                    개별 구매 서비스는 어떻게 이용하나요?
                 </div>
                 <div class="faq-answer">
-                    무료 서비스는 기본적인 사주 분석을 제공하며, 프리미엄은 9가지 심층 분석, 100페이지 PDF 리포트, 전문가 상담 등이 포함됩니다.
+                    개별 구매 서비스는 구독 없이 필요한 서비스만 단건으로 구매하실 수 있습니다. 
+                    한 번 구매하시면 평생 해당 결과를 확인하실 수 있으며, PDF로 다운로드도 가능합니다.
                 </div>
             </div>
+
             <div class="faq-item">
                 <div class="faq-question">
-                    기업 솔루션 견적은 어떻게 받나요?
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-question-circle"></i>
+                    결제 후 바로 이용할 수 있나요?
                 </div>
                 <div class="faq-answer">
-                    B2B 페이지에서 문의 양식을 작성하시면 영업일 기준 1~2일 내로 담당자가 연락드립니다.
+                    네, 결제 완료 즉시 모든 프리미엄 기능을 이용하실 수 있습니다. 
+                    결제 후 자동으로 계정이 업그레이드되며, 마이페이지에서 이용 내역을 확인하실 수 있습니다.
                 </div>
             </div>
+
             <div class="faq-item">
                 <div class="faq-question">
-                    구독 해지는 어떻게 하나요?
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-question-circle"></i>
+                    환불 정책은 어떻게 되나요?
                 </div>
                 <div class="faq-answer">
-                    마이페이지에서 언제든지 구독을 해지할 수 있습니다. 해지 시 다음 결제일부터 요금이 청구되지 않습니다.
+                    구독 시작 후 7일 이내에 서비스를 이용하지 않으셨다면 100% 환불이 가능합니다. 
+                    개별 구매 서비스는 결제 후 24시간 이내, 서비스 미이용 시 환불 가능합니다. 
+                    자세한 내용은 환불정책 페이지를 참고해주세요.
                 </div>
             </div>
         </div>
@@ -500,24 +827,65 @@
 
     <!-- 푸터 -->
     <footer class="footer">
-        <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
-        <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
-            <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
-            <span style="margin: 0 5px;">|</span>
-            <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
-            <span style="margin: 0 5px;">|</span>
-            <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
-        </p>
+        <div class="container">
+            <div class="footer-links">
+                <a href="terms.html">이용약관</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="refund.html">환불정책</a>
+                <a href="admin-login.html">Admin</a>
+            </div>
+            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
+        // 언어 선택기
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+
+        if (langBtn && langDropdown) {
+            langBtn.addEventListener('click', () => {
+                langDropdown.classList.toggle('active');
+            });
+
+            // 언어 선택 옵션
+            const langOptions = document.querySelectorAll('.lang-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // 활성 상태 변경
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 선택된 언어 표시
+                    const flag = this.querySelector('.lang-flag').textContent;
+                    const langText = this.textContent.trim().split(' ')[1];
+                    
+                    document.getElementById('currentFlag').textContent = flag;
+                    document.getElementById('currentLang').textContent = langText;
+                    
+                    // 드롭다운 닫기
+                    langDropdown.classList.remove('active');
+                    
+                    // 다국어 처리 (추후 구현)
+                    console.log('Selected language:', lang);
+                });
+            });
+
+            // 외부 클릭 시 드롭다운 닫기
+            document.addEventListener('click', (e) => {
+                if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('active');
+                }
+            });
+        }
+
         // FAQ 토글
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                const answer = this.nextElementSibling;
-                const isOpen = answer.style.display === 'block';
-                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-                if (!isOpen) answer.style.display = 'block';
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
             });
         });
     </script>
