@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👔 HR 솔루션 - 사주 기반 인사관리 시스템 | AI 사주 천년지기</title>
-    <meta name="description" content="직원 사주 분석으로 최적의 팀 배치, 채용 후보자 궁합 분석, 조직 문화 진단까지. 기업 맞춤형 HR 솔루션">
+    <title>HR 솔루션 - AI 사주 천년지기</title>
+    <meta name="description" content="사주 기반 인재 채용 및 배치 솔루션! 직원의 적성과 팀 조화를 분석하여 최적의 인력 운영을 지원합니다">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -27,6 +27,7 @@
             padding: 0 20px;
         }
         
+        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -50,261 +51,582 @@
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .nav-menu {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
+            margin-left: 6rem;
+        }
+        
+        .nav-menu li {
+            position: relative;
         }
         
         .nav-menu a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .nav-menu a:hover {
             color: #d4af37;
         }
         
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 100px 20px;
-            text-align: center;
-            color: white;
+        .nav-menu a.active {
+            color: #d4af37;
+            font-weight: 600;
         }
         
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: relative;
         }
         
-        .hero-subtitle {
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
-        
-        .hero-description {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
-        }
-        
-        .hero-cta {
-            display: inline-block;
-            padding: 18px 50px;
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
             background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.3rem;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            padding: 1rem 0;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #333;
             transition: all 0.3s;
         }
         
-        .hero-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+        
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '💼';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Noto Serif KR', serif;
+            position: relative;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero-stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+        }
+        
+        /* 섹션 공통 */
+        section {
+            padding: 5rem 0;
         }
         
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: #333;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Noto Serif KR', serif;
+            color: #1a1a1a;
         }
         
-        .stats-section {
-            background: white;
-            padding: 60px 20px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .stat-item {
+        .section-subtitle {
             text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
             font-size: 1.1rem;
             color: #666;
+            margin-bottom: 4rem;
+            line-height: 1.8;
         }
         
-        .features-section {
-            padding: 80px 20px;
-            background: #f9f9f9;
-        }
-        
+        /* 서비스 소개 */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
         .feature-card {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 2.5rem;
+            border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            text-align: center;
+            transition: all 0.3s;
         }
         
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(196, 30, 58, 0.2);
         }
         
         .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
         }
         
         .feature-title {
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
         }
         
         .feature-description {
             color: #666;
             line-height: 1.8;
-            margin-bottom: 20px;
         }
         
-        .feature-list {
-            list-style: none;
-        }
-        
-        .feature-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #333;
-        }
-        
-        .feature-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #27ae60;
-            font-weight: 700;
-        }
-        
-        .pricing-section {
-            padding: 80px 20px;
+        /* 솔루션 */
+        .solutions-section {
             background: white;
         }
         
-        .pricing-container {
-            max-width: 900px;
-            margin: 0 auto;
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
         
-        .pricing-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .solution-card {
+            background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 5px solid #c41e3a;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-left-color: #d4af37;
+        }
+        
+        .solution-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
             color: white;
-            padding: 60px;
-            border-radius: 30px;
-            text-align: center;
-        }
-        
-        .pricing-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.3);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .pricing-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        .pricing-price {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-        
-        .pricing-period {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
-        
-        .pricing-features {
-            text-align: left;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            list-style: none;
-        }
-        
-        .pricing-features li {
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            font-size: 1.1rem;
-        }
-        
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-features i {
-            color: #ffd700;
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .btn-pricing {
-            display: inline-block;
-            padding: 20px 60px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
+            border-radius: 50%;
             font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        
+        .solution-description {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* 도입 효과 */
+        .benefits-section {
+            background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
             transition: all 0.3s;
         }
         
-        .btn-pricing:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(196, 30, 58, 0.2);
         }
         
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-stat {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefit-label {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* 고객사 */
+        .clients-section {
+            background: white;
+        }
+        
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .client-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .client-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .client-logo {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .client-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-industry {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* 가격 플랜 */
+        .pricing-section {
+            background: #f9f9f9;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            border: 3px solid transparent;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border-color: #d4af37;
+            transform: scale(1.05);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .pricing-plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price span {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .pricing-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pricing-features li i {
+            color: #4caf50;
+        }
+        
+        .pricing-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .pricing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.4);
+        }
+        
+        .pricing-card.featured .pricing-button {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        /* FAQ */
+        .faq-section {
+            background: white;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        
+        .faq-item {
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: rgba(196, 30, 58, 0.05);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        /* CTA 섹션 */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+        
+        /* Footer */
         .footer {
             background: #1a1a1a;
-            color: white;
-            padding: 40px 20px;
+            color: rgba(255,255,255,0.7);
+            padding: 3rem 0 1.5rem;
             text-align: center;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
@@ -314,176 +636,496 @@
         }
         
         .footer-links a:hover {
-            color: white;
+            color: #d4af37;
         }
         
+        .footer-copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* 반응형 */
         @media (max-width: 768px) {
-            .hero-title {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .hero-stat-number {
                 font-size: 2rem;
             }
             
-            .hero-subtitle {
-                font-size: 1.3rem;
+            .section-title {
+                font-size: 2rem;
             }
             
             .nav-menu {
-                display: none;
+                margin-left: 0;
+                gap: 1rem;
             }
             
-            .pricing-card {
-                padding: 40px 20px;
+            .features-grid,
+            .pricing-grid,
+            .solutions-grid,
+            .benefits-grid,
+            .clients-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
+    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+                🔮 AI 사주 천년지기
             </a>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
-                <li><a href="pricing.html">가격표</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active">
+                        서비스 <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티 프리미엄</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                        <a href="b2b.html">🏢 B2B 기업 서비스</a>
+                    </div>
+                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-matching.html">궁합 매칭</a></li>
-                <li><a href="community.html">커뮤니티</a></li>
-                <li><a href="b2b.html">B2B 서비스</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li class="language-switcher">
+                    <button class="lang-btn">한국어 🇰🇷</button>
+                </li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero-section">
+    <!-- 히어로 섹션 -->
+    <section class="hero">
         <div class="container">
-            <h1 class="hero-title">👔 HR 솔루션</h1>
-            <p class="hero-subtitle">사주 기반 인사관리로 팀 생산성 40% 향상</p>
-            <p class="hero-description">
-                직원들의 사주를 분석하여 최적의 팀 배치, 채용 후보자 궁합 분석, 조직 문화 진단까지.<br>
-                과학적인 명리학으로 기업의 인재 관리를 혁신하세요.
+            <h1>💼 사주 기반 HR 솔루션</h1>
+            <p class="subtitle">
+                직원의 사주를 분석하여 최적의 배치와 팀 조화를 실현합니다<br>
+                채용부터 승진까지, 과학적 인사관리로 조직 효율을 극대화하세요
             </p>
-            <a href="#contact" class="hero-cta">무료 상담 신청</a>
-        </div>
-    </section>
-
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">127</div>
-                    <div class="stat-label">도입 기업</div>
+            <a href="#contact" class="cta-button">
+                <i class="fas fa-phone"></i> 무료 상담 신청
+            </a>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">247</span>
+                    <span class="hero-stat-label">도입 기업</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">40%</div>
-                    <div class="stat-label">평균 생산성 향상</div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">35%</span>
+                    <span class="hero-stat-label">이직률 감소</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">95%</div>
-                    <div class="stat-label">재계약률</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4.8</div>
-                    <div class="stat-label">고객 만족도</div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">28%</span>
+                    <span class="hero-stat-label">생산성 향상</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features-section">
+    <!-- 서비스 소개 -->
+    <section>
         <div class="container">
-            <h2 class="section-title">🎯 주요 기능</h2>
+            <h2 class="section-title">왜 사주 기반 HR인가요?</h2>
+            <p class="section-subtitle">
+                1000년 명리학과 현대 HR 이론이 만난 과학적 인사관리
+            </p>
+            
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3 class="feature-title">팀 배치 최적화</h3>
-                    <p class="feature-description">
-                        직원들의 사주 오행을 분석하여 가장 시너지가 높은 팀 조합을 추천합니다.
-                    </p>
-                    <ul class="feature-list">
-                        <li>팀원 간 궁합 점수 분석</li>
-                        <li>리더-팀원 궁합 최적화</li>
-                        <li>부서 간 협업 시너지 예측</li>
-                        <li>프로젝트 팀 구성 추천</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">채용 후보자 분석</h3>
+                    <h3 class="feature-title">적성 기반 채용</h3>
                     <p class="feature-description">
-                        채용 후보자의 사주를 분석하여 기존 팀과의 궁합을 미리 확인할 수 있습니다.
+                        지원자의 사주를 분석하여 직무 적합도를 평가합니다. 
+                        학력과 경력만으로는 알 수 없는 잠재력과 성향을 파악하여 최적의 인재를 선발하세요.
                     </p>
-                    <ul class="feature-list">
-                        <li>후보자 성격 및 적성 분석</li>
-                        <li>팀 문화 적합도 평가</li>
-                        <li>장기 근속 가능성 예측</li>
-                        <li>리더십 역량 진단</li>
-                    </ul>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">조직 문화 진단</h3>
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">팀 조화 분석</h3>
                     <p class="feature-description">
-                        전체 직원의 사주를 분석하여 조직의 강점과 약점을 파악합니다.
+                        팀원들의 사주 궁합을 분석하여 최적의 팀 구성을 제안합니다. 
+                        상생상극을 고려한 배치로 팀워크를 극대화하고 갈등을 최소화하세요.
                     </p>
-                    <ul class="feature-list">
-                        <li>조직 오행 균형 분석</li>
-                        <li>부서별 특성 리포트</li>
-                        <li>갈등 가능성 사전 탐지</li>
-                        <li>조직 개선 방향 제시</li>
-                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">승진 및 배치</h3>
+                    <p class="feature-description">
+                        직원의 대운과 흐름을 분석하여 최적의 승진 시기를 파악합니다. 
+                        리더십 운세가 강한 시기에 승진시켜 조직 효율을 높이세요.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="pricing-section" id="contact">
+    <!-- 솔루션 -->
+    <section class="solutions-section">
         <div class="container">
-            <h2 class="section-title">💎 요금제</h2>
-            <div class="pricing-container">
-                <div class="pricing-card">
-                    <div class="pricing-badge">기업 맞춤형</div>
-                    <h3 class="pricing-title">HR 솔루션</h3>
-                    <div class="pricing-price">₩500,000~</div>
-                    <div class="pricing-period">월 구독 (직원 수에 따라 변동)</div>
-                    
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check-circle"></i> 전 직원 사주 DB 구축</li>
-                        <li><i class="fas fa-check-circle"></i> 팀 배치 최적화 분석</li>
-                        <li><i class="fas fa-check-circle"></i> 채용 후보자 궁합 분석 (월 20명)</li>
-                        <li><i class="fas fa-check-circle"></i> 조직 문화 진단 리포트 (분기 1회)</li>
-                        <li><i class="fas fa-check-circle"></i> 전담 HR 컨설턴트 배정</li>
-                        <li><i class="fas fa-check-circle"></i> 월간 정기 컨설팅 (4회)</li>
-                        <li><i class="fas fa-check-circle"></i> 관리자 전용 대시보드</li>
-                        <li><i class="fas fa-check-circle"></i> 데이터 보안 및 암호화</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 고객 지원</li>
-                    </ul>
-                    
-                    <a href="#contact" class="btn-pricing">무료 상담 신청</a>
+            <h2 class="section-title">제공 솔루션</h2>
+            <p class="section-subtitle">
+                채용부터 퇴사까지 전 과정을 지원하는 통합 HR 솔루션
+            </p>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-number">1</div>
+                    <h3 class="solution-title">채용 적합도 분석</h3>
+                    <p class="solution-description">
+                        지원자의 사주와 직무 요구사항을 비교하여 적합도 점수를 산출합니다. 
+                        면접 전 객관적 지표로 활용하세요.
+                    </p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-number">2</div>
+                    <h3 class="solution-title">팀 구성 최적화</h3>
+                    <p class="solution-description">
+                        부서 및 팀의 사주 궁합을 분석하여 최적의 조합을 추천합니다. 
+                        갈등 없는 조화로운 팀을 구성하세요.
+                    </p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-number">3</div>
+                    <h3 class="solution-title">리더십 평가</h3>
+                    <p class="solution-description">
+                        관리자의 리더십 운세와 팀원들과의 궁합을 분석합니다. 
+                        타고난 리더를 발굴하세요.
+                    </p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-number">4</div>
+                    <h3 class="solution-title">갈등 조정 컨설팅</h3>
+                    <p class="solution-description">
+                        부서 간 또는 팀원 간 갈등의 원인을 사주로 분석하고 해결책을 제시합니다.
+                    </p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-number">5</div>
+                    <h3 class="solution-title">이직 예측 시스템</h3>
+                    <p class="solution-description">
+                        직원의 대운 흐름을 분석하여 이직 가능성이 높은 시기를 사전에 파악합니다.
+                    </p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-number">6</div>
+                    <h3 class="solution-title">승진 타이밍 분석</h3>
+                    <p class="solution-description">
+                        직원의 운세 흐름을 고려하여 최적의 승진 시기를 추천합니다.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 도입 효과 -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">도입 효과</h2>
+            <p class="section-subtitle">
+                실제 도입 기업들의 평균 성과
+            </p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📉</div>
+                    <div class="benefit-stat">35%</div>
+                    <div class="benefit-label">이직률 감소</div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-stat">28%</div>
+                    <div class="benefit-label">생산성 향상</div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <div class="benefit-stat">42%</div>
+                    <div class="benefit-label">채용 비용 절감</div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">😊</div>
+                    <div class="benefit-stat">89%</div>
+                    <div class="benefit-label">직원 만족도</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 고객사 -->
+    <section class="clients-section">
+        <div class="container">
+            <h2 class="section-title">주요 고객사</h2>
+            <p class="section-subtitle">
+                247개 기업이 이미 사주 기반 HR을 도입했습니다
+            </p>
+            
+            <div class="clients-grid">
+                <div class="client-card">
+                    <div class="client-logo">🏢</div>
+                    <div class="client-name">A전자</div>
+                    <div class="client-industry">제조업 · 직원 5,000명</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-logo">🏦</div>
+                    <div class="client-name">B금융그룹</div>
+                    <div class="client-industry">금융업 · 직원 3,200명</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-logo">🏪</div>
+                    <div class="client-name">C유통</div>
+                    <div class="client-industry">유통업 · 직원 8,500명</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-logo">💻</div>
+                    <div class="client-name">D소프트</div>
+                    <div class="client-industry">IT업 · 직원 1,200명</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-logo">🏗️</div>
+                    <div class="client-name">E건설</div>
+                    <div class="client-industry">건설업 · 직원 2,800명</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-logo">🎓</div>
+                    <div class="client-name">F교육그룹</div>
+                    <div class="client-industry">교육업 · 직원 1,500명</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 가격 플랜 -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">가격 플랜</h2>
+            <p class="section-subtitle">
+                기업 규모에 맞는 플랜을 선택하세요
+            </p>
+            
+            <div class="pricing-grid">
+                <!-- 스타터 -->
+                <div class="pricing-card">
+                    <h3 class="pricing-plan-name">스타터</h3>
+                    <div class="pricing-price">₩500,000<span>/월</span></div>
+                    <div class="pricing-period">직원 50명 이하</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 채용 적합도 분석</li>
+                        <li><i class="fas fa-check"></i> 월 20명 분석</li>
+                        <li><i class="fas fa-check"></i> 기본 리포트 제공</li>
+                        <li><i class="fas fa-check"></i> 이메일 지원</li>
+                        <li><i class="fas fa-check"></i> 분석 데이터 6개월 보관</li>
+                    </ul>
+                    <button class="pricing-button" onclick="alert('상담 신청 페이지로 이동')">
+                        상담 신청
+                    </button>
+                </div>
+                
+                <!-- 비즈니스 (추천) -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">🔥 인기</div>
+                    <h3 class="pricing-plan-name">비즈니스</h3>
+                    <div class="pricing-price">₩1,500,000<span>/월</span></div>
+                    <div class="pricing-period">직원 51~500명</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 모든 스타터 기능</li>
+                        <li><i class="fas fa-check"></i> 월 100명 분석</li>
+                        <li><i class="fas fa-check"></i> 팀 조화 분석</li>
+                        <li><i class="fas fa-check"></i> 승진 타이밍 추천</li>
+                        <li><i class="fas fa-check"></i> 전담 컨설턴트</li>
+                        <li><i class="fas fa-check"></i> 분석 데이터 1년 보관</li>
+                    </ul>
+                    <button class="pricing-button" onclick="alert('상담 신청 페이지로 이동')">
+                        상담 신청
+                    </button>
+                </div>
+                
+                <!-- 엔터프라이즈 -->
+                <div class="pricing-card">
+                    <h3 class="pricing-plan-name">엔터프라이즈</h3>
+                    <div class="pricing-price">맞춤 견적</div>
+                    <div class="pricing-period">직원 500명 이상</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 모든 비즈니스 기능</li>
+                        <li><i class="fas fa-check"></i> 무제한 분석</li>
+                        <li><i class="fas fa-check"></i> 이직 예측 시스템</li>
+                        <li><i class="fas fa-check"></i> 갈등 조정 컨설팅</li>
+                        <li><i class="fas fa-check"></i> 전담 팀 배정</li>
+                        <li><i class="fas fa-check"></i> 커스텀 개발 지원</li>
+                    </ul>
+                    <button class="pricing-button" onclick="alert('상담 신청 페이지로 이동')">
+                        견적 문의
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <p class="section-subtitle">
+                HR 솔루션에 대해 궁금한 점을 확인하세요
+            </p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>사주 기반 HR이 정말 효과가 있나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네, 247개 도입 기업의 평균 데이터를 보면 이직률 35% 감소, 생산성 28% 향상 등 명확한 효과가 있습니다. 
+                        사주는 사람의 기본 성향과 적성을 파악하는 도구로, 객관적 데이터와 결합하면 더욱 정확한 인사관리가 가능합니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>직원들이 사주 분석을 거부하면 어떻게 하나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        사주 분석은 선택 사항이며, 강제할 수 없습니다. 
+                        다만 대부분의 기업에서는 "조직 적응력 검사"처럼 중립적인 명칭을 사용하며, 
+                        참여 시 인센티브를 제공하여 자발적 참여율을 90% 이상 유지하고 있습니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>기존 HR 시스템과 통합이 가능한가요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        네, API 연동을 통해 대부분의 HR 시스템(SAP, Oracle, Workday 등)과 통합 가능합니다. 
+                        엔터프라이즈 플랜에서는 커스텀 개발을 지원하여 기업의 기존 시스템에 완벽히 맞춰드립니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>개인정보 보호는 어떻게 되나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        모든 데이터는 암호화되어 저장되며, 생년월일시는 사주 계산에만 사용됩니다. 
+                        ISO 27001 인증을 받았으며, GDPR 및 개인정보보호법을 완벽히 준수합니다. 
+                        직원의 동의 없이는 데이터를 제3자에게 제공하지 않습니다.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>도입 기간은 얼마나 걸리나요?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        스타터 플랜은 계약 후 1주일 내 도입 가능하며, 
+                        비즈니스 플랜은 2~4주, 엔터프라이즈 플랜은 1~3개월 소요됩니다. 
+                        도입 기간 동안 전담 컨설턴트가 교육 및 설정을 완료해드립니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>지금 바로 무료 상담을 신청하세요!</h2>
+            <p>247개 기업이 선택한 사주 기반 HR 솔루션을 경험해보세요</p>
+            <a href="mailto:hr@aisaju1000.com" class="cta-button">
+                <i class="fas fa-envelope"></i> hr@aisaju1000.com
+            </a>
+            <p style="margin-top: 2rem; font-size: 1rem;">
+                📞 대표번호: 02-1234-5678 | 평일 09:00-18:00
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
                 <a href="terms.html">이용약관</a>
                 <a href="privacy.html">개인정보처리방침</a>
                 <a href="refund.html">환불정책</a>
-                <a href="admin-login.html">Admin</a>
+                <a href="index.html#faq">FAQ</a>
             </div>
-            <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+            <div class="footer-copyright">
+                <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+                <p>사업자등록번호: 123-45-67890 | 통신판매업신고: 2024-서울강남-12345</p>
+            </div>
         </div>
     </footer>
 
     <script>
+        // FAQ 토글
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // 모든 FAQ 닫기
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 클릭한 FAQ만 열기
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+        
+        // 부드러운 스크롤
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });
