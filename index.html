@@ -915,20 +915,19 @@
                 <div class="form-group">
                     <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
                     <select name="birthtime">
-                 <option value="">모름</option>
-<option value="23:30">자시 子時 (23:30-01:29)</option>
-<option value="01:30">축시 丑時 (01:30-03:29)</option>
-<option value="03:30">인시 寅時 (03:30-05:29)</option>
-<option value="05:30">묘시 卯時 (05:30-07:29)</option>
-<option value="07:30">진시 辰時 (07:30-09:29)</option>
-<option value="09:30">사시 巳時 (09:30-11:29)</option>
-<option value="11:30">오시 午時 (11:30-13:29)</option>
-<option value="13:30">미시 未時 (13:30-15:29)</option>
-<option value="15:30">신시 申時 (15:30-17:29)</option>
-<option value="17:30">유시 酉時 (17:30-19:29)</option>
-<option value="19:30">술시 戌時 (19:30-21:29)</option>
-<option value="21:30">해시 亥時 (21:30-23:29)</option>
-       
+                        <option value="">모름</option>
+                        <option value="23:30">자시 子時 (23:30-01:29)</option>
+                        <option value="01:30">축시 丑時 (01:30-03:29)</option>
+                        <option value="03:30">인시 寅時 (03:30-05:29)</option>
+                        <option value="05:30">묘시 卯時 (05:30-07:29)</option>
+                        <option value="07:30">진시 辰時 (07:30-09:29)</option>
+                        <option value="09:30">사시 巳時 (09:30-11:29)</option>
+                        <option value="11:30">오시 午時 (11:30-13:29)</option>
+                        <option value="13:30">미시 未時 (13:30-15:29)</option>
+                        <option value="15:30">신시 申時 (15:30-17:29)</option>
+                        <option value="17:30">유시 酉時 (17:30-19:29)</option>
+                        <option value="19:30">술시 戌時 (19:30-21:29)</option>
+                        <option value="21:30">해시 亥時 (21:30-23:29)</option>
                     </select>
                 </div>
                 
@@ -1370,11 +1369,17 @@
         
         updateLanguage(currentLang);
         
-        // 폼 제출
+        // 🔥 폼 제출 (birthtime을 hour로 변환)
         document.getElementById('sajuForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
+            
+            // birthtime 값을 hour로 변환
+            if(data.birthtime) {
+                data.hour = data.birthtime; // "15:30", "17:30" 등
+            }
+            
             localStorage.setItem('sajuData', JSON.stringify(data));
             window.location.href = 'result.html';
         });
