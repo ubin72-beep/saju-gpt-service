@@ -1,4 +1,4 @@
-1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -188,18 +188,9 @@
    188	    [yp.cheongan,yp.jiji,mp.cheongan,mp.jiji,dp.cheongan,dp.jiji,hp.cheongan,hp.jiji].forEach(c=>{const e=E[c];if(e)ec[e]++;});
    189	    const ep={};Object.keys(ec).forEach(k=>ep[k]=Math.round(ec[k]/8*100));
    190	    document.querySelectorAll('.fortune-bar').forEach(b=>{const el=b.getAttribute('data-element'),pc=ep[el];b.querySelector('.percent').textContent=`${pc}%`;b.querySelector('.fortune-bar-fill').style.width=`${pc}%`;b.querySelector('.fortune-bar-fill').textContent=`${pc}%`;});
-   191	    
-   192	    // 🔥 계산된 사주팔자 정보를 localStorage에 다시 저장 (AI 상담 연동용)
-   193	    sd.yearPillar = `${yp.cheongan}${yp.jiji} (${yp.cheongName}${yp.jijiName})`;
-   194	    sd.monthPillar = `${mp.cheongan}${mp.jiji} (${mp.cheongName}${mp.jijiName})`;
-   195	    sd.dayPillar = `${dp.cheongan}${dp.jiji} (${dp.cheongName}${dp.jijiName})`;
-   196	    sd.hourPillar = `${hp.cheongan}${hp.jiji} (${hp.cheongName}${hp.jijiName})`;
-   197	    sd.dayMaster = `${dm}${dme}`;
-   198	    localStorage.setItem('sajuData', JSON.stringify(sd));
-   199	    console.log('✅ 사주 정보 저장 완료:', sd);
-   200	}
-   201	window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.fortune-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,100);});},500);});
-   202	    </script>
-   203	</body>
-   204	</html>
-   205	
+   191	}
+   192	window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.fortune-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,100);});},500);});
+   193	    </script>
+   194	</body>
+   195	</html>
+   196	
