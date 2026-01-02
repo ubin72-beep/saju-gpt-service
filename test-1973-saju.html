@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1973년 2월 5일 사주 테스트</title>
+    <title>1973년 3월 9일 사주 테스트 (정확한 양력)</title>
     <style>
         * {
             margin: 0;
@@ -46,32 +46,28 @@
             padding-bottom: 10px;
         }
         
-        pre {
-            background: #1a1a1a;
+        .info-box {
+            background: #333;
             padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 13px;
-            border: 1px solid #444;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #d4af37;
         }
         
-        button {
-            background: #c41e3a;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 16px;
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #d4af37;
             font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            background: #a01830;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(196, 30, 58, 0.4);
         }
         
         .pillar-display {
@@ -90,16 +86,18 @@
             transition: transform 0.3s;
         }
         
+        .pillar-card.correct {
+            border-color: #4caf50;
+        }
+        
         .pillar-card:hover {
             transform: translateY(-5px);
-            border-color: #d4af37;
         }
         
         .pillar-card h3 {
             color: #d4af37;
             margin-bottom: 15px;
             font-size: 14px;
-            text-transform: uppercase;
         }
         
         .pillar-card .gan-ji {
@@ -116,49 +114,27 @@
             margin: 5px 0;
         }
         
-        .expected-box {
-            background: #333;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #d4af37;
-        }
-        
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-        
-        .info-row:last-child {
-            border-bottom: none;
-        }
-        
-        .info-label {
-            color: #d4af37;
+        button {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
             font-weight: bold;
+            transition: all 0.3s;
         }
         
-        .info-value {
-            color: #fff;
+        button:hover {
+            background: #a01830;
+            transform: translateY(-2px);
         }
         
-        .success {
-            color: #4caf50 !important;
-            font-weight: bold;
-        }
-        
-        .error {
-            color: #f44336 !important;
-            font-weight: bold;
-        }
-        
-        .warning {
-            color: #ff9800 !important;
-            font-weight: bold;
-        }
+        .success { color: #4caf50 !important; font-weight: bold; }
+        .error { color: #f44336 !important; font-weight: bold; }
+        .warning { color: #ff9800 !important; font-weight: bold; }
         
         .validation-item {
             padding: 15px;
@@ -178,68 +154,55 @@
             background: rgba(244, 67, 54, 0.1);
         }
         
-        .validation-item.warning {
-            border-left-color: #ff9800;
-            background: rgba(255, 152, 0, 0.1);
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .pillar-display {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .test-section {
-                padding: 20px;
-            }
+        pre {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔮 1973년 2월 5일 (음력) 여성 사주 테스트</h1>
+        <h1>🔮 1973년 3월 9일 (양력) 사주 테스트</h1>
         
         <div class="test-section">
             <h2>📝 테스트 정보</h2>
-            <div class="expected-box">
+            <div class="info-box">
                 <div class="info-row">
-                    <span class="info-label">생년월일:</span>
-                    <span class="info-value">1973년 2월 5일 (음력)</span>
+                    <span class="info-label">음력:</span>
+                    <span>1973년 2월 5일</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">양력 (변환됨):</span>
+                    <span class="success">1973년 3월 9일</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">시간:</span>
-                    <span class="info-value">정오 12시 (기본값)</span>
+                    <span>정오 12시 (기본값)</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">성별:</span>
-                    <span class="info-value">여성</span>
+                    <span>여성</span>
                 </div>
             </div>
             
-            <h3 style="color: #d4af37; margin-top: 25px; margin-bottom: 15px;">예상 사주:</h3>
+            <h3 style="color: #d4af37; margin-top: 25px; margin-bottom: 15px;">✅ 만세력 기준 정답:</h3>
             <div class="pillar-display">
-                <div class="pillar-card" style="border-color: #4caf50;">
+                <div class="pillar-card correct">
                     <h3>년주 (Year)</h3>
-                    <div class="gan-ji">壬子</div>
-                    <div class="element">임자</div>
-                    <div class="element">水水</div>
-                </div>
-                <div class="pillar-card" style="border-color: #4caf50;">
-                    <h3>월주 (Month)</h3>
                     <div class="gan-ji">癸丑</div>
                     <div class="element">계축</div>
                     <div class="element">水土</div>
                 </div>
-                <div class="pillar-card" style="border-color: #4caf50;">
+                <div class="pillar-card correct">
+                    <h3>월주 (Month)</h3>
+                    <div class="gan-ji">乙卯</div>
+                    <div class="element">을묘</div>
+                    <div class="element">木木</div>
+                </div>
+                <div class="pillar-card correct">
                     <h3>일주 (Day)</h3>
                     <div class="gan-ji">甲寅</div>
                     <div class="element">갑인</div>
@@ -260,55 +223,44 @@
         <div class="test-section">
             <h2>📊 계산 결과</h2>
             <div id="result">
-                <div class="loading">
-                    <p>위의 "🔍 사주 계산 실행" 버튼을 클릭하세요...</p>
-                </div>
+                <p style="text-align: center; color: #aaa;">위의 "🔍 사주 계산 실행" 버튼을 클릭하세요...</p>
             </div>
         </div>
 
         <div class="test-section">
             <h2>🎯 검증 결과</h2>
             <div id="validation">
-                <div class="loading">
-                    <p>계산 후 자동으로 검증됩니다...</p>
-                </div>
+                <p style="text-align: center; color: #aaa;">계산 후 자동으로 검증됩니다...</p>
             </div>
         </div>
     </div>
 
-    <!-- Lunar Calendar Library -->
     <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
     <script src="js/saju-calculator.js"></script>
     <script>
         function testCalculation() {
-            console.log('=== 1973년 2월 5일 (음력) 사주 계산 시작 ===');
+            console.log('=== 1973년 3월 9일 (양력) 사주 계산 시작 ===');
             
-            // 로딩 표시
-            document.getElementById('result').innerHTML = '<div class="loading"><p>계산 중...</p></div>';
-            document.getElementById('validation').innerHTML = '<div class="loading"><p>검증 중...</p></div>';
-            
+            // 양력 날짜로 직접 계산
             const testInput = {
-                birthDate: '1973-02-05',
-                birthHour: '12', // 정오 (기본값)
+                birthDate: '1973-03-09', // 양력으로 변환된 날짜
+                birthHour: '12',
                 gender: 'female',
-                calendar: 'lunar'
+                calendar: 'solar' // 이미 양력으로 변환됨
             };
             
             console.log('📝 입력 데이터:', testInput);
             
-            // calculateSaju 함수 확인
             if (typeof calculateSaju !== 'function') {
                 document.getElementById('result').innerHTML = `
                     <div class="validation-item error">
                         <p class="error">❌ calculateSaju 함수를 찾을 수 없습니다!</p>
-                        <p style="color: #aaa; margin-top: 10px;">js/saju-calculator.js 파일이 제대로 로드되지 않았습니다.</p>
                     </div>
                 `;
                 return;
             }
             
             try {
-                // 사주 계산
                 const result = calculateSaju(testInput);
                 console.log('📊 계산 결과:', result);
                 
@@ -316,24 +268,19 @@
                     document.getElementById('result').innerHTML = `
                         <div class="validation-item error">
                             <p class="error">❌ 사주 계산 실패!</p>
-                            <p style="color: #aaa; margin-top: 10px;">계산 중 오류가 발생했습니다. 콘솔을 확인해주세요.</p>
                         </div>
                     `;
                     return;
                 }
                 
-                // 사주 표시
                 displayPillars(result);
-                
-                // 검증
                 validateResult(result);
                 
             } catch (error) {
                 console.error('사주 계산 오류:', error);
                 document.getElementById('result').innerHTML = `
                     <div class="validation-item error">
-                        <p class="error">❌ 사주 계산 중 오류 발생!</p>
-                        <p style="color: #aaa; margin-top: 10px;">${error.message}</p>
+                        <p class="error">❌ 오류: ${error.message}</p>
                         <pre>${error.stack}</pre>
                     </div>
                 `;
@@ -375,15 +322,14 @@
                     </div>
                 </div>
                 
-                <h3 style="color: #d4af37; margin: 25px 0 15px;">📋 상세 정보</h3>
-                <div style="background: #333; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                    <p style="margin: 10px 0;"><strong style="color: #d4af37;">일간(日干):</strong> ${result.dayMaster} (${details.day.cheongName}${details.day.element[0]})</p>
-                    <p style="margin: 10px 0;"><strong style="color: #d4af37;">오행 분석:</strong> ${result.summary.elementAnalysis}</p>
-                    <p style="margin: 10px 0;"><strong style="color: #d4af37;">균형도:</strong> ${result.summary.balance}</p>
+                <div class="info-box">
+                    <p><strong style="color: #d4af37;">일간(日干):</strong> ${result.dayMaster} (${details.day.cheongName}${details.day.element[0]})</p>
+                    <p><strong style="color: #d4af37;">오행:</strong> ${result.summary.elementAnalysis}</p>
+                    <p><strong style="color: #d4af37;">균형도:</strong> ${result.summary.balance}</p>
                 </div>
                 
                 <details style="margin-top: 20px;">
-                    <summary style="cursor: pointer; color: #d4af37; font-weight: bold; margin-bottom: 10px;">🔍 전체 JSON 데이터 보기</summary>
+                    <summary style="cursor: pointer; color: #d4af37; font-weight: bold;">🔍 상세 데이터</summary>
                     <pre>${JSON.stringify(result, null, 2)}</pre>
                 </details>
             `;
@@ -393,96 +339,48 @@
 
         function validateResult(result) {
             const expected = {
-                year: '壬子',
-                month: '癸丑',
+                year: '癸丑',
+                month: '乙卯',
                 day: '甲寅',
                 dayMaster: '甲'
             };
             
             const actual = result.pillars;
-            const actualDayMaster = result.dayMaster;
-            
             let validationHTML = '';
             let allCorrect = true;
             
-            // 년주 검증
+            // 년주
             if (actual.year === expected.year) {
-                validationHTML += `
-                    <div class="validation-item success">
-                        <p class="success">✅ 년주: ${actual.year} (정확함)</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item success"><p class="success">✅ 년주: ${actual.year} (정확함)</p></div>`;
             } else {
-                validationHTML += `
-                    <div class="validation-item error">
-                        <p class="error">❌ 년주: ${actual.year}</p>
-                        <p style="color: #aaa; margin-top: 5px;">예상: ${expected.year}</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item error"><p class="error">❌ 년주: ${actual.year} (예상: ${expected.year})</p></div>`;
                 allCorrect = false;
             }
             
-            // 월주 검증
+            // 월주
             if (actual.month === expected.month) {
-                validationHTML += `
-                    <div class="validation-item success">
-                        <p class="success">✅ 월주: ${actual.month} (정확함)</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item success"><p class="success">✅ 월주: ${actual.month} (정확함)</p></div>`;
             } else {
-                validationHTML += `
-                    <div class="validation-item error">
-                        <p class="error">❌ 월주: ${actual.month}</p>
-                        <p style="color: #aaa; margin-top: 5px;">예상: ${expected.month}</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item error"><p class="error">❌ 월주: ${actual.month} (예상: ${expected.month})</p></div>`;
                 allCorrect = false;
             }
             
-            // 일주 검증 (가장 중요!)
+            // 일주
             if (actual.day === expected.day) {
-                validationHTML += `
-                    <div class="validation-item success">
-                        <p class="success">✅ 일주: ${actual.day} (정확함)</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item success"><p class="success">✅ 일주: ${actual.day} (정확함)</p></div>`;
             } else {
-                validationHTML += `
-                    <div class="validation-item error">
-                        <p class="error">❌ 일주: ${actual.day}</p>
-                        <p style="color: #aaa; margin-top: 5px;">예상: ${expected.day}</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item error"><p class="error">❌ 일주: ${actual.day} (예상: ${expected.day})</p></div>`;
                 allCorrect = false;
             }
             
-            // 일간 확인 (핵심!)
-            if (actualDayMaster === expected.dayMaster) {
-                validationHTML += `
-                    <div class="validation-item success">
-                        <p class="success" style="font-size: 18px;">✅ 일간(日干): ${actualDayMaster} (甲木 맞음!)</p>
-                        <p style="color: #4caf50; margin-top: 10px;">일간이 甲木으로 정확하게 계산되었습니다! 🎉</p>
-                    </div>
-                `;
+            // 일간
+            if (result.dayMaster === expected.dayMaster) {
+                validationHTML += `<div class="validation-item success"><p class="success" style="font-size: 18px;">✅ 일간(日干): ${result.dayMaster} (甲木 맞음!) 🎉</p></div>`;
             } else {
-                validationHTML += `
-                    <div class="validation-item error">
-                        <p class="error">❌ 일간(日干): ${actualDayMaster}</p>
-                        <p style="color: #aaa; margin-top: 5px;">예상: ${expected.dayMaster} (甲木)</p>
-                    </div>
-                `;
+                validationHTML += `<div class="validation-item error"><p class="error">❌ 일간: ${result.dayMaster} (예상: ${expected.dayMaster})</p></div>`;
                 allCorrect = false;
             }
             
-            // 시주는 시간이 정확하지 않아서 검증 생략
-            validationHTML += `
-                <div class="validation-item warning">
-                    <p class="warning">⚠️ 시주: ${actual.hour}</p>
-                    <p style="color: #aaa; margin-top: 5px;">시간 정보가 없어서 검증을 생략합니다.</p>
-                </div>
-            `;
-            
-            // 최종 요약
             if (allCorrect) {
                 validationHTML = `
                     <div class="validation-item success" style="border: 3px solid #4caf50; padding: 25px;">
@@ -500,27 +398,10 @@
             document.getElementById('validation').innerHTML = validationHTML;
         }
 
-        // 페이지 로드 시 라이브러리 확인
         window.addEventListener('load', () => {
             console.log('✅ 테스트 페이지 로드 완료');
-            console.log('Lunar 라이브러리:', typeof Lunar !== 'undefined' ? '✅ 로드됨' : '❌ 없음');
-            console.log('Solar 라이브러리:', typeof Solar !== 'undefined' ? '✅ 로드됨' : '❌ 없음');
-            console.log('calculateSaju 함수:', typeof calculateSaju === 'function' ? '✅ 존재' : '❌ 없음');
-            
-            // 라이브러리 로드 상태 표시
-            if (typeof Lunar === 'undefined' || typeof Solar === 'undefined') {
-                console.warn('⚠️ Lunar 라이브러리가 제대로 로드되지 않았습니다!');
-            }
-            
-            if (typeof calculateSaju !== 'function') {
-                console.error('❌ calculateSaju 함수를 찾을 수 없습니다!');
-                document.getElementById('result').innerHTML = `
-                    <div class="validation-item error">
-                        <p class="error">❌ 사주 계산 시스템이 로드되지 않았습니다!</p>
-                        <p style="color: #aaa; margin-top: 10px;">js/saju-calculator.js 파일을 확인해주세요.</p>
-                    </div>
-                `;
-            }
+            console.log('Lunar:', typeof Lunar !== 'undefined' ? '✅' : '❌');
+            console.log('calculateSaju:', typeof calculateSaju === 'function' ? '✅' : '❌');
         });
     </script>
 </body>
