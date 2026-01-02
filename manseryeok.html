@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만세력 조회 - AI 사주 천년지기</title>
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        .navbar { background: #1a1a1a; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
+        .nav-links a:hover { color: #d4af37; }
+        .header { background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%); color: white; padding: 60px 20px; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .container { max-width: 1000px; margin: -40px auto 60px; padding: 0 20px; }
+        .card { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #d4af37; }
+        .btn { padding: 15px 40px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #c41e3a, #8b0000); color: white; width: 100%; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(196,30,58,0.4); }
+        .result { display: none; }
+        .result.show { display: block; }
+        .saju-table { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .saju-column { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border-radius: 10px; border: 2px solid #d4af37; }
+        .saju-column h3 { font-size: 1.1rem; color: #c41e3a; margin-bottom: 0.5rem; font-weight: 600; }
+        .saju-column .hanja { font-size: 2rem; font-weight: 700; color: #1a1a1a; margin: 0.5rem 0; }
+        .saju-column .element { font-size: 0.9rem; color: #666; }
+        .section-title { font-size: 1.8rem; color: #1a1a1a; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 3px solid #d4af37; font-weight: 700; }
+        .footer { background: #1a1a1a; color: rgba(255,255,255,0.7); padding: 40px 20px; text-align: center; }
+        @media (max-width: 768px) { .saju-table { grid-template-columns: repeat(2, 1fr); } .card { padding: 2rem 1.5rem; } .header h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">☯ AI 사주 천년지기</a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="pricing.html">가격표</a>
+                <a href="mypage.html">마이페이지</a>
+            </div>
+        </div>
+    </nav>
+    <section class="header">
+        <h1>📅 만세력 조회</h1>
+        <p>정확한 사주팔자와 대운을 확인하세요</p>
+    </section>
+    <div class="container">
+        <div class="card">
+            <h2 class="section-title">⭐ 생년월일 입력</h2>
+            <form id="manseryeokForm">
+                <div class="form-group">
+                    <label>생년월일</label>
+                    <input type="date" name="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label>양력/음력</label>
+                    <select name="calendar" required>
+                        <option value="solar">양력</option>
+                        <option value="lunar">음력</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>태어난 시간 (선택)</label>
+                    <select name="birthtime">
+                        <option value="">모름</option>
+                        <option value="0">자시 (23:30-01:29)</option>
+                        <option value="2">축시 (01:30-03:29)</option>
+                        <option value="4">인시 (03:30-05:29)</option>
+                        <option value="6">묘시 (05:30-07:29)</option>
+                        <option value="8">진시 (07:30-09:29)</option>
+                        <option value="10">사시 (09:30-11:29)</option>
+                        <option value="12">오시 (11:30-13:29)</option>
+                        <option value="14">미시 (13:30-15:29)</option>
+                        <option value="16">신시 (15:30-17:29)</option>
+                        <option value="18">유시 (17:30-19:29)</option>
+                        <option value="20">술시 (19:30-21:29)</option>
+                        <option value="22">해시 (21:30-23:29)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>성별</label>
+                    <select name="gender" required>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">🔍 만세력 조회</button>
+            </form>
+        </div>
+        
+        <div class="card result" id="resultCard">
+            <h2 class="section-title">🎴 사주팔자</h2>
+            <div class="saju-table">
+                <div class="saju-column"><h3>時柱 (시주)</h3><div class="hanja" id="time-sky">-</div><div class="hanja" id="time-ground">-</div><div class="element" id="time-element">- -</div></div>
+                <div class="saju-column"><h3>日柱 (일주)</h3><div class="hanja" id="day-sky">-</div><div class="hanja" id="day-ground">-</div><div class="element" id="day-element">- -</div></div>
+                <div class="saju-column"><h3>月柱 (월주)</h3><div class="hanja" id="month-sky">-</div><div class="hanja" id="month-ground">-</div><div class="element" id="month-element">- -</div></div>
+                <div class="saju-column"><h3>年柱 (연주)</h3><div class="hanja" id="year-sky">-</div><div class="hanja" id="year-ground">-</div><div class="element" id="year-element">- -</div></div>
+            </div>
+            <p style="text-align:center;margin-top:2rem;"><strong>일간:</strong> <span id="dayMaster">-</span></p>
+        </div>
+    </div>
+    <footer class="footer"><p>© 2025 AI 사주 천년지기. All rights reserved.</p></footer>
+    <script>
+const G=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],GN=['갑','을','병','정','무','기','경','신','임','계'],
+Z=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'],ZN=['자','축','인','묘','진','사','오','미','신','유','술','해'],
+E={'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'水','癸':'水','子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
+
+function yearPillar(y,m,d){let sy=y;if(m===1||(m===2&&d<4))sy--;const o=(sy-1924+60)%60;return{cheongan:G[o%10],jiji:Z[o%12],cheongName:GN[o%10],jijiName:ZN[o%12]};}
+function monthPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getMonthInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const mji=(m+1)%12,mgi=(G.indexOf(yearPillar(y,m,d).cheongan)*2+m)%10;return{cheongan:G[mgi],jiji:Z[mji],cheongName:GN[mgi],jijiName:ZN[mji]};}
+function dayPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getDayInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const base=new Date(1900,0,1),target=new Date(y,m-1,d),diff=Math.floor((target-base)/864e5),gi=(6+diff)%10,ji=(4+diff)%12;return{cheongan:G[gi<0?gi+10:gi],jiji:Z[ji<0?ji+12:ji],cheongName:GN[gi<0?gi+10:gi],jijiName:ZN[ji<0?ji+12:ji]};}
+function hourPillar(dc,h){const dci=G.indexOf(dc);let hji;if((h>=23.5||h<1.5))hji=0;else if(h>=1.5&&h<3.5)hji=1;else if(h>=3.5&&h<5.5)hji=2;else if(h>=5.5&&h<7.5)hji=3;else if(h>=7.5&&h<9.5)hji=4;else if(h>=9.5&&h<11.5)hji=5;else if(h>=11.5&&h<13.5)hji=6;else if(h>=13.5&&h<15.5)hji=7;else if(h>=15.5&&h<17.5)hji=8;else if(h>=17.5&&h<19.5)hji=9;else if(h>=19.5&&h<21.5)hji=10;else if(h>=21.5&&h<23.5)hji=11;else hji=0;const hgi=((dci%5)*2+hji)%10;return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};}
+
+document.getElementById('manseryeokForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    const fd=new FormData(e.target);
+    let [y,m,d]=fd.get('birthdate').split('-').map(Number);
+    const h=parseInt(fd.get('birthtime')||12),isL=fd.get('calendar')==='lunar';
+    if(isL&&typeof Lunar!=='undefined'){try{const l=Lunar.fromYmd(y,m,d),s=l.getSolar();y=s.getYear();m=s.getMonth();d=s.getDay();}catch(e){}}
+    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h);
+    document.getElementById('year-sky').textContent=yp.cheongan;
+    document.getElementById('year-ground').textContent=yp.jiji;
+    document.getElementById('year-element').textContent=E[yp.cheongan]+' '+E[yp.jiji];
+    document.getElementById('month-sky').textContent=mp.cheongan;
+    document.getElementById('month-ground').textContent=mp.jiji;
+    document.getElementById('month-element').textContent=E[mp.cheongan]+' '+E[mp.jiji];
+    document.getElementById('day-sky').textContent=dp.cheongan;
+    document.getElementById('day-ground').textContent=dp.jiji;
+    document.getElementById('day-element').textContent=E[dp.cheongan]+' '+E[dp.jiji];
+    document.getElementById('time-sky').textContent=hp.cheongan;
+    document.getElementById('time-ground').textContent=hp.jiji;
+    document.getElementById('time-element').textContent=E[hp.cheongan]+' '+E[hp.jiji];
+    document.getElementById('dayMaster').innerHTML=`<strong>${dp.cheongan}${E[dp.cheongan]} (${dp.cheongName}${E[dp.cheongan]})</strong>`;
+    document.getElementById('resultCard').classList.add('show');
+    document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});
+});
+    </script>
+</body>
+</html>
