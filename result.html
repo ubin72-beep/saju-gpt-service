@@ -103,7 +103,44 @@ E={'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚'
 function yearPillar(y,m,d){let sy=y;if(m===1||(m===2&&d<4))sy--;const o=(sy-1924+60)%60;return{cheongan:G[o%10],jiji:Z[o%12],cheongName:GN[o%10],jijiName:ZN[o%12]};}
 function monthPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getMonthInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const mji=(m+1)%12,mgi=(G.indexOf(yearPillar(y,m,d).cheongan)*2+m)%10;return{cheongan:G[mgi],jiji:Z[mji],cheongName:GN[mgi],jijiName:ZN[mji]};}
 function dayPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getDayInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const base=new Date(1900,0,1),target=new Date(y,m-1,d),diff=Math.floor((target-base)/864e5),gi=(6+diff)%10,ji=(4+diff)%12;return{cheongan:G[gi<0?gi+10:gi],jiji:Z[ji<0?ji+12:ji],cheongName:GN[gi<0?gi+10:gi],jijiName:ZN[ji<0?ji+12:ji]};}
-function hourPillar(dc,h){const dci=G.indexOf(dc);let hji=h>=23||h<1?0:h>=1&&h<3?1:h>=3&&h<5?2:h>=5&&h<7?3:h>=7&&h<9?4:h>=9&&h<11?5:h>=11&&h<13?6:h>=13&&h<15?7:h>=15&&h<17?8:h>=17&&h<19?9:h>=19&&h<21?10:11;const hgi=((dci%5)*2+hji)%10;return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};}
+
+// 🔥 전통 만세력 시간 구간 적용 (30분 단위)
+function hourPillar(dc,h,min=0){
+    const dci=G.indexOf(dc);
+    // 시간을 분 단위로 변환 (예: 17시 20분 = 1040분)
+    const totalMin=h*60+min;
+    
+    // 전통 만세력 시간 구간 (30분 단위)
+    // 子時: 23:30-01:29 (1410-89분, 또는 0-89분)
+    // 丑時: 01:30-03:29 (90-209분)
+    // 寅時: 03:30-05:29 (210-329분)
+    // 卯時: 05:30-07:29 (330-449분)
+    // 辰時: 07:30-09:29 (450-569분)
+    // 巳時: 09:30-11:29 (570-689분)
+    // 午時: 11:30-13:29 (690-809분)
+    // 未時: 13:30-15:29 (810-929분)
+    // 申時: 15:30-17:29 (930-1049분) ✅ 17시 20분 포함!
+    // 酉時: 17:30-19:29 (1050-1169분)
+    // 戌時: 19:30-21:29 (1170-1289분)
+    // 亥時: 21:30-23:29 (1290-1409분)
+    
+    let hji;
+    if(totalMin>=1410||totalMin<90)hji=0;        // 子時 23:30-01:29
+    else if(totalMin>=90&&totalMin<210)hji=1;    // 丑時 01:30-03:29
+    else if(totalMin>=210&&totalMin<330)hji=2;   // 寅時 03:30-05:29
+    else if(totalMin>=330&&totalMin<450)hji=3;   // 卯時 05:30-07:29
+    else if(totalMin>=450&&totalMin<570)hji=4;   // 辰時 07:30-09:29
+    else if(totalMin>=570&&totalMin<690)hji=5;   // 巳時 09:30-11:29
+    else if(totalMin>=690&&totalMin<810)hji=6;   // 午時 11:30-13:29
+    else if(totalMin>=810&&totalMin<930)hji=7;   // 未時 13:30-15:29
+    else if(totalMin>=930&&totalMin<1050)hji=8;  // 申時 15:30-17:29 ✅
+    else if(totalMin>=1050&&totalMin<1170)hji=9; // 酉時 17:30-19:29
+    else if(totalMin>=1170&&totalMin<1290)hji=10;// 戌時 19:30-21:29
+    else hji=11;                                 // 亥時 21:30-23:29
+    
+    const hgi=((dci%5)*2+hji)%10;
+    return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};
+}
 
 const sd=JSON.parse(localStorage.getItem('sajuData')||'{}');
 if(sd.birthdate){
@@ -111,9 +148,26 @@ if(sd.birthdate){
     document.getElementById('calendar').textContent=sd.calendar==='solar'?'양력':'음력';
     document.getElementById('gender').textContent=sd.gender==='male'?'남성':'여성';
     let [y,m,d]=sd.birthdate.split('-').map(Number);
-    const h=parseInt(sd.hour||12),isL=sd.calendar==='lunar';
+    
+    // 시간 파싱: "17", "17:20", "16" 등 지원
+    let h=12,min=0;
+    if(sd.hour){
+        const hourStr=String(sd.hour);
+        if(hourStr.includes(':')){
+            const [hh,mm]=hourStr.split(':').map(Number);
+            h=hh;min=mm;
+        }else{
+            h=parseInt(hourStr);
+        }
+    }
+    
+    const isL=sd.calendar==='lunar';
     if(isL&&typeof Lunar!=='undefined'){try{const l=Lunar.fromYmd(y,m,d),s=l.getSolar();y=s.getYear();m=s.getMonth();d=s.getDay();}catch(e){}}
-    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h);
+    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h,min);
+    
+    console.log('🕐 시간 정보:', {hour:h, minute:min, totalMin:h*60+min});
+    console.log('🔮 시주 계산 결과:', hp);
+    
     document.getElementById('year-sky').textContent=yp.cheongan;
     document.getElementById('year-ground').textContent=yp.jiji;
     document.getElementById('year-element').textContent=E[yp.cheongan]+' '+E[yp.jiji];
