@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1973년 2월 5일 사주 테스트</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #c41e3a;
+        }
+        pre {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        button {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #a01830;
+        }
+        .pillar-display {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .pillar-card {
+            background: #1a1a1a;
+            border: 2px solid #c41e3a;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            min-width: 150px;
+        }
+        .pillar-card h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .pillar-card .gan-ji {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            margin: 10px 0;
+        }
+        .pillar-card .element {
+            color: #aaa;
+            font-size: 14px;
+        }
+        .success {
+            color: #4caf50 !important;
+        }
+        .error {
+            color: #f44336 !important;
+        }
+        .warning {
+            color: #ff9800 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 1973년 2월 5일 (음력) 여성 사주 테스트</h1>
+        
+        <div class="test-section">
+            <h2>📝 테스트 정보</h2>
+            <p><strong>생년월일:</strong> 1973년 2월 5일 (음력)</p>
+            <p><strong>시간:</strong> 입력 안 됨 (기본값 사용)</p>
+            <p><strong>성별:</strong> 여성</p>
+            <p><strong>예상 사주:</strong></p>
+            <div class="pillar-display" style="background: #333; padding: 20px; border-radius: 10px;">
+                <div style="text-align: center;">
+                    <p style="color: #d4af37;">년주 (Year)</p>
+                    <p style="font-size: 28px; color: #fff;">壬子</p>
+                    <p style="color: #aaa;">임자 (水水)</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #d4af37;">월주 (Month)</p>
+                    <p style="font-size: 28px; color: #fff;">癸丑</p>
+                    <p style="color: #aaa;">계축 (水土)</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #d4af37;">일주 (Day)</p>
+                    <p style="font-size: 28px; color: #fff;">甲寅</p>
+                    <p style="color: #aaa;">갑인 (木木)</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #d4af37;">시주 (Hour)</p>
+                    <p style="font-size: 28px; color: #fff;">??</p>
+                    <p style="color: #aaa;">시간 미정</p>
+                </div>
+            </div>
+            <button onclick="testCalculation()">🔍 사주 계산 실행</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 계산 결과</h2>
+            <div id="result">
+                <p>계산 버튼을 클릭하세요...</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 검증 결과</h2>
+            <div id="validation">
+                <p>계산 후 자동으로 검증됩니다...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lunar Calendar Library -->
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+    <script src="js/saju-calculator.js"></script>
+    <script>
+        function testCalculation() {
+            console.log('=== 1973년 2월 5일 (음력) 사주 계산 시작 ===');
+            
+            const testInput = {
+                birthDate: '1973-02-05',
+                birthHour: '12', // 정오 (기본값)
+                gender: 'female',
+                calendar: 'lunar'
+            };
+            
+            console.log('📝 입력 데이터:', testInput);
+            
+            // calculateSaju 함수 확인
+            if (typeof calculateSaju !== 'function') {
+                document.getElementById('result').innerHTML = `
+                    <p class="error">❌ calculateSaju 함수를 찾을 수 없습니다!</p>
+                `;
+                return;
+            }
+            
+            // 사주 계산
+            const result = calculateSaju(testInput);
+            console.log('📊 계산 결과:', result);
+            
+            if (!result) {
+                document.getElementById('result').innerHTML = `
+                    <p class="error">❌ 사주 계산 실패!</p>
+                `;
+                return;
+            }
+            
+            // 사주 표시
+            displayPillars(result);
+            
+            // 검증
+            validateResult(result);
+        }
+
+        function displayPillars(result) {
+            const { year, month, day, hour } = result.pillars;
+            const details = result.pillarDetails;
+            
+            const html = `
+                <p class="success">✅ 사주 계산 성공!</p>
+                <div class="pillar-display">
+                    <div class="pillar-card">
+                        <h3>년주 (Year)</h3>
+                        <div class="gan-ji">${year}</div>
+                        <div class="element">${details.year.cheongName}${details.year.jijiName}</div>
+                        <div class="element">${details.year.element}</div>
+                    </div>
+                    <div class="pillar-card">
+                        <h3>월주 (Month)</h3>
+                        <div class="gan-ji">${month}</div>
+                        <div class="element">${details.month.cheongName}${details.month.jijiName}</div>
+                        <div class="element">${details.month.element}</div>
+                    </div>
+                    <div class="pillar-card">
+                        <h3>일주 (Day)</h3>
+                        <div class="gan-ji">${day}</div>
+                        <div class="element">${details.day.cheongName}${details.day.jijiName}</div>
+                        <div class="element">${details.day.element}</div>
+                    </div>
+                    <div class="pillar-card">
+                        <h3>시주 (Hour)</h3>
+                        <div class="gan-ji">${hour}</div>
+                        <div class="element">${details.hour.cheongName}${details.hour.jijiName}</div>
+                        <div class="element">${details.hour.element}</div>
+                    </div>
+                </div>
+                <h3>📋 상세 정보</h3>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+            
+            document.getElementById('result').innerHTML = html;
+        }
+
+        function validateResult(result) {
+            const expected = {
+                year: '壬子',
+                month: '癸丑',
+                day: '甲寅'
+            };
+            
+            const actual = result.pillars;
+            
+            let validationHTML = '<h3>🎯 검증 결과</h3>';
+            
+            // 년주 검증
+            if (actual.year === expected.year) {
+                validationHTML += `<p class="success">✅ 년주: ${actual.year} (정확함)</p>`;
+            } else {
+                validationHTML += `<p class="error">❌ 년주: ${actual.year} (예상: ${expected.year})</p>`;
+            }
+            
+            // 월주 검증
+            if (actual.month === expected.month) {
+                validationHTML += `<p class="success">✅ 월주: ${actual.month} (정확함)</p>`;
+            } else {
+                validationHTML += `<p class="error">❌ 월주: ${actual.month} (예상: ${expected.month})</p>`;
+            }
+            
+            // 일주 검증 (가장 중요!)
+            if (actual.day === expected.day) {
+                validationHTML += `<p class="success">✅ 일주: ${actual.day} (정확함) - 일간은 甲木입니다!</p>`;
+            } else {
+                validationHTML += `<p class="error">❌ 일주: ${actual.day} (예상: ${expected.day})</p>`;
+            }
+            
+            // 일간 확인
+            const dayMaster = result.dayMaster;
+            if (dayMaster === '甲') {
+                validationHTML += `<p class="success">✅ 일간(日干): ${dayMaster} (甲木 맞음!)</p>`;
+            } else {
+                validationHTML += `<p class="error">❌ 일간(日干): ${dayMaster} (예상: 甲)</p>`;
+            }
+            
+            // 시주는 시간이 정확하지 않아서 검증 생략
+            validationHTML += `<p class="warning">⚠️ 시주: ${actual.hour} (시간 정보 없어서 검증 생략)</p>`;
+            
+            document.getElementById('validation').innerHTML = validationHTML;
+        }
+
+        // 페이지 로드 시 라이브러리 확인
+        window.addEventListener('load', () => {
+            console.log('✅ 테스트 페이지 로드 완료');
+            console.log('Lunar 라이브러리:', typeof Lunar !== 'undefined' ? '로드됨' : '없음');
+            console.log('Solar 라이브러리:', typeof Solar !== 'undefined' ? '로드됨' : '없음');
+            console.log('calculateSaju 함수:', typeof calculateSaju === 'function' ? '존재' : '없음');
+        });
+    </script>
+</body>
+</html>
