@@ -804,7 +804,6 @@
                 <li class="dropdown">
                     <a href="javascript:void(0)" data-i18n="nav.services">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
                     <div class="dropdown-menu">
-                        <a href="manseryeok.html">📅 만세력 조회</a>
                         <a href="saju-matching.html">💑 궁합 매칭</a>
                         <a href="community.html">💬 커뮤니티 프리미엄</a>
                         <a href="hr-solution.html">💼 HR 솔루션</a>
@@ -917,18 +916,18 @@
                     <label><i class="fas fa-clock"></i> 태어난 시간 (선택)</label>
                     <select name="birthtime">
                         <option value="">모름</option>
-                        <option value="23:30">자시 子時 (23:30-01:29)</option>
-                        <option value="01:30">축시 丑時 (01:30-03:29)</option>
-                        <option value="03:30">인시 寅時 (03:30-05:29)</option>
-                        <option value="05:30">묘시 卯時 (05:30-07:29)</option>
-                        <option value="07:30">진시 辰時 (07:30-09:29)</option>
-                        <option value="09:30">사시 巳時 (09:30-11:29)</option>
-                        <option value="11:30">오시 午時 (11:30-13:29)</option>
-                        <option value="13:30">미시 未時 (13:30-15:29)</option>
-                        <option value="15:30">신시 申時 (15:30-17:29)</option>
-                        <option value="17:30">유시 酉時 (17:30-19:29)</option>
-                        <option value="19:30">술시 戌時 (19:30-21:29)</option>
-                        <option value="21:30">해시 亥時 (21:30-23:29)</option>
+                        <option value="23-01">자시 (23:00-01:00)</option>
+                        <option value="01-03">축시 (01:00-03:00)</option>
+                        <option value="03-05">인시 (03:00-05:00)</option>
+                        <option value="05-07">묘시 (05:00-07:00)</option>
+                        <option value="07-09">진시 (07:00-09:00)</option>
+                        <option value="09-11">사시 (09:00-11:00)</option>
+                        <option value="11-13">오시 (11:00-13:00)</option>
+                        <option value="13-15">미시 (13:00-15:00)</option>
+                        <option value="15-17">신시 (15:00-17:00)</option>
+                        <option value="17-19">유시 (17:00-19:00)</option>
+                        <option value="19-21">술시 (19:00-21:00)</option>
+                        <option value="21-23">해시 (21:00-23:00)</option>
                     </select>
                 </div>
                 
@@ -958,19 +957,6 @@
         <div class="container">
             <h2 class="section-title">프리미엄 서비스</h2>
             <div class="services-grid">
-                <!-- 만세력 조회 (NEW) -->
-                <div class="service-card" onclick="location.href='manseryeok.html'" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white;">
-                    <div class="service-icon">📅</div>
-                    <div class="service-title" style="color: white;">만세력 조회</div>
-                    <div class="service-description" style="color: rgba(255,255,255,0.95);">날짜별 사주 확인 · 간단한 사주팔자 조회</div>
-                    <div class="service-price" style="color: white;">
-                        <div style="margin-bottom: 5px;">
-                            <span style="font-weight: 700; font-size: 1.2rem;">무료</span>
-                        </div>
-                        <span style="display: inline-block; background: rgba(255,255,255,0.3); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">🔥 NEW</span>
-                    </div>
-                </div>
-
                 <!-- 상세 사주팔자 -->
                 <div class="service-card" onclick="document.getElementById('saju-form').scrollIntoView({behavior: 'smooth'})">
                     <div class="service-icon">🔮</div>
@@ -1001,7 +987,6 @@
                     <div class="service-title">맞춤 연애운</div>
                     <div class="service-description">2026년 사랑의 흐름 · 이상형 분석</div>
                     <div class="service-price">₩3,900</div>
-                    <span style="display: inline-block; background: #e0e0e0; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin-top: 10px;">준비 중</span>
                 </div>
                 
                 <!-- 토정비결 2026 -->
@@ -1018,7 +1003,6 @@
                     <div class="service-title">2026 신년운세</div>
                     <div class="service-description">병오년 12띠별 운세 · 월별 흐름 분석</div>
                     <div class="service-price">₩4,900</div>
-                    <span style="display: inline-block; background: #e0e0e0; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin-top: 10px;">준비 중</span>
                 </div>
                 
                 <!-- 24시간 AI 상담 -->
@@ -1385,17 +1369,11 @@
         
         updateLanguage(currentLang);
         
-        // 폼 제출 (전통 만세력 시간 구간 적용)
+        // 폼 제출
         document.getElementById('sajuForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
-            
-            // 시간 값 처리 (HH:MM 형식 그대로 저장)
-            if(data.birthtime) {
-                data.hour = data.birthtime; // "15:30", "17:30" 등
-            }
-            
             localStorage.setItem('sajuData', JSON.stringify(data));
             window.location.href = 'result.html';
         });
