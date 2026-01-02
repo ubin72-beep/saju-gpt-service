@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사주팔자 결과 - AI 사주 천년지기</title>
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
@@ -54,14 +55,10 @@
             </div>
         </div>
     </nav>
-
     <section class="result-header">
         <h1>🎴 사주팔자 결과</h1>
-        <div class="user-info">
-            생년월일: <span id="birthdate">-</span> (<span id="calendar">-</span>) | 성별: <span id="gender">-</span>
-        </div>
+        <div class="user-info">생년월일: <span id="birthdate">-</span> (<span id="calendar">-</span>) | 성별: <span id="gender">-</span></div>
     </section>
-
     <div class="result-container">
         <div class="result-card">
             <h2 class="section-title">⭐ 당신의 사주팔자</h2>
@@ -72,7 +69,6 @@
                 <div class="saju-column"><h3>年柱 (연주)</h3><div class="hanja" id="year-sky">庚</div><div class="hanja" id="year-ground">申</div><div class="element" id="year-element">金 金</div></div>
             </div>
         </div>
-
         <div class="result-card">
             <h2 class="section-title">👤 일간 (日干) 분석</h2>
             <div class="analysis-section">
@@ -82,134 +78,64 @@
                 </div>
             </div>
         </div>
-
         <div class="result-card">
             <h2 class="section-title">📊 오행 (五行) 균형</h2>
             <div class="analysis-section">
-                <div class="fortune-bar" data-element="木"><div class="fortune-bar-label"><span>🌳 木 (목)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width: 20%;">20%</div></div></div>
-                <div class="fortune-bar" data-element="火"><div class="fortune-bar-label"><span>🔥 火 (화)</span><span class="percent">35%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width: 35%;">35%</div></div></div>
-                <div class="fortune-bar" data-element="土"><div class="fortune-bar-label"><span>🏔️ 土 (토)</span><span class="percent">15%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width: 15%;">15%</div></div></div>
-                <div class="fortune-bar" data-element="金"><div class="fortune-bar-label"><span>⚙️ 金 (금)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width: 20%;">20%</div></div></div>
-                <div class="fortune-bar" data-element="水"><div class="fortune-bar-label"><span>💧 水 (수)</span><span class="percent">10%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width: 10%;">10%</div></div></div>
+                <div class="fortune-bar" data-element="木"><div class="fortune-bar-label"><span>🌳 木 (목)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:20%">20%</div></div></div>
+                <div class="fortune-bar" data-element="火"><div class="fortune-bar-label"><span>🔥 火 (화)</span><span class="percent">35%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:35%">35%</div></div></div>
+                <div class="fortune-bar" data-element="土"><div class="fortune-bar-label"><span>🏔️ 土 (토)</span><span class="percent">15%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:15%">15%</div></div></div>
+                <div class="fortune-bar" data-element="金"><div class="fortune-bar-label"><span>⚙️ 金 (금)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:20%">20%</div></div></div>
+                <div class="fortune-bar" data-element="水"><div class="fortune-bar-label"><span>💧 水 (수)</span><span class="percent">10%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:10%">10%</div></div></div>
             </div>
         </div>
-
         <div class="action-buttons">
             <a href="index.html" class="action-btn btn-secondary">🏠 홈으로</a>
             <a href="pricing.html" class="action-btn btn-gold">👑 프리미엄 분석</a>
             <a href="ai-chat.html" class="action-btn btn-primary">🤖 AI 상담하기</a>
         </div>
     </div>
-
     <footer class="footer"><p>© 2025 AI 사주 천년지기. All rights reserved.</p></footer>
-
     <script>
 const G=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],GN=['갑','을','병','정','무','기','경','신','임','계'],
 Z=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'],ZN=['자','축','인','묘','진','사','오','미','신','유','술','해'],
-E={'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'Water','癸':'水','子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
+E={'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'水','癸':'水','子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
 
-// 음력 데이터 (1900-2050, 151년) - 압축
-const L=[0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,0x05aa0,0x076a3,0x096d0,0x04afb,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0];
-
-function lunar2solar(ly,lm,ld,leap=false){
-    if(ly<1900||ly>2050)return{year:ly,month:lm,day:ld};
-    let idx=ly-1900,info=L[idx],days=0;
-    for(let y=1900;y<ly;y++){
-        let i=L[y-1900];
-        days+=((i&0x10000)?30:29);
-        for(let m=1;m<=12;m++)days+=((i&(0x10000>>m))?30:29);
-    }
-    for(let m=1;m<lm;m++)days+=((info&(0x10000>>m))?30:29);
-    days+=ld;
-    let base=new Date(1900,0,31);
-    base.setDate(base.getDate()+days-1);
-    return{year:base.getFullYear(),month:base.getMonth()+1,day:base.getDate()};
-}
-
-function yearPillar(y,m,d){
-    let sy=y;
-    if(m===1||(m===2&&d<4))sy=y-1;
-    const o=(sy-1924+60)%60;
-    return{cheongan:G[o%10],jiji:Z[o%12],cheongName:GN[o%10],jijiName:ZN[o%12]};
-}
-
-function monthPillar(y,m,d,yp){
-    const ygi=G.indexOf(yp.cheongan),mji=(m+1)%12,mgi=(ygi*2+m)%10;
-    return{cheongan:G[mgi],jiji:Z[mji],cheongName:GN[mgi],jijiName:ZN[mji]};
-}
-
-function dayPillar(y,m,d){
-    const base=new Date(1900,0,1),target=new Date(y,m-1,d),
-    diff=Math.floor((target-base)/(864e5)),gi=(6+diff)%10,ji=(4+diff)%12;
-    return{cheongan:G[gi<0?gi+10:gi],jiji:Z[ji<0?ji+12:ji],cheongName:GN[gi<0?gi+10:gi],jijiName:ZN[ji<0?ji+12:ji]};
-}
-
-function hourPillar(dc,h){
-    const dci=G.indexOf(dc);
-    let hji=h>=23||h<1?0:h>=1&&h<3?1:h>=3&&h<5?2:h>=5&&h<7?3:h>=7&&h<9?4:h>=9&&h<11?5:h>=11&&h<13?6:h>=13&&h<15?7:h>=15&&h<17?8:h>=17&&h<19?9:h>=19&&h<21?10:11;
-    const hgi=((dci%5)*2+hji)%10;
-    return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};
-}
+function yearPillar(y,m,d){let sy=y;if(m===1||(m===2&&d<4))sy--;const o=(sy-1924+60)%60;return{cheongan:G[o%10],jiji:Z[o%12],cheongName:GN[o%10],jijiName:ZN[o%12]};}
+function monthPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getMonthInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const mji=(m+1)%12,mgi=(G.indexOf(yearPillar(y,m,d).cheongan)*2+m)%10;return{cheongan:G[mgi],jiji:Z[mji],cheongName:GN[mgi],jijiName:ZN[mji]};}
+function dayPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getDayInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const base=new Date(1900,0,1),target=new Date(y,m-1,d),diff=Math.floor((target-base)/864e5),gi=(6+diff)%10,ji=(4+diff)%12;return{cheongan:G[gi<0?gi+10:gi],jiji:Z[ji<0?ji+12:ji],cheongName:GN[gi<0?gi+10:gi],jijiName:ZN[ji<0?ji+12:ji]};}
+function hourPillar(dc,h){const dci=G.indexOf(dc);let hji=h>=23||h<1?0:h>=1&&h<3?1:h>=3&&h<5?2:h>=5&&h<7?3:h>=7&&h<9?4:h>=9&&h<11?5:h>=11&&h<13?6:h>=13&&h<15?7:h>=15&&h<17?8:h>=17&&h<19?9:h>=19&&h<21?10:11;const hgi=((dci%5)*2+hji)%10;return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};}
 
 const sd=JSON.parse(localStorage.getItem('sajuData')||'{}');
 if(sd.birthdate){
     document.getElementById('birthdate').textContent=sd.birthdate;
     document.getElementById('calendar').textContent=sd.calendar==='solar'?'양력':'음력';
     document.getElementById('gender').textContent=sd.gender==='male'?'남성':'여성';
-    
     let [y,m,d]=sd.birthdate.split('-').map(Number);
     const h=parseInt(sd.hour||12),isL=sd.calendar==='lunar';
-    
-    if(isL){
-        const sol=lunar2solar(y,m,d);
-        y=sol.year;m=sol.month;d=sol.day;
-    }
-    
-    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d,yp),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h);
-    
+    if(isL&&typeof Lunar!=='undefined'){try{const l=Lunar.fromYmd(y,m,d),s=l.getSolar();y=s.getYear();m=s.getMonth();d=s.getDay();}catch(e){}}
+    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h);
     document.getElementById('year-sky').textContent=yp.cheongan;
     document.getElementById('year-ground').textContent=yp.jiji;
     document.getElementById('year-element').textContent=E[yp.cheongan]+' '+E[yp.jiji];
-    
     document.getElementById('month-sky').textContent=mp.cheongan;
     document.getElementById('month-ground').textContent=mp.jiji;
     document.getElementById('month-element').textContent=E[mp.cheongan]+' '+E[mp.jiji];
-    
     document.getElementById('day-sky').textContent=dp.cheongan;
     document.getElementById('day-ground').textContent=dp.jiji;
     document.getElementById('day-element').textContent=E[dp.cheongan]+' '+E[dp.jiji];
-    
     document.getElementById('time-sky').textContent=hp.cheongan;
     document.getElementById('time-ground').textContent=hp.jiji;
     document.getElementById('time-element').textContent=E[hp.cheongan]+' '+E[hp.jiji];
-    
     const dm=dp.cheongan,dme=E[dm],ee={'木':'🌳','火':'🔥','土':'🏔️','金':'⚙️','水':'💧'};
     document.getElementById('day-master-title').innerHTML=`${ee[dme]} 당신의 일간: ${dm}${dme} (${dp.cheongName}${dme})`;
-    
     const desc={'甲':'갑목은 큰 나무와 같은 성격으로, 곧고 정직하며 리더십이 강합니다.','乙':'을목은 덩굴과 같은 성격으로, 유연하고 적응력이 뛰어납니다.','丙':'병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다.','丁':'정화는 촛불과 같은 성격으로, 세심하고 따뜻한 마음을 가졌습니다.','戊':'무토는 산과 같은 성격으로, 안정적이고 믿음직합니다.','己':'기토는 대지와 같은 성격으로, 포용력이 크고 실용적입니다.','庚':'경금은 바위와 같은 성격으로, 강직하고 의지가 강합니다.','辛':'신금은 보석과 같은 성격으로, 세련되고 예민합니다.','壬':'임수는 큰 강과 같은 성격으로, 활동적이고 지혜롭습니다.','癸':'계수는 빗물과 같은 성격으로, 섬세하고 통찰력이 뛰어납니다.'};
     document.getElementById('day-master-desc').textContent=desc[dm];
-    
     const ec={'木':0,'火':0,'土':0,'金':0,'水':0};
     [yp.cheongan,yp.jiji,mp.cheongan,mp.jiji,dp.cheongan,dp.jiji,hp.cheongan,hp.jiji].forEach(c=>{const e=E[c];if(e)ec[e]++;});
-    const ep={};
-    Object.keys(ec).forEach(k=>ep[k]=Math.round(ec[k]/8*100));
-    document.querySelectorAll('.fortune-bar').forEach(b=>{
-        const el=b.getAttribute('data-element'),pc=ep[el];
-        b.querySelector('.percent').textContent=`${pc}%`;
-        b.querySelector('.fortune-bar-fill').style.width=`${pc}%`;
-        b.querySelector('.fortune-bar-fill').textContent=`${pc}%`;
-    });
+    const ep={};Object.keys(ec).forEach(k=>ep[k]=Math.round(ec[k]/8*100));
+    document.querySelectorAll('.fortune-bar').forEach(b=>{const el=b.getAttribute('data-element'),pc=ep[el];b.querySelector('.percent').textContent=`${pc}%`;b.querySelector('.fortune-bar-fill').style.width=`${pc}%`;b.querySelector('.fortune-bar-fill').textContent=`${pc}%`;});
 }
-
-window.addEventListener('load',()=>{
-    setTimeout(()=>{
-        document.querySelectorAll('.fortune-bar-fill').forEach(b=>{
-            const w=b.style.width;
-            b.style.width='0';
-            setTimeout(()=>b.style.width=w,100);
-        });
-    },500);
-});
+window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.fortune-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,100);});},500);});
     </script>
 </body>
 </html>
