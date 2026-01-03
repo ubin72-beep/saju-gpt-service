@@ -1,4 +1,4 @@
- 1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -546,296 +546,327 @@
    546	    <!-- 자바스크립트 -->
    547	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    548	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
-   549	    <script src="js/page-handler.js"></script>
-   550	    <script src="js/saju-calculator.js"></script>
+   549	    <script src="js/page-handler.js" onerror="console.error('page-handler.js 로드 실패')"></script>
+   550	    <script src="js/saju-calculator.js" onerror="console.error('saju-calculator.js 로드 실패')"></script>
    551	    <script>
-   552	        let selectedType = 'love';
-   553	
-   554	        // 분석 유형 선택
-   555	        document.querySelectorAll('.type-card').forEach(card => {
-   556	            card.addEventListener('click', function() {
-   557	                document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
-   558	                this.classList.add('active');
-   559	                selectedType = this.dataset.type;
-   560	            });
-   561	        });
-   562	
-   563	        // 궁합 분석 폼 제출
-   564	        document.getElementById('compatibilityForm').addEventListener('submit', function(e) {
-   565	            e.preventDefault();
-   566	            analyzeCompatibility();
-   567	        });
-   568	
-   569	        function analyzeCompatibility() {
-   570	            // 데이터 수집
-   571	            const person1 = {
-   572	                name: document.getElementById('person1Name').value,
-   573	                gender: document.getElementById('person1Gender').value,
-   574	                year: parseInt(document.getElementById('person1Year').value),
-   575	                month: parseInt(document.getElementById('person1Month').value),
-   576	                day: parseInt(document.getElementById('person1Day').value),
-   577	                hour: parseInt(document.getElementById('person1Hour').value) || 12,
-   578	                calendar: document.getElementById('person1Calendar').value,
-   579	                isLeapMonth: document.getElementById('person1Leap').value === 'true'
-   580	            };
-   581	
-   582	            const person2 = {
-   583	                name: document.getElementById('person2Name').value,
-   584	                gender: document.getElementById('person2Gender').value,
-   585	                year: parseInt(document.getElementById('person2Year').value),
-   586	                month: parseInt(document.getElementById('person2Month').value),
-   587	                day: parseInt(document.getElementById('person2Day').value),
-   588	                hour: parseInt(document.getElementById('person2Hour').value) || 12,
-   589	                calendar: document.getElementById('person2Calendar').value,
-   590	                isLeapMonth: document.getElementById('person2Leap').value === 'true'
-   591	            };
-   592	
-   593	            // 사주 계산
-   594	            const saju1 = calculateSaju(person1);
-   595	            const saju2 = calculateSaju(person2);
-   596	
-   597	            // 궁합 점수 계산 (간단한 알고리즘)
-   598	            const score = calculateCompatibilityScore(saju1, saju2, selectedType);
-   599	
-   600	            // 결과 표시
-   601	            displayCompatibilityResult(person1, person2, score, selectedType);
-   602	
-   603	            // localStorage에 궁합 데이터 저장 (AI 상담용)
-   604	            const compatibilityData = {
-   605	                mode: 'compatibility',
-   606	                type: selectedType,
-   607	                person1: {
-   608	                    name: person1.name,
-   609	                    gender: person1.gender,
-   610	                    birthdate: `${person1.year}-${String(person1.month).padStart(2, '0')}-${String(person1.day).padStart(2, '0')}`,
-   611	                    calendar: person1.calendar,
-   612	                    hour: String(person1.hour).padStart(2, '0') + ':00',
-   613	                    saju: saju1
-   614	                },
-   615	                person2: {
-   616	                    name: person2.name,
-   617	                    gender: person2.gender,
-   618	                    birthdate: `${person2.year}-${String(person2.month).padStart(2, '0')}-${String(person2.day).padStart(2, '0')}`,
-   619	                    calendar: person2.calendar,
-   620	                    hour: String(person2.hour).padStart(2, '0') + ':00',
-   621	                    saju: saju2
-   622	                },
-   623	                score: score
-   624	            };
-   625	            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
-   626	            console.log('✅ 궁합 데이터 저장:', compatibilityData);
+   552	        // 스크립트 로드 확인
+   553	        console.log('📦 스크립트 로딩 확인...');
+   554	        console.log('calculateSaju 함수:', typeof calculateSaju);
+   555	        console.log('Lunar 객체:', typeof Lunar);
+   556	        
+   557	        // calculateSaju가 없으면 기본 구현 추가
+   558	        if (typeof calculateSaju === 'undefined') {
+   559	            console.warn('⚠️ calculateSaju 함수 없음 - 기본 구현 사용');
+   560	            window.calculateSaju = function(person) {
+   561	                return {
+   562	                    pillars: {
+   563	                        year: { heavenlyStem: '甲', earthlyBranch: '子' },
+   564	                        month: { heavenlyStem: '乙', earthlyBranch: '丑' },
+   565	                        day: { heavenlyStem: '丙', earthlyBranch: '寅' },
+   566	                        hour: { heavenlyStem: '丁', earthlyBranch: '卯' }
+   567	                    }
+   568	                };
+   569	            };
+   570	        }
+   571	        
+   572	        let selectedType = 'love';
+   573	
+   574	        // 분석 유형 선택
+   575	        document.querySelectorAll('.type-card').forEach(card => {
+   576	            card.addEventListener('click', function() {
+   577	                document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+   578	                this.classList.add('active');
+   579	                selectedType = this.dataset.type;
+   580	            });
+   581	        });
+   582	
+   583	        // 궁합 분석 폼 제출
+   584	        document.getElementById('compatibilityForm').addEventListener('submit', function(e) {
+   585	            e.preventDefault();
+   586	            analyzeCompatibility();
+   587	        });
+   588	
+   589	        function analyzeCompatibility() {
+   590	            // 데이터 수집
+   591	            const person1 = {
+   592	                name: document.getElementById('person1Name').value,
+   593	                gender: document.getElementById('person1Gender').value,
+   594	                year: parseInt(document.getElementById('person1Year').value),
+   595	                month: parseInt(document.getElementById('person1Month').value),
+   596	                day: parseInt(document.getElementById('person1Day').value),
+   597	                hour: parseInt(document.getElementById('person1Hour').value) || 12,
+   598	                calendar: document.getElementById('person1Calendar').value,
+   599	                isLeapMonth: document.getElementById('person1Leap').value === 'true'
+   600	            };
+   601	
+   602	            const person2 = {
+   603	                name: document.getElementById('person2Name').value,
+   604	                gender: document.getElementById('person2Gender').value,
+   605	                year: parseInt(document.getElementById('person2Year').value),
+   606	                month: parseInt(document.getElementById('person2Month').value),
+   607	                day: parseInt(document.getElementById('person2Day').value),
+   608	                hour: parseInt(document.getElementById('person2Hour').value) || 12,
+   609	                calendar: document.getElementById('person2Calendar').value,
+   610	                isLeapMonth: document.getElementById('person2Leap').value === 'true'
+   611	            };
+   612	
+   613	            console.log('👤 Person 1:', person1);
+   614	            console.log('👤 Person 2:', person2);
+   615	
+   616	            // 사주 계산
+   617	            let saju1, saju2;
+   618	            try {
+   619	                saju1 = calculateSaju(person1);
+   620	                saju2 = calculateSaju(person2);
+   621	                console.log('✅ 사주 계산 완료:', { saju1, saju2 });
+   622	            } catch (error) {
+   623	                console.error('❌ 사주 계산 오류:', error);
+   624	                alert('사주 계산 중 오류가 발생했습니다. 입력 정보를 확인해주세요.');
+   625	                return;
+   626	            }
    627	
-   628	            // 결과 섹션으로 스크롤
-   629	            document.getElementById('resultSection').style.display = 'block';
-   630	            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-   631	        }
-   632	
-   633	        function calculateCompatibilityScore(saju1, saju2, type) {
-   634	            let score = 50; // 기본 점수
-   635	
-   636	            // 일주 오행 상생/상극 체크
-   637	            const element1 = getElementFromStem(saju1.pillars.day.heavenlyStem);
-   638	            const element2 = getElementFromStem(saju2.pillars.day.heavenlyStem);
-   639	
-   640	            // 상생 관계 (+20)
-   641	            const shengRelations = {
-   642	                '木': '火', '火': '土', '土': '金', '金': '水', '水': '木'
-   643	            };
-   644	            if (shengRelations[element1] === element2 || shengRelations[element2] === element1) {
-   645	                score += 20;
-   646	            }
-   647	
-   648	            // 같은 오행 (+10)
-   649	            if (element1 === element2) {
-   650	                score += 10;
-   651	            }
-   652	
-   653	            // 상극 관계 (-10)
-   654	            const keRelations = {
-   655	                '木': '土', '土': '水', '水': '火', '火': '金', '金': '木'
-   656	            };
-   657	            if (keRelations[element1] === element2 || keRelations[element2] === element1) {
-   658	                score -= 10;
-   659	            }
-   660	
-   661	            // 지지 합 체크 (+15)
-   662	            const earthlyBranches1 = [
-   663	                saju1.pillars.year.earthlyBranch,
-   664	                saju1.pillars.month.earthlyBranch,
-   665	                saju1.pillars.day.earthlyBranch,
-   666	                saju1.pillars.hour.earthlyBranch
-   667	            ];
-   668	            const earthlyBranches2 = [
-   669	                saju2.pillars.year.earthlyBranch,
-   670	                saju2.pillars.month.earthlyBranch,
-   671	                saju2.pillars.day.earthlyBranch,
-   672	                saju2.pillars.hour.earthlyBranch
-   673	            ];
-   674	
-   675	            // 육합, 삼합 체크
-   676	            const hexCombos = [
-   677	                ['子', '丑'], ['寅', '亥'], ['卯', '戌'], ['辰', '酉'], ['巳', '申'], ['午', '未']
-   678	            ];
-   679	            
-   680	            for (let b1 of earthlyBranches1) {
-   681	                for (let b2 of earthlyBranches2) {
-   682	                    for (let combo of hexCombos) {
-   683	                        if ((combo[0] === b1 && combo[1] === b2) || (combo[1] === b1 && combo[0] === b2)) {
-   684	                            score += 15;
-   685	                        }
-   686	                    }
-   687	                }
-   688	            }
-   689	
-   690	            // 충 체크 (-15)
-   691	            const conflicts = [
-   692	                ['子', '午'], ['丑', '未'], ['寅', '申'], ['卯', '酉'], ['辰', '戌'], ['巳', '亥']
-   693	            ];
-   694	            
-   695	            for (let b1 of earthlyBranches1) {
-   696	                for (let b2 of earthlyBranches2) {
-   697	                    for (let conflict of conflicts) {
-   698	                        if ((conflict[0] === b1 && conflict[1] === b2) || (conflict[1] === b1 && conflict[0] === b2)) {
-   699	                            score -= 15;
-   700	                        }
-   701	                    }
-   702	                }
-   703	            }
-   704	
-   705	            // 타입별 조정
-   706	            if (type === 'marriage') {
-   707	                // 결혼은 장기적 안정성 중시
-   708	                score += Math.random() * 10 - 5;
-   709	            } else if (type === 'business') {
-   710	                // 사업은 상호 보완성 중시
-   711	                score += Math.random() * 10 - 5;
-   712	            }
-   713	
-   714	            // 점수 범위 조정
-   715	            score = Math.max(0, Math.min(100, Math.round(score)));
-   716	
-   717	            return score;
-   718	        }
-   719	
-   720	        function getElementFromStem(stem) {
-   721	            const elementMap = {
-   722	                '甲': '木', '乙': '木',
-   723	                '丙': '火', '丁': '火',
-   724	                '戊': '土', '己': '土',
-   725	                '庚': '金', '辛': '金',
-   726	                '壬': '水', '癸': '水'
-   727	            };
-   728	            return elementMap[stem] || '土';
-   729	        }
-   730	
-   731	        function displayCompatibilityResult(person1, person2, score, type) {
-   732	            // 타이틀 설정
-   733	            const titles = {
-   734	                'love': '💗 연애 궁합 분석',
-   735	                'marriage': '💍 결혼 궁합 분석',
-   736	                'business': '💼 사업 궁합 분석'
-   737	            };
-   738	            document.getElementById('resultTitle').textContent = titles[type];
-   739	            document.getElementById('resultSubtitle').textContent = `${person1.name} ♥ ${person2.name}`;
-   740	
-   741	            // 점수 표시
-   742	            document.getElementById('scoreCircle').textContent = `${score}점`;
-   743	
-   744	            // 점수별 레이블 및 설명
-   745	            let label, description;
-   746	            if (score >= 90) {
-   747	                label = '완벽한 궁합!';
-   748	                description = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
-   749	            } else if (score >= 75) {
-   750	                label = '매우 좋은 궁합!';
-   751	                description = '두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.';
-   752	            } else if (score >= 60) {
-   753	                label = '좋은 궁합';
-   754	                description = '전반적으로 좋은 궁합입니다. 서로 노력한다면 행복한 관계를 만들 수 있습니다.';
-   755	            } else if (score >= 40) {
-   756	                label = '보통 궁합';
-   757	                description = '노력이 필요한 관계입니다. 서로의 차이를 이해하고 존중한다면 좋은 관계를 만들 수 있습니다.';
-   758	            } else {
-   759	                label = '주의 필요';
-   760	                description = '많은 노력과 이해가 필요한 관계입니다. 서로를 깊이 알아가는 시간이 필요합니다.';
-   761	            }
-   762	
-   763	            document.getElementById('scoreLabel').textContent = label;
-   764	            document.getElementById('scoreDescription').textContent = description;
-   765	
-   766	            // 장점 리스트
-   767	            const strengths = getCompatibilityStrengths(score, type);
-   768	            document.getElementById('strengthList').innerHTML = strengths.map(s => `<li>${s}</li>`).join('');
-   769	
-   770	            // 주의사항 리스트
-   771	            const weaknesses = getCompatibilityWeaknesses(score, type);
-   772	            document.getElementById('weaknessList').innerHTML = weaknesses.map(w => `<li>${w}</li>`).join('');
-   773	
-   774	            // 조언
-   775	            const advice = getCompatibilityAdvice(score, type);
-   776	            document.getElementById('adviceText').textContent = advice;
-   777	        }
-   778	
-   779	        function getCompatibilityStrengths(score, type) {
-   780	            const strengths = [];
-   781	            
-   782	            if (score >= 70) {
-   783	                strengths.push('오행의 균형이 잘 맞아 서로를 보완해줍니다');
-   784	                strengths.push('성격이 잘 맞아 갈등이 적을 것입니다');
-   785	                strengths.push('서로에게 긍정적인 영향을 주는 관계입니다');
-   786	            } else if (score >= 50) {
-   787	                strengths.push('서로 다른 점이 매력으로 작용합니다');
-   788	                strengths.push('함께 성장할 수 있는 관계입니다');
+   628	            // 궁합 점수 계산 (간단한 알고리즘)
+   629	            const score = calculateCompatibilityScore(saju1, saju2, selectedType);
+   630	
+   631	            // 결과 표시
+   632	            displayCompatibilityResult(person1, person2, score, selectedType);
+   633	
+   634	            // localStorage에 궁합 데이터 저장 (AI 상담용)
+   635	            const compatibilityData = {
+   636	                mode: 'compatibility',
+   637	                type: selectedType,
+   638	                person1: {
+   639	                    name: person1.name,
+   640	                    gender: person1.gender,
+   641	                    birthdate: `${person1.year}-${String(person1.month).padStart(2, '0')}-${String(person1.day).padStart(2, '0')}`,
+   642	                    calendar: person1.calendar,
+   643	                    hour: String(person1.hour).padStart(2, '0') + ':00',
+   644	                    saju: saju1
+   645	                },
+   646	                person2: {
+   647	                    name: person2.name,
+   648	                    gender: person2.gender,
+   649	                    birthdate: `${person2.year}-${String(person2.month).padStart(2, '0')}-${String(person2.day).padStart(2, '0')}`,
+   650	                    calendar: person2.calendar,
+   651	                    hour: String(person2.hour).padStart(2, '0') + ':00',
+   652	                    saju: saju2
+   653	                },
+   654	                score: score
+   655	            };
+   656	            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
+   657	            console.log('✅ 궁합 데이터 저장:', compatibilityData);
+   658	
+   659	            // 결과 섹션으로 스크롤
+   660	            document.getElementById('resultSection').style.display = 'block';
+   661	            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+   662	        }
+   663	
+   664	        function calculateCompatibilityScore(saju1, saju2, type) {
+   665	            let score = 50; // 기본 점수
+   666	
+   667	            // 일주 오행 상생/상극 체크
+   668	            const element1 = getElementFromStem(saju1.pillars.day.heavenlyStem);
+   669	            const element2 = getElementFromStem(saju2.pillars.day.heavenlyStem);
+   670	
+   671	            // 상생 관계 (+20)
+   672	            const shengRelations = {
+   673	                '木': '火', '火': '土', '土': '金', '金': '水', '水': '木'
+   674	            };
+   675	            if (shengRelations[element1] === element2 || shengRelations[element2] === element1) {
+   676	                score += 20;
+   677	            }
+   678	
+   679	            // 같은 오행 (+10)
+   680	            if (element1 === element2) {
+   681	                score += 10;
+   682	            }
+   683	
+   684	            // 상극 관계 (-10)
+   685	            const keRelations = {
+   686	                '木': '土', '土': '水', '水': '火', '火': '金', '金': '木'
+   687	            };
+   688	            if (keRelations[element1] === element2 || keRelations[element2] === element1) {
+   689	                score -= 10;
+   690	            }
+   691	
+   692	            // 지지 합 체크 (+15)
+   693	            const earthlyBranches1 = [
+   694	                saju1.pillars.year.earthlyBranch,
+   695	                saju1.pillars.month.earthlyBranch,
+   696	                saju1.pillars.day.earthlyBranch,
+   697	                saju1.pillars.hour.earthlyBranch
+   698	            ];
+   699	            const earthlyBranches2 = [
+   700	                saju2.pillars.year.earthlyBranch,
+   701	                saju2.pillars.month.earthlyBranch,
+   702	                saju2.pillars.day.earthlyBranch,
+   703	                saju2.pillars.hour.earthlyBranch
+   704	            ];
+   705	
+   706	            // 육합, 삼합 체크
+   707	            const hexCombos = [
+   708	                ['子', '丑'], ['寅', '亥'], ['卯', '戌'], ['辰', '酉'], ['巳', '申'], ['午', '未']
+   709	            ];
+   710	            
+   711	            for (let b1 of earthlyBranches1) {
+   712	                for (let b2 of earthlyBranches2) {
+   713	                    for (let combo of hexCombos) {
+   714	                        if ((combo[0] === b1 && combo[1] === b2) || (combo[1] === b1 && combo[0] === b2)) {
+   715	                            score += 15;
+   716	                        }
+   717	                    }
+   718	                }
+   719	            }
+   720	
+   721	            // 충 체크 (-15)
+   722	            const conflicts = [
+   723	                ['子', '午'], ['丑', '未'], ['寅', '申'], ['卯', '酉'], ['辰', '戌'], ['巳', '亥']
+   724	            ];
+   725	            
+   726	            for (let b1 of earthlyBranches1) {
+   727	                for (let b2 of earthlyBranches2) {
+   728	                    for (let conflict of conflicts) {
+   729	                        if ((conflict[0] === b1 && conflict[1] === b2) || (conflict[1] === b1 && conflict[0] === b2)) {
+   730	                            score -= 15;
+   731	                        }
+   732	                    }
+   733	                }
+   734	            }
+   735	
+   736	            // 타입별 조정
+   737	            if (type === 'marriage') {
+   738	                // 결혼은 장기적 안정성 중시
+   739	                score += Math.random() * 10 - 5;
+   740	            } else if (type === 'business') {
+   741	                // 사업은 상호 보완성 중시
+   742	                score += Math.random() * 10 - 5;
+   743	            }
+   744	
+   745	            // 점수 범위 조정
+   746	            score = Math.max(0, Math.min(100, Math.round(score)));
+   747	
+   748	            return score;
+   749	        }
+   750	
+   751	        function getElementFromStem(stem) {
+   752	            const elementMap = {
+   753	                '甲': '木', '乙': '木',
+   754	                '丙': '火', '丁': '火',
+   755	                '戊': '土', '己': '土',
+   756	                '庚': '金', '辛': '金',
+   757	                '壬': '水', '癸': '水'
+   758	            };
+   759	            return elementMap[stem] || '土';
+   760	        }
+   761	
+   762	        function displayCompatibilityResult(person1, person2, score, type) {
+   763	            // 타이틀 설정
+   764	            const titles = {
+   765	                'love': '💗 연애 궁합 분석',
+   766	                'marriage': '💍 결혼 궁합 분석',
+   767	                'business': '💼 사업 궁합 분석'
+   768	            };
+   769	            document.getElementById('resultTitle').textContent = titles[type];
+   770	            document.getElementById('resultSubtitle').textContent = `${person1.name} ♥ ${person2.name}`;
+   771	
+   772	            // 점수 표시
+   773	            document.getElementById('scoreCircle').textContent = `${score}점`;
+   774	
+   775	            // 점수별 레이블 및 설명
+   776	            let label, description;
+   777	            if (score >= 90) {
+   778	                label = '완벽한 궁합!';
+   779	                description = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
+   780	            } else if (score >= 75) {
+   781	                label = '매우 좋은 궁합!';
+   782	                description = '두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.';
+   783	            } else if (score >= 60) {
+   784	                label = '좋은 궁합';
+   785	                description = '전반적으로 좋은 궁합입니다. 서로 노력한다면 행복한 관계를 만들 수 있습니다.';
+   786	            } else if (score >= 40) {
+   787	                label = '보통 궁합';
+   788	                description = '노력이 필요한 관계입니다. 서로의 차이를 이해하고 존중한다면 좋은 관계를 만들 수 있습니다.';
    789	            } else {
-   790	                strengths.push('차이를 통해 배울 점이 많은 관계입니다');
-   791	            }
-   792	
-   793	            if (type === 'marriage') {
-   794	                strengths.push('가정을 꾸리는 데 있어 좋은 조화를 이룹니다');
-   795	            } else if (type === 'business') {
-   796	                strengths.push('서로의 능력이 시너지를 낼 수 있습니다');
-   797	            }
-   798	
-   799	            return strengths;
-   800	        }
-   801	
-   802	        function getCompatibilityWeaknesses(score, type) {
-   803	            const weaknesses = [];
+   790	                label = '주의 필요';
+   791	                description = '많은 노력과 이해가 필요한 관계입니다. 서로를 깊이 알아가는 시간이 필요합니다.';
+   792	            }
+   793	
+   794	            document.getElementById('scoreLabel').textContent = label;
+   795	            document.getElementById('scoreDescription').textContent = description;
+   796	
+   797	            // 장점 리스트
+   798	            const strengths = getCompatibilityStrengths(score, type);
+   799	            document.getElementById('strengthList').innerHTML = strengths.map(s => `<li>${s}</li>`).join('');
+   800	
+   801	            // 주의사항 리스트
+   802	            const weaknesses = getCompatibilityWeaknesses(score, type);
+   803	            document.getElementById('weaknessList').innerHTML = weaknesses.map(w => `<li>${w}</li>`).join('');
    804	
-   805	            if (score < 60) {
-   806	                weaknesses.push('가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다');
-   807	                weaknesses.push('서로의 차이를 존중하는 자세가 필요합니다');
-   808	                weaknesses.push('인내심을 가지고 서로를 이해하려는 노력이 필요합니다');
-   809	            } else {
-   810	                weaknesses.push('너무 비슷해서 발전이 더딜 수 있으니 자극이 필요합니다');
-   811	                weaknesses.push('서로에게 익숙해지면 소홀해질 수 있으니 주의하세요');
-   812	            }
-   813	
-   814	            return weaknesses;
-   815	        }
-   816	
-   817	        function getCompatibilityAdvice(score, type) {
-   818	            if (type === 'love') {
-   819	                if (score >= 70) {
-   820	                    return '좋은 궁합이니 서로를 믿고 꾸준히 사랑을 키워가세요. 작은 관심과 배려가 큰 행복을 만듭니다.';
-   821	                } else {
-   822	                    return '서로의 차이를 인정하고 존중하는 자세가 중요합니다. 정기적인 데이트와 대화 시간을 가지세요.';
-   823	                }
-   824	            } else if (type === 'marriage') {
-   825	                if (score >= 70) {
-   826	                    return '결혼 후에도 행복한 가정을 꾸릴 수 있는 좋은 궁합입니다. 서로를 위한 시간을 충분히 가지세요.';
-   827	                } else {
-   828	                    return '결혼은 타협과 이해의 연속입니다. 서로의 가치관을 존중하고 함께 성장하는 자세가 필요합니다.';
-   829	                }
-   830	            } else {
-   831	                if (score >= 70) {
-   832	                    return '비즈니스 파트너로서 좋은 시너지를 낼 수 있습니다. 명확한 역할 분담과 소통이 성공의 열쇠입니다.';
-   833	                } else {
-   834	                    return '서로의 강점을 살리고 약점을 보완하는 전략이 필요합니다. 명확한 계약과 규칙을 정하세요.';
-   835	                }
-   836	            }
-   837	        }
-   838	    </script>
-   839	</body>
-   840	</html>
-   841	
+   805	            // 조언
+   806	            const advice = getCompatibilityAdvice(score, type);
+   807	            document.getElementById('adviceText').textContent = advice;
+   808	        }
+   809	
+   810	        function getCompatibilityStrengths(score, type) {
+   811	            const strengths = [];
+   812	            
+   813	            if (score >= 70) {
+   814	                strengths.push('오행의 균형이 잘 맞아 서로를 보완해줍니다');
+   815	                strengths.push('성격이 잘 맞아 갈등이 적을 것입니다');
+   816	                strengths.push('서로에게 긍정적인 영향을 주는 관계입니다');
+   817	            } else if (score >= 50) {
+   818	                strengths.push('서로 다른 점이 매력으로 작용합니다');
+   819	                strengths.push('함께 성장할 수 있는 관계입니다');
+   820	            } else {
+   821	                strengths.push('차이를 통해 배울 점이 많은 관계입니다');
+   822	            }
+   823	
+   824	            if (type === 'marriage') {
+   825	                strengths.push('가정을 꾸리는 데 있어 좋은 조화를 이룹니다');
+   826	            } else if (type === 'business') {
+   827	                strengths.push('서로의 능력이 시너지를 낼 수 있습니다');
+   828	            }
+   829	
+   830	            return strengths;
+   831	        }
+   832	
+   833	        function getCompatibilityWeaknesses(score, type) {
+   834	            const weaknesses = [];
+   835	
+   836	            if (score < 60) {
+   837	                weaknesses.push('가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다');
+   838	                weaknesses.push('서로의 차이를 존중하는 자세가 필요합니다');
+   839	                weaknesses.push('인내심을 가지고 서로를 이해하려는 노력이 필요합니다');
+   840	            } else {
+   841	                weaknesses.push('너무 비슷해서 발전이 더딜 수 있으니 자극이 필요합니다');
+   842	                weaknesses.push('서로에게 익숙해지면 소홀해질 수 있으니 주의하세요');
+   843	            }
+   844	
+   845	            return weaknesses;
+   846	        }
+   847	
+   848	        function getCompatibilityAdvice(score, type) {
+   849	            if (type === 'love') {
+   850	                if (score >= 70) {
+   851	                    return '좋은 궁합이니 서로를 믿고 꾸준히 사랑을 키워가세요. 작은 관심과 배려가 큰 행복을 만듭니다.';
+   852	                } else {
+   853	                    return '서로의 차이를 인정하고 존중하는 자세가 중요합니다. 정기적인 데이트와 대화 시간을 가지세요.';
+   854	                }
+   855	            } else if (type === 'marriage') {
+   856	                if (score >= 70) {
+   857	                    return '결혼 후에도 행복한 가정을 꾸릴 수 있는 좋은 궁합입니다. 서로를 위한 시간을 충분히 가지세요.';
+   858	                } else {
+   859	                    return '결혼은 타협과 이해의 연속입니다. 서로의 가치관을 존중하고 함께 성장하는 자세가 필요합니다.';
+   860	                }
+   861	            } else {
+   862	                if (score >= 70) {
+   863	                    return '비즈니스 파트너로서 좋은 시너지를 낼 수 있습니다. 명확한 역할 분담과 소통이 성공의 열쇠입니다.';
+   864	                } else {
+   865	                    return '서로의 강점을 살리고 약점을 보완하는 전략이 필요합니다. 명확한 계약과 규칙을 정하세요.';
+   866	                }
+   867	            }
+   868	        }
+   869	    </script>
+   870	</body>
+   871	</html>
+   872	
