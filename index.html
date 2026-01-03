@@ -1264,148 +1264,171 @@
   1264	    </footer>
   1265	
   1266	    <script>
-  1267	        // 다국어 시스템
-  1268	        const translations = {
-  1269	            ko: {
-  1270	                nav: { home: '홈', services: '서비스', pricing: '가격표', aiChat: 'AI 상담', blog: '사주 가이드', mypage: '마이페이지' },
-  1271	                hero: {
-  1272	                    year: '2026',
-  1273	                    yearName: '병오년 <span style="color:#f4e5b5;">丙午年</span>',
-  1274	                    subtitle: '붉은 불의 말띠 해',
-  1275	                    description: '1000년의 지혜와 함께하는 명리학의 만세력<br>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다',
-  1276	                    freeSaju: '무료로 사주 보기',
-  1277	                    aiConsult: 'AI 상담 시작'
-  1278	                }
-  1279	            },
-  1280	            en: {
-  1281	                nav: { home: 'Home', services: 'Services', pricing: 'Pricing', aiChat: 'AI Chat', blog: 'Saju Guide', mypage: 'My Page' },
-  1282	                hero: {
-  1283	                    year: '2026',
-  1284	                    yearName: 'Byeong-O Year <span style="color:#f4e5b5;">丙午年</span>',
-  1285	                    subtitle: 'Year of the Red Fire Horse',
-  1286	                    description: 'The 10,000-year calendar with 1000 years of wisdom<br>Discover your destiny with authentic astrology and AI technology',
-  1287	                    freeSaju: 'Free Saju Reading',
-  1288	                    aiConsult: 'Start AI Chat'
-  1289	                }
-  1290	            },
-  1291	            zh: {
-  1292	                nav: { home: '首页', services: '服务', pricing: '价格', aiChat: 'AI咨询', blog: '四柱指南', mypage: '我的信息' },
-  1293	                hero: {
-  1294	                    year: '2026',
-  1295	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
-  1296	                    subtitle: '红火马年',
-  1297	                    description: '拥有千年智慧的万年历<br>用正统命理学和AI技术揭示您的命运',
-  1298	                    freeSaju: '免费查看四柱',
-  1299	                    aiConsult: '开始AI咨询'
-  1300	                }
-  1301	            },
-  1302	            ja: {
-  1303	                nav: { home: 'ホーム', services: 'サービス', pricing: '価格表', aiChat: 'AI相談', blog: '四柱ガイド', mypage: 'マイページ' },
-  1304	                hero: {
-  1305	                    year: '2026',
-  1306	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
-  1307	                    subtitle: '赤い火の馬年',
-  1308	                    description: '千年の知恵とともに歩む命理学の万歳暦<br>正統派命理学とAI技術であなたの運命を明らかにします',
-  1309	                    freeSaju: '無料で四柱推命',
-  1310	                    aiConsult: 'AI相談開始'
-  1311	                }
-  1312	            }
-  1313	        };
-  1314	        
-  1315	        const langData = {
-  1316	            ko: { name: '한국어', flag: '🇰🇷' },
-  1317	            en: { name: 'English', flag: '🇺🇸' },
-  1318	            zh: { name: '中文', flag: '🇨🇳' },
-  1319	            ja: { name: '日本語', flag: '🇯🇵' }
-  1320	        };
-  1321	        
-  1322	        let currentLang = localStorage.getItem('saju_language') || 'ko';
+  1267	        'use strict';
+  1268	        
+  1269	        // 다국어 시스템
+  1270	        const translations = {
+  1271	            ko: {
+  1272	                nav: { home: '홈', services: '서비스', pricing: '가격표', aiChat: 'AI 상담', blog: '사주 가이드', mypage: '마이페이지' },
+  1273	                hero: {
+  1274	                    year: '2026',
+  1275	                    yearName: '병오년 <span style="color:#f4e5b5;">丙午年</span>',
+  1276	                    subtitle: '붉은 불의 말띠 해',
+  1277	                    description: '1000년의 지혜와 함께하는 명리학의 만세력<br>정통 명리학과 AI 기술로 당신의 운명을 밝혀드립니다',
+  1278	                    freeSaju: '무료로 사주 보기',
+  1279	                    aiConsult: 'AI 상담 시작'
+  1280	                }
+  1281	            },
+  1282	            en: {
+  1283	                nav: { home: 'Home', services: 'Services', pricing: 'Pricing', aiChat: 'AI Chat', blog: 'Saju Guide', mypage: 'My Page' },
+  1284	                hero: {
+  1285	                    year: '2026',
+  1286	                    yearName: 'Byeong-O Year <span style="color:#f4e5b5;">丙午年</span>',
+  1287	                    subtitle: 'Year of the Red Fire Horse',
+  1288	                    description: 'The 10,000-year calendar with 1000 years of wisdom<br>Discover your destiny with authentic astrology and AI technology',
+  1289	                    freeSaju: 'Free Saju Reading',
+  1290	                    aiConsult: 'Start AI Chat'
+  1291	                }
+  1292	            },
+  1293	            zh: {
+  1294	                nav: { home: '首页', services: '服务', pricing: '价格', aiChat: 'AI咨询', blog: '四柱指南', mypage: '我的信息' },
+  1295	                hero: {
+  1296	                    year: '2026',
+  1297	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
+  1298	                    subtitle: '红火马年',
+  1299	                    description: '拥有千年智慧的万年历<br>用正统命理学和AI技术揭示您的命运',
+  1300	                    freeSaju: '免费查看四柱',
+  1301	                    aiConsult: '开始AI咨询'
+  1302	                }
+  1303	            },
+  1304	            ja: {
+  1305	                nav: { home: 'ホーム', services: 'サービス', pricing: '価格表', aiChat: 'AI相談', blog: '四柱ガイド', mypage: 'マイページ' },
+  1306	                hero: {
+  1307	                    year: '2026',
+  1308	                    yearName: '丙午年 <span style="color:#f4e5b5;">丙午年</span>',
+  1309	                    subtitle: '赤い火の馬年',
+  1310	                    description: '千年の知恵とともに歩む命理学の万歳暦<br>正統派命理学とAI技術であなたの運命を明らかにします',
+  1311	                    freeSaju: '無料で四柱推命',
+  1312	                    aiConsult: 'AI相談開始'
+  1313	                }
+  1314	            }
+  1315	        };
+  1316	        
+  1317	        const langData = {
+  1318	            ko: { name: '한국어', flag: '🇰🇷' },
+  1319	            en: { name: 'English', flag: '🇺🇸' },
+  1320	            zh: { name: '中文', flag: '🇨🇳' },
+  1321	            ja: { name: '日本語', flag: '🇯🇵' }
+  1322	        };
   1323	        
-  1324	        function updateLanguage(lang) {
-  1325	            currentLang = lang;
-  1326	            localStorage.setItem('saju_language', lang);
-  1327	            
-  1328	            document.querySelectorAll('[data-i18n]').forEach(el => {
-  1329	                const key = el.getAttribute('data-i18n');
-  1330	                const keys = key.split('.');
-  1331	                let value = translations[lang];
-  1332	                keys.forEach(k => value = value[k]);
-  1333	                el.textContent = value;
-  1334	            });
-  1335	            
-  1336	            document.querySelectorAll('[data-i18n-html]').forEach(el => {
-  1337	                const key = el.getAttribute('data-i18n-html');
-  1338	                const keys = key.split('.');
-  1339	                let value = translations[lang];
-  1340	                keys.forEach(k => value = value[k]);
-  1341	                el.innerHTML = value;
-  1342	            });
-  1343	            
-  1344	            document.getElementById('currentFlag').textContent = langData[lang].flag;
-  1345	            document.getElementById('currentLang').textContent = langData[lang].name;
-  1346	            
-  1347	            document.querySelectorAll('.lang-option').forEach(opt => {
-  1348	                opt.classList.remove('active');
-  1349	                if (opt.getAttribute('data-lang') === lang) {
-  1350	                    opt.classList.add('active');
-  1351	                }
-  1352	            });
-  1353	        }
-  1354	        
-  1355	        document.getElementById('langBtn').addEventListener('click', () => {
-  1356	            document.getElementById('langDropdown').classList.toggle('active');
-  1357	        });
-  1358	        
-  1359	        document.querySelectorAll('.lang-option').forEach(option => {
-  1360	            option.addEventListener('click', (e) => {
-  1361	                const lang = e.currentTarget.getAttribute('data-lang');
-  1362	                updateLanguage(lang);
-  1363	                document.getElementById('langDropdown').classList.remove('active');
-  1364	            });
-  1365	        });
-  1366	        
-  1367	        document.addEventListener('click', (e) => {
-  1368	            if (!e.target.closest('.language-switcher')) {
-  1369	                document.getElementById('langDropdown').classList.remove('active');
-  1370	            }
-  1371	        });
-  1372	        
-  1373	        updateLanguage(currentLang);
+  1324	        let currentLang = localStorage.getItem('saju_language') || 'ko';
+  1325	        
+  1326	        function updateLanguage(lang) {
+  1327	            currentLang = lang;
+  1328	            localStorage.setItem('saju_language', lang);
+  1329	            
+  1330	            document.querySelectorAll('[data-i18n]').forEach(el => {
+  1331	                const key = el.getAttribute('data-i18n');
+  1332	                const keys = key.split('.');
+  1333	                let value = translations[lang];
+  1334	                keys.forEach(k => value = value[k]);
+  1335	                el.textContent = value;
+  1336	            });
+  1337	            
+  1338	            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+  1339	                const key = el.getAttribute('data-i18n-html');
+  1340	                const keys = key.split('.');
+  1341	                let value = translations[lang];
+  1342	                keys.forEach(k => value = value[k]);
+  1343	                el.innerHTML = value;
+  1344	            });
+  1345	            
+  1346	            document.getElementById('currentFlag').textContent = langData[lang].flag;
+  1347	            document.getElementById('currentLang').textContent = langData[lang].name;
+  1348	            
+  1349	            document.querySelectorAll('.lang-option').forEach(opt => {
+  1350	                opt.classList.remove('active');
+  1351	                if (opt.getAttribute('data-lang') === lang) {
+  1352	                    opt.classList.add('active');
+  1353	                }
+  1354	            });
+  1355	        }
+  1356	        
+  1357	        document.getElementById('langBtn').addEventListener('click', () => {
+  1358	            document.getElementById('langDropdown').classList.toggle('active');
+  1359	        });
+  1360	        
+  1361	        document.querySelectorAll('.lang-option').forEach(option => {
+  1362	            option.addEventListener('click', (e) => {
+  1363	                const lang = e.currentTarget.getAttribute('data-lang');
+  1364	                updateLanguage(lang);
+  1365	                document.getElementById('langDropdown').classList.remove('active');
+  1366	            });
+  1367	        });
+  1368	        
+  1369	        document.addEventListener('click', (e) => {
+  1370	            if (!e.target.closest('.language-switcher')) {
+  1371	                document.getElementById('langDropdown').classList.remove('active');
+  1372	            }
+  1373	        });
   1374	        
-  1375	        // 🔥 폼 제출 (birthtime을 hour로 변환)
-  1376	        document.getElementById('sajuForm').addEventListener('submit', function(e) {
-  1377	            e.preventDefault();
-  1378	            const formData = new FormData(e.target);
-  1379	            const data = Object.fromEntries(formData);
-  1380	            
-  1381	            // birthtime 값을 hour로 변환
-  1382	            if(data.birthtime) {
-  1383	                data.hour = data.birthtime; // "15:30", "17:30" 등
-  1384	            }
-  1385	            
-  1386	            localStorage.setItem('sajuData', JSON.stringify(data));
-  1387	            window.location.href = 'result.html';
-  1388	        });
-  1389	        
-  1390	        // FAQ 토글
-  1391	        document.querySelectorAll('.faq-question').forEach(question => {
-  1392	            question.addEventListener('click', function() {
-  1393	                const answer = this.nextElementSibling;
-  1394	                const isOpen = answer.style.display === 'block';
-  1395	                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-  1396	                if (!isOpen) answer.style.display = 'block';
-  1397	            });
-  1398	        });
-  1399	        
-  1400	        // 부드러운 스크롤
-  1401	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  1402	            anchor.addEventListener('click', function (e) {
-  1403	                e.preventDefault();
-  1404	                const target = document.querySelector(this.getAttribute('href'));
-  1405	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  1406	            });
-  1407	        });
-  1408	    </script>
-  1409	</body>
-  1410	</html>
-  1411	
+  1375	        updateLanguage(currentLang);
+  1376	        
+  1377	        // 🔥 폼 제출 (birthtime을 hour로 변환)
+  1378	        try {
+  1379	            document.getElementById('sajuForm').addEventListener('submit', function(e) {
+  1380	                e.preventDefault();
+  1381	                const formData = new FormData(e.target);
+  1382	                const data = Object.fromEntries(formData);
+  1383	                
+  1384	                // birthtime 값을 hour로 변환
+  1385	                if(data.birthtime) {
+  1386	                    data.hour = data.birthtime; // "15:30", "17:30" 등
+  1387	                }
+  1388	                
+  1389	                localStorage.setItem('sajuData', JSON.stringify(data));
+  1390	                window.location.href = 'result.html';
+  1391	            });
+  1392	        } catch(err) {
+  1393	            console.error('Form initialization error:', err);
+  1394	        }
+  1395	        
+  1396	        // FAQ 토글
+  1397	        try {
+  1398	            document.querySelectorAll('.faq-question').forEach(question => {
+  1399	                question.addEventListener('click', function() {
+  1400	                    const answer = this.nextElementSibling;
+  1401	                    const isOpen = answer.style.display === 'block';
+  1402	                    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+  1403	                    if (!isOpen) answer.style.display = 'block';
+  1404	                });
+  1405	            });
+  1406	        } catch(err) {
+  1407	            console.error('FAQ initialization error:', err);
+  1408	        }
+  1409	        
+  1410	        // 부드러운 스크롤
+  1411	        try {
+  1412	            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  1413	                anchor.addEventListener('click', function (e) {
+  1414	                    e.preventDefault();
+  1415	                    const target = document.querySelector(this.getAttribute('href'));
+  1416	                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  1417	                });
+  1418	            });
+  1419	        } catch(err) {
+  1420	            console.error('Smooth scroll initialization error:', err);
+  1421	        }
+  1422	        
+  1423	        // 전역 에러 핸들러
+  1424	        window.addEventListener('error', function(e) {
+  1425	            // 외부 스크립트 오류는 무시
+  1426	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+  1427	                e.preventDefault();
+  1428	                return true;
+  1429	            }
+  1430	        });
+  1431	    </script>
+  1432	</body>
+  1433	</html>
+  1434	
