@@ -1,4 +1,4 @@
-   1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -678,8 +678,13 @@
    678	        });
    679	        
    680	        // 페이지 로드 시 사주 정보 로드
-   681	        document.addEventListener('DOMContentLoaded', loadSajuInfo);
-   682	    </script>
-   683	</body>
-   684	</html>
-   685	
+   681	        if (document.readyState === 'loading') {
+   682	            document.addEventListener('DOMContentLoaded', loadSajuInfo);
+   683	        } else {
+   684	            // DOMContentLoaded 이미 발생했으면 즉시 실행
+   685	            loadSajuInfo();
+   686	        }
+   687	    </script>
+   688	</body>
+   689	</html>
+   690	
