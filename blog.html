@@ -535,25 +535,39 @@
    535	    </footer>
    536	
    537	    <script>
-   538	        window.addEventListener('DOMContentLoaded', function() {
-   539	            var links = document.querySelectorAll('a[href^="#"]');
-   540	            if (links && links.length > 0) {
-   541	                for (var i = 0; i < links.length; i++) {
-   542	                    links[i].addEventListener('click', function(e) {
-   543	                        e.preventDefault();
-   544	                        var href = this.getAttribute('href');
-   545	                        var target = document.querySelector(href);
-   546	                        if (target) {
-   547	                            target.scrollIntoView({
-   548	                                behavior: 'smooth',
-   549	                                block: 'start'
-   550	                            });
-   551	                        }
-   552	                    });
-   553	                }
-   554	            }
-   555	        });
-   556	    </script>
-   557	</body>
-   558	</html>
-   559	
+   538	        (function() {
+   539	            'use strict';
+   540	            
+   541	            function init() {
+   542	                var links = document.querySelectorAll('a[href^="#"]');
+   543	                if (!links || links.length === 0) return;
+   544	                
+   545	                for (var i = 0; i < links.length; i++) {
+   546	                    links[i].addEventListener('click', handleClick);
+   547	                }
+   548	            }
+   549	            
+   550	            function handleClick(e) {
+   551	                e.preventDefault();
+   552	                var href = this.getAttribute('href');
+   553	                if (!href || href === '#') return;
+   554	                
+   555	                var target = document.querySelector(href);
+   556	                if (target) {
+   557	                    target.scrollIntoView({
+   558	                        behavior: 'smooth',
+   559	                        block: 'start'
+   560	                    });
+   561	                }
+   562	            }
+   563	            
+   564	            if (document.readyState === 'loading') {
+   565	                document.addEventListener('DOMContentLoaded', init);
+   566	            } else {
+   567	                init();
+   568	            }
+   569	        })();
+   570	    </script>
+   571	</body>
+   572	</html>
+   573	
