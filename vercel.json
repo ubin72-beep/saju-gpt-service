@@ -1,35 +1,4 @@
-   1	{
-     2	  "version": 2,
-     3	  "builds": [
-     4	    {
-     5	      "src": "**/*.html",
-     6	      "use": "@vercel/static"
-     7	    },
-     8	    {
-     9	      "src": "api/index.js",
-    10	      "use": "@vercel/node"
-    11	    }
-    12	  ],
-    13	  "routes": [
-    14	    {
-    15	      "src": "/api/(.*)",
-    16	      "dest": "/api/index.js"
-    17	    }
-    18	  ],
-    19	  "headers": [
-    20	    {
-    21	      "source": "**/*.html",
-    22	      "headers": [
-    23	        {
-    24	          "key": "Content-Type",
-    25	          "value": "text/html; charset=utf-8"
-    26	        }
-    27	      ]
-    28	    }
-    29	  ],
-    30	  "env": {
-    31	    "MONGODB_URI": "@mongodb_uri",
-    32	    "JWT_SECRET": "@jwt_secret"
-    33	  }
-    34	}
-    35	
+{
+  "cleanUrls": true,
+  "trailingSlash": false
+}
