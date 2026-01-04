@@ -532,32 +532,28 @@
    532	                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
    533	            </p>
    534	        </div>
-   535	    </footer>
+   535	      535	    </footer>
    536	
    537	    <script>
-   538	        // 즉시 실행 함수로 스코프 격리
-   539	        !function() {
-   540	            // 부드러운 스크롤 기능
-   541	            var anchorLinks = document.querySelectorAll('a[href^="#"]');
-   542	            
-   543	            // 각 링크에 이벤트 리스너 추가
-   544	            Array.prototype.forEach.call(anchorLinks, function(link) {
-   545	                link.addEventListener('click', function(event) {
-   546	                    event.preventDefault();
-   547	                    
-   548	                    var targetId = this.getAttribute('href');
-   549	                    var targetElement = document.querySelector(targetId);
-   550	                    
-   551	                    if (targetElement) {
-   552	                        targetElement.scrollIntoView({
-   553	                            behavior: 'smooth',
-   554	                            block: 'start'
-   555	                        });
-   556	                    }
-   557	                });
-   558	            });
-   559	        }();
-   560	    </script>
-   561	</body>
-   562	</html>
-   563	
+   538	        // 부드러운 스크롤 기능
+   539	        (function() {
+   540	            var anchorLinks = document.querySelectorAll('a[href^="#"]');
+   541	            
+   542	            for (var i = 0; i < anchorLinks.length; i++) {
+   543	                anchorLinks[i].addEventListener('click', function(event) {
+   544	                    event.preventDefault();
+   545	                    
+   546	                    var targetId = this.getAttribute('href');
+   547	                    var targetElement = document.querySelector(targetId);
+   548	                    
+   549	                    if (targetElement) {
+   550	                        targetElement.scrollIntoView({
+   551	                            behavior: 'smooth',
+   552	                            block: 'start'
+   553	                        });
+   554	                    }
+   555	                });
+   556	            }
+   557	        })();
+   558	    </script>
+   559	</body>
