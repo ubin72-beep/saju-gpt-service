@@ -1,4 +1,4 @@
-  1	<!DOCTYPE html>
+1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -595,17 +595,23 @@
    595	    </footer>
    596	
    597	    <script>
-   598	        'use strict';
-   599	        
-   600	        // 부드러운 스크롤
-   601	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-   602	            anchor.addEventListener('click', function (e) {
-   603	                e.preventDefault();
-   604	                const target = document.querySelector(this.getAttribute('href'));
-   605	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-   606	            });
-   607	        });
-   608	    </script>
-   609	</body>
-   610	</html>
-   611	
+   598	        // 부드러운 스크롤
+   599	        document.addEventListener('DOMContentLoaded', function() {
+   600	            var links = document.querySelectorAll('a[href^="#"]');
+   601	            for (var i = 0; i < links.length; i++) {
+   602	                links[i].addEventListener('click', function(e) {
+   603	                    e.preventDefault();
+   604	                    var href = this.getAttribute('href');
+   605	                    if (href && href !== '#') {
+   606	                        var target = document.querySelector(href);
+   607	                        if (target) {
+   608	                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   609	                        }
+   610	                    }
+   611	                });
+   612	            }
+   613	        });
+   614	    </script>
+   615	</body>
+   616	</html>
+   617	
