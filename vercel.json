@@ -1,24 +1,38 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "blog/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
-      "src": "/(.*).html",
-      "headers": { "Content-Type": "text/html; charset=utf-8" },
-      "dest": "/$1.html"
+      "src": "/blog/(.*)",
+      "dest": "/blog/$1"
     },
     {
-      "src": "/(.*).css",
-      "headers": { "Content-Type": "text/css" },
-      "dest": "/$1.css"
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
     },
     {
-      "src": "/(.*).js",
-      "headers": { "Content-Type": "application/javascript" },
-      "dest": "/$1.js"
-    },
-    {
-      "src": "/",
-      "headers": { "Content-Type": "text/html; charset=utf-8" },
-      "dest": "/index.html"
+      "src": "/(.*\\.html)",
+      "dest": "/$1",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
     }
-  ]
+  ],
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "JWT_SECRET": "@jwt_secret"
+  }
 }
