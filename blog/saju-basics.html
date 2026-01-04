@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주팔자 무엇인가? - AI 사주 천년지기</title>
+    <meta name="description" content="사주팔자의 기본 개념부터 천간지지, 오행까지 완벽 정리. 사주 보는 법을 처음부터 배워보세요.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .breadcrumb-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #c41e3a;
+            text-decoration: none;
+        }
+        
+        .article {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+        
+        .article-header {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .article-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            line-height: 1.9;
+        }
+        
+        .article-content h2 {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            color: #1a1a1a;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #d4af37;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .article-content strong {
+            color: #c41e3a;
+            font-weight: 600;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .info-box h3 {
+            color: white !important;
+            margin-top: 0;
+            border: none !important;
+            padding: 0 !important;
+        }
+        
+        .info-box ul {
+            margin-left: 1.5rem;
+        }
+        
+        .info-box li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #c41e3a;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+            margin: 0 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        
+        .footer {
+            background: #1a1a1a;
+            color: rgba(255,255,255,0.7);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .article-content {
+                padding: 1.5rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">홈</a></li>
+                <li><a href="../ai-chat.html">AI 상담</a></li>
+                <li><a href="../blog.html">사주 가이드</a></li>
+                <li><a href="../pricing.html">가격표</a></li>
+                <li><a href="../mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="../index.html">홈</a> 
+            <span>></span> 
+            <a href="../blog.html">사주 가이드</a> 
+            <span>></span> 
+            <span>사주팔자 무엇인가?</span>
+        </div>
+    </div>
+
+    <article class="article">
+        <div class="article-header">
+            <span class="category-badge">사주 기초</span>
+            <h1>사주팔자 무엇인가?</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> 2025.12.20</span>
+                <span><i class="far fa-eye"></i> 1,234</span>
+            </div>
+        </div>
+
+        <div class="article-content">
+            <p>사주팔자의 기본 개념부터 천간지지, 오행까지 쉽게 이해할 수 있도록 설명합니다. 처음 사주를 접하는 분들도 쉽게 이해할 수 있습니다.</p>
+
+            <h2>사주팔자란?</h2>
+            <p><strong>사주팔자(四柱八字)</strong>는 태어난 연(年), 월(月), 일(日), 시(時)를 천간(天干)과 지지(地支)로 나타낸 여덟 글자입니다. 이 여덟 글자를 통해 한 사람의 성격, 운명, 인생의 흐름을 분석합니다.</p>
+
+            <div class="info-box">
+                <h3>✨ 사주팔자의 구성</h3>
+                <ul>
+                    <li><strong>년주(年柱)</strong>: 조상, 부모, 초년운 (0~20세)</li>
+                    <li><strong>월주(月柱)</strong>: 형제, 직장, 청년운 (20~40세)</li>
+                    <li><strong>일주(日柱)</strong>: 본인, 배우자, 중년운 (40~60세)</li>
+                    <li><strong>시주(時柱)</strong>: 자식, 말년, 노년운 (60세 이후)</li>
+                </ul>
+            </div>
+
+            <h2>천간 (10개)</h2>
+            <p>천간은 하늘의 기운을 나타내는 10개의 글자입니다.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>천간</th>
+                        <th>오행</th>
+                        <th>음양</th>
+                        <th>특징</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>갑(甲)</td>
+                        <td>목(木)</td>
+                        <td>양(陽)</td>
+                        <td>큰 나무, 리더십, 추진력</td>
+                    </tr>
+                    <tr>
+                        <td>을(乙)</td>
+                        <td>목(木)</td>
+                        <td>음(陰)</td>
+                        <td>작은 풀, 유연함, 적응력</td>
+                    </tr>
+                    <tr>
+                        <td>병(丙)</td>
+                        <td>화(火)</td>
+                        <td>양(陽)</td>
+                        <td>태양, 열정, 외향적</td>
+                    </tr>
+                    <tr>
+                        <td>정(丁)</td>
+                        <td>화(火)</td>
+                        <td>음(陰)</td>
+                        <td>촛불, 섬세함, 내면적</td>
+                    </tr>
+                    <tr>
+                        <td>무(戊)</td>
+                        <td>토(土)</td>
+                        <td>양(陽)</td>
+                        <td>산, 안정감, 신뢰</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>지지 (12개)</h2>
+            <p>지지는 땅의 기운을 나타내는 12개의 글자로, 12띠와 대응됩니다.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🐭 자(子) - 쥐</h4>
+                    <p><strong>오행</strong>: 수(水)</p>
+                    <p><strong>특징</strong>: 지혜, 민첩, 재치</p>
+                </div>
+                <div class="card">
+                    <h4>🐮 축(丑) - 소</h4>
+                    <p><strong>오행</strong>: 토(土)</p>
+                    <p><strong>특징</strong>: 성실, 근면, 인내</p>
+                </div>
+                <div class="card">
+                    <h4>🐯 인(寅) - 호랑이</h4>
+                    <p><strong>오행</strong>: 목(木)</p>
+                    <p><strong>특징</strong>: 용맹, 리더십, 추진력</p>
+                </div>
+                <div class="card">
+                    <h4>🐰 묘(卯) - 토끼</h4>
+                    <p><strong>오행</strong>: 목(木)</p>
+                    <p><strong>특징</strong>: 온화, 섬세, 친화력</p>
+                </div>
+            </div>
+
+            <h2>오행(五行) 이론</h2>
+            <p>오행은 우주 만물을 이루는 다섯 가지 기본 요소입니다.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🌳 목(木)</h4>
+                    <p><strong>방위</strong>: 동쪽 / <strong>계절</strong>: 봄</p>
+                    <p><strong>특성</strong>: 성장, 발전, 창의력</p>
+                </div>
+                <div class="card">
+                    <h4>🔥 화(火)</h4>
+                    <p><strong>방위</strong>: 남쪽 / <strong>계절</strong>: 여름</p>
+                    <p><strong>특성</strong>: 열정, 확산, 변화</p>
+                </div>
+                <div class="card">
+                    <h4>🏔️ 토(土)</h4>
+                    <p><strong>방위</strong>: 중앙 / <strong>계절</strong>: 환절기</p>
+                    <p><strong>특성</strong>: 안정, 신뢰, 중심</p>
+                </div>
+            </div>
+
+            <h2>사주 보는 순서</h2>
+            <div class="info-box">
+                <h3>📝 사주 풀이 5단계</h3>
+                <ul>
+                    <li><strong>1단계</strong>: 일간(日干) 파악 - 나를 나타내는 중심</li>
+                    <li><strong>2단계</strong>: 오행 균형 확인 - 어떤 오행이 많고 적은가?</li>
+                    <li><strong>3단계</strong>: 십신 분석 - 각 글자가 나타내는 의미</li>
+                    <li><strong>4단계</strong>: 용신 찾기 - 사주를 조화롭게 만드는 오행</li>
+                    <li><strong>5단계</strong>: 대운 분석 - 10년 단위 운의 흐름</li>
+                </ul>
+            </div>
+
+            <h2>마무리</h2>
+            <p>사주팔자는 단순히 운명을 알아보는 것이 아니라, 나 자신을 이해하고 더 나은 삶을 설계하는 도구입니다. 기초를 탄탄히 다지고 나면, 점점 더 깊은 의미를 발견할 수 있습니다.</p>
+        </div>
+    </article>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>내 사주 자세히 알아보기</h2>
+            <p>AI와 명리학 전문가가 분석하는 정밀한 사주 풀이</p>
+            <div>
+                <a href="../index.html#saju-form" class="btn">
+                    <i class="fas fa-star"></i> 무료로 사주 보기
+                </a>
+                <a href="../ai-chat.html" class="btn">
+                    <i class="fas fa-robot"></i> AI 상담 시작
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+</body>
+</html>
