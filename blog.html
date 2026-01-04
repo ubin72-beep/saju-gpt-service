@@ -1,549 +1,550 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사주 가이드 - AI 사주 천년지기</title>
-    <meta name="description" content="2026년 병오년 운세, 사주 기초 지식, 명리학 정보를 제공하는 블로그">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 네비게이션 */
-        .navbar {
-            background: #1a1a1a;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .nav-brand {
-            color: #d4af37;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-            align-items: center;
-            margin-left: 3rem;
-        }
-        
-        .nav-menu li {
-            position: relative;
-        }
-        
-        .nav-menu a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.95rem;
-            white-space: nowrap;
-        }
-        
-        .nav-menu a:hover {
-            color: #d4af37;
-        }
-        
-        .nav-menu a.active {
-            color: #d4af37;
-            font-weight: 700;
-        }
-        
-        /* 히어로 섹션 */
-        .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #d4af37;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        /* 블로그 그리드 */
-        .blog-section {
-            padding: 60px 20px;
-            background: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #1a1a1a;
-        }
-        
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .blog-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        
-        .blog-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-        }
-        
-        .blog-content {
-            padding: 2rem;
-        }
-        
-        .blog-category {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(212,175,55,0.1);
-            color: #c41e3a;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .blog-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-            line-height: 1.4;
-        }
-        
-        .blog-excerpt {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-        
-        .blog-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: #999;
-            font-size: 0.9rem;
-        }
-        
-        .blog-meta i {
-            color: #d4af37;
-        }
-        
-        /* Featured Post */
-        .featured-post {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-        
-        .featured-image {
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-        }
-        
-        .featured-content {
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .featured-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            width: fit-content;
-        }
-        
-        .featured-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-        
-        .featured-excerpt {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .read-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
-            background: white;
-            color: #764ba2;
-            border-radius: 30px;
-            font-weight: 600;
-            text-decoration: none;
-            width: fit-content;
-            transition: all 0.3s;
-        }
-        
-        .read-more-btn:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(255,255,255,0.3);
-        }
-        
-        /* 푸터 */
-        .footer {
-            background: #1a1a1a;
-            color: rgba(255,255,255,0.7);
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        /* 반응형 */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .featured-post {
-                grid-template-columns: 1fr;
-            }
-            
-            .featured-image {
-                height: 200px;
-                font-size: 4rem;
-            }
-            
-            .featured-content {
-                padding: 2rem;
-            }
-            
-            .featured-title {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i>
-                AI 사주 천년지기
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="blog.html" class="active">사주 가이드</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- 히어로 섹션 -->
-    <section class="hero">
-        <div class="container">
-            <h1><i class="fas fa-book-open"></i> 사주 가이드</h1>
-            <p>2026년 병오년 운세부터 사주 기초까지, 명리학의 모든 것을 알려드립니다</p>
-        </div>
-    </section>
-
-    <!-- 블로그 섹션 -->
-    <section class="blog-section">
-        <div class="container">
-            <div class="blog-grid">
-                <!-- Featured Post -->
-                <a href="blog/year-2026.html" class="blog-card featured-post">
-                    <div class="featured-image">🐴</div>
-                    <div class="featured-content">
-                        <span class="featured-badge">🔥 특집 기사</span>
-                        <h2 class="featured-title">2026년 병오년 완벽 분석</h2>
-                        <p class="featured-excerpt">
-                            붉은 불의 말띠 해, 2026년 병오년의 운세를 상세하게 분석합니다. 
-                            12띠별 운세와 주요 이슈, 주의사항까지 완벽 정리!
-                        </p>
-                        <span class="read-more-btn">
-                            자세히 보기 <i class="fas fa-arrow-right"></i>
-                        </span>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 1 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        📚
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">사주 기초</span>
-                        <h3 class="blog-title">사주팔자란 무엇인가?</h3>
-                        <p class="blog-excerpt">
-                            사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.20</span>
-                            <span><i class="fas fa-eye"></i> 1,234</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 2 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        🌟
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">운세 분석</span>
-                        <h3 class="blog-title">12띠별 2026년 운세 총정리</h3>
-                        <p class="blog-excerpt">
-                            쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.18</span>
-                            <span><i class="fas fa-eye"></i> 2,456</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 3 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        💑
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">궁합</span>
-                        <h3 class="blog-title">궁합 보는 법 완벽 가이드</h3>
-                        <p class="blog-excerpt">
-                            천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.15</span>
-                            <span><i class="fas fa-eye"></i> 3,789</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 4 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-                        🎯
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">직업운</span>
-                        <h3 class="blog-title">사주로 보는 직업 적성</h3>
-                        <p class="blog-excerpt">
-                            내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.12</span>
-                            <span><i class="fas fa-eye"></i> 1,567</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 5 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                        💰
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">재물운</span>
-                        <h3 class="blog-title">2026년 재물운 상승 시기</h3>
-                        <p class="blog-excerpt">
-                            병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.10</span>
-                            <span><i class="fas fa-eye"></i> 4,123</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 6 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-                        ❤️
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">연애운</span>
-                        <h3 class="blog-title">사주로 보는 이상형 찾기</h3>
-                        <p class="blog-excerpt">
-                            내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.08</span>
-                            <span><i class="fas fa-eye"></i> 5,678</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 7 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                        🏠
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">택일</span>
-                        <h3 class="blog-title">이사 · 결혼 좋은 날 고르기</h3>
-                        <p class="blog-excerpt">
-                            명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.05</span>
-                            <span><i class="fas fa-eye"></i> 2,890</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 8 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">
-                        🌙
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">사주 상식</span>
-                        <h3 class="blog-title">음력과 양력, 어떻게 다를까?</h3>
-                        <p class="blog-excerpt">
-                            사주를 볼 때 음력과 양력의 차이점과 정확한 사주 계산법을 알아봅니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.03</span>
-                            <span><i class="fas fa-eye"></i> 1,234</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 블로그 카드 9 -->
-                <a href="#" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
-                        🎓
-                    </div>
-                    <div class="blog-content">
-                        <span class="blog-category">명리학 기초</span>
-                        <h3 class="blog-title">천간과 지지 완벽 정리</h3>
-                        <p class="blog-excerpt">
-                            사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.
-                        </p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.01</span>
-                            <span><i class="fas fa-eye"></i> 987</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
-            <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
-                <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
-                <span style="margin: 0 5px;">|</span>
-                <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
-                <span style="margin: 0 5px;">|</span>
-                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        'use strict';
-        
-        // 부드러운 스크롤
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-    </script>
-</body>
-</html>
+ 1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>사주 가이드 - AI 사주 천년지기</title>
+     7	    <meta name="description" content="2026년 병오년 운세, 사주 기초 지식, 명리학 정보를 제공하는 블로그">
+     8	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     9	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    10	    <style>
+    11	        * {
+    12	            margin: 0;
+    13	            padding: 0;
+    14	            box-sizing: border-box;
+    15	        }
+    16	        
+    17	        body {
+    18	            font-family: 'Noto Sans KR', sans-serif;
+    19	            line-height: 1.6;
+    20	            color: #333;
+    21	            background: #f5f5f5;
+    22	        }
+    23	        
+    24	        .container {
+    25	            max-width: 1200px;
+    26	            margin: 0 auto;
+    27	            padding: 0 20px;
+    28	        }
+    29	        
+    30	        /* 네비게이션 */
+    31	        .navbar {
+    32	            background: #1a1a1a;
+    33	            padding: 1rem 0;
+    34	            position: sticky;
+    35	            top: 0;
+    36	            z-index: 1000;
+    37	            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    38	        }
+    39	        
+    40	        .nav-container {
+    41	            max-width: 1400px;
+    42	            margin: 0 auto;
+    43	            padding: 0 20px;
+    44	            display: flex;
+    45	            justify-content: space-between;
+    46	            align-items: center;
+    47	        }
+    48	        
+    49	        .nav-brand {
+    50	            color: #d4af37;
+    51	            font-size: 1.5rem;
+    52	            font-weight: 700;
+    53	            text-decoration: none;
+    54	            display: flex;
+    55	            align-items: center;
+    56	            gap: 10px;
+    57	        }
+    58	        
+    59	        .nav-menu {
+    60	            display: flex;
+    61	            list-style: none;
+    62	            gap: 1.5rem;
+    63	            align-items: center;
+    64	            margin-left: 3rem;
+    65	        }
+    66	        
+    67	        .nav-menu li {
+    68	            position: relative;
+    69	        }
+    70	        
+    71	        .nav-menu a {
+    72	            color: rgba(255,255,255,0.9);
+    73	            text-decoration: none;
+    74	            transition: color 0.3s;
+    75	            display: flex;
+    76	            align-items: center;
+    77	            gap: 5px;
+    78	            font-size: 0.95rem;
+    79	            white-space: nowrap;
+    80	        }
+    81	        
+    82	        .nav-menu a:hover {
+    83	            color: #d4af37;
+    84	        }
+    85	        
+    86	        .nav-menu a.active {
+    87	            color: #d4af37;
+    88	            font-weight: 700;
+    89	        }
+    90	        
+    91	        /* 히어로 섹션 */
+    92	        .hero {
+    93	            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+    94	            color: white;
+    95	            padding: 80px 20px;
+    96	            text-align: center;
+    97	        }
+    98	        
+    99	        .hero h1 {
+   100	            font-size: 3rem;
+   101	            margin-bottom: 1rem;
+   102	            color: #d4af37;
+   103	        }
+   104	        
+   105	        .hero p {
+   106	            font-size: 1.2rem;
+   107	            opacity: 0.9;
+   108	        }
+   109	        
+   110	        /* 블로그 그리드 */
+   111	        .blog-section {
+   112	            padding: 60px 20px;
+   113	            background: white;
+   114	        }
+   115	        
+   116	        .section-title {
+   117	            text-align: center;
+   118	            font-size: 2rem;
+   119	            margin-bottom: 3rem;
+   120	            color: #1a1a1a;
+   121	        }
+   122	        
+   123	        .blog-grid {
+   124	            display: grid;
+   125	            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+   126	            gap: 2rem;
+   127	            max-width: 1200px;
+   128	            margin: 0 auto;
+   129	        }
+   130	        
+   131	        .blog-card {
+   132	            background: white;
+   133	            border-radius: 15px;
+   134	            overflow: hidden;
+   135	            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+   136	            transition: transform 0.3s, box-shadow 0.3s;
+   137	            cursor: pointer;
+   138	            text-decoration: none;
+   139	            color: inherit;
+   140	            display: block;
+   141	        }
+   142	        
+   143	        .blog-card:hover {
+   144	            transform: translateY(-10px);
+   145	            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+   146	        }
+   147	        
+   148	        .blog-image {
+   149	            width: 100%;
+   150	            height: 220px;
+   151	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   152	            display: flex;
+   153	            align-items: center;
+   154	            justify-content: center;
+   155	            font-size: 4rem;
+   156	        }
+   157	        
+   158	        .blog-content {
+   159	            padding: 2rem;
+   160	        }
+   161	        
+   162	        .blog-category {
+   163	            display: inline-block;
+   164	            padding: 5px 15px;
+   165	            background: rgba(212,175,55,0.1);
+   166	            color: #c41e3a;
+   167	            border-radius: 20px;
+   168	            font-size: 0.85rem;
+   169	            font-weight: 600;
+   170	            margin-bottom: 1rem;
+   171	        }
+   172	        
+   173	        .blog-title {
+   174	            font-size: 1.5rem;
+   175	            font-weight: 700;
+   176	            margin-bottom: 1rem;
+   177	            color: #1a1a1a;
+   178	            line-height: 1.4;
+   179	        }
+   180	        
+   181	        .blog-excerpt {
+   182	            color: #666;
+   183	            margin-bottom: 1rem;
+   184	            line-height: 1.6;
+   185	        }
+   186	        
+   187	        .blog-meta {
+   188	            display: flex;
+   189	            align-items: center;
+   190	            gap: 1rem;
+   191	            color: #999;
+   192	            font-size: 0.9rem;
+   193	        }
+   194	        
+   195	        .blog-meta i {
+   196	            color: #d4af37;
+   197	        }
+   198	        
+   199	        /* Featured Post */
+   200	        .featured-post {
+   201	            grid-column: 1 / -1;
+   202	            display: grid;
+   203	            grid-template-columns: 1fr 1fr;
+   204	            gap: 2rem;
+   205	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   206	            color: white;
+   207	            border-radius: 15px;
+   208	            overflow: hidden;
+   209	        }
+   210	        
+   211	        .featured-image {
+   212	            background: rgba(255,255,255,0.1);
+   213	            display: flex;
+   214	            align-items: center;
+   215	            justify-content: center;
+   216	            font-size: 8rem;
+   217	        }
+   218	        
+   219	        .featured-content {
+   220	            padding: 3rem;
+   221	            display: flex;
+   222	            flex-direction: column;
+   223	            justify-content: center;
+   224	        }
+   225	        
+   226	        .featured-badge {
+   227	            display: inline-block;
+   228	            padding: 8px 20px;
+   229	            background: rgba(255,255,255,0.2);
+   230	            border-radius: 25px;
+   231	            font-size: 0.9rem;
+   232	            font-weight: 600;
+   233	            margin-bottom: 1rem;
+   234	            width: fit-content;
+   235	        }
+   236	        
+   237	        .featured-title {
+   238	            font-size: 2.5rem;
+   239	            font-weight: 700;
+   240	            margin-bottom: 1rem;
+   241	            line-height: 1.3;
+   242	        }
+   243	        
+   244	        .featured-excerpt {
+   245	            font-size: 1.1rem;
+   246	            opacity: 0.9;
+   247	            margin-bottom: 2rem;
+   248	            line-height: 1.6;
+   249	        }
+   250	        
+   251	        .read-more-btn {
+   252	            display: inline-flex;
+   253	            align-items: center;
+   254	            gap: 10px;
+   255	            padding: 12px 30px;
+   256	            background: white;
+   257	            color: #764ba2;
+   258	            border-radius: 30px;
+   259	            font-weight: 600;
+   260	            text-decoration: none;
+   261	            width: fit-content;
+   262	            transition: all 0.3s;
+   263	        }
+   264	        
+   265	        .read-more-btn:hover {
+   266	            transform: translateX(5px);
+   267	            box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+   268	        }
+   269	        
+   270	        /* 푸터 */
+   271	        .footer {
+   272	            background: #1a1a1a;
+   273	            color: rgba(255,255,255,0.7);
+   274	            padding: 40px 20px;
+   275	            text-align: center;
+   276	        }
+   277	        
+   278	        /* 반응형 */
+   279	        @media (max-width: 768px) {
+   280	            .nav-menu {
+   281	                display: none;
+   282	            }
+   283	            
+   284	            .hero h1 {
+   285	                font-size: 2rem;
+   286	            }
+   287	            
+   288	            .blog-grid {
+   289	                grid-template-columns: 1fr;
+   290	            }
+   291	            
+   292	            .featured-post {
+   293	                grid-template-columns: 1fr;
+   294	            }
+   295	            
+   296	            .featured-image {
+   297	                height: 200px;
+   298	                font-size: 4rem;
+   299	            }
+   300	            
+   301	            .featured-content {
+   302	                padding: 2rem;
+   303	            }
+   304	            
+   305	            .featured-title {
+   306	                font-size: 1.8rem;
+   307	            }
+   308	        }
+   309	    </style>
+   310	</head>
+   311	<body>
+   312	    <!-- 네비게이션 -->
+   313	    <nav class="navbar">
+   314	        <div class="nav-container">
+   315	            <a href="index.html" class="nav-brand">
+   316	                <i class="fas fa-yin-yang"></i>
+   317	                AI 사주 천년지기
+   318	            </a>
+   319	            <ul class="nav-menu">
+   320	                <li><a href="index.html">홈</a></li>
+   321	                <li><a href="ai-chat.html">AI 상담</a></li>
+   322	                <li><a href="blog.html" class="active">사주 가이드</a></li>
+   323	                <li><a href="pricing.html">가격표</a></li>
+   324	                <li><a href="mypage.html">마이페이지</a></li>
+   325	            </ul>
+   326	        </div>
+   327	    </nav>
+   328	
+   329	    <!-- 히어로 섹션 -->
+   330	    <section class="hero">
+   331	        <div class="container">
+   332	            <h1><i class="fas fa-book-open"></i> 사주 가이드</h1>
+   333	            <p>2026년 병오년 운세부터 사주 기초까지, 명리학의 모든 것을 알려드립니다</p>
+   334	        </div>
+   335	    </section>
+   336	
+   337	    <!-- 블로그 섹션 -->
+   338	    <section class="blog-section">
+   339	        <div class="container">
+   340	            <div class="blog-grid">
+   341	                <!-- Featured Post -->
+   342	                <a href="blog/year-2026.html" class="blog-card featured-post">
+   343	                    <div class="featured-image">🐴</div>
+   344	                    <div class="featured-content">
+   345	                        <span class="featured-badge">🔥 특집 기사</span>
+   346	                        <h2 class="featured-title">2026년 병오년 완벽 분석</h2>
+   347	                        <p class="featured-excerpt">
+   348	                            붉은 불의 말띠 해, 2026년 병오년의 운세를 상세하게 분석합니다. 
+   349	                            12띠별 운세와 주요 이슈, 주의사항까지 완벽 정리!
+   350	                        </p>
+   351	                        <span class="read-more-btn">
+   352	                            자세히 보기 <i class="fas fa-arrow-right"></i>
+   353	                        </span>
+   354	                    </div>
+   355	                </a>
+   356	
+   357	                <!-- 블로그 카드 1 -->
+   358	                <a href="blog/saju-basics.html" class="blog-card">
+   359	                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+   360	                        📚
+   361	                    </div>
+   362	                    <div class="blog-content">
+   363	                        <span class="blog-category">사주 기초</span>
+   364	                        <h3 class="blog-title">사주팔자란 무엇인가?</h3>
+   365	                        <p class="blog-excerpt">
+   366	                            사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.
+   367	                        </p>
+   368	                        <div class="blog-meta">
+   369	                            <span><i class="fas fa-calendar"></i> 2025.12.20</span>
+   370	                            <span><i class="fas fa-eye"></i> 1,234</span>
+   371	                        </div>
+   372	                    </div>
+   373	                </a>
+   374	
+   375	                <!-- 블로그 카드 2 -->
+   376	                <a href="blog/year-2026.html" class="blog-card">
+   377	                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+   378	                        🌟
+   379	                    </div>
+   380	                    <div class="blog-content">
+   381	                        <span class="blog-category">운세 분석</span>
+   382	                        <h3 class="blog-title">12띠별 2026년 운세 총정리</h3>
+   383	                        <p class="blog-excerpt">
+   384	                            쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.
+   385	                        </p>
+   386	                        <div class="blog-meta">
+   387	                            <span><i class="fas fa-calendar"></i> 2025.12.18</span>
+   388	                            <span><i class="fas fa-eye"></i> 2,456</span>
+   389	                        </div>
+   390	                    </div>
+   391	                </a>
+   392	
+   393	                <!-- 블로그 카드 3 -->
+   394	                <a href="blog/compatibility-guide.html" class="blog-card">
+   395	                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+   396	                        💑
+   397	                    </div>
+   398	                    <div class="blog-content">
+   399	                        <span class="blog-category">궁합</span>
+   400	                        <h3 class="blog-title">궁합 보는 법 완벽 가이드</h3>
+   401	                        <p class="blog-excerpt">
+   402	                            천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.
+   403	                        </p>
+   404	                        <div class="blog-meta">
+   405	                            <span><i class="fas fa-calendar"></i> 2025.12.15</span>
+   406	                            <span><i class="fas fa-eye"></i> 3,789</span>
+   407	                        </div>
+   408	                    </div>
+   409	                </a>
+   410	
+   411	                <!-- 블로그 카드 4 -->
+   412	                <a href="blog/career-fortune.html" class="blog-card">
+   413	                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+   414	                        🎯
+   415	                    </div>
+   416	                    <div class="blog-content">
+   417	                        <span class="blog-category">직업운</span>
+   418	                        <h3 class="blog-title">사주로 보는 직업 적성</h3>
+   419	                        <p class="blog-excerpt">
+   420	                            내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.
+   421	                        </p>
+   422	                        <div class="blog-meta">
+   423	                            <span><i class="fas fa-calendar"></i> 2025.12.12</span>
+   424	                            <span><i class="fas fa-eye"></i> 1,567</span>
+   425	                        </div>
+   426	                    </div>
+   427	                </a>
+   428	
+   429	                <!-- 블로그 카드 5 -->
+   430	                <a href="blog/wealth-2026.html" class="blog-card">
+   431	                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+   432	                        💰
+   433	                    </div>
+   434	                    <div class="blog-content">
+   435	                        <span class="blog-category">재물운</span>
+   436	                        <h3 class="blog-title">2026년 재물운 상승 시기</h3>
+   437	                        <p class="blog-excerpt">
+   438	                            병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.
+   439	                        </p>
+   440	                        <div class="blog-meta">
+   441	                            <span><i class="fas fa-calendar"></i> 2025.12.10</span>
+   442	                            <span><i class="fas fa-eye"></i> 4,123</span>
+   443	                        </div>
+   444	                    </div>
+   445	                </a>
+   446	
+   447	                <!-- 블로그 카드 6 -->
+   448	                <a href="blog/love-match.html" class="blog-card">
+   449	                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+   450	                        ❤️
+   451	                    </div>
+   452	                    <div class="blog-content">
+   453	                        <span class="blog-category">연애운</span>
+   454	                        <h3 class="blog-title">사주로 보는 이상형 찾기</h3>
+   455	                        <p class="blog-excerpt">
+   456	                            내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.
+   457	                        </p>
+   458	                        <div class="blog-meta">
+   459	                            <span><i class="fas fa-calendar"></i> 2025.12.08</span>
+   460	                            <span><i class="fas fa-eye"></i> 5,678</span>
+   461	                        </div>
+   462	                    </div>
+   463	                </a>
+   464	
+   465	                <!-- 블로그 카드 7 -->
+   466	                <a href="blog/date-selection.html" class="blog-card">
+   467	                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+   468	                        🏠
+   469	                    </div>
+   470	                    <div class="blog-content">
+   471	                        <span class="blog-category">택일</span>
+   472	                        <h3 class="blog-title">이사 · 결혼 좋은 날 고르기</h3>
+   473	                        <p class="blog-excerpt">
+   474	                            명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.
+   475	                        </p>
+   476	                        <div class="blog-meta">
+   477	                            <span><i class="fas fa-calendar"></i> 2025.12.05</span>
+   478	                            <span><i class="fas fa-eye"></i> 2,890</span>
+   479	                        </div>
+   480	                    </div>
+   481	                </a>
+   482	
+   483	                <!-- 블로그 카드 8 -->
+   484	                <a href="blog/lunar-solar.html" class="blog-card">
+   485	                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">
+   486	                        🌙
+   487	                    </div>
+   488	                    <div class="blog-content">
+   489	                        <span class="blog-category">사주 상식</span>
+   490	                        <h3 class="blog-title">음력과 양력, 어떻게 다를까?</h3>
+   491	                        <p class="blog-excerpt">
+   492	                            사주를 볼 때 음력과 양력의 차이점과 정확한 사주 계산법을 알아봅니다.
+   493	                        </p>
+   494	                        <div class="blog-meta">
+   495	                            <span><i class="fas fa-calendar"></i> 2025.12.03</span>
+   496	                            <span><i class="fas fa-eye"></i> 1,234</span>
+   497	                        </div>
+   498	                    </div>
+   499	                </a>
+   500	
+   501	                <!-- 블로그 카드 9 -->
+   502	                <a href="blog/tiangan-dizhi.html" class="blog-card">
+   503	                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
+   504	                        🎓
+   505	                    </div>
+   506	                    <div class="blog-content">
+   507	                        <span class="blog-category">명리학 기초</span>
+   508	                        <h3 class="blog-title">천간과 지지 완벽 정리</h3>
+   509	                        <p class="blog-excerpt">
+   510	                            사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.
+   511	                        </p>
+   512	                        <div class="blog-meta">
+   513	                            <span><i class="fas fa-calendar"></i> 2025.12.01</span>
+   514	                            <span><i class="fas fa-eye"></i> 987</span>
+   515	                        </div>
+   516	                    </div>
+   517	                </a>
+   518	            </div>
+   519	        </div>
+   520	    </section>
+   521	
+   522	    <!-- 푸터 -->
+   523	    <footer class="footer">
+   524	        <div class="container">
+   525	            <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
+   526	            <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
+   527	                <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
+   528	                <span style="margin: 0 5px;">|</span>
+   529	                <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
+   530	                <span style="margin: 0 5px;">|</span>
+   531	                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
+   532	            </p>
+   533	        </div>
+   534	    </footer>
+   535	
+   536	    <script>
+   537	        'use strict';
+   538	        
+   539	        // 부드러운 스크롤
+   540	        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+   541	            anchor.addEventListener('click', function (e) {
+   542	                e.preventDefault();
+   543	                const target = document.querySelector(this.getAttribute('href'));
+   544	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   545	            });
+   546	        });
+   547	    </script>
+   548	</body>
+   549	</html>
+   550	
