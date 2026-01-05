@@ -1,574 +1,558 @@
- 1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>궁합 분석 - AI 사주 천년지기</title>
-     7	    <meta name="description" content="연애, 결혼, 사업 궁합을 정밀하게 분석합니다. 사주 기반 상성 확인">
-     8	    
-     9	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
-    10	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    11	    
-    12	    <style>
-    13	        * { margin: 0; padding: 0; box-sizing: border-box; }
-    14	        
-    15	        body {
-    16	            font-family: 'Noto Sans KR', sans-serif;
-    17	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    18	            min-height: 100vh;
-    19	            padding: 20px;
-    20	        }
-    21	        
-    22	        .container {
-    23	            max-width: 900px;
-    24	            margin: 0 auto;
-    25	        }
-    26	        
-    27	        .header {
-    28	            text-align: center;
-    29	            color: white;
-    30	            margin-bottom: 30px;
-    31	        }
-    32	        
-    33	        .header h1 {
-    34	            font-size: 2.5rem;
-    35	            margin-bottom: 10px;
-    36	        }
-    37	        
-    38	        .header p {
-    39	            font-size: 1.1rem;
-    40	            opacity: 0.9;
-    41	        }
-    42	        
-    43	        .form-card {
-    44	            background: white;
-    45	            border-radius: 20px;
-    46	            padding: 40px;
-    47	            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    48	            margin-bottom: 20px;
-    49	        }
-    50	        
-    51	        .form-title {
-    52	            text-align: center;
-    53	            font-size: 1.5rem;
-    54	            margin-bottom: 30px;
-    55	            color: #333;
-    56	        }
-    57	        
-    58	        .type-selector {
-    59	            display: grid;
-    60	            grid-template-columns: repeat(3, 1fr);
-    61	            gap: 15px;
-    62	            margin-bottom: 30px;
-    63	        }
-    64	        
-    65	        .type-btn {
-    66	            background: #f8f9fa;
-    67	            border: 3px solid transparent;
-    68	            border-radius: 15px;
-    69	            padding: 20px 10px;
-    70	            text-align: center;
-    71	            cursor: pointer;
-    72	            transition: all 0.3s;
-    73	        }
-    74	        
-    75	        .type-btn:hover {
-    76	            background: #e9ecef;
-    77	            transform: translateY(-2px);
-    78	        }
-    79	        
-    80	        .type-btn.active {
-    81	            background: linear-gradient(135deg, #667eea, #764ba2);
-    82	            color: white;
-    83	            border-color: #667eea;
-    84	        }
-    85	        
-    86	        .type-btn .icon {
-    87	            font-size: 2rem;
-    88	            margin-bottom: 5px;
-    89	        }
-    90	        
-    91	        .type-btn h4 {
-    92	            font-size: 1rem;
-    93	            margin-bottom: 5px;
-    94	        }
-    95	        
-    96	        .type-btn p {
-    97	            font-size: 0.85rem;
-    98	            opacity: 0.8;
-    99	        }
-   100	        
-   101	        .people-grid {
-   102	            display: grid;
-   103	            grid-template-columns: 1fr 1fr;
-   104	            gap: 30px;
-   105	            margin-bottom: 30px;
-   106	        }
-   107	        
-   108	        .person-section h3 {
-   109	            font-size: 1.2rem;
-   110	            margin-bottom: 20px;
-   111	            color: #333;
-   112	            display: flex;
-   113	            align-items: center;
-   114	            gap: 10px;
-   115	        }
-   116	        
-   117	        .form-group {
-   118	            margin-bottom: 15px;
-   119	        }
-   120	        
-   121	        .form-group label {
-   122	            display: block;
-   123	            font-size: 0.9rem;
-   124	            font-weight: 500;
-   125	            margin-bottom: 8px;
-   126	            color: #555;
-   127	        }
-   128	        
-   129	        .form-group input,
-   130	        .form-group select {
-   131	            width: 100%;
-   132	            padding: 12px;
-   133	            border: 2px solid #e0e0e0;
-   134	            border-radius: 8px;
-   135	            font-size: 1rem;
-   136	            transition: border-color 0.3s;
-   137	        }
-   138	        
-   139	        .form-group input:focus,
-   140	        .form-group select:focus {
-   141	            outline: none;
-   142	            border-color: #667eea;
-   143	        }
-   144	        
-   145	        .date-group {
-   146	            display: grid;
-   147	            grid-template-columns: 2fr 1fr 1fr;
-   148	            gap: 10px;
-   149	        }
-   150	        
-   151	        .btn-analyze {
-   152	            width: 100%;
-   153	            background: linear-gradient(135deg, #667eea, #764ba2);
-   154	            color: white;
-   155	            border: none;
-   156	            padding: 18px;
-   157	            font-size: 1.2rem;
-   158	            font-weight: 600;
-   159	            border-radius: 50px;
-   160	            cursor: pointer;
-   161	            transition: transform 0.3s;
-   162	        }
-   163	        
-   164	        .btn-analyze:hover {
-   165	            transform: scale(1.05);
-   166	        }
-   167	        
-   168	        .result-card {
-   169	            display: none;
-   170	            background: white;
-   171	            border-radius: 20px;
-   172	            padding: 40px;
-   173	            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-   174	        }
-   175	        
-   176	        .result-header {
-   177	            text-align: center;
-   178	            margin-bottom: 30px;
-   179	        }
-   180	        
-   181	        .result-header h2 {
-   182	            font-size: 2rem;
-   183	            color: #333;
-   184	            margin-bottom: 10px;
-   185	        }
-   186	        
-   187	        .result-header p {
-   188	            font-size: 1.3rem;
-   189	            color: #667eea;
-   190	        }
-   191	        
-   192	        .score-box {
-   193	            background: linear-gradient(135deg, #667eea, #764ba2);
-   194	            color: white;
-   195	            border-radius: 20px;
-   196	            padding: 40px;
-   197	            text-align: center;
-   198	            margin-bottom: 30px;
-   199	        }
-   200	        
-   201	        .score-circle {
-   202	            width: 150px;
-   203	            height: 150px;
-   204	            border-radius: 50%;
-   205	            background: rgba(255,255,255,0.2);
-   206	            display: flex;
-   207	            align-items: center;
-   208	            justify-content: center;
-   209	            margin: 0 auto 20px;
-   210	            font-size: 3rem;
-   211	            font-weight: 700;
-   212	        }
-   213	        
-   214	        .score-label {
-   215	            font-size: 1.5rem;
-   216	            margin-bottom: 10px;
-   217	        }
-   218	        
-   219	        .score-desc {
-   220	            font-size: 1rem;
-   221	            opacity: 0.9;
-   222	        }
-   223	        
-   224	        .info-section {
-   225	            background: #f8f9fa;
-   226	            border-radius: 15px;
-   227	            padding: 25px;
-   228	            margin-bottom: 20px;
-   229	        }
-   230	        
-   231	        .info-section h3 {
-   232	            font-size: 1.3rem;
-   233	            margin-bottom: 15px;
-   234	            color: #333;
-   235	        }
-   236	        
-   237	        .info-list {
-   238	            list-style: none;
-   239	            padding: 0;
-   240	        }
-   241	        
-   242	        .info-list li {
-   243	            padding: 10px 0;
-   244	            border-bottom: 1px solid #e0e0e0;
-   245	            display: flex;
-   246	            align-items: start;
-   247	            gap: 10px;
-   248	        }
-   249	        
-   250	        .info-list li:last-child {
-   251	            border-bottom: none;
-   252	        }
-   253	        
-   254	        .ai-consult {
-   255	            text-align: center;
-   256	            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-   257	            border-radius: 15px;
-   258	            padding: 30px;
-   259	            margin-top: 30px;
-   260	        }
-   261	        
-   262	        .ai-consult h3 {
-   263	            color: #667eea;
-   264	            font-size: 1.5rem;
-   265	            margin-bottom: 15px;
-   266	        }
-   267	        
-   268	        .ai-consult p {
-   269	            color: #666;
-   270	            margin-bottom: 20px;
-   271	        }
-   272	        
-   273	        .btn-consult {
-   274	            background: linear-gradient(135deg, #667eea, #764ba2);
-   275	            color: white;
-   276	            border: none;
-   277	            padding: 15px 40px;
-   278	            font-size: 1.1rem;
-   279	            font-weight: 600;
-   280	            border-radius: 50px;
-   281	            cursor: pointer;
-   282	            transition: transform 0.3s;
-   283	        }
-   284	        
-   285	        .btn-consult:hover {
-   286	            transform: translateY(-2px);
-   287	            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-   288	        }
-   289	        
-   290	        @media (max-width: 768px) {
-   291	            .header h1 { font-size: 1.8rem; }
-   292	            .form-card { padding: 25px; }
-   293	            .people-grid { grid-template-columns: 1fr; }
-   294	            .type-selector { grid-template-columns: 1fr; }
-   295	            .score-circle { width: 120px; height: 120px; font-size: 2.5rem; }
-   296	        }
-   297	    </style>
-   298	</head>
-   299	<body>
-   300	    <div class="container">
-   301	        <!-- 헤더 -->
-   302	        <div class="header">
-   303	            <h1>💕 궁합 분석</h1>
-   304	            <p>사주 기반 정밀 상성 분석으로 두 사람의 관계를 확인하세요</p>
-   305	        </div>
-   306	
-   307	        <!-- 입력 폼 -->
-   308	        <div class="form-card">
-   309	            <h2 class="form-title">두 분의 정보를 입력해주세요</h2>
-   310	            
-   311	            <!-- 분석 유형 선택 -->
-   312	            <div class="type-selector">
-   313	                <div class="type-btn active" onclick="selectType(this, 'love')">
-   314	                    <div class="icon">💗</div>
-   315	                    <h4>연애 궁합</h4>
-   316	                    <p>연인 사이의 상성</p>
-   317	                </div>
-   318	                <div class="type-btn" onclick="selectType(this, 'marriage')">
-   319	                    <div class="icon">💍</div>
-   320	                    <h4>결혼 궁합</h4>
-   321	                    <p>평생 동반자 상성</p>
-   322	                </div>
-   323	                <div class="type-btn" onclick="selectType(this, 'business')">
-   324	                    <div class="icon">💼</div>
-   325	                    <h4>사업 궁합</h4>
-   326	                    <p>비즈니스 파트너 상성</p>
-   327	                </div>
-   328	            </div>
-   329	
-   330	            <form id="compatibilityForm" onsubmit="analyzeCompatibility(event)">
-   331	                <div class="people-grid">
-   332	                    <!-- 첫 번째 사람 -->
-   333	                    <div class="person-section">
-   334	                        <h3><i class="fas fa-user"></i> 첫 번째 분</h3>
-   335	                        
-   336	                        <div class="form-group">
-   337	                            <label>이름</label>
-   338	                            <input type="text" id="person1Name" placeholder="홍길동" required>
-   339	                        </div>
-   340	                        
-   341	                        <div class="form-group">
-   342	                            <label>성별</label>
-   343	                            <select id="person1Gender" required>
-   344	                                <option value="male">남성</option>
-   345	                                <option value="female">여성</option>
-   346	                            </select>
-   347	                        </div>
-   348	                        
-   349	                        <div class="form-group">
-   350	                            <label>생년월일</label>
-   351	                            <div class="date-group">
-   352	                                <input type="number" id="person1Year" placeholder="1990" min="1900" max="2024" required>
-   353	                                <input type="number" id="person1Month" placeholder="5월" min="1" max="12" required>
-   354	                                <input type="number" id="person1Day" placeholder="15일" min="1" max="31" required>
-   355	                            </div>
-   356	                        </div>
-   357	                        
-   358	                        <div class="form-group">
-   359	                            <label>생시 (선택)</label>
-   360	                            <input type="number" id="person1Hour" placeholder="14시" min="0" max="23">
-   361	                        </div>
-   362	                        
-   363	                        <div class="form-group">
-   364	                            <label>양력/음력</label>
-   365	                            <select id="person1Calendar" required>
-   366	                                <option value="solar">양력</option>
-   367	                                <option value="lunar">음력</option>
-   368	                            </select>
-   369	                        </div>
-   370	                    </div>
-   371	
-   372	                    <!-- 두 번째 사람 -->
-   373	                    <div class="person-section">
-   374	                        <h3><i class="fas fa-user"></i> 두 번째 분</h3>
-   375	                        
-   376	                        <div class="form-group">
-   377	                            <label>이름</label>
-   378	                            <input type="text" id="person2Name" placeholder="김영희" required>
-   379	                        </div>
-   380	                        
-   381	                        <div class="form-group">
-   382	                            <label>성별</label>
-   383	                            <select id="person2Gender" required>
-   384	                                <option value="male">남성</option>
-   385	                                <option value="female">여성</option>
-   386	                            </select>
-   387	                        </div>
-   388	                        
-   389	                        <div class="form-group">
-   390	                            <label>생년월일</label>
-   391	                            <div class="date-group">
-   392	                                <input type="number" id="person2Year" placeholder="1992" min="1900" max="2024" required>
-   393	                                <input type="number" id="person2Month" placeholder="8월" min="1" max="12" required>
-   394	                                <input type="number" id="person2Day" placeholder="20일" min="1" max="31" required>
-   395	                            </div>
-   396	                        </div>
-   397	                        
-   398	                        <div class="form-group">
-   399	                            <label>생시 (선택)</label>
-   400	                            <input type="number" id="person2Hour" placeholder="10시" min="0" max="23">
-   401	                        </div>
-   402	                        
-   403	                        <div class="form-group">
-   404	                            <label>양력/음력</label>
-   405	                            <select id="person2Calendar" required>
-   406	                                <option value="solar">양력</option>
-   407	                                <option value="lunar">음력</option>
-   408	                            </select>
-   409	                        </div>
-   410	                    </div>
-   411	                </div>
-   412	
-   413	                <button type="submit" class="btn-analyze">
-   414	                    <i class="fas fa-heart"></i> 궁합 분석하기
-   415	                </button>
-   416	            </form>
-   417	        </div>
-   418	
-   419	        <!-- 결과 카드 -->
-   420	        <div class="result-card" id="resultCard">
-   421	            <div class="result-header">
-   422	                <h2 id="resultTitle">💗 연애 궁합 분석 결과</h2>
-   423	                <p id="resultSubtitle">홍길동 ♥ 김영희</p>
-   424	            </div>
-   425	
-   426	            <!-- 점수 -->
-   427	            <div class="score-box">
-   428	                <div class="score-circle" id="scoreCircle">85점</div>
-   429	                <div class="score-label" id="scoreLabel">매우 좋은 궁합입니다!</div>
-   430	                <p class="score-desc" id="scoreDesc">두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.</p>
-   431	            </div>
-   432	
-   433	            <!-- 장점 -->
-   434	            <div class="info-section">
-   435	                <h3><i class="fas fa-check-circle" style="color: #4caf50;"></i> 궁합의 장점</h3>
-   436	                <ul class="info-list" id="strengthList">
-   437	                    <li>✓ 오행의 균형이 잘 맞아 서로를 보완해줍니다</li>
-   438	                    <li>✓ 성격이 잘 맞아 갈등이 적을 것입니다</li>
-   439	                    <li>✓ 금전적인 면에서 서로 도움이 됩니다</li>
-   440	                </ul>
-   441	            </div>
-   442	
-   443	            <!-- 주의사항 -->
-   444	            <div class="info-section">
-   445	                <h3><i class="fas fa-exclamation-circle" style="color: #ff5252;"></i> 주의할 점</h3>
-   446	                <ul class="info-list" id="weaknessList">
-   447	                    <li>! 가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다</li>
-   448	                    <li>! 서로의 차이를 존중하는 자세가 필요합니다</li>
-   449	                </ul>
-   450	            </div>
-   451	
-   452	            <!-- 조언 -->
-   453	            <div class="info-section">
-   454	                <h3><i class="fas fa-lightbulb" style="color: #ffc107;"></i> 관계 개선 조언</h3>
-   455	                <p id="adviceText">
-   456	                    서로의 장점을 인정하고 단점은 보완해주는 자세가 중요합니다. 
-   457	                    정기적인 대화 시간을 가지고 서로의 생각을 공유하세요.
-   458	                    작은 배려와 관심이 큰 행복을 만듭니다.
-   459	                </p>
-   460	            </div>
-   461	
-   462	            <!-- AI 상담 -->
-   463	            <div class="ai-consult">
-   464	                <h3><i class="fas fa-robot"></i> AI 전문가와 더 상세한 궁합 상담</h3>
-   465	                <p>두 분의 궁합에 대해 더 궁금한 점이 있으신가요?<br>AI 명리학 전문가가 24시간 상세한 상담을 제공합니다.</p>
-   466	                <button class="btn-consult" onclick="window.location.href='ai-chat.html'">
-   467	                    <i class="fas fa-comments"></i> AI 상담 시작하기
-   468	                </button>
-   469	            </div>
-   470	        </div>
-   471	    </div>
-   472	
-   473	    <script>
-   474	        var selectedType = 'love';
-   475	
-   476	        function selectType(element, type) {
-   477	            document.querySelectorAll('.type-btn').forEach(function(btn) {
-   478	                btn.classList.remove('active');
-   479	            });
-   480	            element.classList.add('active');
-   481	            selectedType = type;
-   482	        }
-   483	
-   484	        function analyzeCompatibility(event) {
-   485	            event.preventDefault();
-   486	
-   487	            var person1 = {
-   488	                name: document.getElementById('person1Name').value,
-   489	                gender: document.getElementById('person1Gender').value,
-   490	                year: parseInt(document.getElementById('person1Year').value),
-   491	                month: parseInt(document.getElementById('person1Month').value),
-   492	                day: parseInt(document.getElementById('person1Day').value),
-   493	                hour: parseInt(document.getElementById('person1Hour').value) || 12,
-   494	                calendar: document.getElementById('person1Calendar').value
-   495	            };
-   496	
-   497	            var person2 = {
-   498	                name: document.getElementById('person2Name').value,
-   499	                gender: document.getElementById('person2Gender').value,
-   500	                year: parseInt(document.getElementById('person2Year').value),
-   501	                month: parseInt(document.getElementById('person2Month').value),
-   502	                day: parseInt(document.getElementById('person2Day').value),
-   503	                hour: parseInt(document.getElementById('person2Hour').value) || 12,
-   504	                calendar: document.getElementById('person2Calendar').value
-   505	            };
-   506	
-   507	            var score = Math.floor(Math.random() * 30) + 60;
-   508	
-   509	            var titles = {
-   510	                'love': '💗 연애 궁합 분석 결과',
-   511	                'marriage': '💍 결혼 궁합 분석 결과',
-   512	                'business': '💼 사업 궁합 분석 결과'
-   513	            };
-   514	
-   515	            document.getElementById('resultTitle').textContent = titles[selectedType];
-   516	            document.getElementById('resultSubtitle').textContent = person1.name + ' ♥ ' + person2.name;
-   517	            document.getElementById('scoreCircle').textContent = score + '점';
-   518	
-   519	            var label, desc;
-   520	            if (score >= 90) {
-   521	                label = '완벽한 궁합!';
-   522	                desc = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
-   523	            } else if (score >= 75) {
-   524	                label = '매우 좋은 궁합!';
-   525	                desc = '두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.';
-   526	            } else {
-   527	                label = '좋은 궁합';
-   528	                desc = '전반적으로 좋은 궁합입니다. 서로 노력한다면 행복한 관계를 만들 수 있습니다.';
-   529	            }
-   530	
-   531	            document.getElementById('scoreLabel').textContent = label;
-   532	            document.getElementById('scoreDesc').textContent = desc;
-   533	
-   534	            var compatibilityData = {
-   535	                mode: 'compatibility',
-   536	                type: selectedType,
-   537	                person1: {
-   538	                    name: person1.name,
-   539	                    gender: person1.gender,
-   540	                    birthdate: person1.year + '-' + String(person1.month).padStart(2, '0') + '-' + String(person1.day).padStart(2, '0'),
-   541	                    calendar: person1.calendar,
-   542	                    hour: String(person1.hour).padStart(2, '0') + ':00'
-   543	                },
-   544	                person2: {
-   545	                    name: person2.name,
-   546	                    gender: person2.gender,
-   547	                    birthdate: person2.year + '-' + String(person2.month).padStart(2, '0') + '-' + String(person2.day).padStart(2, '0'),
-   548	                    calendar: person2.calendar,
-   549	                    hour: String(person2.hour).padStart(2, '0') + ':00'
-   550	                },
-   551	                score: score
-   552	            };
-   553	
-   554	            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
-   555	            console.log('✅ 궁합 데이터 저장:', compatibilityData);
-   556	
-   557	            document.getElementById('resultCard').style.display = 'block';
-   558	            document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
-   559	        }
-   560	
-   561	        // ===== Global Error Handler =====
-   562	        window.addEventListener('error', function(e) {
-   563	            // aisaju1000.com 외의 스크립트 에러 무시
-   564	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
-   565	                e.preventDefault();
-   566	                return false;
-   567	            }
-   568	        });
-   569	
-   570	        console.log('✅ 궁합 분석 페이지 로드 완료');
-   571	    </script>
-   572	</body>
-   573	</html>
-   574	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>궁합 분석 - AI 사주 천년지기</title>
+    <meta name="description" content="연애, 결혼, 사업 궁합을 정밀하게 분석합니다. 사주 기반 상성 확인">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        .form-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .type-btn {
+            background: #f8f9fa;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .type-btn:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .type-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .type-btn .icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .type-btn h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .type-btn p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .people-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .person-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .date-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .btn-analyze {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .btn-analyze:hover {
+            transform: scale(1.05);
+        }
+        
+        .result-card {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .result-header h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .result-header p {
+            font-size: 1.3rem;
+            color: #667eea;
+        }
+        
+        .score-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        
+        .score-label {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .score-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .info-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .ai-consult {
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .ai-consult h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .ai-consult p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .btn-consult {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-consult:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .form-card { padding: 25px; }
+            .people-grid { grid-template-columns: 1fr; }
+            .type-selector { grid-template-columns: 1fr; }
+            .score-circle { width: 120px; height: 120px; font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💕 궁합 분석</h1>
+            <p>사주 기반 정밀 상성 분석으로 두 사람의 관계를 확인하세요</p>
+        </div>
+
+        <div class="form-card">
+            <h2 class="form-title">두 분의 정보를 입력해주세요</h2>
+            
+            <div class="type-selector">
+                <div class="type-btn active" onclick="selectType(this, 'love')">
+                    <div class="icon">💗</div>
+                    <h4>연애 궁합</h4>
+                    <p>연인 사이의 상성</p>
+                </div>
+                <div class="type-btn" onclick="selectType(this, 'marriage')">
+                    <div class="icon">💍</div>
+                    <h4>결혼 궁합</h4>
+                    <p>평생 동반자 상성</p>
+                </div>
+                <div class="type-btn" onclick="selectType(this, 'business')">
+                    <div class="icon">💼</div>
+                    <h4>사업 궁합</h4>
+                    <p>비즈니스 파트너 상성</p>
+                </div>
+            </div>
+
+            <form id="compatibilityForm" onsubmit="analyzeCompatibility(event)">
+                <div class="people-grid">
+                    <div class="person-section">
+                        <h3>👤 첫 번째 분</h3>
+                        
+                        <div class="form-group">
+                            <label>이름</label>
+                            <input type="text" id="person1Name" placeholder="홍길동" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>성별</label>
+                            <select id="person1Gender" required>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>생년월일</label>
+                            <div class="date-group">
+                                <input type="number" id="person1Year" placeholder="1990" min="1900" max="2024" required>
+                                <input type="number" id="person1Month" placeholder="5월" min="1" max="12" required>
+                                <input type="number" id="person1Day" placeholder="15일" min="1" max="31" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>생시 (선택)</label>
+                            <input type="number" id="person1Hour" placeholder="14시" min="0" max="23">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>양력/음력</label>
+                            <select id="person1Calendar" required>
+                                <option value="solar">양력</option>
+                                <option value="lunar">음력</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="person-section">
+                        <h3>👤 두 번째 분</h3>
+                        
+                        <div class="form-group">
+                            <label>이름</label>
+                            <input type="text" id="person2Name" placeholder="김영희" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>성별</label>
+                            <select id="person2Gender" required>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>생년월일</label>
+                            <div class="date-group">
+                                <input type="number" id="person2Year" placeholder="1992" min="1900" max="2024" required>
+                                <input type="number" id="person2Month" placeholder="8월" min="1" max="12" required>
+                                <input type="number" id="person2Day" placeholder="20일" min="1" max="31" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>생시 (선택)</label>
+                            <input type="number" id="person2Hour" placeholder="10시" min="0" max="23">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>양력/음력</label>
+                            <select id="person2Calendar" required>
+                                <option value="solar">양력</option>
+                                <option value="lunar">음력</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-analyze">
+                    ❤️ 궁합 분석하기
+                </button>
+            </form>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-header">
+                <h2 id="resultTitle">💗 연애 궁합 분석 결과</h2>
+                <p id="resultSubtitle">홍길동 ♥ 김영희</p>
+            </div>
+
+            <div class="score-box">
+                <div class="score-circle" id="scoreCircle">85점</div>
+                <div class="score-label" id="scoreLabel">매우 좋은 궁합입니다!</div>
+                <p class="score-desc" id="scoreDesc">두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>✔️ 궁합의 장점</h3>
+                <ul class="info-list" id="strengthList">
+                    <li>✓ 오행의 균형이 잘 맞아 서로를 보완해줍니다</li>
+                    <li>✓ 성격이 잘 맞아 갈등이 적을 것입니다</li>
+                    <li>✓ 금전적인 면에서 서로 도움이 됩니다</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>⚠️ 주의할 점</h3>
+                <ul class="info-list" id="weaknessList">
+                    <li>! 가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다</li>
+                    <li>! 서로의 차이를 존중하는 자세가 필요합니다</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>💡 관계 개선 조언</h3>
+                <p id="adviceText">
+                    서로의 장점을 인정하고 단점은 보완해주는 자세가 중요합니다. 
+                    정기적인 대화 시간을 가지고 서로의 생각을 공유하세요.
+                    작은 배려와 관심이 큰 행복을 만듭니다.
+                </p>
+            </div>
+
+            <div class="ai-consult">
+                <h3>🤖 AI 전문가와 더 상세한 궁합 상담</h3>
+                <p>두 분의 궁합에 대해 더 궁금한 점이 있으신가요?<br>AI 명리학 전문가가 24시간 상세한 상담을 제공합니다.</p>
+                <a href="ai-chat.html" class="btn-consult">
+                    💬 AI 상담 시작하기
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var selectedType = 'love';
+
+        function selectType(element, type) {
+            var buttons = document.querySelectorAll('.type-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            element.classList.add('active');
+            selectedType = type;
+        }
+
+        function analyzeCompatibility(event) {
+            event.preventDefault();
+
+            var person1 = {
+                name: document.getElementById('person1Name').value,
+                gender: document.getElementById('person1Gender').value,
+                year: parseInt(document.getElementById('person1Year').value),
+                month: parseInt(document.getElementById('person1Month').value),
+                day: parseInt(document.getElementById('person1Day').value),
+                hour: parseInt(document.getElementById('person1Hour').value) || 12,
+                calendar: document.getElementById('person1Calendar').value
+            };
+
+            var person2 = {
+                name: document.getElementById('person2Name').value,
+                gender: document.getElementById('person2Gender').value,
+                year: parseInt(document.getElementById('person2Year').value),
+                month: parseInt(document.getElementById('person2Month').value),
+                day: parseInt(document.getElementById('person2Day').value),
+                hour: parseInt(document.getElementById('person2Hour').value) || 12,
+                calendar: document.getElementById('person2Calendar').value
+            };
+
+            var score = Math.floor(Math.random() * 30) + 60;
+
+            var titles = {
+                'love': '💗 연애 궁합 분석 결과',
+                'marriage': '💍 결혼 궁합 분석 결과',
+                'business': '💼 사업 궁합 분석 결과'
+            };
+
+            document.getElementById('resultTitle').textContent = titles[selectedType];
+            document.getElementById('resultSubtitle').textContent = person1.name + ' ♥ ' + person2.name;
+            document.getElementById('scoreCircle').textContent = score + '점';
+
+            var label, desc;
+            if (score >= 90) {
+                label = '완벽한 궁합!';
+                desc = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
+            } else if (score >= 75) {
+                label = '매우 좋은 궁합!';
+                desc = '두 분은 서로를 잘 이해하고 배려할 수 있는 좋은 상성입니다.';
+            } else {
+                label = '좋은 궁합';
+                desc = '전반적으로 좋은 궁합입니다. 서로 노력한다면 행복한 관계를 만들 수 있습니다.';
+            }
+
+            document.getElementById('scoreLabel').textContent = label;
+            document.getElementById('scoreDesc').textContent = desc;
+
+            var compatibilityData = {
+                mode: 'compatibility',
+                type: selectedType,
+                person1: {
+                    name: person1.name,
+                    gender: person1.gender,
+                    birthdate: person1.year + '-' + String(person1.month).padStart(2, '0') + '-' + String(person1.day).padStart(2, '0'),
+                    calendar: person1.calendar,
+                    hour: String(person1.hour).padStart(2, '0') + ':00'
+                },
+                person2: {
+                    name: person2.name,
+                    gender: person2.gender,
+                    birthdate: person2.year + '-' + String(person2.month).padStart(2, '0') + '-' + String(person2.day).padStart(2, '0'),
+                    calendar: person2.calendar,
+                    hour: String(person2.hour).padStart(2, '0') + ':00'
+                },
+                score: score
+            };
+
+            try {
+                localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
+                console.log('✅ 궁합 데이터 저장 성공');
+            } catch (e) {
+                console.error('❌ 궁합 데이터 저장 실패:', e);
+            }
+
+            document.getElementById('resultCard').style.display = 'block';
+            document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        console.log('✅ 궁합 분석 페이지 로드 완료');
+    </script>
+</body>
+</html>
