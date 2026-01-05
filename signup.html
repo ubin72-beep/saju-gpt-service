@@ -1,597 +1,583 @@
-  1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>회원가입 - AI 사주 천년지기</title>
-     7	    <link rel="preconnect" href="https://fonts.googleapis.com">
-     8	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     9	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    10	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    11	    <style>
-    12	        * {
-    13	            margin: 0;
-    14	            padding: 0;
-    15	            box-sizing: border-box;
-    16	        }
-    17	
-    18	        body {
-    19	            font-family: 'Noto Sans KR', sans-serif;
-    20	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    21	            min-height: 100vh;
-    22	            display: flex;
-    23	            align-items: center;
-    24	            justify-content: center;
-    25	            padding: 20px;
-    26	        }
-    27	
-    28	        .signup-container {
-    29	            background: white;
-    30	            border-radius: 20px;
-    31	            padding: 50px;
-    32	            max-width: 500px;
-    33	            width: 100%;
-    34	            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    35	        }
-    36	
-    37	        .logo {
-    38	            text-align: center;
-    39	            margin-bottom: 30px;
-    40	        }
-    41	
-    42	        .logo h1 {
-    43	            font-size: 2rem;
-    44	            color: #333;
-    45	            margin-bottom: 10px;
-    46	        }
-    47	
-    48	        .logo p {
-    49	            color: #666;
-    50	            font-size: 0.95rem;
-    51	        }
-    52	
-    53	        .form-group {
-    54	            margin-bottom: 25px;
-    55	        }
-    56	
-    57	        .form-group label {
-    58	            display: block;
-    59	            margin-bottom: 8px;
-    60	            font-weight: 600;
-    61	            color: #333;
-    62	        }
-    63	
-    64	        .required {
-    65	            color: #f5576c;
-    66	        }
-    67	
-    68	        .input-wrapper {
-    69	            position: relative;
-    70	        }
-    71	
-    72	        .input-wrapper i {
-    73	            position: absolute;
-    74	            left: 15px;
-    75	            top: 50%;
-    76	            transform: translateY(-50%);
-    77	            color: #999;
-    78	        }
-    79	
-    80	        .form-group input {
-    81	            width: 100%;
-    82	            padding: 12px 15px 12px 45px;
-    83	            border: 2px solid #e0e0e0;
-    84	            border-radius: 10px;
-    85	            font-family: 'Noto Sans KR', sans-serif;
-    86	            font-size: 1rem;
-    87	            transition: border-color 0.3s;
-    88	        }
-    89	
-    90	        .form-group input:focus {
-    91	            outline: none;
-    92	            border-color: #667eea;
-    93	        }
-    94	
-    95	        .form-group input.error {
-    96	            border-color: #f5576c;
-    97	        }
-    98	
-    99	        .form-group input.success {
-   100	            border-color: #4CAF50;
-   101	        }
-   102	
-   103	        .error-message {
-   104	            color: #f5576c;
-   105	            font-size: 0.85rem;
-   106	            margin-top: 5px;
-   107	            display: none;
-   108	        }
-   109	
-   110	        .error-message.show {
-   111	            display: block;
-   112	        }
-   113	
-   114	        .success-message {
-   115	            color: #4CAF50;
-   116	            font-size: 0.85rem;
-   117	            margin-top: 5px;
-   118	            display: none;
-   119	        }
-   120	
-   121	        .success-message.show {
-   122	            display: block;
-   123	        }
-   124	
-   125	        .password-strength {
-   126	            height: 5px;
-   127	            background: #e0e0e0;
-   128	            border-radius: 5px;
-   129	            margin-top: 8px;
-   130	            overflow: hidden;
-   131	        }
-   132	
-   133	        .password-strength-bar {
-   134	            height: 100%;
-   135	            width: 0;
-   136	            transition: width 0.3s, background 0.3s;
-   137	        }
-   138	
-   139	        .password-strength-bar.weak {
-   140	            width: 33%;
-   141	            background: #f5576c;
-   142	        }
-   143	
-   144	        .password-strength-bar.medium {
-   145	            width: 66%;
-   146	            background: #FFA500;
-   147	        }
-   148	
-   149	        .password-strength-bar.strong {
-   150	            width: 100%;
-   151	            background: #4CAF50;
-   152	        }
-   153	
-   154	        .password-toggle {
-   155	            position: absolute;
-   156	            right: 15px;
-   157	            top: 50%;
-   158	            transform: translateY(-50%);
-   159	            cursor: pointer;
-   160	            color: #999;
-   161	        }
-   162	
-   163	        .checkbox-group {
-   164	            margin-bottom: 25px;
-   165	        }
-   166	
-   167	        .checkbox-item {
-   168	            display: flex;
-   169	            align-items: center;
-   170	            gap: 10px;
-   171	            margin-bottom: 12px;
-   172	            padding: 12px;
-   173	            background: #f8f9fa;
-   174	            border-radius: 8px;
-   175	        }
-   176	
-   177	        .checkbox-item input[type="checkbox"] {
-   178	            width: 20px;
-   179	            height: 20px;
-   180	            cursor: pointer;
-   181	        }
-   182	
-   183	        .checkbox-item label {
-   184	            cursor: pointer;
-   185	            margin: 0;
-   186	            flex: 1;
-   187	        }
-   188	
-   189	        .checkbox-item a {
-   190	            color: #667eea;
-   191	            text-decoration: none;
-   192	            font-size: 0.9rem;
-   193	        }
-   194	
-   195	        .checkbox-item a:hover {
-   196	            text-decoration: underline;
-   197	        }
-   198	
-   199	        .btn-signup {
-   200	            width: 100%;
-   201	            padding: 15px;
-   202	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-   203	            color: white;
-   204	            border: none;
-   205	            border-radius: 10px;
-   206	            font-size: 1.1rem;
-   207	            font-weight: 700;
-   208	            cursor: pointer;
-   209	            transition: transform 0.3s;
-   210	        }
-   211	
-   212	        .btn-signup:hover {
-   213	            transform: translateY(-2px);
-   214	        }
-   215	
-   216	        .btn-signup:disabled {
-   217	            background: #ccc;
-   218	            cursor: not-allowed;
-   219	            transform: none;
-   220	        }
-   221	
-   222	        .social-signup {
-   223	            margin-top: 30px;
-   224	            padding-top: 30px;
-   225	            border-top: 1px solid #e0e0e0;
-   226	        }
-   227	
-   228	        .social-title {
-   229	            text-align: center;
-   230	            color: #666;
-   231	            margin-bottom: 20px;
-   232	            font-size: 0.95rem;
-   233	        }
-   234	
-   235	        .social-buttons {
-   236	            display: flex;
-   237	            gap: 10px;
-   238	        }
-   239	
-   240	        .social-btn {
-   241	            flex: 1;
-   242	            padding: 12px;
-   243	            border: 2px solid #e0e0e0;
-   244	            border-radius: 10px;
-   245	            background: white;
-   246	            cursor: pointer;
-   247	            transition: all 0.3s;
-   248	            display: flex;
-   249	            align-items: center;
-   250	            justify-content: center;
-   251	            gap: 8px;
-   252	            font-weight: 600;
-   253	        }
-   254	
-   255	        .social-btn:hover {
-   256	            border-color: #667eea;
-   257	        }
-   258	
-   259	        .social-btn.kakao {
-   260	            background: #FEE500;
-   261	            border-color: #FEE500;
-   262	        }
-   263	
-   264	        .social-btn.kakao:hover {
-   265	            background: #FDD835;
-   266	        }
-   267	
-   268	        .social-btn.naver {
-   269	            background: #03C75A;
-   270	            color: white;
-   271	            border-color: #03C75A;
-   272	        }
-   273	
-   274	        .social-btn.naver:hover {
-   275	            background: #02B350;
-   276	        }
-   277	
-   278	        .social-btn.google {
-   279	            border-color: #e0e0e0;
-   280	        }
-   281	
-   282	        .login-link {
-   283	            text-align: center;
-   284	            margin-top: 25px;
-   285	            color: #666;
-   286	        }
-   287	
-   288	        .login-link a {
-   289	            color: #667eea;
-   290	            text-decoration: none;
-   291	            font-weight: 600;
-   292	        }
-   293	
-   294	        .login-link a:hover {
-   295	            text-decoration: underline;
-   296	        }
-   297	
-   298	        @media (max-width: 576px) {
-   299	            .signup-container {
-   300	                padding: 30px 20px;
-   301	            }
-   302	
-   303	            .social-buttons {
-   304	                flex-direction: column;
-   305	            }
-   306	        }
-   307	    </style>
-   308	</head>
-   309	<body>
-   310	    <div class="signup-container">
-   311	        <div class="logo">
-   312	            <h1>🔮 AI 사주 천년지기</h1>
-   313	            <p>회원가입하고 무료 운세 보기</p>
-   314	        </div>
-   315	
-   316	        <form id="signupForm">
-   317	            <!-- 이메일 -->
-   318	            <div class="form-group">
-   319	                <label>이메일 <span class="required">*</span></label>
-   320	                <div class="input-wrapper">
-   321	                    <i class="fas fa-envelope"></i>
-   322	                    <input type="email" id="email" placeholder="example@email.com" required>
-   323	                </div>
-   324	                <div class="error-message" id="emailError">유효한 이메일을 입력해주세요.</div>
-   325	                <div class="success-message" id="emailSuccess">사용 가능한 이메일입니다.</div>
-   326	            </div>
-   327	
-   328	            <!-- 비밀번호 -->
-   329	            <div class="form-group">
-   330	                <label>비밀번호 <span class="required">*</span></label>
-   331	                <div class="input-wrapper">
-   332	                    <i class="fas fa-lock"></i>
-   333	                    <input type="password" id="password" placeholder="8자 이상, 영문+숫자+특수문자" required>
-   334	                    <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
-   335	                </div>
-   336	                <div class="password-strength">
-   337	                    <div class="password-strength-bar" id="strengthBar"></div>
-   338	                </div>
-   339	                <div class="error-message" id="passwordError">8자 이상, 영문+숫자+특수문자를 포함해주세요.</div>
-   340	            </div>
-   341	
-   342	            <!-- 비밀번호 확인 -->
-   343	            <div class="form-group">
-   344	                <label>비밀번호 확인 <span class="required">*</span></label>
-   345	                <div class="input-wrapper">
-   346	                    <i class="fas fa-lock"></i>
-   347	                    <input type="password" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
-   348	                    <i class="fas fa-eye password-toggle" onclick="togglePassword('passwordConfirm')"></i>
-   349	                </div>
-   350	                <div class="error-message" id="passwordConfirmError">비밀번호가 일치하지 않습니다.</div>
-   351	                <div class="success-message" id="passwordConfirmSuccess">비밀번호가 일치합니다.</div>
-   352	            </div>
-   353	
-   354	            <!-- 이름 -->
-   355	            <div class="form-group">
-   356	                <label>이름 <span class="required">*</span></label>
-   357	                <div class="input-wrapper">
-   358	                    <i class="fas fa-user"></i>
-   359	                    <input type="text" id="name" placeholder="실명을 입력해주세요" required>
-   360	                </div>
-   361	                <div class="error-message" id="nameError">이름을 입력해주세요.</div>
-   362	            </div>
-   363	
-   364	            <!-- 생년월일 -->
-   365	            <div class="form-group">
-   366	                <label>생년월일 <span class="required">*</span></label>
-   367	                <div class="input-wrapper">
-   368	                    <i class="fas fa-calendar"></i>
-   369	                    <input type="date" id="birthDate" required>
-   370	                </div>
-   371	                <div class="error-message" id="birthDateError">생년월일을 선택해주세요.</div>
-   372	            </div>
-   373	
-   374	            <!-- 약관 동의 -->
-   375	            <div class="checkbox-group">
-   376	                <div class="checkbox-item">
-   377	                    <input type="checkbox" id="agreeAll" onchange="toggleAllAgree()">
-   378	                    <label for="agreeAll"><strong>전체 동의</strong></label>
-   379	                </div>
-   380	                <div class="checkbox-item">
-   381	                    <input type="checkbox" id="agreeTerms" class="agree-item" required>
-   382	                    <label for="agreeTerms">[필수] 이용약관 동의</label>
-   383	                    <a href="terms.html" target="_blank">보기</a>
-   384	                </div>
-   385	                <div class="checkbox-item">
-   386	                    <input type="checkbox" id="agreePrivacy" class="agree-item" required>
-   387	                    <label for="agreePrivacy">[필수] 개인정보처리방침 동의</label>
-   388	                    <a href="privacy.html" target="_blank">보기</a>
-   389	                </div>
-   390	                <div class="checkbox-item">
-   391	                    <input type="checkbox" id="agreeAge" class="agree-item" required>
-   392	                    <label for="agreeAge">[필수] 만 14세 이상입니다</label>
-   393	                </div>
-   394	                <div class="checkbox-item">
-   395	                    <input type="checkbox" id="agreeMarketing" class="agree-item">
-   396	                    <label for="agreeMarketing">[선택] 마케팅 정보 수신 동의</label>
-   397	                </div>
-   398	            </div>
-   399	
-   400	            <!-- 가입 버튼 -->
-   401	            <button type="submit" class="btn-signup">
-   402	                <i class="fas fa-user-plus"></i> 회원가입
-   403	            </button>
-   404	        </form>
-   405	
-   406	        <!-- 소셜 가입 -->
-   407	        <div class="social-signup">
-   408	            <div class="social-title">또는 소셜 계정으로 가입</div>
-   409	            <div class="social-buttons">
-   410	                <button class="social-btn kakao" onclick="socialSignup('kakao')">
-   411	                    <i class="fas fa-comment"></i> 카카오
-   412	                </button>
-   413	                <button class="social-btn naver" onclick="socialSignup('naver')">
-   414	                    <strong>N</strong> 네이버
-   415	                </button>
-   416	                <button class="social-btn google" onclick="socialSignup('google')">
-   417	                    <i class="fab fa-google"></i> 구글
-   418	                </button>
-   419	            </div>
-   420	        </div>
-   421	
-   422	        <!-- 로그인 링크 -->
-   423	        <div class="login-link">
-   424	            이미 계정이 있으신가요? <a href="login.html">로그인</a>
-   425	        </div>
-   426	    </div>
-   427	
-   428	    <script>
-   429	        // 이메일 중복 체크 (실제로는 API 호출)
-   430	        document.getElementById('email').addEventListener('blur', function() {
-   431	            const email = this.value;
-   432	            const emailError = document.getElementById('emailError');
-   433	            const emailSuccess = document.getElementById('emailSuccess');
-   434	            
-   435	            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-   436	            
-   437	            if (!emailRegex.test(email)) {
-   438	                this.classList.add('error');
-   439	                this.classList.remove('success');
-   440	                emailError.classList.add('show');
-   441	                emailSuccess.classList.remove('show');
-   442	            } else {
-   443	                // 실제로는 API로 중복 체크
-   444	                this.classList.remove('error');
-   445	                this.classList.add('success');
-   446	                emailError.classList.remove('show');
-   447	                emailSuccess.classList.add('show');
-   448	            }
-   449	        });
-   450	
-   451	        // 비밀번호 강도 체크
-   452	        document.getElementById('password').addEventListener('input', function() {
-   453	            const password = this.value;
-   454	            const strengthBar = document.getElementById('strengthBar');
-   455	            const passwordError = document.getElementById('passwordError');
-   456	            
-   457	            let strength = 0;
-   458	            if (password.length >= 8) strength++;
-   459	            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-   460	            if (/\d/.test(password)) strength++;
-   461	            if (/[!@#$%^&*]/.test(password)) strength++;
-   462	            
-   463	            strengthBar.className = 'password-strength-bar';
-   464	            if (strength <= 1) {
-   465	                strengthBar.classList.add('weak');
-   466	            } else if (strength <= 3) {
-   467	                strengthBar.classList.add('medium');
-   468	            } else {
-   469	                strengthBar.classList.add('strong');
-   470	            }
-   471	            
-   472	            const isValid = password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
-   473	            if (!isValid && password.length > 0) {
-   474	                this.classList.add('error');
-   475	                passwordError.classList.add('show');
-   476	            } else {
-   477	                this.classList.remove('error');
-   478	                passwordError.classList.remove('show');
-   479	            }
-   480	        });
-   481	
-   482	        // 비밀번호 확인
-   483	        document.getElementById('passwordConfirm').addEventListener('input', function() {
-   484	            const password = document.getElementById('password').value;
-   485	            const confirmError = document.getElementById('passwordConfirmError');
-   486	            const confirmSuccess = document.getElementById('passwordConfirmSuccess');
-   487	            
-   488	            if (this.value !== password) {
-   489	                this.classList.add('error');
-   490	                this.classList.remove('success');
-   491	                confirmError.classList.add('show');
-   492	                confirmSuccess.classList.remove('show');
-   493	            } else if (this.value.length > 0) {
-   494	                this.classList.remove('error');
-   495	                this.classList.add('success');
-   496	                confirmError.classList.remove('show');
-   497	                confirmSuccess.classList.add('show');
-   498	            }
-   499	        });
-   500	
-   501	        // 비밀번호 보기/숨기기
-   502	        function togglePassword(id) {
-   503	            const input = document.getElementById(id);
-   504	            const icon = input.nextElementSibling;
-   505	            
-   506	            if (input.type === 'password') {
-   507	                input.type = 'text';
-   508	                icon.classList.remove('fa-eye');
-   509	                icon.classList.add('fa-eye-slash');
-   510	            } else {
-   511	                input.type = 'password';
-   512	                icon.classList.remove('fa-eye-slash');
-   513	                icon.classList.add('fa-eye');
-   514	            }
-   515	        }
-   516	
-   517	        // 전체 동의
-   518	        function toggleAllAgree() {
-   519	            const agreeAll = document.getElementById('agreeAll');
-   520	            const agreeItems = document.querySelectorAll('.agree-item');
-   521	            
-   522	            agreeItems.forEach(item => {
-   523	                item.checked = agreeAll.checked;
-   524	            });
-   525	        }
-   526	
-   527	        // 개별 체크박스 변경 시
-   528	        document.querySelectorAll('.agree-item').forEach(item => {
-   529	            item.addEventListener('change', function() {
-   530	                const agreeAll = document.getElementById('agreeAll');
-   531	                const agreeItems = document.querySelectorAll('.agree-item');
-   532	                const allChecked = Array.from(agreeItems).every(item => item.checked);
-   533	                agreeAll.checked = allChecked;
-   534	            });
-   535	        });
-   536	
-   537	        // 폼 제출
-   538	        document.getElementById('signupForm').addEventListener('submit', function(e) {
-   539	            e.preventDefault();
-   540	            
-   541	            // 필수 약관 체크
-   542	            const agreeTerms = document.getElementById('agreeTerms').checked;
-   543	            const agreePrivacy = document.getElementById('agreePrivacy').checked;
-   544	            const agreeAge = document.getElementById('agreeAge').checked;
-   545	            
-   546	            if (!agreeTerms || !agreePrivacy || !agreeAge) {
-   547	                alert('필수 약관에 동의해주세요.');
-   548	                return;
-   549	            }
-   550	            
-   551	            // 비밀번호 확인
-   552	            const password = document.getElementById('password').value;
-   553	            const passwordConfirm = document.getElementById('passwordConfirm').value;
-   554	            
-   555	            if (password !== passwordConfirm) {
-   556	                alert('비밀번호가 일치하지 않습니다.');
-   557	                return;
-   558	            }
-   559	            
-   560	            // 회원가입 데이터
-   561	            const signupData = {
-   562	                email: document.getElementById('email').value,
-   563	                password: password,
-   564	                name: document.getElementById('name').value,
-   565	                birthDate: document.getElementById('birthDate').value,
-   566	                agreeMarketing: document.getElementById('agreeMarketing').checked,
-   567	                signupDate: new Date().toISOString()
-   568	            };
-   569	            
-   570	            console.log('회원가입 데이터:', signupData);
-   571	            
-   572	            // 실제로는 API 호출
-   573	            // fetch('/api/auth/signup', { ... })
-   574	            
-   575	            alert('회원가입이 완료되었습니다! 🎉\n로그인 페이지로 이동합니다.');
-   576	            window.location.href = 'login.html';
-   577	        });
-   578	
-   579	        // 소셜 가입
-   580	        function socialSignup(provider) {
-   581	            alert(`${provider} 소셜 가입 기능입니다.\n(실제로는 OAuth 연동 필요)`);
-   582	            // 실제로는 OAuth 인증 처리
-   583	        }
-   584	
-   585	        // ===== Global Error Handler =====
-   586	        window.addEventListener('error', function(e) {
-   587	            // aisaju1000.com 외의 스크립트 에러 무시
-   588	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
-   589	                e.preventDefault();
-   590	                return false;
-   591	            }
-   592	        });
-   593	
-   594	        console.log('✅ 회원가입 페이지 로드 완료');
-   595	    </script>
-   596	</body>
-   597	</html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - AI 사주 천년지기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .required {
+            color: #f5576c;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input.error {
+            border-color: #f5576c;
+        }
+
+        .form-group input.success {
+            border-color: #4CAF50;
+        }
+
+        .error-message {
+            color: #f5576c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .password-strength {
+            height: 5px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #f5576c;
+        }
+
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #FFA500;
+        }
+
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #4CAF50;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+        .checkbox-group {
+            margin-bottom: 25px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            margin: 0;
+            flex: 1;
+        }
+
+        .checkbox-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-item a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-signup:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .social-signup {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .social-title {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .social-btn:hover {
+            border-color: #667eea;
+        }
+
+        .social-btn.kakao {
+            background: #FEE500;
+            border-color: #FEE500;
+        }
+
+        .social-btn.kakao:hover {
+            background: #FDD835;
+        }
+
+        .social-btn.naver {
+            background: #03C75A;
+            color: white;
+            border-color: #03C75A;
+        }
+
+        .social-btn.naver:hover {
+            background: #02B350;
+        }
+
+        .social-btn.google {
+            border-color: #e0e0e0;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 576px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>🔮 AI 사주 천년지기</h1>
+            <p>회원가입하고 무료 운세 보기</p>
+        </div>
+
+        <form id="signupForm">
+            <!-- 이메일 -->
+            <div class="form-group">
+                <label>이메일 <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="email" placeholder="example@email.com" required>
+                </div>
+                <div class="error-message" id="emailError">유효한 이메일을 입력해주세요.</div>
+                <div class="success-message" id="emailSuccess">사용 가능한 이메일입니다.</div>
+            </div>
+
+            <!-- 비밀번호 -->
+            <div class="form-group">
+                <label>비밀번호 <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" placeholder="8자 이상, 영문+숫자+특수문자" required>
+                    <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="error-message" id="passwordError">8자 이상, 영문+숫자+특수문자를 포함해주세요.</div>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="form-group">
+                <label>비밀번호 확인 <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                    <span class="password-toggle" onclick="togglePassword('passwordConfirm')">👁️</span>
+                </div>
+                <div class="error-message" id="passwordConfirmError">비밀번호가 일치하지 않습니다.</div>
+                <div class="success-message" id="passwordConfirmSuccess">비밀번호가 일치합니다.</div>
+            </div>
+
+            <!-- 이름 -->
+            <div class="form-group">
+                <label>이름 <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="name" placeholder="실명을 입력해주세요" required>
+                </div>
+                <div class="error-message" id="nameError">이름을 입력해주세요.</div>
+            </div>
+
+            <!-- 생년월일 -->
+            <div class="form-group">
+                <label>생년월일 <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📅</span>
+                    <input type="date" id="birthDate" required>
+                </div>
+                <div class="error-message" id="birthDateError">생년월일을 선택해주세요.</div>
+            </div>
+
+            <!-- 약관 동의 -->
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeAll" onchange="toggleAllAgree()">
+                    <label for="agreeAll"><strong>전체 동의</strong></label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeTerms" class="agree-item" required>
+                    <label for="agreeTerms">[필수] 이용약관 동의</label>
+                    <a href="terms.html" target="_blank">보기</a>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreePrivacy" class="agree-item" required>
+                    <label for="agreePrivacy">[필수] 개인정보처리방침 동의</label>
+                    <a href="privacy.html" target="_blank">보기</a>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeAge" class="agree-item" required>
+                    <label for="agreeAge">[필수] 만 14세 이상입니다</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="agreeMarketing" class="agree-item">
+                    <label for="agreeMarketing">[선택] 마케팅 정보 수신 동의</label>
+                </div>
+            </div>
+
+            <!-- 가입 버튼 -->
+            <button type="submit" class="btn-signup">
+                ✨ 회원가입
+            </button>
+        </form>
+
+        <!-- 소셜 가입 -->
+        <div class="social-signup">
+            <div class="social-title">또는 소셜 계정으로 가입</div>
+            <div class="social-buttons">
+                <button class="social-btn kakao" onclick="socialSignup('kakao')">
+                    💬 카카오
+                </button>
+                <button class="social-btn naver" onclick="socialSignup('naver')">
+                    <strong>N</strong> 네이버
+                </button>
+                <button class="social-btn google" onclick="socialSignup('google')">
+                    🌐 구글
+                </button>
+            </div>
+        </div>
+
+        <!-- 로그인 링크 -->
+        <div class="login-link">
+            이미 계정이 있으신가요? <a href="login.html">로그인</a>
+        </div>
+    </div>
+
+    <script>
+        // 이메일 검증
+        document.getElementById('email').addEventListener('blur', function() {
+            var email = this.value;
+            var emailError = document.getElementById('emailError');
+            var emailSuccess = document.getElementById('emailSuccess');
+            
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                this.classList.add('error');
+                this.classList.remove('success');
+                emailError.classList.add('show');
+                emailSuccess.classList.remove('show');
+            } else {
+                this.classList.remove('error');
+                this.classList.add('success');
+                emailError.classList.remove('show');
+                emailSuccess.classList.add('show');
+            }
+        });
+
+        // 비밀번호 강도 체크
+        document.getElementById('password').addEventListener('input', function() {
+            var password = this.value;
+            var strengthBar = document.getElementById('strengthBar');
+            var passwordError = document.getElementById('passwordError');
+            
+            var strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[!@#$%^&*]/.test(password)) strength++;
+            
+            strengthBar.className = 'password-strength-bar';
+            if (strength <= 1) {
+                strengthBar.classList.add('weak');
+            } else if (strength <= 3) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('strong');
+            }
+            
+            var isValid = password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
+            if (!isValid && password.length > 0) {
+                this.classList.add('error');
+                passwordError.classList.add('show');
+            } else {
+                this.classList.remove('error');
+                passwordError.classList.remove('show');
+            }
+        });
+
+        // 비밀번호 확인
+        document.getElementById('passwordConfirm').addEventListener('input', function() {
+            var password = document.getElementById('password').value;
+            var confirmError = document.getElementById('passwordConfirmError');
+            var confirmSuccess = document.getElementById('passwordConfirmSuccess');
+            
+            if (this.value !== password) {
+                this.classList.add('error');
+                this.classList.remove('success');
+                confirmError.classList.add('show');
+                confirmSuccess.classList.remove('show');
+            } else if (this.value.length > 0) {
+                this.classList.remove('error');
+                this.classList.add('success');
+                confirmError.classList.remove('show');
+                confirmSuccess.classList.add('show');
+            }
+        });
+
+        // 비밀번호 보기/숨기기
+        function togglePassword(id) {
+            var input = document.getElementById(id);
+            var icon = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                icon.textContent = '👁️';
+            }
+        }
+
+        // 전체 동의
+        function toggleAllAgree() {
+            var agreeAll = document.getElementById('agreeAll');
+            var agreeItems = document.querySelectorAll('.agree-item');
+            
+            for (var i = 0; i < agreeItems.length; i++) {
+                agreeItems[i].checked = agreeAll.checked;
+            }
+        }
+
+        // 개별 체크박스 변경
+        var agreeItems = document.querySelectorAll('.agree-item');
+        for (var i = 0; i < agreeItems.length; i++) {
+            agreeItems[i].addEventListener('change', function() {
+                var agreeAll = document.getElementById('agreeAll');
+                var items = document.querySelectorAll('.agree-item');
+                var allChecked = true;
+                
+                for (var j = 0; j < items.length; j++) {
+                    if (!items[j].checked) {
+                        allChecked = false;
+                        break;
+                    }
+                }
+                
+                agreeAll.checked = allChecked;
+            });
+        }
+
+        // 폼 제출
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var agreeTerms = document.getElementById('agreeTerms').checked;
+            var agreePrivacy = document.getElementById('agreePrivacy').checked;
+            var agreeAge = document.getElementById('agreeAge').checked;
+            
+            if (!agreeTerms || !agreePrivacy || !agreeAge) {
+                alert('필수 약관에 동의해주세요.');
+                return;
+            }
+            
+            var password = document.getElementById('password').value;
+            var passwordConfirm = document.getElementById('passwordConfirm').value;
+            
+            if (password !== passwordConfirm) {
+                alert('비밀번호가 일치하지 않습니다.');
+                return;
+            }
+            
+            var signupData = {
+                email: document.getElementById('email').value,
+                password: password,
+                name: document.getElementById('name').value,
+                birthDate: document.getElementById('birthDate').value,
+                agreeMarketing: document.getElementById('agreeMarketing').checked,
+                signupDate: new Date().toISOString()
+            };
+            
+            console.log('회원가입 데이터:', signupData);
+            
+            alert('회원가입이 완료되었습니다! 🎉\\n로그인 페이지로 이동합니다.');
+            window.location.href = 'login.html';
+        });
+
+        // 소셜 가입
+        function socialSignup(provider) {
+            alert(provider + ' 소셜 가입 기능입니다.\\n(실제로는 OAuth 연동 필요)');
+        }
+
+        console.log('✅ 회원가입 페이지 로드 완료');
+    </script>
+</body>
+</html>
