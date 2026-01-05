@@ -1,4 +1,4 @@
- 1	<!DOCTYPE html>
+  1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -581,6 +581,17 @@
    581	            alert(`${provider} 소셜 가입 기능입니다.\n(실제로는 OAuth 연동 필요)`);
    582	            // 실제로는 OAuth 인증 처리
    583	        }
-   584	    </script>
-   585	</body>
-   586	</html>
+   584	
+   585	        // ===== Global Error Handler =====
+   586	        window.addEventListener('error', function(e) {
+   587	            // aisaju1000.com 외의 스크립트 에러 무시
+   588	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+   589	                e.preventDefault();
+   590	                return false;
+   591	            }
+   592	        });
+   593	
+   594	        console.log('✅ 회원가입 페이지 로드 완료');
+   595	    </script>
+   596	</body>
+   597	</html>
