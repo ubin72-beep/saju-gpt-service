@@ -985,7 +985,7 @@
                 </div>
                 
                 <!-- 맞춤 연애운 -->
-                <div class="service-card" onclick="alert('준비 중인 서비스입니다.')">
+                <div class="service-card" onclick="location.href='love-fortune.html'">
                     <div class="service-icon">💖</div>
                     <div class="service-title">맞춤 연애운</div>
                     <div class="service-description">2026년 사랑의 흐름 · 이상형 분석</div>
@@ -1001,7 +1001,7 @@
                 </div>
                 
                 <!-- 2026 신년운세 -->
-                <div class="service-card" onclick="alert('준비 중인 서비스입니다.')">
+                <div class="service-card" onclick="location.href='year-fortune-2026.html'">
                     <div class="service-icon">🐴</div>
                     <div class="service-title">2026 신년운세</div>
                     <div class="service-description">병오년 12띠별 운세 · 월별 흐름 분석</div>
@@ -1374,59 +1374,51 @@
         
         updateLanguage(currentLang);
         
-        // 폼 제출 (birthtime을 hour로 변환)
-        try {
-            document.getElementById('sajuForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                
-                // birthtime 값을 hour로 변환
-                if(data.birthtime) {
-                    data.hour = data.birthtime;
-                }
-                
-                localStorage.setItem('sajuData', JSON.stringify(data));
-                window.location.href = 'result.html';
-            });
-        } catch(err) {
-            console.error('Form initialization error:', err);
-        }
+        // 폼 제출
+        document.getElementById('sajuForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // birthtime 값을 hour로 변환
+            if(data.birthtime) {
+                data.hour = data.birthtime;
+            }
+            
+            localStorage.setItem('sajuData', JSON.stringify(data));
+            window.location.href = 'result.html';
+        });
         
         // FAQ 토글
-        try {
-            document.querySelectorAll('.faq-question').forEach(question => {
-                question.addEventListener('click', function() {
-                    const answer = this.nextElementSibling;
-                    const isOpen = answer.style.display === 'block';
-                    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-                    if (!isOpen) answer.style.display = 'block';
-                });
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                if (!isOpen) answer.style.display = 'block';
             });
-        } catch(err) {
-            console.error('FAQ initialization error:', err);
-        }
+        });
         
         // 부드러운 스크롤
-        try {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
-        } catch(err) {
-            console.error('Smooth scroll initialization error:', err);
-        }
+        });
         
         // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
-            // 외부 스크립트 오류는 무시
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
                 return true;
             }
+        });
+
+        // DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ AI 사주 천년지기 메인 페이지 로드 완료');
         });
     </script>
 </body>
