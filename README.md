@@ -1,673 +1,295 @@
-   1	# 🔮 AI 사주 천년지기 - 2026 병오년 사주팔자 운세
-     2	
-     3	> **1000년의 지혜와 AI 기술로 당신의 운명을 밝혀드립니다**
-     4	
-     5	[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-     6	[![Languages](https://img.shields.io/badge/Languages-4-blue.svg)](https://github.com)
-     7	[![Status](https://img.shields.io/badge/Status-Development-yellow.svg)](https://github.com)
-     8	
-     9	---
-    10	
-    11	## 🌟 **프로젝트 소개**
-    12	
-    13	**AI 사주 천년지기**는 전통 명리학과 최첨단 AI 기술을 결합한 온라인 사주 분석 서비스입니다.  
-    14	2026 병오년(丙午年) 붉은 불의 말띠 해를 맞아, 60년 만에 돌아오는 특별한 해의 운세를 제공합니다.
-    15	
-    16	### **✨ 주요 특징**
-    17	
-    18	- 🔮 **AI 기반 사주 분석** - 1000년 전통 명리학 데이터 학습
-    19	- 📅 **만세력 조회** - 정확한 년월일시 사주팔자 확인
-    20	- 💑 **궁합 매칭 서비스** - 실제 사주 기반 운명의 인연 찾기
-    21	- 📚 **사주 가이드 블로그** - 2026년 운세, 사주 기초, 직업운, 연애운 등 10개 전문 콘텐츠 (신규!)
-    22	- 💬 **커뮤니티 프리미엄** - 유저가 만드는 사주 콘텐츠
-    23	- 🌍 **다국어 지원** - 한국어, English, 中文, 日本語 (4개 언어)
-    24	- 💯 **98.7% 고객 만족도** - 수만 건의 실제 사례 기반
-    25	- 🆓 **대부분 무료** - 기본 사주, 만세력, 궁합, 토정비결 등
-    26	- 🤖 **24시간 AI 상담** - 언제 어디서나 실시간 상담
-    27	- 📱 **반응형 디자인** - 모바일, 태블릿, PC 모두 지원
-    28	
-    29	---
-    30	
-    31	## 🚀 **배포 URL**
-    32	
-    33	### **프로덕션**
-    34	```
-    35	https://ubin72-beep.github.io/saju-gpt-service/
-    36	```
-    37	
-    38	### **GitHub 저장소**
-    39	```
-    40	https://github.com/ubin72-beep/saju-gpt-service
-    41	```
-    42	
-    43	---
-    44	
-    45	## 📋 **완료된 기능**
-    46	
-    47	### ✅ **사주 계산 엔진 (js/saju-calculator.js)** 🔧 최근 수정!
-    48	- [x] **년주 계산 정확도 개선** - 1924년(甲子년) 기준으로 수정
-    49	- [x] **일주 계산 정확도 개선** - 1900년 1월 1일 = 庚辰일 기준으로 수정
-    50	- [x] **월주 계산 함수 오류 수정** - calculateYearPillar → calculateYearPillarManual
-    51	- [x] **음력→양력 변환 로그 강화** - 변환 과정 상세 출력
-    52	- [x] **검증 완료**: 1973년 2월 5일(음력) = 1973년 3월 9일(양력) → 癸丑년 乙卯월 甲寅일 ✅
-    53	- [x] **테스트 페이지 추가** - test-1973-correct.html, test-1973-saju.html
-    54	
-    55	### ✅ **메인 페이지 (index.html)** ⭐ 최근 업데이트!
-    56	- [x] 히어로 섹션 (2026 병오년 말 이미지)
-    57	- [x] 신뢰 지표 (실시간 이용자, 상담 완료, 만족도)
-    58	- [x] 사주 입력 폼 (생년월일, 시간, 성별)
-    59	- [x] **네비게이션 메뉴 업데이트** - "사주 가이드" 링크 추가
-    60	- [x] **12개 프리미엄 서비스 카드** (pricing.html과 가격 통일 완료)
-    61	  - **🔮 상세 사주팔자 (₩4,900)** - 클릭 시 사주 입력 폼으로 스크롤
-    62	  - **💑 정밀 궁합 (₩9,900)**
-    63	  - **📅 이사/결혼 택일 (₩5,900)**
-    64	  - **💖 맞춤 연애운 (₩3,900)** - 2026년 연애 흐름
-    65	  - **📜 토정비결 2026 (₩3,900)**
-    66	  - **🎊 2026 신년운세 (₩4,900)**
-    67	  - **🤖 24시간 AI 상담 (무료)** - ai-chat.html 연동
-    68	  - **📊 프리미엄 분석 (₩49,000)** - 50% 할인 (원가 ₩99,000)
-    69	  - **💑 궁합 매칭 (₩9,900/월)** 🔥 NEW
-    70	  - **💬 커뮤니티 프리미엄 (₩4,900/월)** 🔥 NEW
-    71	  - **💼 HR 솔루션 (₩500,000~/월)** 🔥 NEW
-    72	  - **🏢 B2B 기업 서비스 (₩50,000~/건)** 🔥 NEW
-    73	- [x] 유명인 사주 (BTS RM, 아이유, 손흥민, 유재석)
-    74	- [x] 고객 리뷰 (4.9/5.0, 12,847개)
-    75	- [x] FAQ 섹션 (5개 질문)
-    76	- [x] Footer
-    77	- [x] 다국어 전환기 (한국어/English/中文/日本語)
-    78	- [x] 네비게이션 최적화 (간격 조정, 폰트 크기 최적화)
-    79	
-    80	### ✅ **핵심 페이지 (4개)** ⭐ 최근 완성!
-    81	
-    82	#### 1. **result.html** - 사주 결과 페이지
-    83	- [x] localStorage 기반 사주 정보 로드
-    84	- [x] 생년월일, 양력/음력, 태어난 시간, 성별 표시
-    85	- [x] 십성 분석 (정관, 정재, 식신 등)
-    86	- [x] 대운 타임라인 (10년 주기)
-    87	- [x] PDF 다운로드 버튼
-    88	- [x] 네비게이션 통일
-    89	
-    90	#### 2. **pricing.html** - 가격표 페이지
-    91	- [x] 3개 구독 플랜
-    92	  - 무료 체험 (₩0/평생)
-    93	  - 월간 프리미엄 (₩19,900/월) - BEST 배지
-    94	  - 연간 프리미엄 (₩199,000/년) - 16% 할인
-    95	- [x] 6개 개별 구매 서비스
-    96	  - 상세 사주팔자 (₩4,900)
-    97	  - 정밀 궁합 (₩9,900)
-    98	  - 이사/결혼 택일 (₩5,900)
-    99	  - 맞춤 연애운 (₩3,900)
-   100	  - 토정비결 2026 (₩3,900)
-   101	  - 2026 신년운세 (₩4,900)
-   102	- [x] 기능 비교 테이블 (10가지 항목)
-   103	- [x] FAQ 섹션 (5개)
-   104	- [x] 반응형 디자인
-   105	
-   106	#### 3. **ai-chat.html** - AI 실시간 상담
-   107	- [x] 실시간 채팅 인터페이스 (높이 600px)
-   108	- [x] 사주 정보 카드 (localStorage 연동)
-   109	- [x] 퀵 질문 6개
-   110	  - 올해 나의 재물운은?
-   111	  - 나의 연애운은?
-   112	  - 직업 적성은?
-   113	  - 건강운은?
-   114	  - 이번 달 길일은?
-   115	  - 궁합 좋은 띠는?
-   116	- [x] AI 응답 시스템 (타이핑 애니메이션)
-   117	- [x] 메시지 입력 (Enter 키 & 버튼)
-   118	- [x] 자동 스크롤
-   119	
-   120	#### 4. **mypage.html** - 마이페이지
-   121	- [x] 사이드바 네비게이션
-   122	  - 🔮 내 사주 정보
-   123	  - 👑 구독 관리
-   124	  - 📜 이용 내역
-   125	  - 🕐 최근 본 서비스
-   126	  - ⚙️ 설정
-   127	  - 🚪 로그아웃
-   128	- [x] 사주 정보 카드 (localStorage 연동)
-   129	  - 생년월일 표시
-   130	  - 정보 수정 버튼 → index.html#saju-form
-   131	  - 내 사주 결과 보기 → result.html
-   132	- [x] 구독 관리
-   133	  - 현재 구독: 무료 체험
-   134	  - 업그레이드 버튼 → pricing.html
-   135	- [x] 이용 내역 (3건 샘플)
-   136	- [x] 최근 본 서비스 (3개 카드)
-   137	- [x] 설정
-   138	  - 알림 설정 (토글)
-   139	  - 언어 선택 (4개 언어)
-   140	- [x] 반응형 2단 레이아웃
-   141	
-   142	### ✅ **회원 시스템**
-   143	- [x] 로그인 페이지 (login.html) ⭐ 백엔드 연동 완료!
-   144	- [x] 회원가입 페이지 (signup.html) ⭐ 백엔드 연동 완료!
-   145	- [x] 마이페이지 (mypage.html)
-   146	- [x] 백엔드 API 연동 ⭐ 완료!
-   147	
-   148	### ✅ **사주 분석 서비스 (9개)**
-   149	- [x] 궁합 분석 (compatibility.html) ⭐ 최근 업데이트!
-   150	- [x] 토정비결 2026 (tojeong.html)
-   151	- [x] AI 꿈해몽 (dream.html)
-   152	- [x] 작명/개명 (naming.html)
-   153	- [x] 재물운 그래프 (wealth-forecast.html)
-   154	- [x] 직업 적성 매칭 (career-match.html)
-   155	- [x] 이사/결혼 택일 (taekil.html)
-   156	- [x] 프리미엄 분석 (premium-features.html)
-   157	- [x] **24시간 AI 상담 (ai-chat.html)** ⭐ 최근 완성!
-   158	
-   159	### ✅ **사주 가이드 블로그** 📚 NEW!
-   160	- [x] **blog.html** - 블로그 메인 페이지
-   161	  - [x] 10개 블로그 카드 (2026년 운세, 사주 기초, 직업운, 연애운, 재물운, 궁합, 택일, 육아, 건강운, 용어 사전)
-   162	  - [x] 카테고리 필터 (전체/2026년/기초/운세/궁합/특별)
-   163	  - [x] 검색 기능
-   164	  - [x] 인기 글 TOP 5
-   165	  - [x] 깔끔한 카드 디자인
-   166	- [x] **blog/2026-year-analysis.html** - 2026년 병오년 완벽 분석 포스트
-   167	  - [x] 병오년 특징 (불의 해 중의 불의 해)
-   168	  - [x] 띠별 2026년 운세 (12띠 상세 분석)
-   169	  - [x] 2026년 주의사항 (과욕, 충동, 건강, 인간관계, 재물)
-   170	  - [x] 개운법 & 추천 활동 (길한 색상, 방향, 활동)
-   171	  - [x] 2026년 추천 직업군
-   172	  - [x] 재물운 관리 팁
-   173	  - [x] 연애운 & 결혼운
-   174	  - [x] 건강 관리
-   175	  - [x] 공유 버튼 (페이스북, 트위터, 카카오톡, 링크)
-   176	  - [x] 관련 글 섹션
-   177	  - [x] SEO 최적화
-   178	- [ ] 남은 9개 블로그 포스트 (예정)
-   179	  - [ ] 사주팔자 기초 가이드
-   180	  - [ ] 직업운 좋은 사주 특징
-   181	  - [ ] 연애운 강한 사주
-   182	  - [ ] 재물운 사주 분석
-   183	  - [ ] 궁합 분석 사례 연구
-   184	  - [ ] 택일 완벽 가이드
-   185	  - [ ] 사주로 보는 육아
-   186	  - [ ] 사주로 보는 건강운
-   187	  - [ ] 사주 용어 사전
-   188	
-   189	### ✅ **신규 서비스 랜딩 페이지 (4개)** ⭐ 최근 완성!
-   190	
-   191	#### 1. 💑 **saju-matching.html** - 궁합 매칭 서비스
-   192	- [x] 히어로 섹션 (누적 매칭 12,847건, 궁합 점수 평균 89%)
-   193	- [x] 서비스 소개 (정통 사주 기반, AI 정밀 매칭, 실시간 매칭)
-   194	- [x] 이용 방법 4단계 (프로필 등록 → 자동 매칭 → 프로필 확인 → 대화 시작)
-   195	- [x] 가격 플랜 3가지
-   196	  - 무료 체험: 일 3명 프로필 열람
-   197	  - 베이직 (₩9,900/월): 일 10명 열람 + 상세 궁합 분석
-   198	  - 프리미엄 (₩19,900/월): 무제한 열람 + 실시간 메시지
-   199	- [x] 실제 커플 이야기 (3쌍 후기)
-   200	- [x] FAQ (5개 질문)
-   201	- [x] CTA (무료로 시작하기)
-   202	
-   203	#### 2. 💬 **community.html** - 커뮤니티 프리미엄
-   204	- [x] 히어로 섹션 (52,847명 회원, 일일 1,234개 게시글, 최고 월 수익 ₩125만)
-   205	- [x] 서비스 소개 (실시간 Q&A, 경험 공유, 수익 배분 시스템)
-   206	- [x] 인기 게시글 3개 (조회수/댓글/좋아요 표시)
-   207	- [x] 수익 배분 시스템 (상위 1% ₩125만, 평균 ₩8만)
-   208	- [x] 가격 플랜 2가지
-   209	  - 무료 회원: 게시판 이용 (광고 표시)
-   210	  - 프리미엄 (₩4,900/월): 광고 제거 + 수익 배분 참여
-   211	- [x] FAQ (5개 질문)
-   212	- [x] CTA (무료로 시작하기)
-   213	
-   214	#### 3. 💼 **hr-solution.html** - HR 솔루션
-   215	- [x] 히어로 섹션 (247개 도입 기업, 이직률 35%↓, 생산성 28%↑)
-   216	- [x] 서비스 소개 (적성 기반 채용, 팀 조화 분석, 승진 및 배치)
-   217	- [x] 제공 솔루션 6가지 (채용/팀구성/리더십/갈등조정/이직예측/승진타이밍)
-   218	- [x] 도입 효과 (이직률↓35%, 생산성↑28%, 채용비용↓42%, 만족도 89%)
-   219	- [x] 주요 고객사 6개 (A전자, B금융, C유통, D소프트, E건설, F교육)
-   220	- [x] 가격 플랜 3가지
-   221	  - 스타터 (₩500,000/월): 직원 50명 이하
-   222	  - 비즈니스 (₩1,500,000/월): 직원 51~500명
-   223	  - 엔터프라이즈 (맞춤 견적): 직원 500명 이상
-   224	- [x] FAQ (5개 질문)
-   225	- [x] CTA (무료 상담 신청)
-   226	
-   227	#### 4. 🏢 **b2b.html** - B2B 기업 서비스
-   228	- [x] 히어로 섹션 (1,847 프로젝트 수행, 523 기업 고객, 만족도 4.9/5.0)
-   229	- [x] 서비스 카테고리 3가지
-   230	  - 기업 컨설팅 (₩300,000~/건): CEO 진단, 기업 운세, 조직 궁합, M&A 타이밍
-   231	  - 임직원 교육 (₩1,500,000~/일): 사주 기초, 팀워크 워크샵, 리더십 개발
-   232	  - 기업 이벤트 (₩800,000~/회): 신년 행사, 1:1 상담 부스, 팀별 게임
-   233	- [x] 컨설팅 상세 4가지 (CEO/조직/전략/M&A)
-   234	- [x] 성공 사례 3개 (G 스타트업, H 제조, I 서비스)
-   235	- [x] 진행 프로세스 5단계 (견적문의 → 상담 → 계약 → 수행 → 완료)
-   236	- [x] FAQ (5개 질문)
-   237	- [x] CTA (견적 문의하기)
-   238	
-   239	### ✅ **추가 서비스 페이지** (기존)
-   240	
-   241	#### 💑 **궁합 매칭 서비스** (4개 상세 페이지)
-   242	- [x] **matching-register.html** - 프로필 등록 (사주 입력 + 자기소개)
-   243	- [x] **matching-list.html** - 매칭 목록 (궁합 점수별 정렬)
-   244	- [x] **matching-profile.html** - 프로필 상세 (사주 상세 + 메시지)
-   245	- [x] **matching-mypage.html** - 마이페이지 (내 프로필 + 받은 좋아요)
-   246	
-   247	#### 💬 **커뮤니티 프리미엄** (3개 상세 페이지)
-   248	- [x] **community-board.html** - 게시판 목록 (인기글/최신글)
-   249	- [x] **community-write.html** - 글쓰기 (사주 질문/경험 공유)
-   250	- [x] **community-view.html** - 게시글 상세 (댓글 + 좋아요)
-   251	
-   252	### ✅ **관리자 페이지**
-   253	- [x] 관리자 로그인 (admin-login.html)
-   254	- [x] 관리자 대시보드 (admin.html)
-   255	  - 회원 관리
-   256	  - 게시글 관리
-   257	  - 신고 처리
-   258	  - 결제 내역
-   259	  - 통계 (차트)
-   260	
-   261	### ✅ **기타 페이지**
-   262	- [x] 가격표 (pricing.html)
-   263	- [x] 약관 (terms.html, privacy.html, refund.html)
-   264	- [x] FAQ (faq.html)
-   265	- [x] 404 페이지 (404.html)
-   266	- [x] 추천인 프로그램 (referral.html)
-   267	- [x] 결제 완료 (payment-success.html)
-   268	
-   269	### ✅ **SEO 및 PWA**
-   270	- [x] sitemap.xml
-   271	- [x] robots.txt
-   272	- [x] manifest.json (PWA)
-   273	- [x] service-worker (sw.js)
-   274	- [x] .nojekyll (GitHub Pages 설정)
-   275	
-   276	### ✅ **다국어 지원 (i18n.js)**
-   277	- [x] 한국어 (ko) - 기본
-   278	- [x] 영어 (en)
-   279	- [x] 중국어 (zh)
-   280	- [x] 일본어 (ja)
-   281	- [x] 실시간 언어 전환 (새로고침 없음)
-   282	- [x] 언어 선택 UI (드롭다운)
-   283	- [x] localStorage 저장
-   284	
-   285	---
-   286	
-   287	## 📂 **프로젝트 구조**
-   288	
-   289	```
-   290	saju-gpt-service/
-   291	├── index.html                    # 메인 페이지 ⭐
-   292	├── result.html                   # 사주 결과 ⭐
-   293	├── pricing.html                  # 가격표 ⭐
-   294	├── ai-chat.html                  # AI 실시간 상담 ⭐
-   295	├── mypage.html                   # 마이페이지 ⭐
-   296	├── login.html                    # 로그인
-   297	├── signup.html                   # 회원가입
-   298	│
-   299	├── 사주 가이드 블로그 📚 NEW!
-   300	│   ├── blog.html                # 블로그 메인 페이지
-   301	│   └── blog/
-   302	│       ├── 2026-year-analysis.html  # 2026년 병오년 완벽 분석
-   303	│       ├── (사주팔자 기초 가이드 - 예정)
-   304	│       ├── (직업운 좋은 사주 - 예정)
-   305	│       ├── (연애운 강한 사주 - 예정)
-   306	│       ├── (재물운 사주 분석 - 예정)
-   307	│       ├── (궁합 분석 사례 - 예정)
-   308	│       ├── (택일 완벽 가이드 - 예정)
-   309	│       ├── (사주로 보는 육아 - 예정)
-   310	│       ├── (사주로 보는 건강운 - 예정)
-   311	│       └── (사주 용어 사전 - 예정)
-   312	│
-   313	├── 신규 서비스 랜딩 (4개) ⭐
-   314	│   ├── saju-matching.html       # 💑 궁합 매칭 서비스
-   315	│   ├── community.html           # 💬 커뮤니티 프리미엄
-   316	│   ├── hr-solution.html         # 💼 HR 솔루션
-   317	│   └── b2b.html                 # 🏢 B2B 기업 서비스
-   318	│
-   319	├── 사주 분석 서비스 (9개)
-   320	│   ├── compatibility.html        # 궁합 분석
-   321	│   ├── tojeong.html             # 토정비결
-   322	│   ├── dream.html               # AI 꿈해몽
-   323	│   ├── naming.html              # 작명/개명
-   324	│   ├── wealth-forecast.html     # 재물운 그래프
-   325	│   ├── career-match.html        # 직업 적성
-   326	│   ├── taekil.html              # 택일
-   327	│   └── premium-features.html    # 프리미엄 분석
-   328	│
-   329	├── 추가 서비스 상세 페이지 (7개)
-   330	│   ├── matching-register.html   # 궁합: 프로필 등록
-   331	│   ├── matching-list.html       # 궁합: 매칭 목록
-   332	│   ├── matching-profile.html    # 궁합: 프로필 상세
-   333	│   ├── matching-mypage.html     # 궁합: 마이페이지
-   334	│   ├── community-board.html     # 커뮤니티: 게시판
-   335	│   ├── community-write.html     # 커뮤니티: 글쓰기
-   336	│   └── community-view.html      # 커뮤니티: 게시글 보기
-   337	│
-   338	├── 관리자
-   339	│   ├── admin-login.html         # 관리자 로그인
-   340	│   └── admin.html               # 관리자 대시보드
-   341	│
-   342	├── 기타 페이지
-   343	│   ├── terms.html               # 이용약관
-   344	│   ├── privacy.html             # 개인정보처리방침
-   345	│   ├── refund.html              # 환불정책
-   346	│   ├── faq.html                 # FAQ
-   347	│   ├── referral.html            # 추천인
-   348	│   ├── payment-success.html     # 결제 완료
-   349	│   └── 404.html                 # 404 에러
-   350	│
-   351	├── js/
-   352	│   ├── i18n.js                  # 다국어 지원
-   353	│   └── (기타 JavaScript)
-   354	│
-   355	├── css/
-   356	│   └── (스타일시트)
-   357	│
-   358	├── images/
-   359	│   └── horse-2026.png           # 말 이미지
-   360	│
-   361	├── backend/                      # 백엔드 API ⭐ 90% 완료!
-   362	│   ├── models/                  # 데이터 모델
-   363	│   │   ├── User.js             # 사용자
-   364	│   │   ├── SajuAnalysis.js     # 사주 분석
-   365	│   │   └── Subscription.js     # 구독
-   366	│   ├── controllers/             # 비즈니스 로직
-   367	│   │   ├── authController.js   # 인증
-   368	│   │   ├── sajuController.js   # 사주
-   369	│   │   └── subscriptionController.js  # 구독
-   370	│   ├── routes/                  # API 라우트
-   371	│   │   ├── auth.js
-   372	│   │   ├── saju.js
-   373	│   │   ├── subscription.js
-   374	│   │   └── users.js
-   375	│   ├── middleware/              # 미들웨어
-   376	│   ├── utils/                   # 유틸리티
-   377	│   ├── server.js               # 메인 서버
-   378	│   ├── package.json
-   379	│   ├── .env.example            # 환경 변수 템플릿
-   380	│   ├── .gitignore
-   381	│   └── README.md               # 백엔드 문서
-   382	│
-   383	├── sitemap.xml                   # SEO
-   384	├── robots.txt                    # SEO
-   385	├── manifest.json                 # PWA
-   386	├── sw.js                         # Service Worker
-   387	└── README.md                     # 프로젝트 문서 ⭐
-   388	```
-   389	
-   390	---
-   391	
-   392	## 🔧 **기술 스택**
-   393	
-   394	### **프론트엔드**
-   395	- HTML5
-   396	- CSS3 (Flexbox, Grid, Animations)
-   397	- JavaScript (ES6+)
-   398	- Font Awesome 6.4.0
-   399	- Google Fonts (Noto Sans KR, Noto Serif KR)
-   400	
-   401	### **백엔드** ⭐ 90% 완료!
-   402	- Node.js + Express
-   403	- MongoDB Atlas (클라우드 데이터베이스)
-   404	- JWT 인증 + bcrypt 암호화
-   405	- RESTful API 설계
-   406	- Mongoose ODM
-   407	
-   408	### **배포**
-   409	- GitHub Pages (프론트엔드)
-   410	- Vercel / Railway (백엔드 - 예정)
-   411	
-   412	### **결제**
-   413	- 토스페이먼츠 (예정)
-   414	
-   415	---
-   416	
-   417	## 💰 **수익 모델** (가격 통일 완료!)
-   418	
-   419	### **1. 구독 서비스** 💎
-   420	- **무료 체험** (₩0/평생)
-   421	  - AI 상담 3회/일
-   422	  - 오늘의 운세
-   423	  - 띠별 운세
-   424	- **월간 프리미엄** (₩19,900/월) 🏆 BEST
-   425	  - AI 상담 무제한
-   426	  - 모든 유료 서비스 포함
-   427	  - PDF 다운로드
-   428	  - 우선 지원
-   429	- **연간 프리미엄** (₩199,000/년)
-   430	  - 월간 대비 16% 할인 (월 ₩16,583)
-   431	  - 월간 프리미엄 모든 혜택
-   432	  - 전담 상담사 지원
-   433	
-   434	**예상 수익**: 월 500명 가입 시 **₩9,950,000/월**
-   435	
-   436	### **2. 개별 구매 서비스** 🔮
-   437	- 상세 사주팔자: **₩4,900**
-   438	- 정밀 궁합: **₩9,900**
-   439	- 이사/결혼 택일: **₩5,900**
-   440	- 맞춤 연애운: **₩3,900**
-   441	- 토정비결 2026: **₩3,900**
-   442	- 2026 신년운세: **₩4,900**
-   443	
-   444	**예상 수익**: 월 200건 시 **₩1,500,000/월**
-   445	
-   446	### **3. 궁합 매칭 서비스** 💑
-   447	- 무료: 일 3명 프로필 열람
-   448	- 베이직 (₩9,900/월): 일 10명 열람
-   449	- 프리미엄 (₩19,900/월): 무제한 + 메시지
-   450	
-   451	**예상 수익**: 월 1,000명 가입 시 **₩9,900,000/월**
-   452	
-   453	### **4. 커뮤니티 프리미엄** 💬
-   454	- 무료: 게시판 이용 (광고 수익)
-   455	- 프리미엄 (₩4,900/월): 광고 제거 + 수익 배분
-   456	
-   457	**예상 수익**: 월 500명 가입 시 **₩2,450,000/월**
-   458	
-   459	### **5. B2B/HR** 🏢
-   460	- HR 솔루션: ₩500,000~/월
-   461	- 기업 서비스: ₩50,000~/건
-   462	
-   463	**예상 수익**: 월 5개 기업 시 **₩2,500,000/월**
-   464	
-   465	### **총 예상 수익: 월 ₩26,300,000**
-   466	
-   467	---
-   468	
-   469	## 🚧 **현재 진행 중**
-   470	
-   471	### ✅ **백엔드 개발** (진행률: 100%) ⭐ 완료!
-   472	- [x] MongoDB Atlas 연결 ✅
-   473	- [x] User, SajuAnalysis, Subscription 모델 ✅
-   474	- [x] 회원가입/로그인 API (JWT 인증) ✅
-   475	- [x] 사주 분석 저장/조회/수정/삭제 API ✅
-   476	- [x] 구독 관리 API (플랜/결제/취소) ✅
-   477	- [x] 프로필 수정/계정 삭제 API ✅
-   478	- [x] .env.example, README.md, .gitignore ✅
-   479	- [x] 프론트엔드 연동 (login.html, signup.html) ⭐ 완료!
-   480	- [x] 로컬 서버 실행 및 API 테스트 ✅
-   481	- [ ] 백엔드 배포 (Vercel/Railway) (0%)
-   482	- [ ] 궁합 매칭 프로필 관리 (10%)
-   483	- [ ] 커뮤니티 게시글/댓글 CRUD (0%)
-   484	- [ ] 결제 연동 (Toss Payments) (0%)
-   485	- [ ] 이메일 알림 (0%)
-   486	
-   487	### ❌ **법률 준비** (진행률: 0%)
-   488	- [ ] 사업자등록
-   489	- [ ] 통신판매업 신고
-   490	- [ ] 약관 보완 (실제 정보 입력)
-   491	
-   492	### ❌ **보안 설정** (진행률: 50%)
-   493	- [x] SSL 인증서 (GitHub Pages 자동)
-   494	- [ ] 비밀번호 암호화
-   495	- [ ] JWT 토큰 보안
-   496	- [ ] 개인정보 마스킹
-   497	
-   498	---
-   499	
-   500	## 🗓️ **로드맵**
-   501	
-   502	### **✅ Phase 0: 핵심 페이지 완성** (완료!) ⭐
-   503	- [x] index.html (메인 페이지) ✅
-   504	- [x] result.html (사주 결과) ✅
-   505	- [x] pricing.html (가격표) ✅
-   506	- [x] ai-chat.html (AI 상담) ✅
-   507	- [x] mypage.html (마이페이지) ✅
-   508	- [x] 가격 통일 (index.html ↔ pricing.html) ✅
-   509	- [x] localStorage 연동 (사주 정보) ✅
-   510	- [x] 반응형 디자인 ✅
-   511	
-   512	### **✅ Phase 0.5: 랜딩 페이지 완성** (완료!) ⭐ NEW
-   513	- [x] saju-matching.html (궁합 매칭 서비스) ✅
-   514	- [x] community.html (커뮤니티 프리미엄) ✅
-   515	- [x] hr-solution.html (HR 솔루션) ✅
-   516	- [x] b2b.html (B2B 기업 서비스) ✅
-   517	- [x] 네비게이션 드롭다운 연동 ✅
-   518	- [x] 일관된 디자인 시스템 ✅
-   519	- [x] FAQ & CTA 섹션 ✅
-   520	
-   521	### **Phase 1: 백엔드 개발** (완료!) ⭐
-   522	- [x] MongoDB Atlas 연결 ✅
-   523	- [x] 회원가입/로그인 API ✅
-   524	- [x] 사주/궁합 데이터 저장 ✅
-   525	- [x] 프론트엔드 연동 (login/signup) ⭐ 완료!
-   526	- [x] 로컬 서버 실행 및 테스트 ✅
-   527	
-   528	### **Phase 2: 결제 및 법률** (1-2주)
-   529	- [ ] 사업자등록 신청
-   530	- [ ] 통신판매업 신고
-   531	- [ ] 토스페이먼츠 연동
-   532	- [ ] 구독 관리 시스템
-   533	
-   534	### **Phase 3: 테스트** (1주)
-   535	- [ ] 전체 기능 QA
-   536	- [ ] 보안 점검
-   537	- [ ] 모바일 최적화
-   538	- [ ] 베타 테스터 피드백
-   539	
-   540	### **Phase 4: 런칭** (1주)
-   541	- [ ] SEO 최적화
-   542	- [ ] Google Analytics 연동
-   543	- [ ] 소프트 런칭 (지인 공유)
-   544	- [ ] 공식 런칭 (SNS 홍보)
-   545	
-   546	---
-   547	
-   548	## 📊 **현재 완성도**
-   549	
-   550	```
-   551	프론트엔드:  ████████████████████ 100% ⭐ 완료!
-   552	  ├─ 핵심 페이지 (5개)
-   553	  │   ├─ index.html:         ████████████████████ 100% ✅
-   554	  │   ├─ result.html:        ████████████████████ 100% ✅
-   555	  │   ├─ pricing.html:       ████████████████████ 100% ✅
-   556	  │   ├─ ai-chat.html:       ████████████████████ 100% ✅
-   557	  │   └─ mypage.html:        ████████████████████ 100% ✅
-   558	  │
-   559	  ├─ 랜딩 페이지 (4개) ⭐
-   560	  │   ├─ saju-matching.html: ████████████████████ 100% ✅
-   561	  │   ├─ community.html:     ████████████████████ 100% ✅
-   562	  │   ├─ hr-solution.html:   ████████████████████ 100% ✅
-   563	  │   └─ b2b.html:           ████████████████████ 100% ✅
-   564	  │
-   565	  ├─ 블로그 (Blog) 📚 NEW!
-   566	  │   ├─ blog.html:          ████████████████████ 100% ✅
-   567	  │   └─ blog/2026-year-analysis.html: ████████████████████ 100% ✅
-   568	  │   └─ 남은 9개 포스트:    ██░░░░░░░░░░░░░░░░░░  10%
-   569	  │
-   570	  └─ 사주 계산 엔진 🔧
-   571	      └─ saju-calculator.js: ████████████████████ 100% ✅ 정확도 개선!
-   572	
-   573	백엔드:      ████████████████████ 100% ⭐ 완료!
-   574	  ├─ models/               ████████████████████ 100% ✅
-   575	  ├─ controllers/          ████████████████████ 100% ✅
-   576	  ├─ routes/               ████████████████████ 100% ✅
-   577	  ├─ middleware/           ████████████████████ 100% ✅
-   578	  ├─ utils/                ████████████████████ 100% ✅
-   579	  ├─ MongoDB 연결          ████████████████████ 100% ✅
-   580	  ├─ 로컬 서버 실행         ████████████████████ 100% ✅
-   581	  ├─ API 테스트            ████████████████████ 100% ✅
-   582	  └─ 프론트 연동           ████████████████████ 100% ⭐ 완료!
-   583	
-   584	법률:        ░░░░░░░░░░░░░░░░░░░░  0%
-   585	결제:        ░░░░░░░░░░░░░░░░░░░░  0%
-   586	배포:        ░░░░░░░░░░░░░░░░░░░░  0%
-   587	
-   588	총 완성도:   ████████████████████ 99% 🎉
-   589	```
-   590	
-   591	---
-   592	
-   593	## 🛠️ **설치 및 실행**
-   594	
-   595	### **1. 로컬 개발**
-   596	
-   597	```bash
-   598	# 저장소 클론
-   599	git clone https://github.com/ubin72-beep/saju-gpt-service.git
-   600	
-   601	# 디렉토리 이동
-   602	cd saju-gpt-service
-   603	
-   604	# 로컬 서버 실행 (예: Live Server)
-   605	# index.html 파일 열기
-   606	```
-   607	
-   608	### **2. 백엔드 실행** (개발 중)
-   609	
-   610	```bash
-   611	# 백엔드 디렉토리로 이동
-   612	cd backend
-   613	
-   614	# 의존성 설치
-   615	npm install
-   616	
-   617	# 환경변수 설정
-   618	cp .env.example .env
-   619	# MONGODB_URI, JWT_SECRET 등 입력
-   620	
-   621	# 서버 실행
-   622	npm start
-   623	```
-   624	
-   625	---
-   626	
-   627	## 📞 **연락처**
-   628	
-   629	- **이메일**: support@aisaju1000.com
-   630	- **GitHub**: [ubin72-beep](https://github.com/ubin72-beep)
-   631	- **프로젝트**: [saju-gpt-service](https://github.com/ubin72-beep/saju-gpt-service)
-   632	
-   633	---
-   634	
-   635	## 📄 **라이선스**
-   636	
-   637	MIT License
-   638	
-   639	Copyright (c) 2025 AI 사주 천년지기
-   640	
-   641	---
-   642	
-   643	## 🙏 **기여**
-   644	
-   645	이 프로젝트에 기여하고 싶으시다면:
-   646	
-   647	1. Fork the Project
-   648	2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-   649	3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-   650	4. Push to the Branch (`git push origin feature/AmazingFeature`)
-   651	5. Open a Pull Request
-   652	
-   653	---
-   654	
-   655	## 🌟 **감사의 말**
-   656	
-   657	전통 명리학의 지혜를 현대 기술과 결합하여  
-   658	더 많은 사람들에게 도움을 드릴 수 있게 되어 감사합니다.
-   659	
-   660	**"과거의 지혜, 미래의 기술, 현재의 행복"**
-   661	
-   662	---
-   663	
-   664	## 📚 **참고 문서**
-   665	
-   666	- [배포 전 체크리스트 📋](./PRE_LAUNCH_CHECKLIST.md)
-   667	- [백엔드 개발 가이드 🔧](./BACKEND_AUTH_GUIDE.md)
-   668	- [신규 서비스 매뉴얼 💡](./NEW_SERVICES_GUIDE.md)
-   669	
-   670	---
-   671	
-   672	**Made with ❤️ by AI 사주 천년지기 Team**
-   673	
+# AI 사주 천년지기
+
+**2026 병오년 사주팔자 운세 서비스**
+
+## 🚀 프로젝트 개요
+정통 명리학과 AI 기술을 결합한 온라인 사주 분석 서비스
+
+## 📦 최근 업데이트 (2026-01-05)
+- ✅ **blog/year-2026.html 완전 재구성** (10개 주제 통합 가이드)
+- ✅ **JavaScript 오류 완전 해결** (index.html 구조 적용)
+- ✅ **12띠 운세 카드 그리드** (종합운 점수 + 행운의 달)
+- ✅ **부드러운 스크롤 구현** (목차 링크)
+- ✅ **전역 에러 핸들러 적용** (브라우저 확장 프로그램 오류 무시)
+- ✅ **Content-Type 문제 해결** (HTML 소스 노출 해결)
+
+## 🌐 배포 URL
+- **Production**: https://aisaju1000.com
+- **GitHub Pages**: https://ubin72-beep.github.io/saju-gpt-service/
+
+## 🛠️ 기술 스택
+- **Frontend**: HTML5, CSS3, JavaScript ES6+
+- **Icons**: Font Awesome 6.4.0
+- **Fonts**: Google Fonts (Noto Sans KR, Noto Serif KR)
+- **Hosting**: GitHub Pages + Vercel
+- **Domain**: aisaju1000.com
+
+## 📂 프로젝트 구조
+```
+saju-gpt-service/
+├── index.html                  (메인 페이지 - 사주팔자 입력 폼)
+├── result.html                 (사주 결과 페이지)
+├── compatibility.html          (궁합 분석 페이지)
+├── ai-chat.html               (AI 상담 페이지)
+├── blog.html                  (블로그 메인 - 사주 가이드 목록)
+├── blog/
+│   ├── year-2026.html         (2026년 완벽 가이드 - 10개 주제 통합)
+│   ├── 2026-year-analysis.html (2026년 운세 분석)
+│   ├── saju-basics.html       (사주팔자 기초 가이드)
+│   ├── compatibility-guide.html (궁합 분석 가이드)
+│   ├── career-fortune.html    (직업운 가이드)
+│   └── wealth-2026.html       (재물운 가이드)
+├── pricing.html               (가격표)
+├── mypage.html                (마이페이지)
+├── vercel.json                (Vercel 배포 설정)
+├── CNAME                      (커스텀 도메인)
+├── .nojekyll                  (Jekyll 비활성화)
+└── README.md                  (프로젝트 문서)
+```
+
+## 🎨 주요 기능
+
+### 1. 사주팔자 무료 보기
+- 생년월일, 시간, 성별 입력으로 사주 분석
+- 사주팔자 (연주, 월주, 일주, 시주) 자동 계산
+- 오행 분석 및 운세 해석
+
+### 2. 정밀 궁합 분석
+- 두 사람의 사주 기반 궁합 점수 계산
+- 연애운, 결혼운, 재물운 상세 분석
+- 천간합, 지지합 분석
+
+### 3. AI 24시간 상담
+- 실시간 AI 운세 상담
+- 사주, 운세, 궁합 관련 질문 답변
+- 24시간 무제한 상담
+
+### 4. 사주 가이드 블로그
+**10개 주제 통합 가이드 (blog/year-2026.html)**:
+- Section 01: 2026년 병오년 완벽 분석
+- Section 02: 사주팔자 기초 가이드
+- Section 03: 직업운 좋은 사주 특징
+- Section 04: 연애운 강한 사주
+- Section 05: 재물운 사주 분석
+- Section 06: 궁합 분석 사례 연구
+- Section 07: 택일 완벽 가이드
+- Section 08: 사주로 보는 육아
+- Section 09: 사주로 보는 건강운
+- Section 10: 사주 용어 사전
+
+### 5. 12띠 운세 카드
+- 12띠별 2026년 운세 상세 분석
+- 종합운 점수 (5점 만점)
+- 행운의 달 표시
+- 띠별 특징 및 조언
+
+### 6. 다국어 지원
+- 한국어 (기본)
+- English
+- 中文 (중국어)
+- 日本語 (일본어)
+
+## 📊 페이지별 주요 기능
+
+| 페이지 | URL | 주요 기능 |
+|--------|-----|-----------|
+| **메인** | `/index.html` | 사주팔자 입력 폼, 서비스 소개 |
+| **결과** | `/result.html` | 사주팔자 결과 표시, 운세 해석 |
+| **궁합** | `/compatibility.html` | 두 사람의 궁합 분석 |
+| **AI 상담** | `/ai-chat.html` | 실시간 AI 운세 상담 |
+| **블로그** | `/blog.html` | 사주 가이드 목록 |
+| **2026 가이드** | `/blog/year-2026.html` | 10개 주제 통합 가이드 |
+| **가격표** | `/pricing.html` | 서비스 요금제 안내 |
+| **마이페이지** | `/mypage.html` | 사용자 정보 관리 |
+
+## 🔧 기술적 특징
+
+### JavaScript 구조
+```javascript
+// 안정적인 DOM 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    // 모든 초기화 코드
+});
+
+// 전역 에러 핸들러
+window.addEventListener('error', function(e) {
+    if (e.filename && !e.filename.includes('aisaju1000.com')) {
+        e.preventDefault();
+    }
+});
+
+// 부드러운 스크롤
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+```
+
+### CSS 디자인 시스템
+- **Color Palette**: 
+  - Primary: `#8B4513` (갈색)
+  - Secondary: `#FFD700` (금색)
+  - Background: `#1a1a1a` (다크)
+  - Text: `#ffffff` (흰색)
+- **Typography**: Noto Sans KR, Noto Serif KR
+- **Layout**: Flexbox + Grid
+- **Responsive**: Mobile-first approach
+
+### 반응형 디자인
+```css
+/* Mobile */
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container { padding: 20px; }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .container { padding: 40px; }
+}
+```
+
+## 🚀 배포 방법
+
+### GitHub에 커밋하기
+```bash
+# 변경사항 추가
+git add .
+
+# 커밋 메시지 작성
+git commit -m "Update: [변경 내용]"
+
+# GitHub에 푸시
+git push origin main
+```
+
+### Vercel 자동 배포
+- GitHub에 푸시하면 Vercel이 자동으로 재배포
+- 배포 시간: 약 5~10분
+- 배포 완료 후 https://aisaju1000.com 에서 확인
+
+### 로컬 테스트
+```bash
+# Python 3 사용
+python -m http.server 8000
+
+# 브라우저에서 접속
+http://localhost:8000
+```
+
+## 🐛 문제 해결 가이드
+
+### HTML 소스가 보이는 경우
+1. **vercel.json 확인**:
+   ```json
+   {
+     "cleanUrls": true,
+     "trailingSlash": false,
+     "headers": [
+       {
+         "source": "/**/*.html",
+         "headers": [
+           { "key": "Content-Type", "value": "text/html; charset=utf-8" }
+         ]
+       }
+     ]
+   }
+   ```
+
+2. **브라우저 캐시 삭제**:
+   - Chrome: `Ctrl + Shift + Delete`
+   - 또는 시크릿 모드 사용
+
+3. **Vercel 재배포**:
+   - Vercel 대시보드 → Deployments → Redeploy
+
+### JavaScript 오류가 발생하는 경우
+1. **DOMContentLoaded 이벤트 확인**
+2. **전역 에러 핸들러 추가**
+3. **try-catch 블록 사용**
+
+### 목차 링크가 작동하지 않는 경우
+1. **href 속성 확인**: `href="#section1"`
+2. **target 요소 확인**: `id="section1"`
+3. **부드러운 스크롤 스크립트 확인**
+
+## 📈 향후 개선 계획
+
+### 단기 계획 (1개월)
+- [ ] 블로그 콘텐츠 추가 (20개 이상)
+- [ ] SEO 최적화 (Open Graph, Twitter Card)
+- [ ] 성능 최적화 (이미지 압축, CSS/JS 압축)
+- [ ] 모바일 UX 개선
+
+### 중기 계획 (3개월)
+- [ ] 사용자 회원가입/로그인 기능
+- [ ] 사주 결과 저장 기능
+- [ ] 결제 시스템 연동
+- [ ] 푸시 알림 기능
+
+### 장기 계획 (6개월)
+- [ ] AI 사주 분석 정확도 개선
+- [ ] 다국어 지원 확대 (베트남어, 태국어 등)
+- [ ] 모바일 앱 출시 (iOS, Android)
+- [ ] API 서비스 제공
+
+## 🤝 기여 가이드
+
+### 코드 스타일
+- **HTML**: 2칸 들여쓰기, 시맨틱 태그 사용
+- **CSS**: BEM 네이밍 컨벤션
+- **JavaScript**: ES6+ 문법, 함수형 프로그래밍
+
+### 커밋 메시지 규칙
+```
+feat: 새로운 기능 추가
+fix: 버그 수정
+docs: 문서 수정
+style: 코드 포맷팅
+refactor: 코드 리팩토링
+test: 테스트 추가
+chore: 빌드 업무 수정
+```
+
+## 📞 문의 및 지원
+
+- **이메일**: support@aisaju1000.com
+- **GitHub Issues**: https://github.com/ubin72-beep/saju-gpt-service/issues
+- **웹사이트**: https://aisaju1000.com
+
+## 📝 라이선스
+
+MIT License
+
+Copyright (c) 2025 AI 사주 천년지기
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+© 2025 AI 사주 천년지기. All rights reserved.
