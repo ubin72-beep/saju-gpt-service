@@ -1,564 +1,564 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 로그인 - AI 사주 천년지기</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .login-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 450px;
-            overflow: hidden;
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-            padding: 3rem 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .login-header i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .login-header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-header p {
-            font-size: 0.9375rem;
-            opacity: 0.9;
-        }
-
-        .login-body {
-            padding: 2.5rem 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #2c3e50;
-            font-size: 0.9375rem;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-            font-size: 1.125rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #c41e3a;
-            box-shadow: 0 0 0 4px rgba(196,30,58,0.1);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            font-size: 0.9375rem;
-            color: #6b7280;
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.0625rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(196,30,58,0.3);
-        }
-
-        .btn-login:active {
-            transform: translateY(0);
-        }
-
-        .btn-login:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .login-footer {
-            text-align: center;
-            padding: 1.5rem;
-            background: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .login-footer a {
-            color: #c41e3a;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .login-footer a:hover {
-            color: #a01830;
-            text-decoration: underline;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-
-        .alert.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        .alert-danger {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .alert-warning {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fde68a;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                max-width: 100%;
-            }
-            
-            .login-header {
-                padding: 2rem 1.5rem;
-            }
-            
-            .login-body {
-                padding: 2rem 1.5rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-header">
-            <i class="fas fa-shield-halved"></i>
-            <h1>관리자 로그인</h1>
-            <p>AI 사주 천년지기</p>
-        </div>
-
-        <div class="login-body">
-            <div id="alertBox" class="alert"></div>
-
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label for="username">아이디</label>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            name="username"
-                            class="form-control" 
-                            placeholder="관리자 아이디를 입력하세요"
-                            autocomplete="username"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password"
-                            class="form-control" 
-                            placeholder="비밀번호를 입력하세요"
-                            autocomplete="current-password"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">로그인 상태 유지</label>
-                </div>
-
-                <button type="submit" id="loginBtn" class="btn-login">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>로그인</span>
-                </button>
-            </form>
-        </div>
-
-        <div class="login-footer">
-            <a href="index.html">
-                <i class="fas fa-arrow-left"></i> 홈으로 돌아가기
-            </a>
-        </div>
-    </div>
-
-    <script>
-        // 환경 설정 (실제 배포 시 환경 변수로 관리)
-        const API_CONFIG = {
-            // 개발 환경
-            dev: {
-                baseURL: 'http://localhost:3000',
-                apiEndpoint: '/api/admin/login'
-            },
-            // 프로덕션 환경
-            prod: {
-                baseURL: 'https://api.aisaju1000.com',
-                apiEndpoint: '/api/admin/login'
-            }
-        };
-
-        // 현재 환경 (실제로는 환경 변수로 설정)
-        const CURRENT_ENV = window.location.hostname === 'localhost' ? 'dev' : 'prod';
-        const API = API_CONFIG[CURRENT_ENV];
-
-        // 로그인 시도 횟수 제한
-        let loginAttempts = 0;
-        const MAX_ATTEMPTS = 5;
-        const LOCKOUT_TIME = 15 * 60 * 1000; // 15분
-
-        // 페이지 로드 시 잠금 상태 확인
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLockout();
-            
-            // 이미 로그인되어 있는지 확인
-            const token = getAuthToken();
-            if (token && validateToken(token)) {
-                window.location.href = 'admin.html';
-            }
-        });
-
-        // 로그인 폼 제출
-        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // 잠금 상태 확인
-            if (checkLockout()) {
-                return;
-            }
-
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
-
-            // 입력 검증
-            if (!username || !password) {
-                showAlert('아이디와 비밀번호를 입력해주세요.', 'danger');
-                return;
-            }
-
-            // 보안: 최소 길이 체크
-            if (password.length < 8) {
-                showAlert('비밀번호는 최소 8자 이상이어야 합니다.', 'warning');
-                return;
-            }
-
-            // 로그인 처리
-            await handleLogin(username, password, remember);
-        });
-
-        // 로그인 처리 함수
-        async function handleLogin(username, password, remember) {
-            const loginBtn = document.getElementById('loginBtn');
-            const btnText = loginBtn.querySelector('span');
-            const btnIcon = loginBtn.querySelector('i');
-            
-            try {
-                // 버튼 비활성화 및 로딩 표시
-                loginBtn.disabled = true;
-                btnIcon.className = 'loading-spinner';
-                btnText.textContent = '로그인 중...';
-
-                // 백엔드 API 호출
-                const response = await fetch(`${API.baseURL}${API.apiEndpoint}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    // 로그인 성공
-                    loginAttempts = 0;
-                    localStorage.removeItem('loginAttempts');
-                    localStorage.removeItem('lockoutUntil');
-
-                    // JWT 토큰 저장
-                    const storage = remember ? localStorage : sessionStorage;
-                    storage.setItem('adminToken', data.token);
-                    storage.setItem('adminUser', JSON.stringify(data.user));
-
-                    showAlert('로그인 성공! 관리자 페이지로 이동합니다.', 'success');
-
-                    // 2초 후 관리자 페이지로 이동
-                    setTimeout(() => {
-                        window.location.href = 'admin.html';
-                    }, 2000);
-
-                } else {
-                    // 로그인 실패
-                    handleLoginFailure(data.message || '로그인에 실패했습니다.');
-                }
-
-            } catch (error) {
-                console.error('Login error:', error);
-                
-                // 네트워크 오류 또는 서버 오류
-                if (error.message.includes('Failed to fetch')) {
-                    showAlert('서버에 연결할 수 없습니다. 네트워크 연결을 확인해주세요.', 'danger');
-                } else {
-                    // 백엔드 API가 없을 경우 임시 인증 (개발 환경)
-                    if (CURRENT_ENV === 'dev') {
-                        handleDemoLogin(username, password, remember);
-                    } else {
-                        showAlert('로그인 처리 중 오류가 발생했습니다.', 'danger');
-                    }
-                }
-
-            } finally {
-                // 버튼 복원
-                loginBtn.disabled = false;
-                btnIcon.className = 'fas fa-sign-in-alt';
-                btnText.textContent = '로그인';
-            }
-        }
-
-        // 데모 로그인 (개발 환경용)
-        function handleDemoLogin(username, password, remember) {
-            // 임시 관리자 계정 (실제로는 백엔드에서 처리)
-            const DEMO_ADMIN = {
-                username: 'admin',
-                password: 'Admin@2026!',  // 변경된 강력한 비밀번호
-            };
-
-            if (username === DEMO_ADMIN.username && password === DEMO_ADMIN.password) {
-                loginAttempts = 0;
-                localStorage.removeItem('loginAttempts');
-                localStorage.removeItem('lockoutUntil');
-
-                // 임시 토큰 생성
-                const demoToken = btoa(JSON.stringify({
-                    username: username,
-                    role: 'admin',
-                    exp: Date.now() + (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000)
-                }));
-
-                const storage = remember ? localStorage : sessionStorage;
-                storage.setItem('adminToken', demoToken);
-                storage.setItem('adminUser', JSON.stringify({
-                    id: 1,
-                    username: username,
-                    role: 'admin'
-                }));
-
-                showAlert('로그인 성공! (개발 모드)', 'success');
-
-                setTimeout(() => {
-                    window.location.href = 'admin.html';
-                }, 1500);
-
-            } else {
-                handleLoginFailure('아이디 또는 비밀번호가 올바르지 않습니다.');
-            }
-        }
-
-        // 로그인 실패 처리
-        function handleLoginFailure(message) {
-            loginAttempts++;
-            localStorage.setItem('loginAttempts', loginAttempts);
-
-            const remainingAttempts = MAX_ATTEMPTS - loginAttempts;
-
-            if (loginAttempts >= MAX_ATTEMPTS) {
-                // 계정 잠금
-                const lockoutUntil = Date.now() + LOCKOUT_TIME;
-                localStorage.setItem('lockoutUntil', lockoutUntil);
-                showAlert(`너무 많은 로그인 시도로 인해 15분간 로그인이 제한됩니다.`, 'danger');
-            } else {
-                showAlert(`${message} (남은 시도: ${remainingAttempts}회)`, 'danger');
-            }
-        }
-
-        // 잠금 상태 확인
-        function checkLockout() {
-            const lockoutUntil = localStorage.getItem('lockoutUntil');
-            
-            if (lockoutUntil) {
-                const remaining = parseInt(lockoutUntil) - Date.now();
-                
-                if (remaining > 0) {
-                    const minutes = Math.ceil(remaining / 60000);
-                    showAlert(`로그인이 제한되었습니다. ${minutes}분 후에 다시 시도해주세요.`, 'warning');
-                    document.getElementById('loginBtn').disabled = true;
-                    return true;
-                } else {
-                    // 잠금 해제
-                    localStorage.removeItem('lockoutUntil');
-                    localStorage.removeItem('loginAttempts');
-                    loginAttempts = 0;
-                }
-            }
-            
-            return false;
-        }
-
-        // 토큰 가져오기
-        function getAuthToken() {
-            return localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
-        }
-
-        // 토큰 검증 (간단한 검증)
-        function validateToken(token) {
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1] || token));
-                return payload.exp > Date.now();
-            } catch {
-                return false;
-            }
-        }
-
-        // 알림 표시
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alertBox');
-            alertBox.className = `alert alert-${type} show`;
-            alertBox.textContent = message;
-
-            // 5초 후 자동 숨김
-            setTimeout(() => {
-                alertBox.classList.remove('show');
-            }, 5000);
-        }
-
-        // 전역 에러 핸들러
-        window.addEventListener('error', function(e) {
-            if (e.filename && !e.filename.includes('aisaju1000.com')) {
-                e.preventDefault();
-                return true;
-            }
-        }, true);
-
-        // 보안: 비밀번호 입력 필드 붙여넣기 방지 (선택사항)
-        // document.getElementById('password').addEventListener('paste', function(e) {
-        //     e.preventDefault();
-        //     showAlert('보안을 위해 비밀번호 붙여넣기가 제한됩니다.', 'warning');
-        // });
-    </script>
-</body>
-</html>
+   1	<!DOCTYPE html>
+     2	<html lang="ko">
+     3	<head>
+     4	    <meta charset="UTF-8">
+     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	    <title>관리자 로그인 - AI 사주 천년지기</title>
+     7	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+     8	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     9	    <style>
+    10	        * {
+    11	            margin: 0;
+    12	            padding: 0;
+    13	            box-sizing: border-box;
+    14	        }
+    15	
+    16	        body {
+    17	            font-family: 'Noto Sans KR', sans-serif;
+    18	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    19	            min-height: 100vh;
+    20	            display: flex;
+    21	            align-items: center;
+    22	            justify-content: center;
+    23	            padding: 20px;
+    24	        }
+    25	
+    26	        .login-container {
+    27	            background: white;
+    28	            border-radius: 20px;
+    29	            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    30	            width: 100%;
+    31	            max-width: 450px;
+    32	            overflow: hidden;
+    33	        }
+    34	
+    35	        .login-header {
+    36	            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+    37	            padding: 3rem 2rem;
+    38	            text-align: center;
+    39	            color: white;
+    40	        }
+    41	
+    42	        .login-header i {
+    43	            font-size: 3rem;
+    44	            margin-bottom: 1rem;
+    45	            opacity: 0.9;
+    46	        }
+    47	
+    48	        .login-header h1 {
+    49	            font-size: 1.75rem;
+    50	            font-weight: 700;
+    51	            margin-bottom: 0.5rem;
+    52	        }
+    53	
+    54	        .login-header p {
+    55	            font-size: 0.9375rem;
+    56	            opacity: 0.9;
+    57	        }
+    58	
+    59	        .login-body {
+    60	            padding: 2.5rem 2rem;
+    61	        }
+    62	
+    63	        .form-group {
+    64	            margin-bottom: 1.5rem;
+    65	        }
+    66	
+    67	        .form-group label {
+    68	            display: block;
+    69	            margin-bottom: 0.5rem;
+    70	            font-weight: 500;
+    71	            color: #2c3e50;
+    72	            font-size: 0.9375rem;
+    73	        }
+    74	
+    75	        .input-group {
+    76	            position: relative;
+    77	        }
+    78	
+    79	        .input-group i {
+    80	            position: absolute;
+    81	            left: 1rem;
+    82	            top: 50%;
+    83	            transform: translateY(-50%);
+    84	            color: #9ca3af;
+    85	            font-size: 1.125rem;
+    86	        }
+    87	
+    88	        .form-control {
+    89	            width: 100%;
+    90	            padding: 1rem 1rem 1rem 3rem;
+    91	            border: 2px solid #e5e7eb;
+    92	            border-radius: 12px;
+    93	            font-size: 1rem;
+    94	            transition: all 0.3s ease;
+    95	        }
+    96	
+    97	        .form-control:focus {
+    98	            outline: none;
+    99	            border-color: #c41e3a;
+   100	            box-shadow: 0 0 0 4px rgba(196,30,58,0.1);
+   101	        }
+   102	
+   103	        .checkbox-group {
+   104	            display: flex;
+   105	            align-items: center;
+   106	            gap: 0.5rem;
+   107	            margin-bottom: 1.5rem;
+   108	        }
+   109	
+   110	        .checkbox-group input[type="checkbox"] {
+   111	            width: 18px;
+   112	            height: 18px;
+   113	            cursor: pointer;
+   114	        }
+   115	
+   116	        .checkbox-group label {
+   117	            font-size: 0.9375rem;
+   118	            color: #6b7280;
+   119	            cursor: pointer;
+   120	            margin: 0;
+   121	        }
+   122	
+   123	        .btn-login {
+   124	            width: 100%;
+   125	            padding: 1rem;
+   126	            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+   127	            color: white;
+   128	            border: none;
+   129	            border-radius: 12px;
+   130	            font-size: 1.0625rem;
+   131	            font-weight: 600;
+   132	            cursor: pointer;
+   133	            transition: all 0.3s ease;
+   134	            display: flex;
+   135	            align-items: center;
+   136	            justify-content: center;
+   137	            gap: 0.5rem;
+   138	        }
+   139	
+   140	        .btn-login:hover {
+   141	            transform: translateY(-2px);
+   142	            box-shadow: 0 10px 25px rgba(196,30,58,0.3);
+   143	        }
+   144	
+   145	        .btn-login:active {
+   146	            transform: translateY(0);
+   147	        }
+   148	
+   149	        .btn-login:disabled {
+   150	            opacity: 0.6;
+   151	            cursor: not-allowed;
+   152	            transform: none;
+   153	        }
+   154	
+   155	        .login-footer {
+   156	            text-align: center;
+   157	            padding: 1.5rem;
+   158	            background: #f9fafb;
+   159	            border-top: 1px solid #e5e7eb;
+   160	        }
+   161	
+   162	        .login-footer a {
+   163	            color: #c41e3a;
+   164	            text-decoration: none;
+   165	            font-weight: 500;
+   166	            transition: all 0.3s ease;
+   167	        }
+   168	
+   169	        .login-footer a:hover {
+   170	            color: #a01830;
+   171	            text-decoration: underline;
+   172	        }
+   173	
+   174	        .alert {
+   175	            padding: 1rem;
+   176	            border-radius: 12px;
+   177	            margin-bottom: 1.5rem;
+   178	            display: none;
+   179	        }
+   180	
+   181	        .alert.show {
+   182	            display: block;
+   183	            animation: slideDown 0.3s ease;
+   184	        }
+   185	
+   186	        .alert-danger {
+   187	            background: #fee2e2;
+   188	            color: #dc2626;
+   189	            border: 1px solid #fecaca;
+   190	        }
+   191	
+   192	        .alert-success {
+   193	            background: #d1fae5;
+   194	            color: #065f46;
+   195	            border: 1px solid #a7f3d0;
+   196	        }
+   197	
+   198	        .alert-warning {
+   199	            background: #fef3c7;
+   200	            color: #92400e;
+   201	            border: 1px solid #fde68a;
+   202	        }
+   203	
+   204	        .loading-spinner {
+   205	            display: inline-block;
+   206	            width: 20px;
+   207	            height: 20px;
+   208	            border: 3px solid rgba(255,255,255,0.3);
+   209	            border-radius: 50%;
+   210	            border-top-color: white;
+   211	            animation: spin 0.8s linear infinite;
+   212	        }
+   213	
+   214	        @keyframes spin {
+   215	            to { transform: rotate(360deg); }
+   216	        }
+   217	
+   218	        @keyframes slideDown {
+   219	            from {
+   220	                opacity: 0;
+   221	                transform: translateY(-10px);
+   222	            }
+   223	            to {
+   224	                opacity: 1;
+   225	                transform: translateY(0);
+   226	            }
+   227	        }
+   228	
+   229	        @media (max-width: 480px) {
+   230	            .login-container {
+   231	                max-width: 100%;
+   232	            }
+   233	            
+   234	            .login-header {
+   235	                padding: 2rem 1.5rem;
+   236	            }
+   237	            
+   238	            .login-body {
+   239	                padding: 2rem 1.5rem;
+   240	            }
+   241	        }
+   242	    </style>
+   243	</head>
+   244	<body>
+   245	    <div class="login-container">
+   246	        <div class="login-header">
+   247	            <i class="fas fa-shield-halved"></i>
+   248	            <h1>관리자 로그인</h1>
+   249	            <p>AI 사주 천년지기</p>
+   250	        </div>
+   251	
+   252	        <div class="login-body">
+   253	            <div id="alertBox" class="alert"></div>
+   254	
+   255	            <form id="adminLoginForm">
+   256	                <div class="form-group">
+   257	                    <label for="username">아이디</label>
+   258	                    <div class="input-group">
+   259	                        <i class="fas fa-user"></i>
+   260	                        <input 
+   261	                            type="text" 
+   262	                            id="username" 
+   263	                            name="username"
+   264	                            class="form-control" 
+   265	                            placeholder="관리자 아이디를 입력하세요"
+   266	                            autocomplete="username"
+   267	                            required
+   268	                        >
+   269	                    </div>
+   270	                </div>
+   271	
+   272	                <div class="form-group">
+   273	                    <label for="password">비밀번호</label>
+   274	                    <div class="input-group">
+   275	                        <i class="fas fa-lock"></i>
+   276	                        <input 
+   277	                            type="password" 
+   278	                            id="password" 
+   279	                            name="password"
+   280	                            class="form-control" 
+   281	                            placeholder="비밀번호를 입력하세요"
+   282	                            autocomplete="current-password"
+   283	                            required
+   284	                        >
+   285	                    </div>
+   286	                </div>
+   287	
+   288	                <div class="checkbox-group">
+   289	                    <input type="checkbox" id="remember" name="remember">
+   290	                    <label for="remember">로그인 상태 유지</label>
+   291	                </div>
+   292	
+   293	                <button type="submit" id="loginBtn" class="btn-login">
+   294	                    <i class="fas fa-sign-in-alt"></i>
+   295	                    <span>로그인</span>
+   296	                </button>
+   297	            </form>
+   298	        </div>
+   299	
+   300	        <div class="login-footer">
+   301	            <a href="index.html">
+   302	                <i class="fas fa-arrow-left"></i> 홈으로 돌아가기
+   303	            </a>
+   304	        </div>
+   305	    </div>
+   306	
+   307	    <script>
+   308	        // 환경 설정 (실제 배포 시 환경 변수로 관리)
+   309	        const API_CONFIG = {
+   310	            // 개발 환경
+   311	            dev: {
+   312	                baseURL: 'http://localhost:3000',
+   313	                apiEndpoint: '/api/admin/login'
+   314	            },
+   315	            // 프로덕션 환경
+   316	            prod: {
+   317	                baseURL: 'https://api.aisaju1000.com',
+   318	                apiEndpoint: '/api/admin/login'
+   319	            }
+   320	        };
+   321	
+   322	        // 현재 환경 (실제로는 환경 변수로 설정)
+   323	        const CURRENT_ENV = window.location.hostname === 'localhost' ? 'dev' : 'prod';
+   324	        const API = API_CONFIG[CURRENT_ENV];
+   325	
+   326	        // 로그인 시도 횟수 제한
+   327	        let loginAttempts = 0;
+   328	        const MAX_ATTEMPTS = 5;
+   329	        const LOCKOUT_TIME = 15 * 60 * 1000; // 15분
+   330	
+   331	        // 페이지 로드 시 잠금 상태 확인
+   332	        document.addEventListener('DOMContentLoaded', function() {
+   333	            checkLockout();
+   334	            
+   335	            // 이미 로그인되어 있는지 확인
+   336	            const token = getAuthToken();
+   337	            if (token && validateToken(token)) {
+   338	                window.location.href = 'admin.html';
+   339	            }
+   340	        });
+   341	
+   342	        // 로그인 폼 제출
+   343	        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+   344	            e.preventDefault();
+   345	            
+   346	            // 잠금 상태 확인
+   347	            if (checkLockout()) {
+   348	                return;
+   349	            }
+   350	
+   351	            const username = document.getElementById('username').value.trim();
+   352	            const password = document.getElementById('password').value;
+   353	            const remember = document.getElementById('remember').checked;
+   354	
+   355	            // 입력 검증
+   356	            if (!username || !password) {
+   357	                showAlert('아이디와 비밀번호를 입력해주세요.', 'danger');
+   358	                return;
+   359	            }
+   360	
+   361	            // 보안: 최소 길이 체크
+   362	            if (password.length < 8) {
+   363	                showAlert('비밀번호는 최소 8자 이상이어야 합니다.', 'warning');
+   364	                return;
+   365	            }
+   366	
+   367	            // 로그인 처리
+   368	            await handleLogin(username, password, remember);
+   369	        });
+   370	
+   371	        // 로그인 처리 함수
+   372	        async function handleLogin(username, password, remember) {
+   373	            const loginBtn = document.getElementById('loginBtn');
+   374	            const btnText = loginBtn.querySelector('span');
+   375	            const btnIcon = loginBtn.querySelector('i');
+   376	            
+   377	            try {
+   378	                // 버튼 비활성화 및 로딩 표시
+   379	                loginBtn.disabled = true;
+   380	                btnIcon.className = 'loading-spinner';
+   381	                btnText.textContent = '로그인 중...';
+   382	
+   383	                // 백엔드 API 호출
+   384	                const response = await fetch(`${API.baseURL}${API.apiEndpoint}`, {
+   385	                    method: 'POST',
+   386	                    headers: {
+   387	                        'Content-Type': 'application/json'
+   388	                    },
+   389	                    body: JSON.stringify({
+   390	                        username: username,
+   391	                        password: password
+   392	                    })
+   393	                });
+   394	
+   395	                const data = await response.json();
+   396	
+   397	                if (response.ok && data.success) {
+   398	                    // 로그인 성공
+   399	                    loginAttempts = 0;
+   400	                    localStorage.removeItem('loginAttempts');
+   401	                    localStorage.removeItem('lockoutUntil');
+   402	
+   403	                    // JWT 토큰 저장
+   404	                    const storage = remember ? localStorage : sessionStorage;
+   405	                    storage.setItem('adminToken', data.token);
+   406	                    storage.setItem('adminUser', JSON.stringify(data.user));
+   407	
+   408	                    showAlert('로그인 성공! 관리자 페이지로 이동합니다.', 'success');
+   409	
+   410	                    // 2초 후 관리자 페이지로 이동
+   411	                    setTimeout(() => {
+   412	                        window.location.href = 'admin.html';
+   413	                    }, 2000);
+   414	
+   415	                } else {
+   416	                    // 로그인 실패
+   417	                    handleLoginFailure(data.message || '로그인에 실패했습니다.');
+   418	                }
+   419	
+   420	            } catch (error) {
+   421	                console.error('Login error:', error);
+   422	                
+   423	                // 네트워크 오류 또는 서버 오류
+   424	                if (error.message.includes('Failed to fetch')) {
+   425	                    showAlert('서버에 연결할 수 없습니다. 네트워크 연결을 확인해주세요.', 'danger');
+   426	                } else {
+   427	                    // 백엔드 API가 없을 경우 임시 인증 (개발 환경)
+   428	                    if (CURRENT_ENV === 'dev') {
+   429	                        handleDemoLogin(username, password, remember);
+   430	                    } else {
+   431	                        showAlert('로그인 처리 중 오류가 발생했습니다.', 'danger');
+   432	                    }
+   433	                }
+   434	
+   435	            } finally {
+   436	                // 버튼 복원
+   437	                loginBtn.disabled = false;
+   438	                btnIcon.className = 'fas fa-sign-in-alt';
+   439	                btnText.textContent = '로그인';
+   440	            }
+   441	        }
+   442	
+   443	        // 데모 로그인 (개발 환경용)
+   444	        function handleDemoLogin(username, password, remember) {
+   445	            // 임시 관리자 계정 (실제로는 백엔드에서 처리)
+   446	            const DEMO_ADMIN = {
+   447	                username: 'admin',
+   448	                password: 'Admin@2026!',  // 변경된 강력한 비밀번호
+   449	            };
+   450	
+   451	            if (username === DEMO_ADMIN.username && password === DEMO_ADMIN.password) {
+   452	                loginAttempts = 0;
+   453	                localStorage.removeItem('loginAttempts');
+   454	                localStorage.removeItem('lockoutUntil');
+   455	
+   456	                // 임시 토큰 생성
+   457	                const demoToken = btoa(JSON.stringify({
+   458	                    username: username,
+   459	                    role: 'admin',
+   460	                    exp: Date.now() + (remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000)
+   461	                }));
+   462	
+   463	                const storage = remember ? localStorage : sessionStorage;
+   464	                storage.setItem('adminToken', demoToken);
+   465	                storage.setItem('adminUser', JSON.stringify({
+   466	                    id: 1,
+   467	                    username: username,
+   468	                    role: 'admin'
+   469	                }));
+   470	
+   471	                showAlert('로그인 성공! (개발 모드)', 'success');
+   472	
+   473	                setTimeout(() => {
+   474	                    window.location.href = 'admin.html';
+   475	                }, 1500);
+   476	
+   477	            } else {
+   478	                handleLoginFailure('아이디 또는 비밀번호가 올바르지 않습니다.');
+   479	            }
+   480	        }
+   481	
+   482	        // 로그인 실패 처리
+   483	        function handleLoginFailure(message) {
+   484	            loginAttempts++;
+   485	            localStorage.setItem('loginAttempts', loginAttempts);
+   486	
+   487	            const remainingAttempts = MAX_ATTEMPTS - loginAttempts;
+   488	
+   489	            if (loginAttempts >= MAX_ATTEMPTS) {
+   490	                // 계정 잠금
+   491	                const lockoutUntil = Date.now() + LOCKOUT_TIME;
+   492	                localStorage.setItem('lockoutUntil', lockoutUntil);
+   493	                showAlert(`너무 많은 로그인 시도로 인해 15분간 로그인이 제한됩니다.`, 'danger');
+   494	            } else {
+   495	                showAlert(`${message} (남은 시도: ${remainingAttempts}회)`, 'danger');
+   496	            }
+   497	        }
+   498	
+   499	        // 잠금 상태 확인
+   500	        function checkLockout() {
+   501	            const lockoutUntil = localStorage.getItem('lockoutUntil');
+   502	            
+   503	            if (lockoutUntil) {
+   504	                const remaining = parseInt(lockoutUntil) - Date.now();
+   505	                
+   506	                if (remaining > 0) {
+   507	                    const minutes = Math.ceil(remaining / 60000);
+   508	                    showAlert(`로그인이 제한되었습니다. ${minutes}분 후에 다시 시도해주세요.`, 'warning');
+   509	                    document.getElementById('loginBtn').disabled = true;
+   510	                    return true;
+   511	                } else {
+   512	                    // 잠금 해제
+   513	                    localStorage.removeItem('lockoutUntil');
+   514	                    localStorage.removeItem('loginAttempts');
+   515	                    loginAttempts = 0;
+   516	                }
+   517	            }
+   518	            
+   519	            return false;
+   520	        }
+   521	
+   522	        // 토큰 가져오기
+   523	        function getAuthToken() {
+   524	            return localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+   525	        }
+   526	
+   527	        // 토큰 검증 (간단한 검증)
+   528	        function validateToken(token) {
+   529	            try {
+   530	                const payload = JSON.parse(atob(token.split('.')[1] || token));
+   531	                return payload.exp > Date.now();
+   532	            } catch {
+   533	                return false;
+   534	            }
+   535	        }
+   536	
+   537	        // 알림 표시
+   538	        function showAlert(message, type) {
+   539	            const alertBox = document.getElementById('alertBox');
+   540	            alertBox.className = `alert alert-${type} show`;
+   541	            alertBox.textContent = message;
+   542	
+   543	            // 5초 후 자동 숨김
+   544	            setTimeout(() => {
+   545	                alertBox.classList.remove('show');
+   546	            }, 5000);
+   547	        }
+   548	
+   549	        // 전역 에러 핸들러
+   550	        window.addEventListener('error', function(e) {
+   551	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+   552	                e.preventDefault();
+   553	                return true;
+   554	            }
+   555	        }, true);
+   556	
+   557	        // 보안: 비밀번호 입력 필드 붙여넣기 방지 (선택사항)
+   558	        // document.getElementById('password').addEventListener('paste', function(e) {
+   559	        //     e.preventDefault();
+   560	        //     showAlert('보안을 위해 비밀번호 붙여넣기가 제한됩니다.', 'warning');
+   561	        // });
+   562	    </script>
+   563	</body>
+   564	</html>
