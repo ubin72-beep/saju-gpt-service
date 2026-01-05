@@ -1082,7 +1082,18 @@
   1082	                }
   1083	            });
   1084	        });
-  1085	    </script>
-  1086	</body>
-  1087	</html>
-  1088	
+  1085	
+  1086	        // ===== Global Error Handler =====
+  1087	        window.addEventListener('error', function(e) {
+  1088	            // aisaju1000.com 외의 스크립트 에러 무시
+  1089	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+  1090	                e.preventDefault();
+  1091	                return false;
+  1092	            }
+  1093	        });
+  1094	
+  1095	        console.log('✅ 커뮤니티 프리미엄 페이지 로드 완료');
+  1096	    </script>
+  1097	</body>
+  1098	</html>
+  1099	
