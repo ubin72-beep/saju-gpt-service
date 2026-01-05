@@ -1,4 +1,4 @@
-  1	<!DOCTYPE html>
+ 1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
@@ -557,7 +557,18 @@
    557	            document.getElementById('resultCard').style.display = 'block';
    558	            document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth' });
    559	        }
-   560	    </script>
-   561	</body>
-   562	</html>
-   563	
+   560	
+   561	        // ===== Global Error Handler =====
+   562	        window.addEventListener('error', function(e) {
+   563	            // aisaju1000.com 외의 스크립트 에러 무시
+   564	            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+   565	                e.preventDefault();
+   566	                return false;
+   567	            }
+   568	        });
+   569	
+   570	        console.log('✅ 궁합 분석 페이지 로드 완료');
+   571	    </script>
+   572	</body>
+   573	</html>
+   574	
