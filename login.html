@@ -1,577 +1,588 @@
-  1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>로그인 - AI 사주 천년지기 | Ultra Modern Design</title>
-     7	    
-     8	    <!-- Styles -->
-     9	    <link rel="stylesheet" href="css/style-modern.css">
-    10	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    11	    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    12	    
-    13	    <style>
-    14	        /* ===== Modern Login Page ===== */
-    15	        .login-page {
-    16	            min-height: 100vh;
-    17	            display: flex;
-    18	            align-items: center;
-    19	            justify-content: center;
-    20	            padding: var(--spacing-2xl) var(--spacing-lg);
-    21	            position: relative;
-    22	            overflow: hidden;
-    23	        }
-    24	        
-    25	        /* Animated Background */
-    26	        .login-background {
-    27	            position: absolute;
-    28	            top: 0;
-    29	            left: 0;
-    30	            width: 100%;
-    31	            height: 100%;
-    32	            background: var(--gradient-mesh);
-    33	            z-index: -1;
-    34	        }
-    35	        
-    36	        .login-background::before {
-    37	            content: '';
-    38	            position: absolute;
-    39	            width: 500px;
-    40	            height: 500px;
-    41	            background: radial-gradient(circle, rgba(147, 51, 234, 0.2), transparent);
-    42	            top: -100px;
-    43	            left: -100px;
-    44	            animation: float 20s ease-in-out infinite;
-    45	        }
-    46	        
-    47	        .login-background::after {
-    48	            content: '';
-    49	            position: absolute;
-    50	            width: 400px;
-    51	            height: 400px;
-    52	            background: radial-gradient(circle, rgba(255, 51, 102, 0.2), transparent);
-    53	            bottom: -100px;
-    54	            right: -100px;
-    55	            animation: float 20s ease-in-out infinite reverse;
-    56	        }
-    57	        
-    58	        /* Login Container */
-    59	        .login-container {
-    60	            max-width: 480px;
-    61	            width: 100%;
-    62	            background: var(--glass-bg);
-    63	            backdrop-filter: blur(20px) saturate(180%);
-    64	            -webkit-backdrop-filter: blur(20px) saturate(180%);
-    65	            border: 1px solid var(--glass-border);
-    66	            border-radius: var(--radius-2xl);
-    67	            padding: var(--spacing-2xl);
-    68	            box-shadow: var(--shadow-2xl);
-    69	            animation: slideInUp 0.6s ease;
-    70	        }
-    71	        
-    72	        .login-header {
-    73	            text-align: center;
-    74	            margin-bottom: var(--spacing-xl);
-    75	        }
-    76	        
-    77	        .login-logo {
-    78	            font-size: 3rem;
-    79	            margin-bottom: var(--spacing-md);
-    80	            animation: rotate360 10s linear infinite;
-    81	        }
-    82	        
-    83	        .login-header h1 {
-    84	            font-size: 2rem;
-    85	            margin-bottom: var(--spacing-xs);
-    86	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
-    87	            -webkit-background-clip: text;
-    88	            -webkit-text-fill-color: transparent;
-    89	        }
-    90	        
-    91	        .login-subtitle {
-    92	            color: var(--text-secondary);
-    93	            font-size: 0.938rem;
-    94	        }
-    95	        
-    96	        /* Tabs */
-    97	        .login-tabs {
-    98	            display: grid;
-    99	            grid-template-columns: 1fr 1fr;
-   100	            gap: var(--spacing-sm);
-   101	            margin-bottom: var(--spacing-xl);
-   102	            background: var(--bg-tertiary);
-   103	            padding: 6px;
-   104	            border-radius: var(--radius-lg);
-   105	        }
-   106	        
-   107	        .tab-btn {
-   108	            padding: var(--spacing-md);
-   109	            background: transparent;
-   110	            border: none;
-   111	            border-radius: var(--radius-md);
-   112	            font-weight: 700;
-   113	            font-size: 1rem;
-   114	            color: var(--text-secondary);
-   115	            cursor: pointer;
-   116	            transition: all var(--transition-normal);
-   117	        }
-   118	        
-   119	        .tab-btn.active {
-   120	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
-   121	            color: white;
-   122	            box-shadow: var(--shadow-lg);
-   123	        }
-   124	        
-   125	        .tab-btn:hover:not(.active) {
-   126	            color: var(--text-primary);
-   127	            background: var(--bg-secondary);
-   128	        }
-   129	        
-   130	        /* Form */
-   131	        .tab-content {
-   132	            display: none;
-   133	        }
-   134	        
-   135	        .tab-content.active {
-   136	            display: block;
-   137	            animation: fadeIn 0.4s ease;
-   138	        }
-   139	        
-   140	        @keyframes fadeIn {
-   141	            from { opacity: 0; transform: translateY(10px); }
-   142	            to { opacity: 1; transform: translateY(0); }
-   143	        }
-   144	        
-   145	        .form-group {
-   146	            margin-bottom: var(--spacing-md);
-   147	        }
-   148	        
-   149	        .form-group label {
-   150	            display: block;
-   151	            margin-bottom: var(--spacing-xs);
-   152	            font-weight: 600;
-   153	            color: var(--text-primary);
-   154	            font-size: 0.938rem;
-   155	        }
-   156	        
-   157	        .form-group input {
-   158	            width: 100%;
-   159	            padding: var(--spacing-md);
-   160	            background: var(--bg-secondary);
-   161	            border: 2px solid var(--border-color);
-   162	            border-radius: var(--radius-md);
-   163	            font-size: 1rem;
-   164	            color: var(--text-primary);
-   165	            transition: all var(--transition-normal);
-   166	        }
-   167	        
-   168	        .form-group input:focus {
-   169	            outline: none;
-   170	            border-color: var(--primary-purple);
-   171	            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
-   172	        }
-   173	        
-   174	        .form-group input::placeholder {
-   175	            color: var(--text-muted);
-   176	        }
-   177	        
-   178	        .form-check {
-   179	            display: flex;
-   180	            align-items: center;
-   181	            gap: var(--spacing-xs);
-   182	        }
-   183	        
-   184	        .form-check input[type="checkbox"] {
-   185	            width: 20px;
-   186	            height: 20px;
-   187	            cursor: pointer;
-   188	        }
-   189	        
-   190	        .form-check label {
-   191	            margin: 0;
-   192	            font-weight: 400;
-   193	            font-size: 0.875rem;
-   194	            cursor: pointer;
-   195	        }
-   196	        
-   197	        .btn-submit {
-   198	            width: 100%;
-   199	            padding: var(--spacing-md);
-   200	            background: linear-gradient(135deg, var(--primary-purple), var(--primary-red));
-   201	            color: white;
-   202	            border: none;
-   203	            border-radius: var(--radius-full);
-   204	            font-size: 1.125rem;
-   205	            font-weight: 700;
-   206	            cursor: pointer;
-   207	            transition: all var(--transition-normal);
-   208	            box-shadow: var(--shadow-glow);
-   209	            margin-bottom: var(--spacing-lg);
-   210	            position: relative;
-   211	            overflow: hidden;
-   212	        }
-   213	        
-   214	        .btn-submit::before {
-   215	            content: '';
-   216	            position: absolute;
-   217	            top: 0;
-   218	            left: -100%;
-   219	            width: 100%;
-   220	            height: 100%;
-   221	            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-   222	            transition: left 0.5s;
-   223	        }
-   224	        
-   225	        .btn-submit:hover::before {
-   226	            left: 100%;
-   227	        }
-   228	        
-   229	        .btn-submit:hover {
-   230	            transform: translateY(-3px);
-   231	            box-shadow: var(--shadow-2xl), 0 0 40px rgba(147, 51, 234, 0.6);
-   232	        }
-   233	        
-   234	        /* Divider */
-   235	        .divider {
-   236	            text-align: center;
-   237	            margin: var(--spacing-xl) 0;
-   238	            color: var(--text-muted);
-   239	            position: relative;
-   240	        }
-   241	        
-   242	        .divider::before,
-   243	        .divider::after {
-   244	            content: '';
-   245	            position: absolute;
-   246	            top: 50%;
-   247	            width: 40%;
-   248	            height: 1px;
-   249	            background: var(--border-color);
-   250	        }
-   251	        
-   252	        .divider::before { left: 0; }
-   253	        .divider::after { right: 0; }
-   254	        
-   255	        /* Social Login */
-   256	        .social-login {
-   257	            display: grid;
-   258	            grid-template-columns: 1fr 1fr;
-   259	            gap: var(--spacing-md);
-   260	            margin-bottom: var(--spacing-lg);
-   261	        }
-   262	        
-   263	        .btn-social {
-   264	            padding: var(--spacing-md);
-   265	            border-radius: var(--radius-md);
-   266	            border: none;
-   267	            font-weight: 700;
-   268	            cursor: pointer;
-   269	            transition: all var(--transition-normal);
-   270	            display: flex;
-   271	            align-items: center;
-   272	            justify-content: center;
-   273	            gap: var(--spacing-xs);
-   274	        }
-   275	        
-   276	        .btn-kakao {
-   277	            background: #FEE500;
-   278	            color: #000000;
-   279	        }
-   280	        
-   281	        .btn-kakao:hover {
-   282	            background: #FDD800;
-   283	            transform: translateY(-2px);
-   284	            box-shadow: var(--shadow-lg);
-   285	        }
-   286	        
-   287	        .btn-naver {
-   288	            background: #03C75A;
-   289	            color: white;
-   290	        }
-   291	        
-   292	        .btn-naver:hover {
-   293	            background: #02B350;
-   294	            transform: translateY(-2px);
-   295	            box-shadow: var(--shadow-lg);
-   296	        }
-   297	        
-   298	        /* Links */
-   299	        .links {
-   300	            text-align: center;
-   301	            font-size: 0.875rem;
-   302	        }
-   303	        
-   304	        .links a {
-   305	            color: var(--primary-purple);
-   306	            text-decoration: none;
-   307	            font-weight: 600;
-   308	            transition: color var(--transition-fast);
-   309	        }
-   310	        
-   311	        .links a:hover {
-   312	            color: var(--primary-red);
-   313	            text-decoration: underline;
-   314	        }
-   315	        
-   316	        /* Admin Link */
-   317	        .admin-link {
-   318	            text-align: center;
-   319	            margin-top: var(--spacing-md);
-   320	            padding: var(--spacing-md);
-   321	            background: var(--bg-tertiary);
-   322	            border-radius: var(--radius-md);
-   323	            font-size: 0.875rem;
-   324	        }
-   325	        
-   326	        .admin-link a {
-   327	            color: var(--primary-purple);
-   328	            font-weight: 700;
-   329	            text-decoration: none;
-   330	        }
-   331	        
-   332	        .admin-link a:hover {
-   333	            color: var(--primary-red);
-   334	        }
-   335	        
-   336	        /* Back Button */
-   337	        .back-btn {
-   338	            position: absolute;
-   339	            top: var(--spacing-lg);
-   340	            left: var(--spacing-lg);
-   341	            padding: var(--spacing-md) var(--spacing-lg);
-   342	            background: var(--glass-bg);
-   343	            backdrop-filter: blur(10px);
-   344	            border: 1px solid var(--glass-border);
-   345	            border-radius: var(--radius-full);
-   346	            text-decoration: none;
-   347	            color: var(--text-primary);
-   348	            font-weight: 600;
-   349	            transition: all var(--transition-normal);
-   350	            display: inline-flex;
-   351	            align-items: center;
-   352	            gap: var(--spacing-xs);
-   353	        }
-   354	        
-   355	        .back-btn:hover {
-   356	            transform: translateY(-2px);
-   357	            box-shadow: var(--shadow-lg);
-   358	        }
-   359	        
-   360	        /* Responsive */
-   361	        @media (max-width: 640px) {
-   362	            .login-container {
-   363	                padding: var(--spacing-lg);
-   364	            }
-   365	            
-   366	            .social-login {
-   367	                grid-template-columns: 1fr;
-   368	            }
-   369	        }
-   370	    </style>
-   371	</head>
-   372	<body>
-   373	    <div class="login-page">
-   374	        <div class="login-background"></div>
-   375	        
-   376	        <a href="index.html" class="back-btn">
-   377	            <i class="fas fa-arrow-left"></i> 홈으로
-   378	        </a>
-   379	        
-   380	        <div class="login-container">
-   381	            <div class="login-header">
-   382	                <div class="login-logo">
-   383	                    <i class="fas fa-yin-yang"></i>
-   384	                </div>
-   385	                <h1>AI 사주 천년지기</h1>
-   386	                <p class="login-subtitle">정통 명리학과 AI 기술의 만남</p>
-   387	            </div>
-   388	
-   389	            <div class="login-tabs">
-   390	                <button class="tab-btn active" onclick="switchTab('login')">로그인</button>
-   391	                <button class="tab-btn" onclick="switchTab('signup')">회원가입</button>
-   392	            </div>
-   393	
-   394	            <!-- 로그인 폼 -->
-   395	            <div id="loginTab" class="tab-content active">
-   396	                <form id="loginForm" onsubmit="handleLogin(event)">
-   397	                    <div class="form-group">
-   398	                        <label>이메일</label>
-   399	                        <input type="email" name="email" placeholder="example@email.com" required>
-   400	                    </div>
-   401	                    <div class="form-group">
-   402	                        <label>비밀번호</label>
-   403	                        <input type="password" name="password" placeholder="비밀번호 입력" required>
-   404	                    </div>
-   405	                    <div class="form-group form-check">
-   406	                        <input type="checkbox" id="rememberMe">
-   407	                        <label for="rememberMe">로그인 상태 유지</label>
-   408	                    </div>
-   409	                    <button type="submit" class="btn-submit">
-   410	                        <i class="fas fa-sign-in-alt"></i> 로그인
-   411	                    </button>
-   412	                </form>
-   413	
-   414	                <div class="divider">또는</div>
-   415	
-   416	                <div class="social-login">
-   417	                    <button class="btn-social btn-kakao">
-   418	                        <i class="fab fa-kickstarter-k"></i> 카카오
-   419	                    </button>
-   420	                    <button class="btn-social btn-naver">
-   421	                        N 네이버
-   422	                    </button>
-   423	                </div>
-   424	
-   425	                <div class="links">
-   426	                    <a href="#forgot-password">비밀번호 찾기</a> | 
-   427	                    <a href="#forgot-email">이메일 찾기</a>
-   428	                </div>
-   429	                
-   430	                <div class="admin-link">
-   431	                    <i class="fas fa-user-shield"></i> 관리자이신가요? 
-   432	                    <a href="admin-login.html">관리자 로그인</a>
-   433	                </div>
-   434	            </div>
-   435	
-   436	            <!-- 회원가입 폼 -->
-   437	            <div id="signupTab" class="tab-content">
-   438	                <form id="signupForm" onsubmit="handleSignup(event)">
-   439	                    <div class="form-group">
-   440	                        <label>이름</label>
-   441	                        <input type="text" name="name" placeholder="홍길동" required>
-   442	                    </div>
-   443	                    <div class="form-group">
-   444	                        <label>이메일</label>
-   445	                        <input type="email" name="email" placeholder="example@email.com" required>
-   446	                    </div>
-   447	                    <div class="form-group">
-   448	                        <label>비밀번호</label>
-   449	                        <input type="password" name="password" placeholder="8자 이상 입력" required minlength="8">
-   450	                    </div>
-   451	                    <div class="form-group">
-   452	                        <label>비밀번호 확인</label>
-   453	                        <input type="password" name="passwordConfirm" placeholder="비밀번호 재입력" required minlength="8">
-   454	                    </div>
-   455	                    <div class="form-group form-check">
-   456	                        <input type="checkbox" id="agreeTerms" required>
-   457	                        <label for="agreeTerms">이용약관 및 개인정보처리방침에 동의합니다</label>
-   458	                    </div>
-   459	                    <button type="submit" class="btn-submit">
-   460	                        <i class="fas fa-user-plus"></i> 회원가입
-   461	                    </button>
-   462	                </form>
-   463	            </div>
-   464	        </div>
-   465	    </div>
-   466	
-   467	    <!-- API 클라이언트 -->
-   468	    <script src="js/api.js"></script>
-   469	    
-   470	    <script>
-   471	        function switchTab(tab) {
-   472	            // Remove active class from all tabs
-   473	            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-   474	            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-   475	            
-   476	            // Add active class to selected tab
-   477	            if (tab === 'login') {
-   478	                document.querySelector('.tab-btn:first-child').classList.add('active');
-   479	                document.getElementById('loginTab').classList.add('active');
-   480	            } else {
-   481	                document.querySelector('.tab-btn:last-child').classList.add('active');
-   482	                document.getElementById('signupTab').classList.add('active');
-   483	            }
-   484	        }
-   485	
-   486	        // 로그인 처리
-   487	        async function handleLogin(e) {
-   488	            e.preventDefault();
-   489	            const formData = new FormData(e.target);
-   490	            const email = formData.get('email');
-   491	            const password = formData.get('password');
-   492	            
-   493	            // 로딩 표시
-   494	            const submitBtn = e.target.querySelector('button[type="submit"]');
-   495	            const originalText = submitBtn.innerHTML;
-   496	            submitBtn.disabled = true;
-   497	            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
-   498	            
-   499	            try {
-   500	                const result = await login(email, password);
-   501	                
-   502	                if (result.success) {
-   503	                    alert('✅ ' + result.message);
-   504	                    
-   505	                    // 마이페이지 또는 이전 페이지로 이동
-   506	                    const returnUrl = sessionStorage.getItem('returnUrl') || 'mypage.html';
-   507	                    sessionStorage.removeItem('returnUrl');
-   508	                    window.location.href = returnUrl;
-   509	                } else {
-   510	                    alert('❌ ' + result.message);
-   511	                    submitBtn.disabled = false;
-   512	                    submitBtn.innerHTML = originalText;
-   513	                }
-   514	            } catch (error) {
-   515	                console.error('로그인 에러:', error);
-   516	                alert('❌ 로그인 중 오류가 발생했습니다: ' + error.message);
-   517	                submitBtn.disabled = false;
-   518	                submitBtn.innerHTML = originalText;
-   519	            }
-   520	        }
-   521	
-   522	        // 회원가입 처리
-   523	        async function handleSignup(e) {
-   524	            e.preventDefault();
-   525	            const formData = new FormData(e.target);
-   526	            const name = formData.get('name');
-   527	            const email = formData.get('email');
-   528	            const password = formData.get('password');
-   529	            const passwordConfirm = formData.get('passwordConfirm');
-   530	            
-   531	            // 비밀번호 확인
-   532	            if (password !== passwordConfirm) {
-   533	                alert('❌ 비밀번호가 일치하지 않습니다.');
-   534	                return;
-   535	            }
-   536	            
-   537	            // 비밀번호 길이 확인
-   538	            if (password.length < 6) {
-   539	                alert('❌ 비밀번호는 최소 6자 이상이어야 합니다.');
-   540	                return;
-   541	            }
-   542	            
-   543	            // 로딩 표시
-   544	            const submitBtn = e.target.querySelector('button[type="submit"]');
-   545	            const originalText = submitBtn.innerHTML;
-   546	            submitBtn.disabled = true;
-   547	            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 가입 중...';
-   548	            
-   549	            try {
-   550	                const result = await signup(email, password, name);
-   551	                
-   552	                if (result.success) {
-   553	                    alert('✅ ' + result.message + '\n\n자동으로 로그인되었습니다!');
-   554	                    
-   555	                    // 회원가입 성공 시 마이페이지로 이동
-   556	                    window.location.href = 'mypage.html';
-   557	                } else {
-   558	                    alert('❌ ' + result.message);
-   559	                    submitBtn.disabled = false;
-   560           submitBtn.innerHTML = originalText;
-   561	                }
-   562	            } catch (error) {
-   563	                console.error('회원가입 에러:', error);
-   564	                alert('❌ 회원가입 중 오류가 발생했습니다: ' + error.message);
-   565	                submitBtn.disabled = false;
-   566	                submitBtn.innerHTML = originalText;
-   567	            }
-   568	        }
-   569	
-   570	        // 이미 로그인되어 있으면 마이페이지로 리다이렉트
-   571	        if (localStorage.getItem('authToken')) {
-   572	            window.location.href = 'mypage.html';
-   573	        }
-   574	    </script>
-   575	</body>
-   576	</html>
-   577	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - AI 사주 천년지기</title>
+    
+    <!-- External Resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CSS Reset & Base ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* ===== Login Container ===== */
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 450px;
+            width: 100%;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ===== Header ===== */
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .login-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* ===== Tabs ===== */
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #f5f5f5;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(102,126,234,0.2);
+        }
+        
+        /* ===== Form ===== */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+        
+        /* ===== Checkbox ===== */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== Buttons ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* ===== Social Login ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+        }
+        
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .btn-social {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-social:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-social i {
+            font-size: 18px;
+        }
+        
+        .btn-google { color: #DB4437; }
+        .btn-kakao { color: #FEE500; background: #FEE500 !important; }
+        
+        /* ===== Footer ===== */
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .back-home {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-home:hover {
+            text-decoration: underline;
+        }
+        
+        /* ===== Alert Message ===== */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .login-header h1 {
+                font-size: 24px;
+            }
+            
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Header -->
+        <div class="login-header">
+            <h1>🔮 AI 사주 천년지기</h1>
+            <p class="login-subtitle">정통 명리학과 AI 기술의 만남</p>
+        </div>
+        
+        <!-- Alert Message -->
+        <div id="alertMessage" class="alert"></div>
+        
+        <!-- Tabs -->
+        <div class="login-tabs">
+            <button class="tab-btn active" data-tab="login">로그인</button>
+            <button class="tab-btn" data-tab="signup">회원가입</button>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="loginTab" class="tab-content active">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">이메일</label>
+                    <input type="email" id="loginEmail" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">비밀번호</label>
+                    <input type="password" id="loginPassword" placeholder="비밀번호 입력" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>로그인 상태 유지</span>
+                    </label>
+                    <a href="#" class="forgot-password">비밀번호 찾기</a>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>또는</span>
+            </div>
+            
+            <div class="social-login">
+                <button class="btn-social btn-google">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="btn-social btn-kakao">
+                    <i class="fas fa-comment"></i> Kakao
+                </button>
+            </div>
+        </div>
+        
+        <!-- Signup Form -->
+        <div id="signupTab" class="tab-content">
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">이름</label>
+                    <input type="text" id="signupName" placeholder="홍길동" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">이메일</label>
+                    <input type="email" id="signupEmail" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">비밀번호</label>
+                    <input type="password" id="signupPassword" placeholder="8자 이상 입력" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPasswordConfirm">비밀번호 확인</label>
+                    <input type="password" id="signupPasswordConfirm" placeholder="비밀번호 재입력" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> 회원가입
+                </button>
+            </form>
+        </div>
+        
+        <!-- Footer -->
+        <div class="login-footer">
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i> 홈으로 돌아가기
+            </a>
+        </div>
+    </div>
+    
+    <script src="js/api.js"></script>
+    <script>
+        'use strict';
+        
+        // ===== Tab Switching =====
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.getAttribute('data-tab');
+                
+                // Remove active class from all
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to current
+                button.classList.add('active');
+                document.getElementById(`${tabName}Tab`).classList.add('active');
+                
+                // Clear alert message
+                hideAlert();
+            });
+        });
+        
+        // ===== Alert Functions =====
+        function showAlert(message, type = 'success') {
+            const alertElement = document.getElementById('alertMessage');
+            alertElement.textContent = message;
+            alertElement.className = `alert alert-${type} show`;
+            
+            setTimeout(() => {
+                hideAlert();
+            }, 5000);
+        }
+        
+        function hideAlert() {
+            const alertElement = document.getElementById('alertMessage');
+            alertElement.classList.remove('show');
+        }
+        
+        // ===== Login Form Handler =====
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Basic validation
+            if (!email || !password) {
+                showAlert('이메일과 비밀번호를 입력해주세요.', 'error');
+                return;
+            }
+            
+            try {
+                // API 호출 (js/api.js 사용)
+                if (typeof login === 'function') {
+                    const result = await login(email, password);
+                    
+                    if (result.success) {
+                        showAlert('로그인 성공! 페이지를 이동합니다...', 'success');
+                        
+                        // Remember me 처리
+                        if (rememberMe) {
+                            localStorage.setItem('rememberMe', 'true');
+                        }
+                        
+                        // 페이지 이동
+                        setTimeout(() => {
+                            window.location.href = 'mypage.html';
+                        }, 1500);
+                    } else {
+                        showAlert(result.message || '로그인에 실패했습니다.', 'error');
+                    }
+                } else {
+                    // 백엔드 API가 없을 경우 임시 처리
+                    console.log('Login attempt:', { email, password, rememberMe });
+                    showAlert('⚠️ 백엔드 API가 연결되지 않았습니다. js/api.js를 확인해주세요.', 'error');
+                }
+            } catch (error) {
+                console.error('로그인 에러:', error);
+                showAlert('❌ 로그인 중 오류가 발생했습니다: ' + error.message, 'error');
+            }
+        });
+        
+        // ===== Signup Form Handler =====
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+            
+            // Validation
+            if (!name || !email || !password || !passwordConfirm) {
+                showAlert('모든 필드를 입력해주세요.', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAlert('비밀번호는 8자 이상이어야 합니다.', 'error');
+                return;
+            }
+            
+            if (password !== passwordConfirm) {
+                showAlert('비밀번호가 일치하지 않습니다.', 'error');
+                return;
+            }
+            
+            try {
+                // API 호출 (js/api.js 사용)
+                if (typeof signup === 'function') {
+                    const result = await signup({ name, email, password });
+                    
+                    if (result.success) {
+                        showAlert('✅ 회원가입 성공! 로그인 페이지로 이동합니다...', 'success');
+                        
+                        // 로그인 탭으로 전환
+                        setTimeout(() => {
+                            document.querySelector('[data-tab="login"]').click();
+                            document.getElementById('loginEmail').value = email;
+                        }, 2000);
+                    } else {
+                        showAlert(result.message || '회원가입에 실패했습니다.', 'error');
+                    }
+                } else {
+                    // 백엔드 API가 없을 경우 임시 처리
+                    console.log('Signup attempt:', { name, email, password });
+                    showAlert('⚠️ 백엔드 API가 연결되지 않았습니다. js/api.js를 확인해주세요.', 'error');
+                }
+            } catch (error) {
+                console.error('회원가입 에러:', error);
+                showAlert('❌ 회원가입 중 오류가 발생했습니다: ' + error.message, 'error');
+            }
+        });
+        
+        // ===== Social Login =====
+        document.querySelectorAll('.btn-social').forEach(button => {
+            button.addEventListener('click', () => {
+                const provider = button.classList.contains('btn-google') ? 'Google' : 'Kakao';
+                showAlert(`${provider} 소셜 로그인은 준비 중입니다.`, 'error');
+            });
+        });
+        
+        // ===== Check if already logged in =====
+        if (localStorage.getItem('authToken')) {
+            window.location.href = 'mypage.html';
+        }
+        
+        // ===== Global Error Handler =====
+        window.addEventListener('error', function(e) {
+            // aisaju1000.com 외의 스크립트 에러 무시
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        console.log('✅ 로그인 페이지 로드 완료 (백엔드 API 연동)');
+    </script>
+</body>
+</html>
