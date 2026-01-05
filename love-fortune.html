@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맞춤 연애운 - AI 사주 천년지기</title>
+    <meta name="description" content="2026년 나의 연애운은? 사주팔자 기반 연애운 분석과 인연운, 이상형, 주의사항까지 모두 확인하세요.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c41e3a 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '💖';
+            font-size: 20rem;
+            position: absolute;
+            right: -5%;
+            top: -10%;
+            opacity: 0.1;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1000px;
+            margin: -60px auto 60px;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        /* 입력 폼 카드 */
+        .input-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .input-card h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #c41e3a;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 0 4px rgba(255,107,157,0.1);
+        }
+
+        .gender-select {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gender-option:hover {
+            border-color: #ff6b9d;
+            background: #fff5f8;
+        }
+
+        .gender-option.selected {
+            border-color: #ff6b9d;
+            background: #fff5f8;
+            font-weight: bold;
+        }
+
+        .gender-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c41e3a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.3);
+        }
+
+        /* 결과 카드 */
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .result-card.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #c41e3a;
+        }
+
+        .fortune-score {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe0e9 100%);
+            border-radius: 15px;
+        }
+
+        .fortune-score .score {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #c41e3a;
+        }
+
+        .fortune-score .label {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #ff6b9d;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            padding: 1.5rem 0;
+        }
+
+        .highlight-box {
+            background: #fff5f8;
+            border-left: 4px solid #ff6b9d;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .highlight-box strong {
+            color: #c41e3a;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196F3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .lucky-months {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .month-card {
+            background: white;
+            border: 2px solid #ff6b9d;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .month-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255,107,157,0.3);
+        }
+
+        .month-card .month {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #c41e3a;
+        }
+
+        .month-card .desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* CTA 섹션 */
+        .cta-section {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c41e3a 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: 1rem 2rem;
+            background: white;
+            color: #c41e3a;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        /* 푸터 */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .input-card,
+            .result-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .gender-select {
+                flex-direction: column;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="blog.html">사주 가이드</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div>
+            <h1>💖 맞춤 연애운</h1>
+            <p>2026년 사랑의 흐름 · 이상형 · 인연운 완벽 분석</p>
+        </div>
+    </section>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 입력 폼 -->
+        <div class="input-card">
+            <h2>연애운 분석 신청</h2>
+            <form id="loveFortuneForm">
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" id="name" placeholder="이름을 입력하세요" required>
+                </div>
+
+                <div class="form-group">
+                    <label>생년월일</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>출생 시간 (선택)</label>
+                    <select id="birthtime">
+                        <option value="">모름</option>
+                        <option value="23-01">자시 (23:00-01:00)</option>
+                        <option value="01-03">축시 (01:00-03:00)</option>
+                        <option value="03-05">인시 (03:00-05:00)</option>
+                        <option value="05-07">묘시 (05:00-07:00)</option>
+                        <option value="07-09">진시 (07:00-09:00)</option>
+                        <option value="09-11">사시 (09:00-11:00)</option>
+                        <option value="11-13">오시 (11:00-13:00)</option>
+                        <option value="13-15">미시 (13:00-15:00)</option>
+                        <option value="15-17">신시 (15:00-17:00)</option>
+                        <option value="17-19">유시 (17:00-19:00)</option>
+                        <option value="19-21">술시 (19:00-21:00)</option>
+                        <option value="21-23">해시 (21:00-23:00)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>성별</label>
+                    <div class="gender-select">
+                        <div class="gender-option" data-gender="male">
+                            <i class="fas fa-mars"></i>
+                            <div>남성</div>
+                        </div>
+                        <div class="gender-option" data-gender="female">
+                            <i class="fas fa-venus"></i>
+                            <div>여성</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="gender" required>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-heart"></i> 연애운 보기 (₩3,900)
+                </button>
+            </form>
+        </div>
+
+        <!-- 결과 카드 -->
+        <div class="result-card" id="resultCard">
+            <h1 class="result-title">💖 <span id="resultName"></span>님의 연애운</h1>
+
+            <!-- 종합 점수 -->
+            <div class="fortune-score">
+                <div class="score" id="loveScore">85</div>
+                <div class="label">연애운 종합 점수</div>
+            </div>
+
+            <!-- 2026년 연애운 흐름 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    2026년 연애운 흐름
+                </h2>
+                <div class="section-content" id="yearlyFortune">
+                    <p>2026년 병오년은 <strong style="color: #c41e3a;">불의 기운</strong>이 강한 해로, 열정적이고 적극적인 만남이 많아지는 시기입니다.</p>
+                    
+                    <div class="highlight-box">
+                        <strong>💫 상반기 (1월~6월)</strong><br>
+                        새로운 인연을 만날 가능성이 높습니다. 특히 3월과 5월에 운명적인 만남이 기다리고 있을 수 있습니다. 적극적으로 나서는 것이 좋습니다.
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>🌙 하반기 (7월~12월)</strong><br>
+                        기존 관계가 깊어지는 시기입니다. 솔로라면 친구의 소개나 모임을 통해 좋은 인연을 만날 수 있습니다. 9월과 11월이 특히 좋습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 행운의 달 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-star"></i>
+                    행운의 달
+                </h2>
+                <div class="lucky-months">
+                    <div class="month-card">
+                        <div class="month">3월</div>
+                        <div class="desc">운명적 만남</div>
+                    </div>
+                    <div class="month-card">
+                        <div class="month">5월</div>
+                        <div class="desc">고백 성공률 높음</div>
+                    </div>
+                    <div class="month-card">
+                        <div class="month">9월</div>
+                        <div class="desc">관계 발전</div>
+                    </div>
+                    <div class="month-card">
+                        <div class="month">11월</div>
+                        <div class="desc">결혼운 상승</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이상형 분석 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-heart"></i>
+                    나의 이상형
+                </h2>
+                <div class="section-content">
+                    <p>사주팔자를 분석한 결과, 당신과 잘 맞는 이상형은 다음과 같습니다:</p>
+                    
+                    <div class="highlight-box">
+                        <strong>🎯 성격적 특징</strong><br>
+                        • 차분하고 안정적인 성격<br>
+                        • 따뜻하고 배려심이 많은 사람<br>
+                        • 책임감이 강하고 진실한 사람<br>
+                        • 가정적이고 헌신적인 성향
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>🌟 외적 특징</strong><br>
+                        • 밝은 미소와 친근한 인상<br>
+                        • 단정하고 깔끔한 스타일<br>
+                        • 건강하고 활력 넘치는 모습
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>💼 직업 및 환경</strong><br>
+                        교사, 의료인, 공무원, 예술가 등 안정적이고 창의적인 직업을 가진 사람과 좋은 인연이 될 수 있습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 인연을 만나는 장소 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    인연을 만나는 장소
+                </h2>
+                <div class="section-content">
+                    <div class="tip-box">
+                        <strong>✨ 추천 장소</strong><br>
+                        • 문화 센터, 전시회, 공연장<br>
+                        • 카페, 서점, 도서관<br>
+                        • 친구 모임, 동호회 활동<br>
+                        • 교육 프로그램, 세미나<br>
+                        • 여행지, 맛집 탐방<br><br>
+                        <strong>특히 남쪽 방향</strong>이나 <strong>불 기운</strong>이 강한 장소에서 좋은 인연을 만날 확률이 높습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 연애 성공 팁 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    연애 성공 팁
+                </h2>
+                <div class="section-content">
+                    <div class="tip-box">
+                        <strong>💡 이렇게 행동하세요!</strong><br><br>
+                        1. <strong>적극성</strong>: 2026년은 적극적으로 다가가는 것이 좋습니다<br>
+                        2. <strong>진실함</strong>: 솔직하고 진심 어린 대화를 나누세요<br>
+                        3. <strong>배려</strong>: 상대방의 감정을 먼저 생각하는 자세<br>
+                        4. <strong>자기계발</strong>: 자신의 매력을 키우는 시간을 가지세요<br>
+                        5. <strong>긍정적 태도</strong>: 밝고 긍정적인 에너지를 유지하세요
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주의사항 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    주의사항
+                </h2>
+                <div class="section-content">
+                    <div class="warning-box">
+                        <strong>⚠️ 이것만은 피하세요!</strong><br><br>
+                        • <strong>성급한 결정</strong>: 첫눈에 반했더라도 충분한 시간을 가지세요<br>
+                        • <strong>과도한 집착</strong>: 상대방에게 부담을 주지 않도록 주의<br>
+                        • <strong>전 연인 비교</strong>: 과거에 연연하지 말고 새로운 마음으로<br>
+                        • <strong>외적 조건만 중시</strong>: 내면의 아름다움을 더 중요하게<br>
+                        • <strong>2월과 8월</strong>: 이 시기는 감정 기복이 클 수 있으니 중요한 결정은 피하세요
+                    </div>
+                </div>
+            </div>
+
+            <!-- 조언 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-heart-circle-check"></i>
+                    마무리 조언
+                </h2>
+                <div class="section-content">
+                    <div class="highlight-box">
+                        <p style="font-size: 1.2rem; line-height: 1.9;">
+                            2026년은 당신에게 <strong style="color: #c41e3a;">행복한 사랑</strong>이 찾아올 가능성이 높은 해입니다. 
+                            운세도 중요하지만, 가장 중요한 것은 <strong>진실된 마음</strong>과 <strong>노력</strong>입니다.
+                        </p>
+                        <p style="font-size: 1.1rem; margin-top: 1rem;">
+                            상대방을 존중하고, 자신을 사랑하며, 긍정적인 마음가짐으로 임한다면 
+                            반드시 아름다운 인연을 만날 수 있을 것입니다. 💕
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA 섹션 -->
+        <div class="cta-section">
+            <h2>더 자세한 분석이 필요하신가요?</h2>
+            <p>AI 상담으로 맞춤형 연애 조언을 받아보세요</p>
+            <div class="cta-buttons">
+                <a href="ai-chat.html" class="btn-cta">
+                    <i class="fas fa-comments"></i> AI 상담 시작
+                </a>
+                <a href="compatibility.html" class="btn-cta">
+                    <i class="fas fa-heart"></i> 궁합 보기
+                </a>
+                <a href="index.html" class="btn-cta">
+                    <i class="fas fa-home"></i> 무료 사주 보기
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 성별 선택
+        document.querySelectorAll('.gender-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.gender-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                document.getElementById('gender').value = this.dataset.gender;
+            });
+        });
+
+        // 폼 제출
+        document.getElementById('loveFortuneForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const gender = document.getElementById('gender').value;
+
+            if (!gender) {
+                alert('성별을 선택해주세요.');
+                return;
+            }
+
+            // 실제로는 결제 프로세스가 필요합니다
+            // 여기서는 데모를 위해 바로 결과를 표시합니다
+            if (confirm(`${name}님의 연애운 분석을 진행하시겠습니까? (₩3,900)`)) {
+                // 결과 표시
+                document.getElementById('resultName').textContent = name;
+                document.getElementById('resultCard').classList.add('show');
+                
+                // 결과 카드로 스크롤
+                setTimeout(() => {
+                    document.getElementById('resultCard').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 300);
+            }
+        });
+
+        // 전역 에러 핸들러
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return true;
+            }
+        }, true);
+
+        // DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('맞춤 연애운 페이지 로드 완료');
+        });
+    </script>
+</body>
+</html>
