@@ -1,25 +1,19 @@
-   1	{
-     2	  "cleanUrls": true,
-     3	  "trailingSlash": false,
-     4	  "headers": [
-     5	    {
-     6	      "source": "/(.*).html",
-     7	      "headers": [
-     8	        {
-     9	          "key": "Content-Type",
-    10	          "value": "text/html; charset=utf-8"
-    11	        }
-    12	      ]
-    13	    },
-    14	    {
-    15	      "source": "/blog/(.*).html",
-    16	      "headers": [
-    17	        {
-    18	          "key": "Content-Type",
-    19	          "value": "text/html; charset=utf-8"
-    20	        }
-    21	      ]
-    22	    }
-    23	  ]
-    24	}
-    25	
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/**/*.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
+}
