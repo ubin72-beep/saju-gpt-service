@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 신년운세 - AI 사주 천년지기</title>
+    <meta name="description" content="2026년 병오년 12띠별 운세 완벽 분석. 쥐띠부터 돼지띠까지 당신의 신년 운세를 확인하세요.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            background: linear-gradient(135deg, #c41e3a 0%, #8B0000 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🐴';
+            font-size: 20rem;
+            position: absolute;
+            right: -5%;
+            top: -10%;
+            opacity: 0.1;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .hero .year-info {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        /* 12띠 선택 카드 */
+        .zodiac-selector {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .zodiac-selector h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #c41e3a;
+        }
+
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .zodiac-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .zodiac-card:hover {
+            transform: translateY(-10px);
+            border-color: #c41e3a;
+            box-shadow: 0 10px 30px rgba(196,30,58,0.2);
+        }
+
+        .zodiac-card .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .zodiac-card .name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .zodiac-card .years {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .zodiac-card .score {
+            display: inline-block;
+            background: #c41e3a;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        /* 결과 카드 */
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .result-card.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #c41e3a 0%, #8B0000 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .result-header .zodiac-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-header h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-header .score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #c41e3a;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #555;
+            padding: 1.5rem 0;
+        }
+
+        .fortune-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .fortune-item {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-left: 4px solid #c41e3a;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .fortune-item h3 {
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            border-left: 4px solid #c41e3a;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196F3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .lucky-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .lucky-item {
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .lucky-item .label {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .lucky-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #c41e3a;
+        }
+
+        /* CTA 섹션 */
+        .cta-section {
+            background: linear-gradient(135deg, #c41e3a 0%, #8B0000 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            padding: 1rem 2rem;
+            background: white;
+            color: #c41e3a;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        /* 푸터 */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .zodiac-selector,
+            .result-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .zodiac-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="blog.html">사주 가이드</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div>
+            <h1>🐴 2026 신년운세</h1>
+            <p class="subtitle">병오년 12띠별 운세 완벽 분석</p>
+            <p class="year-info">불의 기운이 강한 희망의 해, 당신의 운세는?</p>
+        </div>
+    </section>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 12띠 선택 -->
+        <div class="zodiac-selector">
+            <h2>당신의 띠를 선택하세요</h2>
+            <div class="zodiac-grid">
+                <div class="zodiac-card" data-zodiac="rat">
+                    <div class="icon">🐭</div>
+                    <div class="name">쥐띠</div>
+                    <div class="years">1960, 1972, 1984, 1996, 2008, 2020</div>
+                    <div class="score">종합운: 4/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="ox">
+                    <div class="icon">🐮</div>
+                    <div class="name">소띠</div>
+                    <div class="years">1961, 1973, 1985, 1997, 2009, 2021</div>
+                    <div class="score">종합운: 5/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="tiger">
+                    <div class="icon">🐯</div>
+                    <div class="name">호랑이띠</div>
+                    <div class="years">1962, 1974, 1986, 1998, 2010, 2022</div>
+                    <div class="score">종합운: 4/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="rabbit">
+                    <div class="icon">🐰</div>
+                    <div class="name">토끼띠</div>
+                    <div class="years">1963, 1975, 1987, 1999, 2011, 2023</div>
+                    <div class="score">종합운: 3/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="dragon">
+                    <div class="icon">🐉</div>
+                    <div class="name">용띠</div>
+                    <div class="years">1964, 1976, 1988, 2000, 2012, 2024</div>
+                    <div class="score">종합운: 5/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="snake">
+                    <div class="icon">🐍</div>
+                    <div class="name">뱀띠</div>
+                    <div class="years">1965, 1977, 1989, 2001, 2013, 2025</div>
+                    <div class="score">종합운: 4/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="horse">
+                    <div class="icon">🐴</div>
+                    <div class="name">말띠</div>
+                    <div class="years">1966, 1978, 1990, 2002, 2014, 2026</div>
+                    <div class="score">종합운: 5/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="goat">
+                    <div class="icon">🐑</div>
+                    <div class="name">양띠</div>
+                    <div class="years">1967, 1979, 1991, 2003, 2015, 2027</div>
+                    <div class="score">종합운: 3/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="monkey">
+                    <div class="icon">🐵</div>
+                    <div class="name">원숭이띠</div>
+                    <div class="years">1968, 1980, 1992, 2004, 2016</div>
+                    <div class="score">종합운: 4/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="rooster">
+                    <div class="icon">🐓</div>
+                    <div class="name">닭띠</div>
+                    <div class="years">1969, 1981, 1993, 2005, 2017</div>
+                    <div class="score">종합운: 4/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="dog">
+                    <div class="icon">🐶</div>
+                    <div class="name">개띠</div>
+                    <div class="years">1970, 1982, 1994, 2006, 2018</div>
+                    <div class="score">종합운: 3/5</div>
+                </div>
+                
+                <div class="zodiac-card" data-zodiac="pig">
+                    <div class="icon">🐷</div>
+                    <div class="name">돼지띠</div>
+                    <div class="years">1971, 1983, 1995, 2007, 2019</div>
+                    <div class="score">종합운: 5/5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 카드 (기본적으로 숨김) -->
+        <div class="result-card" id="resultCard">
+            <div class="result-header">
+                <div class="zodiac-icon" id="resultIcon">🐴</div>
+                <h2 id="resultZodiac">말띠</h2>
+                <p id="resultYears">1966, 1978, 1990, 2002, 2014, 2026</p>
+                <div class="score" id="resultScore">종합운: 5/5 ⭐⭐⭐⭐⭐</div>
+            </div>
+
+            <!-- 종합 운세 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    2026년 종합 운세
+                </h2>
+                <div class="section-content" id="overallFortune">
+                    <!-- JavaScript로 동적 삽입 -->
+                </div>
+            </div>
+
+            <!-- 세부 운세 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    세부 운세
+                </h2>
+                <div class="fortune-grid" id="detailFortune">
+                    <!-- JavaScript로 동적 삽입 -->
+                </div>
+            </div>
+
+            <!-- 행운의 요소 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-clover"></i>
+                    행운의 요소
+                </h2>
+                <div class="lucky-info" id="luckyElements">
+                    <!-- JavaScript로 동적 삽입 -->
+                </div>
+            </div>
+
+            <!-- 개운 방법 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    개운 방법
+                </h2>
+                <div class="section-content" id="adviceTips">
+                    <!-- JavaScript로 동적 삽입 -->
+                </div>
+            </div>
+
+            <!-- 주의사항 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    주의사항
+                </h2>
+                <div class="section-content" id="warningContent">
+                    <!-- JavaScript로 동적 삽입 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA 섹션 -->
+        <div class="cta-section">
+            <h2>더 상세한 운세가 궁금하신가요?</h2>
+            <p>AI 상담으로 당신만의 맞춤 운세를 확인하세요</p>
+            <div class="cta-buttons">
+                <a href="ai-chat.html" class="btn-cta">
+                    <i class="fas fa-comments"></i> AI 상담 시작
+                </a>
+                <a href="index.html" class="btn-cta">
+                    <i class="fas fa-calculator"></i> 무료 사주 보기
+                </a>
+                <a href="blog/year-2026.html" class="btn-cta">
+                    <i class="fas fa-book"></i> 2026년 완벽 가이드
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2025 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 12띠 운세 데이터
+        const zodiacData = {
+            rat: {
+                name: '쥐띠',
+                icon: '🐭',
+                years: '1960, 1972, 1984, 1996, 2008, 2020',
+                score: '4/5',
+                overall: `2026년 병오년은 쥐띠에게 <strong>안정과 발전</strong>이 기대되는 해입니다. 특히 재물운이 좋아 예상치 못한 수입이 생길 수 있습니다. 그러나 건강 관리에 신경 써야 하며, 지나친 욕심은 금물입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐', desc: '재물운이 좋습니다. 투자보다는 저축이 유리합니다.' },
+                    love: { score: '⭐⭐⭐', desc: '솔로는 5월, 커플은 9월이 좋습니다.' },
+                    health: { score: '⭐⭐⭐', desc: '소화기 건강에 유의하세요.' },
+                    career: { score: '⭐⭐⭐⭐', desc: '직장에서 인정받을 기회가 많습니다.' }
+                },
+                lucky: {
+                    color: '파랑, 검정',
+                    direction: '북쪽',
+                    number: '1, 6',
+                    month: '3월, 7월, 11월'
+                },
+                advice: '올해는 차근차근 기본에 충실한 것이 좋습니다. 새로운 도전보다는 현재를 다지는 시기로 삼으세요.',
+                warning: '2월과 8월에는 감정 기복이 클 수 있으니 중요한 결정은 피하세요.'
+            },
+            ox: {
+                name: '소띠',
+                icon: '🐮',
+                years: '1961, 1973, 1985, 1997, 2009, 2021',
+                score: '5/5',
+                overall: `2026년은 소띠에게 <strong>최고의 해</strong>가 될 것입니다! 모든 방면에서 좋은 기운이 흐르며, 특히 사업운과 재물운이 매우 좋습니다. 노력한 만큼 결실을 맺는 한 해가 될 것입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐⭐', desc: '재물운 최고! 사업 확장 적기입니다.' },
+                    love: { score: '⭐⭐⭐⭐', desc: '연애운이 좋습니다. 결혼 적기!' },
+                    health: { score: '⭐⭐⭐⭐', desc: '건강 상태 양호합니다.' },
+                    career: { score: '⭐⭐⭐⭐⭐', desc: '승진, 이직 모두 길합니다.' }
+                },
+                lucky: {
+                    color: '노랑, 갈색',
+                    direction: '동북쪽',
+                    number: '2, 8',
+                    month: '4월, 8월, 12월'
+                },
+                advice: '적극적으로 도전하세요! 올해는 무엇을 해도 잘 풀리는 해입니다. 자신감을 가지고 나아가세요.',
+                warning: '너무 많은 일을 벌이기보다는 우선순위를 정해 집중하는 것이 좋습니다.'
+            },
+            tiger: {
+                name: '호랑이띠',
+                icon: '🐯',
+                years: '1962, 1974, 1986, 1998, 2010, 2022',
+                score: '4/5',
+                overall: `2026년은 호랑이띠에게 <strong>변화와 도약</strong>의 해입니다. 새로운 기회가 많이 찾아오며, 특히 직업운이 좋습니다. 적극적인 자세가 성공의 열쇠가 될 것입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐', desc: '투자 수익이 기대됩니다.' },
+                    love: { score: '⭐⭐⭐', desc: '솔로는 상반기, 커플은 하반기가 좋습니다.' },
+                    health: { score: '⭐⭐⭐⭐', desc: '활력이 넘치는 한 해입니다.' },
+                    career: { score: '⭐⭐⭐⭐⭐', desc: '이직, 창업 모두 좋습니다.' }
+                },
+                lucky: {
+                    color: '초록, 청록',
+                    direction: '동쪽',
+                    number: '3, 8',
+                    month: '2월, 6월, 10월'
+                },
+                advice: '용기를 내어 새로운 도전을 시작하세요. 변화를 두려워하지 마세요.',
+                warning: '성급한 결정보다는 충분히 고민한 후 행동하세요.'
+            },
+            rabbit: {
+                name: '토끼띠',
+                icon: '🐰',
+                years: '1963, 1975, 1987, 1999, 2011, 2023',
+                score: '3/5',
+                overall: `2026년은 토끼띠에게 <strong>인내와 조정</strong>의 시기입니다. 큰 변화보다는 현재를 지키고 다지는 것이 좋습니다. 하반기부터 운세가 상승할 것입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐', desc: '안정적이나 큰 수입은 어렵습니다.' },
+                    love: { score: '⭐⭐⭐', desc: '커플은 좋으나 솔로는 어려움.' },
+                    health: { score: '⭐⭐⭐', desc: '스트레스 관리가 중요합니다.' },
+                    career: { score: '⭐⭐⭐', desc: '현 직장 유지가 좋습니다.' }
+                },
+                lucky: {
+                    color: '흰색, 은색',
+                    direction: '서쪽',
+                    number: '4, 9',
+                    month: '5월, 9월'
+                },
+                advice: '조급해하지 말고 천천히 나아가세요. 하반기부터 좋아집니다.',
+                warning: '상반기에 무리한 투자나 결정은 피하세요.'
+            },
+            dragon: {
+                name: '용띠',
+                icon: '🐉',
+                years: '1964, 1976, 1988, 2000, 2012, 2024',
+                score: '5/5',
+                overall: `2026년은 용띠에게 <strong>최상의 해</strong>입니다! 모든 면에서 뛰어난 성과를 거둘 것이며, 특히 사업과 명예 운이 최고조에 달합니다. 당신의 시대가 왔습니다!`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐⭐', desc: '재물운이 폭발합니다!' },
+                    love: { score: '⭐⭐⭐⭐⭐', desc: '연애, 결혼 모두 대길!' },
+                    health: { score: '⭐⭐⭐⭐', desc: '건강 상태 매우 좋습니다.' },
+                    career: { score: '⭐⭐⭐⭐⭐', desc: '승진, 사업 성공 확실!' }
+                },
+                lucky: {
+                    color: '금색, 은색',
+                    direction: '동남쪽',
+                    number: '5, 9',
+                    month: '전체 (특히 3월, 7월, 11월)'
+                },
+                advice: '당신의 능력을 마음껏 발휘하세요! 리더십을 보여줄 절호의 기회입니다.',
+                warning: '겸손함을 잃지 마세요. 교만은 금물입니다.'
+            },
+            snake: {
+                name: '뱀띠',
+                icon: '🐍',
+                years: '1965, 1977, 1989, 2001, 2013, 2025',
+                score: '4/5',
+                overall: `2026년은 뱀띠에게 <strong>지혜와 통찰</strong>이 빛나는 해입니다. 직관력이 뛰어나 좋은 결정을 내릴 것입니다. 재물운도 좋아 안정적인 한 해가 될 것입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐', desc: '재테크로 수익을 기대할 수 있습니다.' },
+                    love: { score: '⭐⭐⭐⭐', desc: '연애운이 매우 좋습니다!' },
+                    health: { score: '⭐⭐⭐', desc: '피로 관리에 신경 쓰세요.' },
+                    career: { score: '⭐⭐⭐⭐', desc: '승진 또는 중요한 프로젝트 성공!' }
+                },
+                lucky: {
+                    color: '빨강, 보라',
+                    direction: '남쪽',
+                    number: '6, 9',
+                    month: '4월, 8월, 12월'
+                },
+                advice: '당신의 직관을 믿으세요. 중요한 순간에 올바른 선택을 할 것입니다.',
+                warning: '6월과 12월에는 건강 관리에 특히 신경 쓰세요.'
+            },
+            horse: {
+                name: '말띠',
+                icon: '🐴',
+                years: '1966, 1978, 1990, 2002, 2014, 2026',
+                score: '5/5',
+                overall: `2026년은 말띠의 <strong>본명년</strong>입니다! 12년 만에 찾아온 당신의 해로, 모든 운이 최고조에 달합니다. 무엇을 해도 잘 풀리는 황금의 한 해가 될 것입니다!`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐⭐', desc: '재물운 최고! 대박 가능!' },
+                    love: { score: '⭐⭐⭐⭐⭐', desc: '연애, 결혼 모두 최고!' },
+                    health: { score: '⭐⭐⭐⭐⭐', desc: '활력과 에너지 넘칩니다!' },
+                    career: { score: '⭐⭐⭐⭐⭐', desc: '모든 일이 술술 풀립니다!' }
+                },
+                lucky: {
+                    color: '빨강, 주황, 금색',
+                    direction: '남쪽',
+                    number: '7, 9',
+                    month: '전체 (1년 내내 좋음!)'
+                },
+                advice: '올해는 당신의 해입니다! 꿈꿔왔던 일을 시작하세요. 무엇이든 가능합니다!',
+                warning: '본명년이지만 붉은 속옷을 입고 조심스럽게 행동하면 더욱 좋습니다.'
+            },
+            goat: {
+                name: '양띠',
+                icon: '🐑',
+                years: '1967, 1979, 1991, 2003, 2015, 2027',
+                score: '3/5',
+                overall: `2026년은 양띠에게 <strong>조용한 성장</strong>의 시기입니다. 드라마틱한 변화보다는 꾸준한 노력이 중요합니다. 하반기부터 운세가 점차 좋아질 것입니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐', desc: '큰 수입은 어렵지만 안정적입니다.' },
+                    love: { score: '⭐⭐⭐', desc: '차분한 관계 발전이 좋습니다.' },
+                    health: { score: '⭐⭐⭐', desc: '규칙적인 생활이 중요합니다.' },
+                    career: { score: '⭐⭐⭐', desc: '현재 업무에 충실하세요.' }
+                },
+                lucky: {
+                    color: '녹색, 청록',
+                    direction: '남서쪽',
+                    number: '2, 7',
+                    month: '6월, 10월'
+                },
+                advice: '서두르지 말고 꾸준히 나아가세요. 시간이 답입니다.',
+                warning: '상반기에 큰 결정이나 투자는 신중하게 하세요.'
+            },
+            monkey: {
+                name: '원숭이띠',
+                icon: '🐵',
+                years: '1968, 1980, 1992, 2004, 2016',
+                score: '4/5',
+                overall: `2026년은 원숭이띠에게 <strong>창의력과 기회</strong>가 넘치는 해입니다. 당신의 재치와 유머가 빛을 발할 것이며, 특히 인간관계운이 매우 좋습니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐', desc: '부업으로 수익 창출 가능!' },
+                    love: { score: '⭐⭐⭐⭐', desc: '매력이 폭발하는 한 해!' },
+                    health: { score: '⭐⭐⭐', desc: '과로에 주의하세요.' },
+                    career: { score: '⭐⭐⭐⭐', desc: '창의적인 아이디어로 성공!' }
+                },
+                lucky: {
+                    color: '흰색, 노랑',
+                    direction: '서남쪽',
+                    number: '9, 3',
+                    month: '3월, 7월, 11월'
+                },
+                advice: '당신의 창의력을 마음껏 발휘하세요. 새로운 아이디어가 성공의 열쇠입니다.',
+                warning: '너무 많은 일을 동시에 하지 마세요. 집중이 필요합니다.'
+            },
+            rooster: {
+                name: '닭띠',
+                icon: '🐓',
+                years: '1969, 1981, 1993, 2005, 2017',
+                score: '4/5',
+                overall: `2026년은 닭띠에게 <strong>성실과 보상</strong>의 해입니다. 그동안의 노력이 결실을 맺으며, 특히 명예운과 직업운이 좋습니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐', desc: '보너스, 인센티브 기대!' },
+                    love: { score: '⭐⭐⭐', desc: '진지한 만남이 기다립니다.' },
+                    health: { score: '⭐⭐⭐⭐', desc: '건강 상태 양호합니다.' },
+                    career: { score: '⭐⭐⭐⭐⭐', desc: '승진, 표창 가능성 높음!' }
+                },
+                lucky: {
+                    color: '금색, 흰색',
+                    direction: '서쪽',
+                    number: '5, 10',
+                    month: '2월, 6월, 10월'
+                },
+                advice: '성실함이 당신의 무기입니다. 계속 최선을 다하세요.',
+                warning: '완벽주의가 스트레스가 되지 않도록 주의하세요.'
+            },
+            dog: {
+                name: '개띠',
+                icon: '🐶',
+                years: '1970, 1982, 1994, 2006, 2018',
+                score: '3/5',
+                overall: `2026년은 개띠에게 <strong>인내와 신중</strong>이 필요한 해입니다. 상반기는 다소 어려울 수 있으나, 하반기부터 운세가 좋아집니다. 주변 사람들의 도움이 중요합니다.`,
+                details: {
+                    money: { score: '⭐⭐⭐', desc: '절약이 미덕인 한 해입니다.' },
+                    love: { score: '⭐⭐⭐', desc: '서두르지 말고 천천히.' },
+                    health: { score: '⭐⭐⭐', desc: '스트레스 관리가 필요합니다.' },
+                    career: { score: '⭐⭐⭐', desc: '현 위치 유지가 좋습니다.' }
+                },
+                lucky: {
+                    color: '갈색, 황토색',
+                    direction: '서북쪽',
+                    number: '3, 4',
+                    month: '9월, 11월'
+                },
+                advice: '조급해하지 마세요. 하반기부터 좋아집니다. 인내심을 가지세요.',
+                warning: '상반기에 무리한 투자나 사업 확장은 피하세요.'
+            },
+            pig: {
+                name: '돼지띠',
+                icon: '🐷',
+                years: '1971, 1983, 1995, 2007, 2019',
+                score: '5/5',
+                overall: `2026년은 돼지띠에게 <strong>풍요와 행복</strong>의 해입니다! 재물운이 특히 좋으며, 전반적으로 모든 운이 상승세를 탑니다. 즐거운 일이 많은 한 해가 될 것입니다!`,
+                details: {
+                    money: { score: '⭐⭐⭐⭐⭐', desc: '재물운 최고! 복권운도 있음!' },
+                    love: { score: '⭐⭐⭐⭐⭐', desc: '행복한 연애, 결혼 가능!' },
+                    health: { score: '⭐⭐⭐⭐', desc: '건강하고 활력 넘칩니다.' },
+                    career: { score: '⭐⭐⭐⭐', desc: '사업 확장, 승진 길!' }
+                },
+                lucky: {
+                    color: '파랑, 검정, 금색',
+                    direction: '북쪽',
+                    number: '1, 6',
+                    month: '전체 (특히 4월, 8월, 12월)'
+                },
+                advice: '올해는 마음껏 즐기세요! 복이 많이 들어오는 한 해입니다.',
+                warning: '좋은 운이지만 과소비는 주의하세요.'
+            }
+        };
+
+        // 띠 선택 이벤트
+        document.querySelectorAll('.zodiac-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const zodiac = this.dataset.zodiac;
+                showFortune(zodiac);
+            });
+        });
+
+        // 운세 표시 함수
+        function showFortune(zodiac) {
+            const data = zodiacData[zodiac];
+            
+            // 헤더 업데이트
+            document.getElementById('resultIcon').textContent = data.icon;
+            document.getElementById('resultZodiac').textContent = data.name;
+            document.getElementById('resultYears').textContent = data.years;
+            document.getElementById('resultScore').textContent = `종합운: ${data.score} ${'⭐'.repeat(parseInt(data.score))}`;
+
+            // 종합 운세
+            document.getElementById('overallFortune').innerHTML = `<p>${data.overall}</p>`;
+
+            // 세부 운세
+            const detailHTML = `
+                <div class="fortune-item">
+                    <h3><i class="fas fa-dollar-sign"></i> 재물운</h3>
+                    <div>${data.details.money.score}</div>
+                    <p>${data.details.money.desc}</p>
+                </div>
+                <div class="fortune-item">
+                    <h3><i class="fas fa-heart"></i> 연애운</h3>
+                    <div>${data.details.love.score}</div>
+                    <p>${data.details.love.desc}</p>
+                </div>
+                <div class="fortune-item">
+                    <h3><i class="fas fa-heart-pulse"></i> 건강운</h3>
+                    <div>${data.details.health.score}</div>
+                    <p>${data.details.health.desc}</p>
+                </div>
+                <div class="fortune-item">
+                    <h3><i class="fas fa-briefcase"></i> 직업운</h3>
+                    <div>${data.details.career.score}</div>
+                    <p>${data.details.career.desc}</p>
+                </div>
+            `;
+            document.getElementById('detailFortune').innerHTML = detailHTML;
+
+            // 행운의 요소
+            const luckyHTML = `
+                <div class="lucky-item">
+                    <div class="label">행운의 색</div>
+                    <div class="value">${data.lucky.color}</div>
+                </div>
+                <div class="lucky-item">
+                    <div class="label">행운의 방향</div>
+                    <div class="value">${data.lucky.direction}</div>
+                </div>
+                <div class="lucky-item">
+                    <div class="label">행운의 숫자</div>
+                    <div class="value">${data.lucky.number}</div>
+                </div>
+                <div class="lucky-item">
+                    <div class="label">행운의 달</div>
+                    <div class="value">${data.lucky.month}</div>
+                </div>
+            `;
+            document.getElementById('luckyElements').innerHTML = luckyHTML;
+
+            // 개운 방법
+            document.getElementById('adviceTips').innerHTML = `
+                <div class="tip-box">
+                    <strong>💡 개운 조언</strong><br><br>
+                    ${data.advice}
+                </div>
+            `;
+
+            // 주의사항
+            document.getElementById('warningContent').innerHTML = `
+                <div class="warning-box">
+                    <strong>⚠️ 주의사항</strong><br><br>
+                    ${data.warning}
+                </div>
+            `;
+
+            // 결과 카드 표시
+            document.getElementById('resultCard').classList.add('show');
+            
+            // 스크롤
+            setTimeout(() => {
+                document.getElementById('resultCard').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 300);
+        }
+
+        // 전역 에러 핸들러
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return true;
+            }
+        }, true);
+
+        // DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('2026 신년운세 페이지 로드 완료');
+        });
+    </script>
+</body>
+</html>
