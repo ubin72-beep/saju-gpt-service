@@ -1,5 +1,59 @@
-/*.html
-  Content-Type: text/html; charset=utf-8
+# 한글 인코딩 설정
+AddDefaultCharset UTF-8
 
-/blog/*.html
-  Content-Type: text/html; charset=utf-8
+# HTML 파일을 올바르게 처리
+<FilesMatch "\.(html|htm)$">
+    ForceType text/html
+    Header set Content-Type "text/html; charset=UTF-8"
+</FilesMatch>
+
+# CSS 파일
+<FilesMatch "\.css$">
+    ForceType text/css
+    Header set Content-Type "text/css; charset=UTF-8"
+</FilesMatch>
+
+# JavaScript 파일
+<FilesMatch "\.js$">
+    ForceType application/javascript
+    Header set Content-Type "application/javascript; charset=UTF-8"
+</FilesMatch>
+
+# GZIP 압축 활성화
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# 캐시 설정
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+# 보안 설정
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# 에러 페이지
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# index.html을 기본 페이지로
+DirectoryIndex index.html index.htm
+
+# PHP 설정 (필요시)
+<IfModule mod_php.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
