@@ -1552,10 +1552,36 @@
             });
         }
         
-        // 폼 제출
-        document.getElementById('sajuForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(e.target);
+        1555	        }
+  1556	        
+  1557	        // 언어 선택기
+  1558	        const langBtn = document.getElementById('langBtn');
+  1559	        const langDropdown = document.getElementById('langDropdown');
+  1560	        
+  1561	        if (langBtn && langDropdown) {
+  1562	            langBtn.addEventListener('click', () => {
+  1563	                langDropdown.classList.toggle('active');
+  1564	            });
+  1565	            
+  1566	            document.querySelectorAll('.lang-option').forEach(option => {
+  1567	                option.addEventListener('click', (e) => {
+  1568	                    const lang = e.currentTarget.getAttribute('data-lang');
+  1569	                    langDropdown.classList.remove('active');
+  1570	                    // 언어 변경 로직 추가 가능
+  1571	                });
+  1572	            });
+  1573	            
+  1574	            document.addEventListener('click', (e) => {
+  1575	                if (!e.target.closest('.language-switcher')) {
+  1576	                    langDropdown.classList.remove('active');
+  1577	                }
+  1578	            });
+  1579	        }
+  1580	        
+  1581	        // 폼 제출
+  1582	        document.getElementById('sajuForm').addEventListener('submit', function(e) {
+  1583	            e.preventDefault();
+  1584	            const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
             localStorage.setItem('sajuData', JSON.stringify(data));
             window.location.href = 'result.html';
@@ -1576,9 +1602,36 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
+                 1605	                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  1606	            });
+  1607	        });
+  1608	    </script>
+  1609	    
+  1610	    <!-- Schema.org 구조화된 데이터 -->
+  1611	    <script type="application/ld+json">
+  1612	    {
+  1613	      "@context": "https://schema.org",
+  1614	      "@type": "WebSite",
+  1615	      "name": "AI 사주 천년지기",
+  1616	      "url": "https://aisaju1000.com",
+  1617	      "description": "2026 병오년, 60년 만에 찾아오는 특별한 해. AI가 분석하는 나만의 사주팔자 운세",
+  1618	      "potentialAction": {
+  1619	        "@type": "SearchAction",
+  1620	        "target": "https://aisaju1000.com/?q={search_term_string}",
+  1621	        "query-input": "required name=search_term_string"
+  1622	      }
+  1623	    }
+  1624	    </script>
+  1625	    
+  1626	    <script type="application/ld+json">
+  1627	    {
+  1628	      "@context": "https://schema.org",
+  1629	      "@type": "Organization",
+  1630	      "name": "AI 사주 천년지기",
+  1631	      "url": "https://aisaju1000.com",
+  1632	      "logo": "https://aisaju1000.com/images/logo.png",
+  1633	      "contactPoint": {
+  1634	        "@type": "ContactPoint",
     </script>
 </body>
 </html>
