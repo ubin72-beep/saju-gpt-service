@@ -1,0 +1,41 @@
+# Cloudflare Pages 정적 사이트 설정
+
+# 빌드 설정
+[build]
+  command = "echo 'No build required - static site'"
+  publish = "."
+
+# 데이터베이스 비활성화
+[env.production]
+  STATIC_SITE = "true"
+  NO_DATABASE = "true"
+
+# 리다이렉트
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# 헤더
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
