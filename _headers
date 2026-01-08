@@ -1,59 +1,47 @@
-# 한글 인코딩 설정
-AddDefaultCharset UTF-8
+/*
+  Content-Type: text/html; charset=utf-8
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
 
-# HTML 파일을 올바르게 처리
-<FilesMatch "\.(html|htm)$">
-    ForceType text/html
-    Header set Content-Type "text/html; charset=UTF-8"
-</FilesMatch>
+/*.html
+  Content-Type: text/html; charset=utf-8
 
-# CSS 파일
-<FilesMatch "\.css$">
-    ForceType text/css
-    Header set Content-Type "text/css; charset=UTF-8"
-</FilesMatch>
+/*.css
+  Content-Type: text/css; charset=utf-8
 
-# JavaScript 파일
-<FilesMatch "\.js$">
-    ForceType application/javascript
-    Header set Content-Type "application/javascript; charset=UTF-8"
-</FilesMatch>
+/*.js
+  Content-Type: application/javascript; charset=utf-8
 
-# GZIP 압축 활성화
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
-</IfModule>
+/*.json
+  Content-Type: application/json; charset=utf-8
 
-# 캐시 설정
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/html "access plus 1 hour"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/gif "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-</IfModule>
+/*.png
+  Content-Type: image/png
 
-# 보안 설정
-<IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-XSS-Protection "1; mode=block"
-</IfModule>
+/*.jpg
+  Content-Type: image/jpeg
 
-# 에러 페이지
-ErrorDocument 404 /404.html
-ErrorDocument 500 /500.html
+/*.jpeg
+  Content-Type: image/jpeg
 
-# index.html을 기본 페이지로
-DirectoryIndex index.html index.htm
+/*.gif
+  Content-Type: image/gif
 
-# PHP 설정 (필요시)
-<IfModule mod_php.c>
-    php_value upload_max_filesize 10M
-    php_value post_max_size 10M
-    php_value max_execution_time 300
-    php_value max_input_time 300
-</IfModule>
+/*.svg
+  Content-Type: image/svg+xml
+
+/*.ico
+  Content-Type: image/x-icon
+
+/*.woff
+  Content-Type: font/woff
+
+/*.woff2
+  Content-Type: font/woff2
+
+/*.ttf
+  Content-Type: font/ttf
+
+/*.eot
+  Content-Type: application/vnd.ms-fontobject
