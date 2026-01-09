@@ -29,62 +29,92 @@
             padding: 0 20px;
         }
 
-        /* 네비게이션 바 */
+        /* 네비게이션 */
         .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 20px;
         }
-
-        .logo {
+        .nav-brand {
+            color: #d4af37;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #c41e3a;
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-
         .nav-menu {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
+            align-items: center;
         }
-
         .nav-menu a {
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: #c41e3a;
-        }
-
-        .btn-login {
-            padding: 0.5rem 1.5rem;
-            background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
             transition: all 0.3s;
         }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(196,30,58,0.3);
+        .nav-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+        }
+        .nav-menu a.active {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            background: rgba(26, 26, 26, 0.98);
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            padding: 15px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .mobile-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding-left: 25px;
+        }
+        .mobile-menu a.active {
+            background: #d4af37;
+            color: #1a1a1a;
+            font-weight: 600;
         }
 
         /* 히어로 섹션 */
@@ -307,46 +337,57 @@
 
         /* 반응형 */
         @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
             .tojeong-hero h1 {
                 font-size: 2rem;
             }
-
             .fortune-input {
                 flex-direction: column;
             }
-
             .month-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .navbar .container {
-                justify-content: space-between;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="result.html">내 사주</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="tojeong.html" class="active">토정비결</a></li>
-                <li><a href="pricing.html">프리미엄</a></li>
+                <li><a href="index.html">🏠 홈</a></li>
+                <li><a href="ai-chat.html">💬 AI 상담</a></li>
+                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+                <li><a href="blog.html">📰 블로그</a></li>
+                <li><a href="compatibility.html">💕 궁합 보기</a></li>
+                <li><a href="tojeong.html" class="active">📖 토정비결</a></li>
+                <li><a href="pricing.html">💳 가격표</a></li>
+                <li><a href="mypage.html">👤 마이페이지</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="login.html" class="btn-login">로그인</a>
-            </div>
         </div>
     </nav>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">🏠 홈</a>
+        <a href="ai-chat.html">💬 AI 상담</a>
+        <a href="saju-guide.html">📖 명리학 가이드</a>
+        <a href="blog.html">📰 블로그</a>
+        <a href="compatibility.html">💕 궁합 보기</a>
+        <a href="tojeong.html" class="active">📖 토정비결</a>
+        <a href="pricing.html">💳 가격표</a>
+        <a href="mypage.html">👤 마이페이지</a>
+    </div>
 
     <section class="tojeong-hero">
         <div class="container">
@@ -403,7 +444,11 @@
     </footer>
 
     <script>
-        // 토정비결 데이터 (12개월)
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
         const TOJEONG_DATA = {
             1: {
                 title: '정월 (1월)',
@@ -554,7 +599,6 @@
                 return;
             }
 
-            // 월별 운세 표시
             const monthGrid = document.getElementById('monthGrid');
             monthGrid.innerHTML = '';
 
@@ -608,7 +652,6 @@
             return labels[fortune] || '평';
         }
 
-        // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
@@ -616,7 +659,6 @@
             }
         }, true);
 
-        // DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ 토정비결 2026 페이지 로드 완료');
         });
