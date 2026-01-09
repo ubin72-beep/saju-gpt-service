@@ -58,12 +58,16 @@
             list-style: none;
             align-items: center;
         }
+        .nav-menu li {
+            position: relative;
+        }
         .nav-menu a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
             padding: 8px 16px;
             border-radius: 20px;
             transition: all 0.3s;
+            display: block;
         }
         .nav-menu a:hover {
             background: rgba(212, 175, 55, 0.2);
@@ -73,6 +77,37 @@
             background: #d4af37;
             color: #1a1a1a;
         }
+        
+        /* 드롭다운 */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(26, 26, 26, 0.98);
+            min-width: 200px;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            padding: 0.5rem 0;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu a {
+            padding: 12px 20px;
+            border-radius: 0;
+        }
+        .dropdown-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
         .hamburger {
             display: none;
             flex-direction: column;
@@ -95,6 +130,8 @@
             right: 0;
             padding: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
         }
         .mobile-menu.active { display: block; }
         .mobile-menu a {
@@ -139,13 +176,6 @@
         .blog-section {
             padding: 60px 20px;
             background: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #1a1a1a;
         }
         
         .blog-grid {
@@ -334,11 +364,17 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">🏠 홈</a></li>
-                <li><a href="ai-chat.html">💬 AI 상담</a></li>
-                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">🔮 서비스 ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="ai-chat.html">💬 AI 상담</a>
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="tojeong.html">📖 토정비결</a>
+                        <a href="dream.html">💭 꿈해몽</a>
+                    </div>
+                </li>
+                <li><a href="saju-guide.html">📖 가이드</a></li>
                 <li><a href="blog.html" class="active">📰 블로그</a></li>
-                <li><a href="compatibility.html">💕 궁합 보기</a></li>
-                <li><a href="tojeong.html">📖 토정비결</a></li>
                 <li><a href="pricing.html">💳 가격표</a></li>
                 <li><a href="mypage.html">👤 마이페이지</a></li>
             </ul>
@@ -349,10 +385,11 @@
     <div class="mobile-menu" id="mobileMenu">
         <a href="index.html">🏠 홈</a>
         <a href="ai-chat.html">💬 AI 상담</a>
-        <a href="saju-guide.html">📖 명리학 가이드</a>
-        <a href="blog.html" class="active">📰 블로그</a>
         <a href="compatibility.html">💕 궁합 보기</a>
         <a href="tojeong.html">📖 토정비결</a>
+        <a href="dream.html">💭 꿈해몽</a>
+        <a href="saju-guide.html">📖 명리학 가이드</a>
+        <a href="blog.html" class="active">📰 블로그</a>
         <a href="pricing.html">💳 가격표</a>
         <a href="mypage.html">👤 마이페이지</a>
     </div>
@@ -385,17 +422,13 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 1 -->
+                <!-- 블로그 카드들 -->
                 <a href="saju-guide.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        📚
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📚</div>
                     <div class="blog-content">
                         <span class="blog-category">사주 기초</span>
                         <h3 class="blog-title">사주팔자란 무엇인가?</h3>
-                        <p class="blog-excerpt">
-                            사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.
-                        </p>
+                        <p class="blog-excerpt">사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.20</span>
                             <span><i class="fas fa-eye"></i> 1,234</span>
@@ -403,17 +436,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 2 -->
                 <a href="year-fortune-2026.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        🌟
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">🌟</div>
                     <div class="blog-content">
                         <span class="blog-category">운세 분석</span>
                         <h3 class="blog-title">12띠별 2026년 운세 총정리</h3>
-                        <p class="blog-excerpt">
-                            쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.
-                        </p>
+                        <p class="blog-excerpt">쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.18</span>
                             <span><i class="fas fa-eye"></i> 2,456</span>
@@ -421,17 +449,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 3 -->
                 <a href="compatibility.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        💑
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">💑</div>
                     <div class="blog-content">
                         <span class="blog-category">궁합</span>
                         <h3 class="blog-title">궁합 보는 법 완벽 가이드</h3>
-                        <p class="blog-excerpt">
-                            천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.
-                        </p>
+                        <p class="blog-excerpt">천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.15</span>
                             <span><i class="fas fa-eye"></i> 3,789</span>
@@ -439,17 +462,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 4 -->
                 <a href="career-match.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-                        🎯
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">🎯</div>
                     <div class="blog-content">
                         <span class="blog-category">직업운</span>
                         <h3 class="blog-title">사주로 보는 직업 적성</h3>
-                        <p class="blog-excerpt">
-                            내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.
-                        </p>
+                        <p class="blog-excerpt">내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.12</span>
                             <span><i class="fas fa-eye"></i> 4,123</span>
@@ -457,17 +475,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 5 -->
                 <a href="wealth-forecast.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                        💰
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">💰</div>
                     <div class="blog-content">
                         <span class="blog-category">재물운</span>
                         <h3 class="blog-title">2026년 재물운 상승 시기</h3>
-                        <p class="blog-excerpt">
-                            병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.
-                        </p>
+                        <p class="blog-excerpt">병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.10</span>
                             <span><i class="fas fa-eye"></i> 5,678</span>
@@ -475,17 +488,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 6 -->
                 <a href="love-fortune.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-                        ❤️
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">❤️</div>
                     <div class="blog-content">
                         <span class="blog-category">연애운</span>
                         <h3 class="blog-title">사주로 보는 이상형 찾기</h3>
-                        <p class="blog-excerpt">
-                            내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.
-                        </p>
+                        <p class="blog-excerpt">내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.08</span>
                             <span><i class="fas fa-eye"></i> 2,890</span>
@@ -493,17 +501,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 7 -->
                 <a href="taekil.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                        🏠
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">🏠</div>
                     <div class="blog-content">
                         <span class="blog-category">택일</span>
                         <h3 class="blog-title">이사 · 결혼 좋은 날 고르기</h3>
-                        <p class="blog-excerpt">
-                            명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.
-                        </p>
+                        <p class="blog-excerpt">명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.05</span>
                             <span><i class="fas fa-eye"></i> 1,234</span>
@@ -511,17 +514,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 8 -->
                 <a href="tojeong.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">
-                        🌙
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">🌙</div>
                     <div class="blog-content">
                         <span class="blog-category">사주 상식</span>
                         <h3 class="blog-title">음력과 양력, 어떻게 다를까?</h3>
-                        <p class="blog-excerpt">
-                            사주를 볼 때 음력과 양력의 차이점과 정확한 사주 계산법을 알아봅니다.
-                        </p>
+                        <p class="blog-excerpt">사주를 볼 때 음력과 양력의 차이점과 정확한 사주 계산법을 알아봅니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.03</span>
                             <span><i class="fas fa-eye"></i> 987</span>
@@ -529,17 +527,12 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드 9 -->
                 <a href="saju-guide.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
-                        🎓
-                    </div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">🎓</div>
                     <div class="blog-content">
                         <span class="blog-category">명리학 기초</span>
                         <h3 class="blog-title">천간과 지지 완벽 정리</h3>
-                        <p class="blog-excerpt">
-                            사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.
-                        </p>
+                        <p class="blog-excerpt">사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.</p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.01</span>
                             <span><i class="fas fa-eye"></i> 1,567</span>
