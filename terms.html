@@ -1,586 +1,296 @@
-  1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>이용약관 - AI 사주 천년지기</title>
-     7	    
-     8	    <!-- Font Awesome -->
-     9	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    10	    
-    11	    <!-- Google Fonts -->
-    12	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    13	    
-    14	    <style>
-    15	        /* 전역 스타일 */
-    16	        * {
-    17	            margin: 0;
-    18	            padding: 0;
-    19	            box-sizing: border-box;
-    20	        }
-    21	        
-    22	        body {
-    23	            font-family: 'Noto Sans KR', sans-serif;
-    24	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    25	            color: #333;
-    26	            line-height: 1.6;
-    27	            min-height: 100vh;
-    28	        }
-    29	        
-    30	        .container {
-    31	            max-width: 1200px;
-    32	            margin: 0 auto;
-    33	            padding: 0 20px;
-    34	        }
-    35	        
-    36	        /* 네비게이션 바 */
-    37	        .navbar {
-    38	            background: rgba(255, 255, 255, 0.95);
-    39	            backdrop-filter: blur(10px);
-    40	            position: fixed;
-    41	            top: 0;
-    42	            left: 0;
-    43	            right: 0;
-    44	            z-index: 1000;
-    45	            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    46	        }
-    47	        
-    48	        .navbar .container {
-    49	            display: flex;
-    50	            justify-content: space-between;
-    51	            align-items: center;
-    52	            padding: 1rem 20px;
-    53	        }
-    54	        
-    55	        .nav-brand a {
-    56	            font-size: 1.5rem;
-    57	            font-weight: bold;
-    58	            color: #c41e3a;
-    59	            text-decoration: none;
-    60	            display: flex;
-    61	            align-items: center;
-    62	            gap: 0.5rem;
-    63	        }
-    64	        
-    65	        .nav-brand a:hover {
-    66	            color: #a01828;
-    67	        }
-    68	        
-    69	        /* 법률 페이지 스타일 */
-    70	        .legal-page {
-    71	            padding: 120px 0 60px;
-    72	            min-height: calc(100vh - 200px);
-    73	        }
-    74	        
-    75	        .legal-content {
-    76	            max-width: 1000px;
-    77	            margin: 0 auto;
-    78	            background: white;
-    79	            padding: 3rem;
-    80	            border-radius: 15px;
-    81	            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    82	        }
-    83	        
-    84	        .legal-content h1 {
-    85	            font-size: 2.5rem;
-    86	            margin-bottom: 1rem;
-    87	            color: #c41e3a;
-    88	            border-bottom: 3px solid #c41e3a;
-    89	            padding-bottom: 1rem;
-    90	        }
-    91	        
-    92	        .legal-content h2 {
-    93	            font-size: 1.5rem;
-    94	            margin: 2.5rem 0 1rem;
-    95	            color: #333;
-    96	            font-weight: 600;
-    97	            border-left: 4px solid #c41e3a;
-    98	            padding-left: 1rem;
-    99	        }
-   100	        
-   101	        .legal-content h3 {
-   102	            font-size: 1.2rem;
-   103	            margin: 1.5rem 0 0.8rem;
-   104	            color: #555;
-   105	            font-weight: 600;
-   106	        }
-   107	        
-   108	        .legal-content p {
-   109	            line-height: 1.9;
-   110	            margin-bottom: 1rem;
-   111	            color: #555;
-   112	            font-size: 1rem;
-   113	        }
-   114	        
-   115	        .legal-content strong {
-   116	            color: #c41e3a;
-   117	            font-weight: 600;
-   118	        }
-   119	        
-   120	        .legal-content ul,
-   121	        .legal-content ol {
-   122	            margin-left: 2rem;
-   123	            margin-bottom: 1rem;
-   124	        }
-   125	        
-   126	        .legal-content li {
-   127	            margin-bottom: 0.5rem;
-   128	            line-height: 1.8;
-   129	        }
-   130	        
-   131	        /* 중요 알림 박스 */
-   132	        .alert-box {
-   133	            background: #fff3cd;
-   134	            border-left: 4px solid #ffc107;
-   135	            padding: 1.5rem;
-   136	            margin: 2rem 0;
-   137	            border-radius: 5px;
-   138	        }
-   139	        
-   140	        .alert-box.danger {
-   141	            background: #f8d7da;
-   142	            border-left-color: #dc3545;
-   143	        }
-   144	        
-   145	        .alert-box.info {
-   146	            background: #d1ecf1;
-   147	            border-left-color: #17a2b8;
-   148	        }
-   149	        
-   150	        .alert-box h3 {
-   151	            color: #856404;
-   152	            margin: 0 0 1rem 0;
-   153	        }
-   154	        
-   155	        .alert-box.danger h3 {
-   156	            color: #721c24;
-   157	        }
-   158	        
-   159	        .alert-box.info h3 {
-   160	            color: #0c5460;
-   161	        }
-   162	        
-   163	        /* 목차 스타일 */
-   164	        .toc {
-   165	            background: #f8f9fa;
-   166	            padding: 2rem;
-   167	            border-radius: 10px;
-   168	            margin: 2rem 0;
-   169	            border-left: 4px solid #c41e3a;
-   170	        }
-   171	        
-   172	        .toc h3 {
-   173	            font-size: 1.2rem;
-   174	            color: #c41e3a;
-   175	            margin-bottom: 1rem;
-   176	        }
-   177	        
-   178	        .toc ul {
-   179	            list-style: none;
-   180	            padding-left: 1rem;
-   181	        }
-   182	        
-   183	        .toc li {
-   184	            margin: 0.5rem 0;
-   185	            color: #666;
-   186	        }
-   187	        
-   188	        .toc a {
-   189	            color: #667eea;
-   190	            text-decoration: none;
-   191	            transition: color 0.3s;
-   192	        }
-   193	        
-   194	        .toc a:hover {
-   195	            color: #c41e3a;
-   196	            text-decoration: underline;
-   197	        }
-   198	        
-   199	        /* 사업자 정보 박스 */
-   200	        .business-info {
-   201	            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-   202	            color: white;
-   203	            padding: 2rem;
-   204	            border-radius: 10px;
-   205	            margin: 2rem 0;
-   206	        }
-   207	        
-   208	        .business-info h3 {
-   209	            color: white;
-   210	            margin-bottom: 1rem;
-   211	        }
-   212	        
-   213	        .business-info p {
-   214	            color: white;
-   215	            margin: 0.5rem 0;
-   216	        }
-   217	        
-   218	        /* 푸터 */
-   219	        .footer {
-   220	            background: rgba(255, 255, 255, 0.95);
-   221	            padding: 2rem 0;
-   222	            text-align: center;
-   223	            color: #666;
-   224	            margin-top: auto;
-   225	        }
-   226	        
-   227	        .footer-links {
-   228	            display: flex;
-   229	            justify-content: center;
-   230	            gap: 2rem;
-   231	            margin-bottom: 1rem;
-   232	            flex-wrap: wrap;
-   233	        }
-   234	        
-   235	        .footer-links a {
-   236	            color: #667eea;
-   237	            text-decoration: none;
-   238	            transition: color 0.3s;
-   239	        }
-   240	        
-   241	        .footer-links a:hover {
-   242	            color: #c41e3a;
-   243	        }
-   244	        
-   245	        .footer-contact {
-   246	            margin-top: 1rem;
-   247	            font-size: 0.9rem;
-   248	        }
-   249	        
-   250	        .footer p {
-   251	            color: #999;
-   252	            margin: 0.5rem 0;
-   253	        }
-   254	        
-   255	        /* 반응형 디자인 */
-   256	        @media (max-width: 768px) {
-   257	            .legal-content {
-   258	                padding: 2rem 1.5rem;
-   259	            }
-   260	            
-   261	            .legal-content h1 {
-   262	                font-size: 1.8rem;
-   263	            }
-   264	            
-   265	            .legal-content h2 {
-   266	                font-size: 1.3rem;
-   267	                margin: 2rem 0 0.8rem;
-   268	            }
-   269	            
-   270	            .toc {
-   271	                padding: 1.5rem;
-   272	            }
-   273	            
-   274	            .footer-links {
-   275	                flex-direction: column;
-   276	                gap: 1rem;
-   277	            }
-   278	        }
-   279	        
-   280	        /* 프린트 스타일 */
-   281	        @media print {
-   282	            body {
-   283	                background: white;
-   284	            }
-   285	            
-   286	            .navbar,
-   287	            .footer {
-   288	                display: none;
-   289	            }
-   290	            
-   291	            .legal-page {
-   292	                padding: 20px 0;
-   293	            }
-   294	            
-   295	            .legal-content {
-   296	                box-shadow: none;
-   297	                padding: 0;
-   298	            }
-   299	        }
-   300	    </style>
-   301	</head>
-   302	<body>
-   303	    <!-- 네비게이션 바 -->
-   304	    <nav class="navbar">
-   305	        <div class="container">
-   306	            <div class="nav-brand">
-   307	                <a href="index.html">
-   308	                    <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-   309	                </a>
-   310	            </div>
-   311	        </div>
-   312	    </nav>
-   313	
-   314	    <!-- 메인 콘텐츠 -->
-   315	    <section class="legal-page">
-   316	        <div class="container">
-   317	            <div class="legal-content">
-   318	                <h1><i class="fas fa-file-contract"></i> 이용약관</h1>
-   319	                <p><strong>시행일자:</strong> 2026년 1월 9일</p>
-   320	
-   321	                <!-- 사업자 정보 -->
-   322	                <div class="business-info">
-   323	                    <h3><i class="fas fa-building"></i> 사업자 정보</h3>
-   324	                    <p><strong>상호:</strong> 큐브박스</p>
-   325	                    <p><strong>대표자:</strong> 김미화</p>
-   326	                    <p><strong>사업자등록번호:</strong> 537-08-03349</p>
-   327	                    <p><strong>통신판매업 신고번호:</strong> [통신판매업 신고 후 입력]</p>
-   328	                    <p><strong>주소:</strong> 서울 송파구 송파대로14길 7-10 2층</p>
-   329	                    <p><strong>전화:</strong> 0502-1909-7788</p>
-   330	                    <p><strong>이메일:</strong> aisaju1000@gmail.com</p>
-   331	                    <p><strong>개인정보보호책임자:</strong> 김유빈 (aisaju1000@gmail.com)</p>
-   332	                </div>
-   333	
-   334	                <!-- 중요 알림 -->
-   335	                <div class="alert-box danger">
-   336	                    <h3><i class="fas fa-exclamation-triangle"></i> 중요 안내</h3>
-   337	                    <p><strong>본 서비스는 전통 명리학에 기반한 운세 참고 자료입니다.</strong></p>
-   338	                    <ul>
-   339	                        <li>의료 행위, 법률 자문, 투자 조언이 <strong>아닙니다</strong></li>
-   340	                        <li>중요한 결정은 반드시 전문가와 상담하세요</li>
-   341	                        <li>운세 정보로 인한 손해에 대해 회사는 책임지지 않습니다</li>
-   342	                    </ul>
-   343	                </div>
-   344	
-   345	                <!-- 목차 -->
-   346	                <div class="toc">
-   347	                    <h3><i class="fas fa-list"></i> 목차</h3>
-   348	                    <ul>
-   349	                        <li><a href="#article1">제1조 목적</a></li>
-   350	                        <li><a href="#article2">제2조 정의</a></li>
-   351	                        <li><a href="#article3">제3조 약관의 효력 및 변경</a></li>
-   352	                        <li><a href="#article4">제4조 서비스의 제공</a></li>
-   353	                        <li><a href="#article5">제5조 서비스의 성격 및 면책</a></li>
-   354	                        <li><a href="#article6">제6조 이용자의 의무</a></li>
-   355	                        <li><a href="#article7">제7조 개인정보 보호</a></li>
-   356	                        <li><a href="#article8">제8조 데이터 수집 및 이용</a></li>
-   357	                        <li><a href="#article9">제9조 유료 서비스</a></li>
-   358	                        <li><a href="#article10">제10조 환불 정책</a></li>
-   359	                        <li><a href="#article11">제11조 지적 재산권</a></li>
-   360	                        <li><a href="#article12">제12조 서비스 중단 및 변경</a></li>
-   361	                        <li><a href="#article13">제13조 면책 조항</a></li>
-   362	                        <li><a href="#article14">제14조 손해배상</a></li>
-   363	                        <li><a href="#article15">제15조 분쟁 해결</a></li>
-   364	                        <li><a href="#article16">제16조 준거법 및 재판관할</a></li>
-   365	                    </ul>
-   366	                </div>
-   367	
-   368	                <h2 id="article1"><i class="fas fa-bullseye"></i> 제1조 (목적)</h2>
-   369	                <p>본 약관은 <strong>AI 사주 천년지기</strong>(이하 "회사")가 제공하는 사주팔자 및 운세 관련 서비스(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
-   370	
-   371	                <h2 id="article2"><i class="fas fa-book"></i> 제2조 (정의)</h2>
-   372	                <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다:</p>
-   373	                <ol>
-   374	                    <li><strong>"서비스"</strong>란 회사가 제공하는 사주팔자 자동 계산, AI 기반 운세 상담, 토정비결, 궁합, 신년운세 등 전통 명리학에 기반한 모든 콘텐츠 및 기능을 말합니다.</li>
-   375	                    <li><strong>"이용자"</strong>란 본 약관에 동의하고 서비스를 이용하는 회원 및 비회원을 말합니다.</li>
-   376	                    <li><strong>"회원"</strong>이란 회사에 개인정보를 제공하여 회원등록을 한 자로서, 회사의 정보를 지속적으로 제공받으며 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</li>
-   377	                    <li><strong>"비회원"</strong>이란 회원가입 없이 서비스를 이용하는 자를 말합니다.</li>
-   378	                </ol>
-   379	
-   380	                <h2 id="article3"><i class="fas fa-edit"></i> 제3조 (약관의 효력 및 변경)</h2>
-   381	                <ol>
-   382	                    <li>본 약관은 서비스 화면에 게시하거나 기타의 방법으로 공지함으로써 효력이 발생합니다.</li>
-   383	                    <li>회사는 필요한 경우 관련 법령을 위배하지 않는 범위에서 본 약관을 변경할 수 있습니다.</li>
-   384	                    <li>약관이 변경되는 경우 회사는 변경사항을 시행일자 7일 전부터 공지합니다.</li>
-   385	                    <li>이용자가 변경된 약관에 동의하지 않는 경우 서비스 이용을 중단하고 탈퇴할 수 있습니다.</li>
-   386	                </ol>
-   387	
-   388	                <h2 id="article4"><i class="fas fa-cogs"></i> 제4조 (서비스의 제공)</h2>
-   389	                <p>회사가 제공하는 서비스는 다음과 같습니다:</p>
-   390	                <ol>
-   391	                    <li><strong>사주팔자 자동 계산 및 해석</strong></li>
-   392	                    <li><strong>AI 기반 운세 상담 서비스</strong></li>
-   393	                    <li><strong>토정비결 운세</strong></li>
-   394	                    <li><strong>궁합 보기 (애정운, 직장운 등)</strong></li>
-   395	                    <li><strong>2026 신년운세</strong></li>
-   396	                    <li><strong>프리미엄 콘텐츠</strong> (맞춤 연애운, 재물운, 직업운 등)</li>
-   397	                    <li>기타 회사가 추가 개발하거나 제휴 계약을 통해 제공하는 서비스</li>
-   398	                </ol>
-   399	
-   400	                <h2 id="article5"><i class="fas fa-shield-alt"></i> 제5조 (서비스의 성격 및 면책)</h2>
-   401	                
-   402	                <div class="alert-box danger">
-   403	                    <h3><i class="fas fa-exclamation-circle"></i> 필독! 서비스 성격 및 한계</h3>
-   404	                    <p><strong>1. 본 서비스는 전통 명리학(사주팔자)에 기반한 운세 참고 자료를 제공합니다.</strong></p>
-   405	                    
-   406	                    <p><strong>2. 본 서비스는 다음에 해당하지 않습니다:</strong></p>
-   407	                    <ul>
-   408	                        <li>❌ 의료 행위 또는 의료 상담</li>
-   409	                        <li>❌ 법률 자문 또는 법률 서비스</li>
-   410	                        <li>❌ 투자 조언 또는 재무 상담</li>
-   411	                        <li>❌ 심리 상담 또는 정신건강 치료</li>
-   412	                        <li>❌ 취업 알선 또는 직업 소개</li>
-   413	                    </ul>
-   414	                    
-   415	                    <p><strong>3. 운세 정보는 참고용으로만 사용해야 하며, 중요한 결정(의료, 법률, 재무, 취업 등)은 반드시 해당 분야 전문가와 상담 후 진행하시기 바랍니다.</strong></p>
-   416	                    
-   417	                    <p><strong>4. 회사는 운세 정보의 정확성, 신뢰성, 적시성을 보장하지 않으며, 운세 정보로 인해 발생한 어떠한 직접적·간접적 손해에 대해서도 책임지지 않습니다.</strong></p>
-   418	                    
-   419	                    <p><strong>5. 이용자는 본 서비스가 전통 문화 콘텐츠이며 참고 자료임을 이해하고 동의합니다.</strong></p>
-   420	                </div>
-   421	
-   422	                <h2 id="article6"><i class="fas fa-user-check"></i> 제6조 (이용자의 의무)</h2>
-   423	                <p>이용자는 다음 행위를 하여서는 안 됩니다:</p>
-   424	                <ol>
-   425	                    <li>타인의 정보를 도용하거나 허위 정보를 입력하는 행위</li>
-   426	                    <li>회사의 서비스 운영을 방해하는 행위</li>
-   427	                    <li>회사의 지적 재산권을 침해하는 행위</li>
-   428	                    <li>음란물, 폭력물 등 불법 콘텐츠를 게시하는 행위</li>
-   429	                    <li>서비스를 영리 목적으로 무단 이용하는 행위</li>
-   430	                    <li>자동화된 수단(봇, 크롤러 등)을 사용하여 서비스에 접근하는 행위</li>
-   431	                </ol>
-   432	
-   433	                <h2 id="article7"><i class="fas fa-lock"></i> 제7조 (개인정보 보호)</h2>
-   434	                <ol>
-   435	                    <li>회사는 이용자의 개인정보를 보호하기 위해 「개인정보보호법」 등 관련 법령을 준수합니다.</li>
-   436	                    <li>개인정보의 수집, 이용, 제공, 관리 등에 관한 사항은 별도의 <a href="privacy.html" style="color: #667eea;">개인정보처리방침</a>을 따릅니다.</li>
-   437	                    <li>회사는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 다만, 법령에 따라 제공이 필요한 경우는 예외로 합니다.</li>
-   438	                </ol>
-   439	
-   440	                <h2 id="article8"><i class="fas fa-database"></i> 제8조 (데이터 수집 및 이용)</h2>
-   441	                
-   442	                <div class="alert-box info">
-   443	                    <h3><i class="fas fa-info-circle"></i> 개인정보 수집 안내</h3>
-   444	                    <p><strong>수집하는 정보:</strong></p>
-   445	                    <ul>
-   446	                        <li><strong>필수 정보:</strong> 생년월일, 출생시간, 성별</li>
-   447	                        <li><strong>선택 정보:</strong> 이름(닉네임 가능)</li>
-   448	                    </ul>
-   449	                    
-   450	                    <p><strong>수집 목적:</strong> 사주팔자 계산 및 운세 상담 서비스 제공</p>
-   451	                    
-   452	                    <p><strong>보유 기간:</strong> 상담 완료 후 즉시 삭제 (최대 24시간)</p>
-   453	                    
-   454	                    <p><strong>거부권:</strong> 정보 제공을 거부할 수 있으며, 거부 시 서비스 이용이 제한됩니다.</p>
-   455	                </div>
-   456	                
-   457	                <ol>
-   458	                    <li>회사는 사주팔자 계산을 위해 최소한의 정보(생년월일, 출생시간, 성별)만 수집합니다.</li>
-   459	                    <li><strong>회사는 주민등록번호를 수집하지 않습니다.</strong></li>
-   460	                    <li>수집된 정보는 서비스 제공 목적으로만 사용되며, 상담 완료 후 즉시 삭제됩니다.</li>
-   461	                    <li>회사는 정적 웹사이트 구조로 운영되며, 서버에 개인정보를 저장하지 않습니다.</li>
-   462	                </ol>
-   463	
-   464	                <h2 id="article9"><i class="fas fa-credit-card"></i> 제9조 (유료 서비스)</h2>
-   465	                <ol>
-   466	                    <li>회사는 일부 프리미엄 콘텐츠에 대해 유료 서비스를 제공할 수 있습니다.</li>
-   467	                    <li>유료 서비스의 가격, 결제 방법, 이용 조건은 서비스 화면에 명시됩니다.</li>
-   468	                    <li>결제는 신용카드, 계좌이체, 간편결제 등 다양한 방법으로 가능합니다.</li>
-   469	                    <li>유료 서비스 구매 시 전자상거래법에 따른 청약철회권이 적용됩니다.</li>
-   470	                </ol>
-   471	
-   472	                <h2 id="article10"><i class="fas fa-undo"></i> 제10조 (환불 정책)</h2>
-   473	                <p>환불 정책에 관한 자세한 사항은 <a href="refund.html" style="color: #667eea;">환불정책</a> 페이지를 참조하시기 바랍니다.</p>
-   474	                <ol>
-   475	                    <li>유료 콘텐츠 구매 후 7일 이내, 콘텐츠를 열람하지 않은 경우 전액 환불이 가능합니다.</li>
-   476	                    <li>콘텐츠를 이미 열람한 경우 환불이 제한될 수 있습니다.</li>
-   477	                    <li>환불 신청은 고객센터(aisaju1000@gmail.com, 0502-1909-7788)로 연락 주시기 바랍니다.</li>
-   478	                </ol>
-   479	
-   480	                <h2 id="article11"><i class="fas fa-copyright"></i> 제11조 (지적 재산권)</h2>
-   481	                <ol>
-   482	                    <li>서비스에 사용되는 모든 콘텐츠(텍스트, 이미지, 소프트웨어 등)의 저작권 및 지적 재산권은 회사에 귀속됩니다.</li>
-   483	                    <li>이용자는 회사의 사전 승인 없이 서비스의 콘텐츠를 복제, 배포, 전송, 판매할 수 없습니다.</li>
-   484	                    <li>이용자가 서비스에 게시한 콘텐츠의 저작권은 이용자에게 있으나, 회사는 서비스 운영을 위해 해당 콘텐츠를 사용할 수 있습니다.</li>
-   485	                </ol>
-   486	
-   487	                <h2 id="article12"><i class="fas fa-pause-circle"></i> 제12조 (서비스 중단 및 변경)</h2>
-   488	                <ol>
-   489	                    <li>회사는 다음의 경우 서비스 제공을 일시적으로 중단할 수 있습니다:
-   490	                        <ul>
-   491	                            <li>시스템 점검, 유지보수, 업그레이드</li>
-   492	                            <li>천재지변, 국가비상사태 등 불가항력적 사유</li>
-   493	                            <li>서비스 설비의 장애 또는 트래픽 폭주</li>
-   494	                        </ul>
-   495	                    </li>
-   496	                    <li>회사는 서비스 중단 시 사전에 공지하며, 불가피한 경우 사후에 공지할 수 있습니다.</li>
-   497	                    <li>회사는 운영상 또는 기술상의 필요에 따라 서비스의 전부 또는 일부를 변경할 수 있습니다.</li>
-   498	                </ol>
-   499	
-   500	                <h2 id="article13"><i class="fas fa-exclamation-triangle"></i> 제13조 (면책 조항)</h2>
-   501	                
-   502	                <div class="alert-box danger">
-   503	                    <h3><i class="fas fa-ban"></i> 회사의 면책 사항</h3>
-   504	                    <p>회사는 다음의 경우 책임을 지지 않습니다:</p>
-   505	                    <ol>
-   506	                        <li><strong>운세 정보의 정확성 또는 결과</strong>
-   507	                            <ul>
-   508	                                <li>운세 정보는 참고 자료일 뿐, 절대적 예측이 아닙니다</li>
-   509	                                <li>운세 정보에 따른 이용자의 결정 및 그 결과</li>
-   510	                            </ul>
-   511	                        </li>
-   512	                        <li><strong>이용자의 귀책사유로 인한 서비스 이용 장애</strong>
-   513	                            <ul>
-   514	                                <li>이용자의 컴퓨터 오류, 네트워크 장애</li>
-   515	                                <li>이용자가 잘못된 정보를 입력한 경우</li>
-   516	                            </ul>
-   517	                        </li>
-   518	                        <li><strong>제3자가 제공한 정보의 정확성</strong>
-   519	                            <ul>
-   520	                                <li>외부 링크, 제휴 콘텐츠 등</li>
-   521	                            </ul>
-   522	                        </li>
-   523	                        <li><strong>천재지변, 국가비상사태 등 불가항력적 사유</strong></li>
-   524	                        <li><strong>이용자 간 또는 이용자와 제3자 간 분쟁</strong></li>
-   525	                    </ol>
-   526	                </div>
-   527	
-   528	                <h2 id="article14"><i class="fas fa-won-sign"></i> 제14조 (손해배상)</h2>
-   529	                <ol>
-   530	                    <li>회사는 고의 또는 중과실로 이용자에게 손해를 입힌 경우 그 손해를 배상할 책임이 있습니다.</li>
-   531	                    <li>손해배상의 범위는 통상손해로 한정하며, 특별손해 또는 간접손해는 배상하지 않습니다.</li>
-   532	                    <li>손해배상액은 이용자가 지불한 서비스 이용료를 초과하지 않습니다.</li>
-   533	                </ol>
-   534	
-   535	                <h2 id="article15"><i class="fas fa-handshake"></i> 제15조 (분쟁 해결)</h2>
-   536	                <ol>
-   537	                    <li>회사와 이용자 간 분쟁이 발생한 경우, 우선적으로 협의를 통해 해결합니다.</li>
-   538	                    <li>협의가 이루어지지 않은 경우, 「소비자기본법」에 따라 한국소비자원 또는 소비자분쟁조정위원회에 분쟁조정을 신청할 수 있습니다.</li>
-   539	                    <li>전자거래 분쟁의 경우 「전자문서 및 전자거래 기본법」에 따라 한국인터넷진흥원(KISA) 전자거래분쟁조정위원회의 조정을 받을 수 있습니다.</li>
-   540	                </ol>
-   541	
-   542	                <h2 id="article16"><i class="fas fa-gavel"></i> 제16조 (준거법 및 재판관할)</h2>
-   543	                <ol>
-   544	                    <li>본 약관 및 서비스 이용과 관련된 분쟁에 대해서는 대한민국 법을 준거법으로 합니다.</li>
-   545	                    <li>서비스 이용으로 발생한 분쟁에 대한 소송은 회사의 본사 소재지를 관할하는 법원을 전속 관할 법원으로 합니다.</li>
-   546	                </ol>
-   547	
-   548	                <!-- 연락처 정보 -->
-   549	                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; border-left: 4px solid #667eea;">
-   550	                    <h3><i class="fas fa-phone-volume"></i> 고객센터 안내</h3>
-   551	                    <p>이용약관 관련 문의사항이 있으시면 언제든지 연락 주세요:</p>
-   552	                    <p><i class="fas fa-phone"></i> <strong>전화:</strong> <a href="tel:0502-1909-7788" style="color: #667eea;">0502-1909-7788</a></p>
-   553	                    <p><i class="fas fa-fax"></i> <strong>팩스:</strong> 0504-150-7783</p>
-   554	                    <p><i class="fas fa-envelope"></i> <strong>이메일:</strong> <a href="mailto:aisaju1000@gmail.com" style="color: #667eea;">aisaju1000@gmail.com</a></p>
-   555	                    <p><i class="fas fa-clock"></i> <strong>운영시간:</strong> 평일 10:00-18:00 (주말 및 공휴일 휴무)</p>
-   556	                </div>
-   557	
-   558	                <p style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e0e0e0;">
-   559	                    <strong><i class="fas fa-calendar-check"></i> 부칙</strong><br>
-   560	                    본 약관은 <strong>2026년 1월 9일</strong>부터 시행됩니다.
-   561	                </p>
-   562	            </div>
-   563	        </div>
-   564	    </section>
-   565	
-   566	    <!-- 푸터 -->
-   567	    <footer class="footer">
-   568	        <div class="container">
-   569	            <div class="footer-links">
-   570	                <a href="index.html"><i class="fas fa-home"></i> 홈</a>
-   571	                <a href="terms.html"><i class="fas fa-file-contract"></i> 이용약관</a>
-   572	                <a href="privacy.html"><i class="fas fa-shield-alt"></i> 개인정보처리방침</a>
-   573	                <a href="refund.html"><i class="fas fa-undo"></i> 환불정책</a>
-   574	            </div>
-   575	            
-   576	            <div style="margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
-   577	                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;"><strong>큐브박스</strong> | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
-   578	                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;">주소: 서울 송파구 송파대로14길 7-10 2층 | 개인정보보호책임자: 김유빈</p>
-   579	                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;"><i class="fas fa-phone"></i> 전화: 0502-1909-7788 | <i class="fas fa-fax"></i> 팩스: 0504-150-7783 | <i class="fas fa-envelope"></i> 이메일: aisaju1000@gmail.com</p>
-   580	            </div>
-   581	            
-   582	            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
-   583	        </div>
-   584	    </footer>
-   585	</body>
-   586	</html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용약관 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; padding: 1rem 20px; }
+        .nav-brand a { font-size: 1.5rem; font-weight: bold; color: #c41e3a; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .nav-brand a:hover { color: #a01828; }
+        .legal-page { padding: 120px 0 60px; min-height: calc(100vh - 200px); }
+        .legal-content { max-width: 1000px; margin: 0 auto; background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .legal-content h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #c41e3a; border-bottom: 3px solid #c41e3a; padding-bottom: 1rem; }
+        .legal-content h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; color: #333; font-weight: 600; border-left: 4px solid #c41e3a; padding-left: 1rem; }
+        .legal-content h3 { font-size: 1.2rem; margin: 1.5rem 0 0.8rem; color: #555; font-weight: 600; }
+        .legal-content p { line-height: 1.9; margin-bottom: 1rem; color: #555; font-size: 1rem; }
+        .legal-content strong { color: #c41e3a; font-weight: 600; }
+        .legal-content ul, .legal-content ol { margin-left: 2rem; margin-bottom: 1rem; }
+        .legal-content li { margin-bottom: 0.5rem; line-height: 1.8; }
+        .alert-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; margin: 2rem 0; border-radius: 5px; }
+        .alert-box.danger { background: #f8d7da; border-left-color: #dc3545; }
+        .alert-box.info { background: #d1ecf1; border-left-color: #17a2b8; }
+        .alert-box h3 { color: #856404; margin: 0 0 1rem 0; }
+        .alert-box.danger h3 { color: #721c24; }
+        .alert-box.info h3 { color: #0c5460; }
+        .toc { background: #f8f9fa; padding: 2rem; border-radius: 10px; margin: 2rem 0; border-left: 4px solid #c41e3a; }
+        .toc h3 { font-size: 1.2rem; color: #c41e3a; margin-bottom: 1rem; }
+        .toc ul { list-style: none; padding-left: 1rem; }
+        .toc li { margin: 0.5rem 0; color: #666; }
+        .toc a { color: #667eea; text-decoration: none; transition: color 0.3s; }
+        .toc a:hover { color: #c41e3a; text-decoration: underline; }
+        .business-info { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 10px; margin: 2rem 0; }
+        .business-info h3 { color: white; margin-bottom: 1rem; }
+        .business-info p { color: white; margin: 0.5rem 0; }
+        .footer { background: rgba(255, 255, 255, 0.95); padding: 2rem 0; text-align: center; color: #666; margin-top: auto; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .footer-links a { color: #667eea; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: #c41e3a; }
+        .footer-contact { margin-top: 1rem; font-size: 0.9rem; }
+        .footer p { color: #999; margin: 0.5rem 0; }
+        @media (max-width: 768px) {
+            .legal-content { padding: 2rem 1.5rem; }
+            .legal-content h1 { font-size: 1.8rem; }
+            .legal-content h2 { font-size: 1.3rem; margin: 2rem 0 0.8rem; }
+            .toc { padding: 1.5rem; }
+            .footer-links { flex-direction: column; gap: 1rem; }
+        }
+        @media print {
+            body { background: white; }
+            .navbar, .footer { display: none; }
+            .legal-page { padding: 20px 0; }
+            .legal-content { box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><a href="index.html"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a></div>
+        </div>
+    </nav>
+    <section class="legal-page">
+        <div class="container">
+            <div class="legal-content">
+                <h1><i class="fas fa-file-contract"></i> 이용약관</h1>
+                <p><strong>시행일자:</strong> 2026년 1월 9일</p>
+                <div class="business-info">
+                    <h3><i class="fas fa-building"></i> 사업자 정보</h3>
+                    <p><strong>상호:</strong> 큐브박스</p>
+                    <p><strong>대표자:</strong> 김미화</p>
+                    <p><strong>사업자등록번호:</strong> 537-08-03349</p>
+                    <p><strong>통신판매업 신고번호:</strong> [통신판매업 신고 후 입력]</p>
+                    <p><strong>주소:</strong> 서울 송파구 송파대로14길 7-10 2층</p>
+                    <p><strong>전화:</strong> 0502-1909-7788</p>
+                    <p><strong>이메일:</strong> aisaju1000@gmail.com</p>
+                    <p><strong>개인정보보호책임자:</strong> 김유빈 (aisaju1000@gmail.com)</p>
+                </div>
+                <div class="alert-box danger">
+                    <h3><i class="fas fa-exclamation-triangle"></i> 중요 안내</h3>
+                    <p><strong>본 서비스는 전통 명리학에 기반한 운세 참고 자료입니다.</strong></p>
+                    <ul>
+                        <li>의료 행위, 법률 자문, 투자 조언이 <strong>아닙니다</strong></li>
+                        <li>중요한 결정은 반드시 전문가와 상담하세요</li>
+                        <li>운세 정보로 인한 손해에 대해 회사는 책임지지 않습니다</li>
+                    </ul>
+                </div>
+                <div class="toc">
+                    <h3><i class="fas fa-list"></i> 목차</h3>
+                    <ul>
+                        <li><a href="#article1">제1조 목적</a></li>
+                        <li><a href="#article2">제2조 정의</a></li>
+                        <li><a href="#article3">제3조 약관의 효력 및 변경</a></li>
+                        <li><a href="#article4">제4조 서비스의 제공</a></li>
+                        <li><a href="#article5">제5조 서비스의 성격 및 면책</a></li>
+                        <li><a href="#article6">제6조 이용자의 의무</a></li>
+                        <li><a href="#article7">제7조 개인정보 보호</a></li>
+                        <li><a href="#article8">제8조 데이터 수집 및 이용</a></li>
+                        <li><a href="#article9">제9조 유료 서비스</a></li>
+                        <li><a href="#article10">제10조 환불 정책</a></li>
+                        <li><a href="#article11">제11조 지적 재산권</a></li>
+                        <li><a href="#article12">제12조 서비스 중단 및 변경</a></li>
+                        <li><a href="#article13">제13조 면책 조항</a></li>
+                        <li><a href="#article14">제14조 손해배상</a></li>
+                        <li><a href="#article15">제15조 분쟁 해결</a></li>
+                        <li><a href="#article16">제16조 준거법 및 재판관할</a></li>
+                    </ul>
+                </div>
+                <h2 id="article1"><i class="fas fa-bullseye"></i> 제1조 (목적)</h2>
+                <p>본 약관은 <strong>AI 사주 천년지기</strong>(이하 "회사")가 제공하는 사주팔자 및 운세 관련 서비스(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+                <h2 id="article2"><i class="fas fa-book"></i> 제2조 (정의)</h2>
+                <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다:</p>
+                <ol>
+                    <li><strong>"서비스"</strong>란 회사가 제공하는 사주팔자 자동 계산, AI 기반 운세 상담, 토정비결, 궁합, 신년운세 등 전통 명리학에 기반한 모든 콘텐츠 및 기능을 말합니다.</li>
+                    <li><strong>"이용자"</strong>란 본 약관에 동의하고 서비스를 이용하는 회원 및 비회원을 말합니다.</li>
+                    <li><strong>"회원"</strong>이란 회사에 개인정보를 제공하여 회원등록을 한 자로서, 회사의 정보를 지속적으로 제공받으며 서비스를 계속적으로 이용할 수 있는 자를 말합니다.</li>
+                    <li><strong>"비회원"</strong>이란 회원가입 없이 서비스를 이용하는 자를 말합니다.</li>
+                </ol>
+                <h2 id="article3"><i class="fas fa-edit"></i> 제3조 (약관의 효력 및 변경)</h2>
+                <ol>
+                    <li>본 약관은 서비스 화면에 게시하거나 기타의 방법으로 공지함으로써 효력이 발생합니다.</li>
+                    <li>회사는 필요한 경우 관련 법령을 위배하지 않는 범위에서 본 약관을 변경할 수 있습니다.</li>
+                    <li>약관이 변경되는 경우 회사는 변경사항을 시행일자 7일 전부터 공지합니다.</li>
+                    <li>이용자가 변경된 약관에 동의하지 않는 경우 서비스 이용을 중단하고 탈퇴할 수 있습니다.</li>
+                </ol>
+                <h2 id="article4"><i class="fas fa-cogs"></i> 제4조 (서비스의 제공)</h2>
+                <p>회사가 제공하는 서비스는 다음과 같습니다:</p>
+                <ol>
+                    <li><strong>사주팔자 자동 계산 및 해석</strong></li>
+                    <li><strong>AI 기반 운세 상담 서비스</strong></li>
+                    <li><strong>토정비결 운세</strong></li>
+                    <li><strong>궁합 보기 (애정운, 직장운 등)</strong></li>
+                    <li><strong>2026 신년운세</strong></li>
+                    <li><strong>프리미엄 콘텐츠</strong> (맞춤 연애운, 재물운, 직업운 등)</li>
+                    <li>기타 회사가 추가 개발하거나 제휴 계약을 통해 제공하는 서비스</li>
+                </ol>
+                <h2 id="article5"><i class="fas fa-shield-alt"></i> 제5조 (서비스의 성격 및 면책)</h2>
+                <div class="alert-box danger">
+                    <h3><i class="fas fa-exclamation-circle"></i> 필독! 서비스 성격 및 한계</h3>
+                    <p><strong>1. 본 서비스는 전통 명리학(사주팔자)에 기반한 운세 참고 자료를 제공합니다.</strong></p>
+                    <p><strong>2. 본 서비스는 다음에 해당하지 않습니다:</strong></p>
+                    <ul>
+                        <li>❌ 의료 행위 또는 의료 상담</li>
+                        <li>❌ 법률 자문 또는 법률 서비스</li>
+                        <li>❌ 투자 조언 또는 재무 상담</li>
+                        <li>❌ 심리 상담 또는 정신건강 치료</li>
+                        <li>❌ 취업 알선 또는 직업 소개</li>
+                    </ul>
+                    <p><strong>3. 운세 정보는 참고용으로만 사용해야 하며, 중요한 결정(의료, 법률, 재무, 취업 등)은 반드시 해당 분야 전문가와 상담 후 진행하시기 바랍니다.</strong></p>
+                    <p><strong>4. 회사는 운세 정보의 정확성, 신뢰성, 적시성을 보장하지 않으며, 운세 정보로 인해 발생한 어떠한 직접적·간접적 손해에 대해서도 책임지지 않습니다.</strong></p>
+                    <p><strong>5. 이용자는 본 서비스가 전통 문화 콘텐츠이며 참고 자료임을 이해하고 동의합니다.</strong></p>
+                </div>
+                <h2 id="article6"><i class="fas fa-user-check"></i> 제6조 (이용자의 의무)</h2>
+                <p>이용자는 다음 행위를 하여서는 안 됩니다:</p>
+                <ol>
+                    <li>타인의 정보를 도용하거나 허위 정보를 입력하는 행위</li>
+                    <li>회사의 서비스 운영을 방해하는 행위</li>
+                    <li>회사의 지적 재산권을 침해하는 행위</li>
+                    <li>음란물, 폭력물 등 불법 콘텐츠를 게시하는 행위</li>
+                    <li>서비스를 영리 목적으로 무단 이용하는 행위</li>
+                    <li>자동화된 수단(봇, 크롤러 등)을 사용하여 서비스에 접근하는 행위</li>
+                </ol>
+                <h2 id="article7"><i class="fas fa-lock"></i> 제7조 (개인정보 보호)</h2>
+                <ol>
+                    <li>회사는 이용자의 개인정보를 보호하기 위해 「개인정보보호법」 등 관련 법령을 준수합니다.</li>
+                    <li>개인정보의 수집, 이용, 제공, 관리 등에 관한 사항은 별도의 <a href="privacy.html" style="color: #667eea;">개인정보처리방침</a>을 따릅니다.</li>
+                    <li>회사는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 다만, 법령에 따라 제공이 필요한 경우는 예외로 합니다.</li>
+                </ol>
+                <h2 id="article8"><i class="fas fa-database"></i> 제8조 (데이터 수집 및 이용)</h2>
+                <div class="alert-box info">
+                    <h3><i class="fas fa-info-circle"></i> 개인정보 수집 안내</h3>
+                    <p><strong>수집하는 정보:</strong></p>
+                    <ul>
+                        <li><strong>필수 정보:</strong> 생년월일, 출생시간, 성별</li>
+                        <li><strong>선택 정보:</strong> 이름(닉네임 가능)</li>
+                    </ul>
+                    <p><strong>수집 목적:</strong> 사주팔자 계산 및 운세 상담 서비스 제공</p>
+                    <p><strong>보유 기간:</strong> 상담 완료 후 즉시 삭제 (최대 24시간)</p>
+                    <p><strong>거부권:</strong> 정보 제공을 거부할 수 있으며, 거부 시 서비스 이용이 제한됩니다.</p>
+                </div>
+                <ol>
+                    <li>회사는 사주팔자 계산을 위해 최소한의 정보(생년월일, 출생시간, 성별)만 수집합니다.</li>
+                    <li><strong>회사는 주민등록번호를 수집하지 않습니다.</strong></li>
+                    <li>수집된 정보는 서비스 제공 목적으로만 사용되며, 상담 완료 후 즉시 삭제됩니다.</li>
+                    <li>회사는 정적 웹사이트 구조로 운영되며, 서버에 개인정보를 저장하지 않습니다.</li>
+                </ol>
+                <h2 id="article9"><i class="fas fa-credit-card"></i> 제9조 (유료 서비스)</h2>
+                <ol>
+                    <li>회사는 일부 프리미엄 콘텐츠에 대해 유료 서비스를 제공할 수 있습니다.</li>
+                    <li>유료 서비스의 가격, 결제 방법, 이용 조건은 서비스 화면에 명시됩니다.</li>
+                    <li>결제는 신용카드, 계좌이체, 간편결제 등 다양한 방법으로 가능합니다.</li>
+                    <li>유료 서비스 구매 시 전자상거래법에 따른 청약철회권이 적용됩니다.</li>
+                </ol>
+                <h2 id="article10"><i class="fas fa-undo"></i> 제10조 (환불 정책)</h2>
+                <p>환불 정책에 관한 자세한 사항은 <a href="refund.html" style="color: #667eea;">환불정책</a> 페이지를 참조하시기 바랍니다.</p>
+                <ol>
+                    <li>유료 콘텐츠 구매 후 7일 이내, 콘텐츠를 열람하지 않은 경우 전액 환불이 가능합니다.</li>
+                    <li>콘텐츠를 이미 열람한 경우 환불이 제한될 수 있습니다.</li>
+                    <li>환불 신청은 고객센터(aisaju1000@gmail.com, 0502-1909-7788)로 연락 주시기 바랍니다.</li>
+                </ol>
+                <h2 id="article11"><i class="fas fa-copyright"></i> 제11조 (지적 재산권)</h2>
+                <ol>
+                    <li>서비스에 사용되는 모든 콘텐츠(텍스트, 이미지, 소프트웨어 등)의 저작권 및 지적 재산권은 회사에 귀속됩니다.</li>
+                    <li>이용자는 회사의 사전 승인 없이 서비스의 콘텐츠를 복제, 배포, 전송, 판매할 수 없습니다.</li>
+                    <li>이용자가 서비스에 게시한 콘텐츠의 저작권은 이용자에게 있으나, 회사는 서비스 운영을 위해 해당 콘텐츠를 사용할 수 있습니다.</li>
+                </ol>
+                <h2 id="article12"><i class="fas fa-pause-circle"></i> 제12조 (서비스 중단 및 변경)</h2>
+                <ol>
+                    <li>회사는 다음의 경우 서비스 제공을 일시적으로 중단할 수 있습니다:
+                        <ul>
+                            <li>시스템 점검, 유지보수, 업그레이드</li>
+                            <li>천재지변, 국가비상사태 등 불가항력적 사유</li>
+                            <li>서비스 설비의 장애 또는 트래픽 폭주</li>
+                        </ul>
+                    </li>
+                    <li>회사는 서비스 중단 시 사전에 공지하며, 불가피한 경우 사후에 공지할 수 있습니다.</li>
+                    <li>회사는 운영상 또는 기술상의 필요에 따라 서비스의 전부 또는 일부를 변경할 수 있습니다.</li>
+                </ol>
+                <h2 id="article13"><i class="fas fa-exclamation-triangle"></i> 제13조 (면책 조항)</h2>
+                <div class="alert-box danger">
+                    <h3><i class="fas fa-ban"></i> 회사의 면책 사항</h3>
+                    <p>회사는 다음의 경우 책임을 지지 않습니다:</p>
+                    <ol>
+                        <li><strong>운세 정보의 정확성 또는 결과</strong>
+                            <ul>
+                                <li>운세 정보는 참고 자료일 뿐, 절대적 예측이 아닙니다</li>
+                                <li>운세 정보에 따른 이용자의 결정 및 그 결과</li>
+                            </ul>
+                        </li>
+                        <li><strong>이용자의 귀책사유로 인한 서비스 이용 장애</strong>
+                            <ul>
+                                <li>이용자의 컴퓨터 오류, 네트워크 장애</li>
+                                <li>이용자가 잘못된 정보를 입력한 경우</li>
+                            </ul>
+                        </li>
+                        <li><strong>제3자가 제공한 정보의 정확성</strong>
+                            <ul>
+                                <li>외부 링크, 제휴 콘텐츠 등</li>
+                            </ul>
+                        </li>
+                        <li><strong>천재지변, 국가비상사태 등 불가항력적 사유</strong></li>
+                        <li><strong>이용자 간 또는 이용자와 제3자 간 분쟁</strong></li>
+                    </ol>
+                </div>
+                <h2 id="article14"><i class="fas fa-won-sign"></i> 제14조 (손해배상)</h2>
+                <ol>
+                    <li>회사는 고의 또는 중과실로 이용자에게 손해를 입힌 경우 그 손해를 배상할 책임이 있습니다.</li>
+                    <li>손해배상의 범위는 통상손해로 한정하며, 특별손해 또는 간접손해는 배상하지 않습니다.</li>
+                    <li>손해배상액은 이용자가 지불한 서비스 이용료를 초과하지 않습니다.</li>
+                </ol>
+                <h2 id="article15"><i class="fas fa-handshake"></i> 제15조 (분쟁 해결)</h2>
+                <ol>
+                    <li>회사와 이용자 간 분쟁이 발생한 경우, 우선적으로 협의를 통해 해결합니다.</li>
+                    <li>협의가 이루어지지 않은 경우, 「소비자기본법」에 따라 한국소비자원 또는 소비자분쟁조정위원회에 분쟁조정을 신청할 수 있습니다.</li>
+                    <li>전자거래 분쟁의 경우 「전자문서 및 전자거래 기본법」에 따라 한국인터넷진흥원(KISA) 전자거래분쟁조정위원회의 조정을 받을 수 있습니다.</li>
+                </ol>
+                <h2 id="article16"><i class="fas fa-gavel"></i> 제16조 (준거법 및 재판관할)</h2>
+                <ol>
+                    <li>본 약관 및 서비스 이용과 관련된 분쟁에 대해서는 대한민국 법을 준거법으로 합니다.</li>
+                    <li>서비스 이용으로 발생한 분쟁에 대한 소송은 회사의 본사 소재지를 관할하는 법원을 전속 관할 법원으로 합니다.</li>
+                </ol>
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; border-left: 4px solid #667eea;">
+                    <h3><i class="fas fa-phone-volume"></i> 고객센터 안내</h3>
+                    <p>이용약관 관련 문의사항이 있으시면 언제든지 연락 주세요:</p>
+                    <p><i class="fas fa-phone"></i> <strong>전화:</strong> <a href="tel:0502-1909-7788" style="color: #667eea;">0502-1909-7788</a></p>
+                    <p><i class="fas fa-fax"></i> <strong>팩스:</strong> 0504-150-7783</p>
+                    <p><i class="fas fa-envelope"></i> <strong>이메일:</strong> <a href="mailto:aisaju1000@gmail.com" style="color: #667eea;">aisaju1000@gmail.com</a></p>
+                    <p><i class="fas fa-clock"></i> <strong>운영시간:</strong> 평일 10:00-18:00 (주말 및 공휴일 휴무)</p>
+                </div>
+                <p style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e0e0e0;"><strong><i class="fas fa-calendar-check"></i> 부칙</strong><br>본 약관은 <strong>2026년 1월 9일</strong>부터 시행됩니다.</p>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html"><i class="fas fa-home"></i> 홈</a>
+                <a href="terms.html"><i class="fas fa-file-contract"></i> 이용약관</a>
+                <a href="privacy.html"><i class="fas fa-shield-alt"></i> 개인정보처리방침</a>
+                <a href="refund.html"><i class="fas fa-undo"></i> 환불정책</a>
+            </div>
+            <div style="margin: 1.5rem 0; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;"><strong>큐브박스</strong> | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
+                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;">주소: 서울 송파구 송파대로14길 7-10 2층 | 개인정보보호책임자: 김유빈</p>
+                <p style="margin: 0.3rem 0; color: #666; font-size: 0.85rem;"><i class="fas fa-phone"></i> 전화: 0502-1909-7788 | <i class="fas fa-fax"></i> 팩스: 0504-150-7783 | <i class="fas fa-envelope"></i> 이메일: aisaju1000@gmail.com</p>
+            </div>
+            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
