@@ -68,6 +68,7 @@
             border-radius: 20px;
             transition: all 0.3s;
             display: block;
+            white-space: nowrap;
         }
         .nav-menu a:hover {
             background: rgba(212, 175, 55, 0.2);
@@ -363,35 +364,37 @@
                 <span></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html">🏠 홈</a></li>
+                <li><a href="index.html">홈</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">🔮 서비스 ▼</a>
+                    <a href="#" class="dropdown-toggle">서비스 ▼</a>
                     <div class="dropdown-menu">
-                        <a href="ai-chat.html">💬 AI 상담</a>
-                        <a href="compatibility.html">💕 궁합 보기</a>
-                        <a href="tojeong.html">📖 토정비결</a>
-                        <a href="dream.html">💭 꿈해몽</a>
+                        <a href="compatibility.html">궁합 보기</a>
+                        <a href="tojeong.html">토정비결</a>
+                        <a href="dream.html">꿈해몽</a>
+                        <a href="naming.html">작명·개명</a>
                     </div>
                 </li>
-                <li><a href="saju-guide.html">📖 가이드</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
                 <li><a href="blog.html" class="active">📰 블로그</a></li>
-                <li><a href="pricing.html">💳 가격표</a></li>
-                <li><a href="mypage.html">👤 마이페이지</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- 모바일 메뉴 -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html">🏠 홈</a>
-        <a href="ai-chat.html">💬 AI 상담</a>
-        <a href="compatibility.html">💕 궁합 보기</a>
-        <a href="tojeong.html">📖 토정비결</a>
-        <a href="dream.html">💭 꿈해몽</a>
-        <a href="saju-guide.html">📖 명리학 가이드</a>
-        <a href="blog.html" class="active">📰 블로그</a>
-        <a href="pricing.html">💳 가격표</a>
-        <a href="mypage.html">👤 마이페이지</a>
+        <a href="index.html">홈</a>
+        <a href="ai-chat.html">AI 상담</a>
+        <a href="compatibility.html">궁합 보기</a>
+        <a href="tojeong.html">토정비결</a>
+        <a href="dream.html">꿈해몽</a>
+        <a href="naming.html">작명·개명</a>
+        <a href="saju-guide.html">명리학 가이드</a>
+        <a href="blog.html" class="active">블로그</a>
+        <a href="pricing.html">가격표</a>
+        <a href="mypage.html">마이페이지</a>
     </div>
 
     <!-- 히어로 섹션 -->
@@ -563,23 +566,6 @@
             menu.classList.toggle('active');
         }
 
-        try {
-            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        } catch (err) {
-            console.error('Smooth scroll error:', err);
-        }
-        
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
