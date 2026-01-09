@@ -1615,55 +1615,7 @@
                     
                     // 모든 옵션에서 active 제거
                     langOptions.forEach(function(opt) {
-                        opt.classList.remove('active');
-                    });
-                    
-                    // 클릭한 옵션에 active 추가
-                    this.classList.add('active');
-                    
-                    // 드롭다운 닫기
-                    langDropdown.classList.remove('active');
-                    
-                    console.log('Selected language:', lang);
-                });
-            });
-            
-            // 외부 클릭시 드롭다운 닫기
-            document.addEventListener('click', function(e) {
-                if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-                    langDropdown.classList.remove('active');
-                }
-            });
-        }
-        
-        // 폼 제출
-        const sajuForm = document.getElementById('sajuForm');
-        if (sajuForm) {
-            sajuForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                const data = {};
-                formData.forEach(function(value, key) {
-                    data[key] = value;
-                });
-                localStorage.setItem('sajuData', JSON.stringify(data));
-                window.location.href = 'result.html';
-            });
-        }
-        
-        // FAQ 토글
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(function(question) {
-            question.addEventListener('click', function() {
-                const answer = this.nextElementSibling;
-                const isOpen = answer.style.display === 'block';
-                
-                // 모든 답변 닫기
-                const allAnswers = document.querySelectorAll('.faq-answer');
-                allAnswers.forEach(function(ans) {
-                    ans.style.display = 'none';
-                });
-                
+                        
                 // 클릭한 답변만 열기
                 if (!isOpen) {
                     answer.style.display = 'block';
