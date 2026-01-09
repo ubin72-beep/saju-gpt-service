@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>궁합 분석 - AI 사주 천년지기</title>
     <meta name="description" content="연애, 결혼, 사업 궁합을 정밀하게 분석합니다. 사주 기반 상성 확인">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,7 +15,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f8f9fa;
             color: #333;
             line-height: 1.6;
@@ -21,47 +23,95 @@
 
         /* 네비게이션 */
         .navbar {
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 20px;
+        }
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .nav-brand {
             color: #d4af37;
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 700;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
-
-        .nav-links {
+        .nav-menu {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
+            align-items: center;
         }
-
-        .nav-links a {
-            color: white;
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            transition: color 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
         }
-
-        .nav-links a:hover {
+        .nav-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
             color: #d4af37;
+        }
+        .nav-menu a.active {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            background: rgba(26, 26, 26, 0.98);
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            padding: 15px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .mobile-menu a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding-left: 25px;
+        }
+        .mobile-menu a.active {
+            background: #d4af37;
+            color: #1a1a1a;
+            font-weight: 600;
         }
 
         /* 히어로 섹션 */
@@ -94,8 +144,8 @@
             opacity: 0.95;
         }
 
-        /* 컨테이너 */
-        .container {
+        /* 메인 컨테이너 */
+        .main-container {
             max-width: 1200px;
             margin: -20px auto 60px;
             padding: 0 2rem;
@@ -411,49 +461,38 @@
 
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
+            .nav-menu { display: none; }
+            .hamburger { display: flex; }
             .hero {
                 padding: 30px 0 25px;
             }
-
             .hero h1 {
                 font-size: 1.8rem;
             }
-
             .hero p {
                 font-size: 0.95rem;
             }
-
-            .container {
+            .main-container {
                 padding: 0 1rem;
                 margin: -15px auto 40px;
             }
-
             .form-card {
                 padding: 25px;
             }
-
             .people-grid {
                 grid-template-columns: 1fr;
             }
-
             .type-selector {
                 grid-template-columns: 1fr;
             }
-
             .score-circle {
                 width: 140px;
                 height: 140px;
                 font-size: 2.8rem;
             }
-
             .score-box {
                 padding: 35px 20px;
             }
-
             .info-section {
                 padding: 20px;
             }
@@ -463,19 +502,38 @@
 <body>
     <!-- 네비게이션 -->
     <nav class="navbar">
-        <div class="nav-container">
+        <div class="container">
             <a href="index.html" class="nav-brand">
-                🔮 AI 사주 천년지기
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="compatibility.html">궁합 보기</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 홈</a></li>
+                <li><a href="ai-chat.html">💬 AI 상담</a></li>
+                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+                <li><a href="blog.html">📰 블로그</a></li>
+                <li><a href="compatibility.html" class="active">💕 궁합 보기</a></li>
+                <li><a href="pricing.html">💳 가격표</a></li>
+                <li><a href="mypage.html">👤 마이페이지</a></li>
             </ul>
         </div>
     </nav>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">🏠 홈</a>
+        <a href="ai-chat.html">💬 AI 상담</a>
+        <a href="saju-guide.html">📖 명리학 가이드</a>
+        <a href="blog.html">📰 블로그</a>
+        <a href="compatibility.html" class="active">💕 궁합 보기</a>
+        <a href="pricing.html">💳 가격표</a>
+        <a href="mypage.html">👤 마이페이지</a>
+    </div>
 
     <!-- 히어로 섹션 -->
     <section class="hero">
@@ -484,7 +542,7 @@
     </section>
 
     <!-- 메인 컨텐츠 -->
-    <div class="container">
+    <div class="main-container">
         <!-- 입력 폼 -->
         <div class="form-card">
             <h2 class="form-title">두 분의 정보를 입력해주세요</h2>
@@ -659,14 +717,17 @@
     </footer>
 
     <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
         var selectedType = 'love';
 
         function selectType(element, type) {
-            // 모든 버튼 비활성화
             document.querySelectorAll('.type-btn').forEach(function(btn) {
                 btn.classList.remove('active');
             });
-            // 선택된 버튼 활성화
             element.classList.add('active');
             selectedType = type;
         }
@@ -674,7 +735,6 @@
         function analyzeCompatibility(event) {
             event.preventDefault();
 
-            // 첫 번째 사람 정보
             var person1 = {
                 name: document.getElementById('person1Name').value,
                 gender: document.getElementById('person1Gender').value,
@@ -685,7 +745,6 @@
                 calendar: document.getElementById('person1Calendar').value
             };
 
-            // 두 번째 사람 정보
             var person2 = {
                 name: document.getElementById('person2Name').value,
                 gender: document.getElementById('person2Gender').value,
@@ -696,10 +755,8 @@
                 calendar: document.getElementById('person2Calendar').value
             };
 
-            // 랜덤 점수 생성 (60-90점)
             var score = Math.floor(Math.random() * 31) + 60;
 
-            // 제목 업데이트
             var titles = {
                 'love': '💗 연애 궁합 분석 결과',
                 'marriage': '💍 결혼 궁합 분석 결과',
@@ -710,7 +767,6 @@
             document.getElementById('resultSubtitle').textContent = person1.name + ' ♥ ' + person2.name;
             document.getElementById('scoreCircle').textContent = score + '점';
 
-            // 점수에 따른 평가
             var label, desc;
             if (score >= 85) {
                 label = '완벽한 궁합입니다!';
@@ -729,7 +785,6 @@
             document.getElementById('scoreLabel').textContent = label;
             document.getElementById('scoreDesc').textContent = desc;
 
-            // localStorage에 데이터 저장
             var compatibilityData = {
                 mode: 'compatibility',
                 type: selectedType,
@@ -753,10 +808,8 @@
             localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
             console.log('✅ 궁합 데이터 저장:', compatibilityData);
 
-            // 결과 카드 표시
             document.getElementById('resultCard').style.display = 'block';
             
-            // 부드럽게 스크롤
             setTimeout(function() {
                 document.getElementById('resultCard').scrollIntoView({ 
                     behavior: 'smooth',
@@ -765,7 +818,6 @@
             }, 100);
         }
 
-        // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
