@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주 가이드 - 명리학의 모든 것 | AI 사주 천년지기</title>
+    <meta name="description" content="명리학의 유래부터 현대적 활용까지. 사주팔자의 원리와 신뢰할 수 있는 이유를 알아보세요.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #8B0000 0%, #c41e3a 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #8B0000 0%, #c41e3a 100%);
+            color: white;
+            padding: 4rem 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Content Container */
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        /* Section Styles */
+        .section {
+            background: white;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            color: #8B0000;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            font-size: 2.5rem;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .section-content h3 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.5rem;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, #8B0000 0%, #c41e3a 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #c41e3a;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #c41e3a;
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #c41e3a;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #c41e3a;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #c41e3a;
+            margin: 2rem 0;
+        }
+
+        .highlight-box strong {
+            color: #8B0000;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            color: #666;
+            display: none;
+            line-height: 1.8;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #8B0000 0%, #c41e3a 100%);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: white;
+            color: #8B0000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem 20px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-contact {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand">AI 사주 천년지기</a>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">사주 가이드</a></li>
+                <li><a href="pricing.html">이용권</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🏛️ 명리학의 모든 것</h1>
+        <p>수천 년의 역사를 지닌 명리학, 그 깊이와 신뢰성을 탐구합니다</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- 명리학의 유래 -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-scroll"></i>
+                명리학의 유래와 역사
+            </h2>
+            <div class="section-content">
+                <p>
+                    명리학(命理學)은 <strong>사람의 타고난 운명과 성향을 연구하는 학문</strong>으로, 
+                    중국 고대부터 발전해 온 동양철학의 핵심입니다. 
+                    '명(命)'은 하늘이 부여한 운명을, '리(理)'는 그 이치를 뜻합니다.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 기원전 2697년</div>
+                        <p><strong>황제(黃帝) 시대</strong> - 천간지지 체계의 기원. 달력과 시간 체계 확립</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 전국시대 (기원전 5세기)</div>
+                        <p><strong>음양오행론 확립</strong> - 추연(鄒衍)이 음양오행 이론을 체계화</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 당나라 (618-907년)</div>
+                        <p><strong>이허중(李虛中)</strong> - 사주팔자의 기초 이론 정립. 연·월·일의 간지로 운명 추론</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 송나라 (960-1279년)</div>
+                        <p><strong>서자평(徐子平)</strong> - 시(時) 기둥 추가로 사주팔자 완성. 현대 명리학의 기틀 마련</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 고려시대</div>
+                        <p><strong>한국 전래</strong> - 불교·유교와 함께 명리학이 한반도에 전파</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 조선시대</div>
+                        <p><strong>한국식 명리학 발전</strong> - 한국의 문화와 결합하여 독자적 발전</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">📅 2020년대</div>
+                        <p><strong>AI 명리학 시대</strong> - 인공지능 기술과 결합하여 현대적 해석 제공</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>💡 명리학의 핵심 가치</strong><br>
+                    명리학은 단순한 점술이 아닙니다. <strong>약 4,700년의 역사</strong>를 통해 검증되고 발전해 온 
+                    동양철학의 정수이며, 인간의 본성과 운명의 흐름을 이해하는 체계적인 학문입니다.
+                </div>
+            </div>
+        </section>
+
+        <!-- 명리학의 핵심 원리 -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-yin-yang"></i>
+                명리학의 핵심 원리
+            </h2>
+            <div class="section-content">
+                <h3>🌓 음양론 (陰陽論)</h3>
+                <p>
+                    우주 만물은 <strong>음(陰)과 양(陽)</strong>의 두 기운으로 구성됩니다. 
+                    밤과 낮, 여자와 남자, 달과 해처럼 서로 대립하면서도 조화를 이루는 관계입니다.
+                </p>
+
+                <h3>🔥 오행론 (五行論)</h3>
+                <p>
+                    만물은 <strong>목(木), 화(火), 토(土), 금(金), 수(水)</strong>의 다섯 가지 기본 원소로 이루어집니다.
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">🌳</div>
+                        <div class="card-title">목(木) - 나무</div>
+                        <div class="card-text">
+                            성장, 확장, 발전의 기운<br>
+                            방향: 동쪽 | 계절: 봄<br>
+                            성격: 창의적, 활동적
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔥</div>
+                        <div class="card-title">화(火) - 불</div>
+                        <div class="card-text">
+                            열정, 변화, 상승의 기운<br>
+                            방향: 남쪽 | 계절: 여름<br>
+                            성격: 열정적, 적극적
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⛰️</div>
+                        <div class="card-title">토(土) - 흙</div>
+                        <div class="card-text">
+                            안정, 중심, 포용의 기운<br>
+                            방향: 중앙 | 계절: 환절기<br>
+                            성격: 신중한, 안정적
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⚔️</div>
+                        <div class="card-title">금(金) - 쇠</div>
+                        <div class="card-text">
+                            결단, 수확, 정리의 기운<br>
+                            방향: 서쪽 | 계절: 가을<br>
+                            성격: 결단력, 냉철함
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💧</div>
+                        <div class="card-title">수(水) - 물</div>
+                        <div class="card-text">
+                            지혜, 유연성, 보존의 기운<br>
+                            방향: 북쪽 | 계절: 겨울<br>
+                            성격: 지혜로운, 유연한
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🔄 오행의 상생·상극</h3>
+                <p>
+                    <strong>상생(相生):</strong> 서로 돕는 관계<br>
+                    목생화(木生火) → 화생토(火生土) → 토생금(土生金) → 금생수(金生水) → 수생목(水生木)
+                </p>
+                <p>
+                    <strong>상극(相剋):</strong> 서로 억제하는 관계<br>
+                    목극토(木剋土) → 토극수(土剋水) → 수극화(水剋火) → 화극금(火剋金) → 금극목(金剋木)
+                </p>
+            </div>
+        </section>
+
+        <!-- 사주팔자 구성 -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-table-columns"></i>
+                사주팔자란?
+            </h2>
+            <div class="section-content">
+                <p>
+                    사주팔자(四柱八字)는 <strong>네 개의 기둥(四柱)</strong>과 <strong>여덟 글자(八字)</strong>로 
+                    이루어진 운명의 설계도입니다. 태어난 연·월·일·시의 천간(天干)과 지지(地支)를 
+                    조합하여 한 사람의 타고난 기질과 운명을 파악합니다.
+                </p>
+
+                <div class="highlight-box">
+                    <strong>사주팔자의 구성</strong><br><br>
+                    <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                        <tr style="background: #8B0000; color: white;">
+                            <th style="padding: 1rem; border: 1px solid #ddd;">기둥</th>
+                            <th style="padding: 1rem; border: 1px solid #ddd;">천간 (하늘)</th>
+                            <th style="padding: 1rem; border: 1px solid #ddd;">지지 (땅)</th>
+                            <th style="padding: 1rem; border: 1px solid #ddd;">의미</th>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 1rem; border: 1px solid #ddd;"><strong>연주 (年柱)</strong></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">년 간</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">년 지</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">조상, 부모, 유년기</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; border: 1px solid #ddd;"><strong>월주 (月柱)</strong></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">월 간</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">월 지</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">부모, 형제, 청년기</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 1rem; border: 1px solid #ddd;"><strong>일주 (日柱)</strong></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">일 간 (본인)</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">일 지 (배우자)</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">자신, 배우자, 중년기</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 1rem; border: 1px solid #ddd;"><strong>시주 (時柱)</strong></td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">시 간</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">시 지</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">자녀, 말년, 노년기</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>📌 일간(日干) - 나를 나타내는 핵심</h3>
+                <p>
+                    사주팔자에서 가장 중요한 것은 <strong>일간(日干)</strong>입니다. 
+                    태어난 '일(日)'의 천간이 바로 '나'를 나타내며, 이를 통해 타고난 성격과 기질을 파악합니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 명리학의 활용 -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-compass"></i>
+                명리학의 실생활 활용
+            </h2>
+            <div class="section-content">
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <div class="card-title">성격 분석</div>
+                        <div class="card-text">
+                            타고난 기질과 강점·약점 파악<br>
+                            자아 이해와 자기계발의 기초
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💼</div>
+                        <div class="card-title">직업 적성</div>
+                        <div class="card-text">
+                            오행 균형에 따른 직업 추천<br>
+                            성공 가능성이 높은 분야 제시
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">❤️</div>
+                        <div class="card-title">궁합 판단</div>
+                        <div class="card-text">
+                            배우자·사업 파트너와의 조화<br>
+                            관계 개선 방향 제시
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📈</div>
+                        <div class="card-title">운세 예측</div>
+                        <div class="card-text">
+                            연도별·월별 운의 흐름 파악<br>
+                            기회와 위기 시기 예측
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🏥</div>
+                        <div class="card-title">건강 관리</div>
+                        <div class="card-text">
+                            오행 불균형에 따른 건강 주의점<br>
+                            체질별 맞춤 건강법
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">의사결정 지원</div>
+                        <div class="card-text">
+                            중요한 선택의 시기 판단<br>
+                            방향성 설정에 도움
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 신뢰할 수 있는 이유 -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-certificate"></i>
+                신뢰할 수 있는 이유
+            </h2>
+            <div class="section-content">
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">📚</div>
+                        <div class="card-title">4,700년의 역사</div>
+                        <div class="card-text">
+                            수천 년간 동양 문화권에서 검증된 체계적 학문입니다.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔬</div>
+                        <div class="card-title">논리적 체계</div>
+                        <div class="card-text">
+                            음양오행론에 기반한 명확한 이론적 틀을 갖추고 있습니다.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">통계적 검증</div>
+                        <div class="card-text">
+                            수많은 사례를 통해 일정한 패턴과 경향성이 확인되었습니다.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🤖</div>
+                        <div class="card-title">AI 기술 결합</div>
+                        <div class="card-text">
+                            최신 인공지능 기술로 더욱 정교하고 객관적인 분석이 가능합니다.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎓</div>
+                        <div class="card-title">학문적 연구</div>
+                        <div class="card-text">
+                            한국·중국의 대학과 연구기관에서 지속적으로 연구되고 있습니다.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🌏</div>
+                        <div class="card-title">글로벌 인정</div>
+                        <div class="card-text">
+                            동아시아를 넘어 전 세계적으로 관심과 신뢰를 받고 있습니다.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>⚠️ 명리학의 올바른 이해</strong><br><br>
+                    명리학은 <strong>참고 자료</strong>입니다. 운명이 100% 정해져 있다는 뜻이 아니라, 
+                    <strong>타고난 경향성과 가능성</strong>을 보여줍니다. 
+                    최종 선택과 노력은 본인에게 달려 있으며, 명리학은 더 나은 선택을 위한 
+                    <strong>지혜로운 도구</strong>로 활용되어야 합니다.
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-question-circle"></i>
+                자주 묻는 질문
+            </h2>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        명리학은 과학적으로 증명되었나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        명리학은 서양의 실증과학과는 다른 체계입니다. 
+                        음양오행론은 동양철학의 논리 체계로, 수천 년간의 경험적 관찰과 
+                        통계적 패턴에 기반합니다. 현대 과학으로 완전히 증명되지는 않았지만, 
+                        심리학·통계학적 접근을 통해 일정한 타당성이 연구되고 있습니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        사주팔자는 정확한가요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        사주팔자는 타고난 기질과 경향성을 보여줍니다. 
+                        "100% 맞는다"는 표현보다는 "경향성과 가능성을 제시한다"는 것이 정확합니다. 
+                        전문가의 해석 능력, 본인의 노력, 환경적 요인 등이 결과에 영향을 미칩니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        AI 사주와 전통 사주의 차이는?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        전통 사주는 명리학자의 경험과 직관에 의존합니다. 
+                        AI 사주는 방대한 데이터와 알고리즘을 통해 객관적이고 일관된 해석을 제공합니다. 
+                        전통적 지혜와 현대 기술이 결합되어 더욱 정교한 분석이 가능합니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        운명은 바꿀 수 없나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        명리학은 "타고난 경향성"을 보여주는 것이지, 운명이 100% 고정되어 있다는 뜻이 아닙니다. 
+                        "운명의 60%는 타고난 것, 40%는 노력으로 만드는 것"이라는 말처럼, 
+                        자신의 강점을 살리고 약점을 보완하는 노력으로 더 나은 미래를 만들 수 있습니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        사주팔자를 어떻게 활용해야 하나요?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>1) 자기 이해:</strong> 타고난 성격과 기질 파악<br>
+                        <strong>2) 진로 선택:</strong> 적성에 맞는 직업 탐색<br>
+                        <strong>3) 관계 개선:</strong> 타인과의 궁합 이해<br>
+                        <strong>4) 시기 판단:</strong> 중요한 결정의 타이밍 참고<br>
+                        <strong>5) 자기계발:</strong> 약점 보완과 강점 강화 방향 설정
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 블로그 더보기 섹션 -->
+        <section class="section" style="background: #f8f9fa; padding: 3rem;">
+            <h2 class="section-title">
+                <i class="fas fa-newspaper"></i>
+                더 알아보기
+            </h2>
+            <div class="section-content">
+                <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                    명리학 이론을 배웠다면, 이제 실전 사례와 활용법을 알아보세요!
+                </p>
+                
+                <div class="cards-grid">
+                    <div class="card" style="cursor: pointer;" onclick="location.href='blog.html'">
+                        <div class="card-icon">📚</div>
+                        <div class="card-title">사주 블로그</div>
+                        <div class="card-text">
+                            2026년 운세, 궁합 가이드, 직업 적성 등<br>
+                            실전에 활용할 수 있는 다양한 콘텐츠
+                        </div>
+                    </div>
+
+                    <div class="card" style="cursor: pointer;" onclick="location.href='year-fortune-2026.html'">
+                        <div class="card-icon">🐴</div>
+                        <div class="card-title">2026 병오년 운세</div>
+                        <div class="card-text">
+                            60년 만의 특별한 해<br>
+                            12띠별 상세 운세 분석
+                        </div>
+                    </div>
+
+                    <div class="card" style="cursor: pointer;" onclick="location.href='compatibility.html'">
+                        <div class="card-icon">💕</div>
+                        <div class="card-title">궁합 보기</div>
+                        <div class="card-text">
+                            사주 궁합 무료 분석<br>
+                            연애·결혼 궁합 확인
+                        </div>
+                    </div>
+
+                    <div class="card" style="cursor: pointer;" onclick="location.href='tojeong.html'">
+                        <div class="card-icon">📜</div>
+                        <div class="card-title">토정비결 2026</div>
+                        <div class="card-text">
+                            조선시대부터 전해지는<br>
+                            병오년 12개월 운세
+                        </div>
+                    </div>
+
+                    <div class="card" style="cursor: pointer;" onclick="location.href='dream.html'">
+                        <div class="card-icon">💭</div>
+                        <div class="card-title">AI 꿈해몽</div>
+                        <div class="card-text">
+                            꿈의 의미를 분석<br>
+                            무료 AI 꿈해몽 서비스
+                        </div>
+                    </div>
+
+                    <div class="card" style="cursor: pointer;" onclick="location.href='naming.html'">
+                        <div class="card-icon">✍️</div>
+                        <div class="card-title">작명·개명</div>
+                        <div class="card-text">
+                            오행에 맞는 이름 분석<br>
+                            사주 기반 작명 서비스
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="blog.html" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #8B0000 0%, #c41e3a 100%); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform 0.3s;">
+                        <i class="fas fa-book-open"></i> 블로그 전체 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>🎯 지금 바로 AI 사주팔자 상담을 받아보세요!</h2>
+            <p style="font-size: 1.1rem; margin-top: 1rem;">
+                수천 년의 명리학 지혜와 최신 AI 기술이 만나<br>
+                당신만을 위한 맞춤 분석을 제공합니다
+            </p>
+            <a href="index.html" class="cta-button">
+                <i class="fas fa-star"></i> 무료 사주 보러가기
+            </a>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">홈</a>
+                <a href="terms.html">이용약관</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="refund.html">환불정책</a>
+            </div>
+            <div class="footer-contact">
+                <p>큐브박스 | 대표 김미화 | 사업자등록번호 537-08-03349</p>
+                <p>서울 송파구 송파대로14길 7-10 2층 | 전화 0502-1909-7788 | 이메일 aisaju1000@gmail.com</p>
+                <p style="margin-top: 1rem;">© 2026 AI 사주 천년지기. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer) {
+                        otherAnswer.classList.remove('active');
+                    }
+                });
+
+                // Reset all other icons
+                document.querySelectorAll('.faq-question i').forEach(otherIcon => {
+                    if (otherIcon !== icon) {
+                        otherIcon.className = 'fas fa-chevron-down';
+                    }
+                });
+
+                // Toggle current answer
+                answer.classList.toggle('active');
+                
+                // Toggle icon
+                if (answer.classList.contains('active')) {
+                    icon.className = 'fas fa-chevron-up';
+                } else {
+                    icon.className = 'fas fa-chevron-down';
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
