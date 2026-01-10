@@ -7,7 +7,7 @@
     <meta name="description" content="2026년 병오년 토정비결로 12개월 상세 운세를 확인하세요">
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
@@ -21,6 +21,7 @@
             background: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            padding-top: 70px;
         }
 
         .container {
@@ -29,92 +30,231 @@
             padding: 0 20px;
         }
 
-        /* 네비게이션 */
+        /* 네비게이션 - index.html과 동일 */
         .navbar {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
+            background: #1a1a1a;
             padding: 1rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .navbar .container {
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
+
         .nav-brand {
             color: #d4af37;
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: bold;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
+            z-index: 1001;
         }
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-menu a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s;
-        }
-        .nav-menu a:hover {
-            background: rgba(212, 175, 55, 0.2);
-            color: #d4af37;
-        }
-        .nav-menu a.active {
-            background: #d4af37;
-            color: #1a1a1a;
-        }
+
+        /* 햄버거 메뉴 */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 4px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 5px;
         }
+
         .hamburger span {
             width: 25px;
             height: 3px;
             background: #d4af37;
-            border-radius: 3px;
+            margin: 3px 0;
             transition: 0.3s;
+            border-radius: 3px;
         }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* 데스크톱 메뉴 */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #2a2a2a;
+            min-width: 200px;
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: #3a3a3a;
+            color: #d4af37;
+        }
+
+        /* 다국어 선택기 */
+        .language-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #d4af37;
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #2a2a2a;
+            min-width: 150px;
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .lang-dropdown.active {
+            display: block;
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lang-option:hover {
+            background: #3a3a3a;
+        }
+
+        .lang-option.active {
+            color: #d4af37;
+        }
+
+        .lang-option .fa-check {
+            opacity: 0;
+        }
+
+        .lang-option.active .fa-check {
+            opacity: 1;
+        }
+
+        /* 모바일 메뉴 */
         .mobile-menu {
             display: none;
-            background: rgba(26, 26, 26, 0.98);
             position: fixed;
             top: 70px;
             left: 0;
             right: 0;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 999;
+            padding: 2rem;
+            overflow-y: auto;
         }
-        .mobile-menu.active { display: block; }
-        .mobile-menu a {
+
+        .mobile-menu.active {
             display: block;
-            color: rgba(255,255,255,0.9);
-            padding: 15px;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu li {
+            margin: 1.5rem 0;
+        }
+
+        .mobile-menu a {
+            color: white;
             text-decoration: none;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
+            font-size: 1.3rem;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
         }
+
         .mobile-menu a:hover {
-            background: rgba(212, 175, 55, 0.2);
             color: #d4af37;
-            padding-left: 25px;
-        }
-        .mobile-menu a.active {
-            background: #d4af37;
-            color: #1a1a1a;
-            font-weight: 600;
         }
 
         /* 히어로 섹션 */
@@ -307,7 +447,7 @@
 
         /* 푸터 */
         .footer {
-            background: #2c3e50;
+            background: #1a1a1a;
             color: white;
             padding: 3rem 0 1rem;
             margin-top: 4rem;
@@ -319,7 +459,7 @@
 
         .footer h3 {
             margin-bottom: 1rem;
-            color: #ff6b6b;
+            color: #d4af37;
         }
 
         .footer p {
@@ -337,14 +477,30 @@
 
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .hamburger { display: flex; }
+            body {
+                padding-top: 60px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .language-switcher {
+                display: none;
+            }
+
             .tojeong-hero h1 {
                 font-size: 2rem;
             }
+
             .fortune-input {
                 flex-direction: column;
             }
+
             .month-grid {
                 grid-template-columns: 1fr;
             }
@@ -354,39 +510,79 @@
 <body>
     <!-- 네비게이션 -->
     <nav class="navbar">
-        <div class="container">
+        <div class="nav-container">
             <a href="index.html" class="nav-brand">
                 <i class="fas fa-yin-yang"></i>
                 AI 사주 천년지기
             </a>
-            <div class="hamburger" onclick="toggleMobileMenu()">
+            
+            <!-- 햄버거 메뉴 (모바일) -->
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+            
             <ul class="nav-menu">
-                <li><a href="index.html">🏠 홈</a></li>
-                <li><a href="ai-chat.html">💬 AI 상담</a></li>
-                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-                <li><a href="blog.html">📰 블로그</a></li>
-                <li><a href="compatibility.html">💕 궁합 보기</a></li>
-                <li><a href="tojeong.html" class="active">📖 토정비결</a></li>
-                <li><a href="pricing.html">💳 가격표</a></li>
-                <li><a href="mypage.html">👤 마이페이지</a></li>
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
             </ul>
+            
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- 모바일 메뉴 -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html">🏠 홈</a>
-        <a href="ai-chat.html">💬 AI 상담</a>
-        <a href="saju-guide.html">📖 명리학 가이드</a>
-        <a href="blog.html">📰 블로그</a>
-        <a href="compatibility.html">💕 궁합 보기</a>
-        <a href="tojeong.html" class="active">📖 토정비결</a>
-        <a href="pricing.html">💳 가격표</a>
-        <a href="mypage.html">👤 마이페이지</a>
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
     </div>
 
     <section class="tojeong-hero">
@@ -444,11 +640,49 @@
     </footer>
 
     <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
-        }
+        // 햄버거 메뉴 토글
+        var hamburger = document.getElementById('hamburger');
+        var mobileMenu = document.getElementById('mobileMenu');
 
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // 다국어 선택기
+        var langBtn = document.getElementById('langBtn');
+        var langDropdown = document.getElementById('langDropdown');
+
+        langBtn.addEventListener('click', function() {
+            langDropdown.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.lang-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                
+                if (lang !== 'ko') {
+                    alert('다국어 서비스는 준비 중입니다.');
+                    langDropdown.classList.remove('active');
+                    return;
+                }
+                
+                document.querySelectorAll('.lang-option').forEach(function(opt) {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                langDropdown.classList.remove('active');
+            });
+        });
+
+        // 외부 클릭 시 드롭다운 닫기
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.language-switcher')) {
+                langDropdown.classList.remove('active');
+            }
+        });
+
+        // 토정비결 데이터 (12개월)
         const TOJEONG_DATA = {
             1: {
                 title: '정월 (1월)',
@@ -599,6 +833,7 @@
                 return;
             }
 
+            // 월별 운세 표시
             const monthGrid = document.getElementById('monthGrid');
             monthGrid.innerHTML = '';
 
@@ -652,6 +887,7 @@
             return labels[fortune] || '평';
         }
 
+        // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
@@ -659,6 +895,7 @@
             }
         }, true);
 
+        // DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('✅ 토정비결 2026 페이지 로드 완료');
         });
