@@ -1,220 +1,100 @@
-   1	<!DOCTYPE html>
+ 1	<!DOCTYPE html>
      2	<html lang="ko">
      3	<head>
      4	    <meta charset="UTF-8">
      5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
      6	    <title>사주팔자 결과 - AI 사주 천년지기</title>
-     7	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
-     8	    <style>
-     9	        * { margin: 0; padding: 0; box-sizing: border-box; }
-    10	        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
-    11	        .navbar { background: #1a1a1a; padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-    12	        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-    13	        .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
-    14	        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
-    15	        .nav-links a:hover { color: #d4af37; }
-    16	        .result-header { background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%); color: white; padding: 60px 20px; text-align: center; }
-    17	        .result-header h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
-    18	        .result-header .user-info { font-size: 1.2rem; opacity: 0.9; }
-    19	        .result-container { max-width: 1000px; margin: -40px auto 60px; padding: 0 20px; }
-    20	        .result-card { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 2rem; }
-    21	        .section-title { font-size: 1.8rem; color: #1a1a1a; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 3px solid #d4af37; font-weight: 700; }
-    22	        .saju-table { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-    23	        .saju-column { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border-radius: 10px; border: 2px solid #d4af37; }
-    24	        .saju-column h3 { font-size: 1.1rem; color: #c41e3a; margin-bottom: 0.5rem; font-weight: 600; }
-    25	        .saju-column .hanja { font-size: 2rem; font-weight: 700; color: #1a1a1a; margin: 0.5rem 0; }
-    26	        .saju-column .element { font-size: 0.9rem; color: #666; }
-    27	        .analysis-section { margin-top: 2rem; }
-    28	        .analysis-item { padding: 1.5rem; background: #f9f9f9; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #d4af37; }
-    29	        .analysis-item h4 { font-size: 1.2rem; color: #c41e3a; margin-bottom: 0.5rem; font-weight: 600; }
-    30	        .analysis-item p { color: #333; line-height: 1.8; }
-    31	        .fortune-bar { margin-top: 1rem; }
-    32	        .fortune-bar-label { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; }
-    33	        .fortune-bar-bg { height: 30px; background: #e0e0e0; border-radius: 15px; overflow: hidden; }
-    34	        .fortune-bar-fill { height: 100%; background: linear-gradient(90deg, #d4af37, #f4e5b5); display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: #1a1a1a; font-weight: 700; transition: width 1s ease; }
-    35	        .action-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 3rem; }
-    36	        .action-btn { padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: all 0.3s; display: inline-block; }
-    37	        .btn-primary { background: linear-gradient(135deg, #c41e3a, #8b0000); color: white; }
-    38	        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(196,30,58,0.4); }
-    39	        .btn-secondary { background: white; color: #c41e3a; border: 2px solid #c41e3a; }
-    40	        .btn-secondary:hover { background: #c41e3a; color: white; }
-    41	        .btn-gold { background: linear-gradient(135deg, #d4af37, #f4e5b5); color: #1a1a1a; }
-    42	        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,175,55,0.5); }
-    43	        .footer { background: #1a1a1a; color: rgba(255,255,255,0.7); padding: 40px 20px; text-align: center; }
-    44	        @media (max-width: 768px) { .saju-table { grid-template-columns: repeat(2, 1fr); } .result-card { padding: 2rem 1.5rem; } .result-header h1 { font-size: 2rem; } }
-    45	    </style>
-    46	</head>
-    47	<body>
-    48	    <nav class="navbar">
-    49	        <div class="nav-container">
-    50	            <a href="index.html" class="nav-brand">☯ AI 사주 천년지기</a>
-    51	            <div class="nav-links">
-    52	                <a href="index.html">홈</a>
-    53	                <a href="pricing.html">가격표</a>
-    54	                <a href="mypage.html">마이페이지</a>
-    55	            </div>
-    56	        </div>
-    57	    </nav>
-    58	    <section class="result-header">
-    59	        <h1>🎴 사주팔자 결과</h1>
-    60	        <div class="user-info">생년월일: <span id="birthdate">-</span> (<span id="calendar">-</span>) | 성별: <span id="gender">-</span></div>
-    61	    </section>
-    62	    <div class="result-container">
-    63	        <div class="result-card">
-    64	            <h2 class="section-title">⭐ 당신의 사주팔자</h2>
-    65	            <div class="saju-table">
-    66	                <div class="saju-column"><h3>時柱 (시주)</h3><div class="hanja" id="time-sky">甲</div><div class="hanja" id="time-ground">子</div><div class="element" id="time-element">木 水</div></div>
-    67	                <div class="saju-column"><h3>日柱 (일주)</h3><div class="hanja" id="day-sky">丙</div><div class="hanja" id="day-ground">午</div><div class="element" id="day-element">火 火</div></div>
-    68	                <div class="saju-column"><h3>月柱 (월주)</h3><div class="hanja" id="month-sky">戊</div><div class="hanja" id="month-ground">寅</div><div class="element" id="month-element">土 木</div></div>
-    69	                <div class="saju-column"><h3>年柱 (연주)</h3><div class="hanja" id="year-sky">庚</div><div class="hanja" id="year-ground">申</div><div class="element" id="year-element">金 金</div></div>
-    70	            </div>
-    71	        </div>
-    72	        <div class="result-card">
-    73	            <h2 class="section-title">👤 일간 (日干) 분석</h2>
-    74	            <div class="analysis-section">
-    75	                <div class="analysis-item">
-    76	                    <h4 id="day-master-title">🔥 당신의 일간: 丙火 (병화)</h4>
-    77	                    <p id="day-master-desc">병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다.</p>
-    78	                </div>
-    79	            </div>
-    80	        </div>
-    81	        <div class="result-card">
-    82	            <h2 class="section-title">📊 오행 (五行) 균형</h2>
-    83	            <div class="analysis-section">
-    84	                <div class="fortune-bar" data-element="木"><div class="fortune-bar-label"><span>🌳 木 (목)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:20%">20%</div></div></div>
-    85	                <div class="fortune-bar" data-element="火"><div class="fortune-bar-label"><span>🔥 火 (화)</span><span class="percent">35%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:35%">35%</div></div></div>
-    86	                <div class="fortune-bar" data-element="土"><div class="fortune-bar-label"><span>🏔️ 土 (토)</span><span class="percent">15%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:15%">15%</div></div></div>
-    87	                <div class="fortune-bar" data-element="金"><div class="fortune-bar-label"><span>⚙️ 金 (금)</span><span class="percent">20%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:20%">20%</div></div></div>
-    88	                <div class="fortune-bar" data-element="水"><div class="fortune-bar-label"><span>💧 水 (수)</span><span class="percent">10%</span></div><div class="fortune-bar-bg"><div class="fortune-bar-fill" style="width:10%">10%</div></div></div>
-    89	            </div>
-    90	        </div>
-    91	        <div class="action-buttons">
-    92	            <a href="index.html" class="action-btn btn-secondary">🏠 홈으로</a>
-    93	            <a href="pricing.html" class="action-btn btn-gold">👑 프리미엄 분석</a>
-    94	            <a href="ai-chat.html" class="action-btn btn-primary">🤖 AI 상담하기</a>
-    95	        </div>
-    96	    </div>
-    97	    <footer class="footer">
-    98	        <p style="margin-bottom: 10px; font-size: 14px; font-weight: 500;"><strong>큐브박스</strong> | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
-    99	        <p style="font-size: 13px; color: rgba(255,255,255,0.6);">전화: 0502-1909-7788 | 팩스: 0504-150-7783 | 이메일: aisaju1000@gmail.com</p>
-   100	        <p style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5);">© 2026 AI 사주 천년지기. All rights reserved.</p>
-   101	    </footer>
-   102	    <script>
-   103	const G=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],GN=['갑','을','병','정','무','기','경','신','임','계'],
-   104	Z=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'],ZN=['자','축','인','묘','진','사','오','미','신','유','술','해'],
-   105	E={'甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'水','癸':'水','子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
-   106	
-   107	function yearPillar(y,m,d){let sy=y;if(m===1||(m===2&&d<4))sy--;const o=(sy-1924+60)%60;return{cheongan:G[o%10],jiji:Z[o%12],cheongName:GN[o%10],jijiName:ZN[o%12]};}
-   108	function monthPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getMonthInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const mji=(m+1)%12,mgi=(G.indexOf(yearPillar(y,m,d).cheongan)*2+m)%10;return{cheongan:G[mgi],jiji:Z[mji],cheongName:GN[mgi],jijiName:ZN[mji]};}
-   109	function dayPillar(y,m,d){if(typeof Solar!=='undefined'){try{const s=Solar.fromYmd(y,m,d),l=s.getLunar(),gz=l.getDayInGanZhi(),g=gz[0],j=gz[1],gi=G.indexOf(g),ji=Z.indexOf(j);if(gi>=0&&ji>=0)return{cheongan:g,jiji:j,cheongName:GN[gi],jijiName:ZN[ji]};}catch(e){}}const base=new Date(1900,0,1),target=new Date(y,m-1,d),diff=Math.floor((target-base)/864e5),gi=(6+diff)%10,ji=(4+diff)%12;return{cheongan:G[gi<0?gi+10:gi],jiji:Z[ji<0?ji+12:ji],cheongName:GN[gi<0?gi+10:gi],jijiName:ZN[ji<0?ji+12:ji]};}
-   110	
-   111	// 🔥 전통 만세력 시간 구간 적용 (30분 단위)
-   112	function hourPillar(dc,h,min=0){
-   113	    const dci=G.indexOf(dc);
-   114	    // 시간을 분 단위로 변환 (예: 17시 20분 = 1040분)
-   115	    const totalMin=h*60+min;
-   116	    
-   117	    // 전통 만세력 시간 구간 (30분 단위)
-   118	    // 子時: 23:30-01:29 (1410-89분, 또는 0-89분)
-   119	    // 丑時: 01:30-03:29 (90-209분)
-   120	    // 寅時: 03:30-05:29 (210-329분)
-   121	    // 卯時: 05:30-07:29 (330-449분)
-   122	    // 辰時: 07:30-09:29 (450-569분)
-   123	    // 巳時: 09:30-11:29 (570-689분)
-   124	    // 午時: 11:30-13:29 (690-809분)
-   125	    // 未時: 13:30-15:29 (810-929분)
-   126	    // 申時: 15:30-17:29 (930-1049분) ✅ 17시 20분 포함!
-   127	    // 酉時: 17:30-19:29 (1050-1169분)
-   128	    // 戌時: 19:30-21:29 (1170-1289분)
-   129	    // 亥時: 21:30-23:29 (1290-1409분)
-   130	    
-   131	    let hji;
-   132	    if(totalMin>=1410||totalMin<90)hji=0;        // 子時 23:30-01:29
-   133	    else if(totalMin>=90&&totalMin<210)hji=1;    // 丑時 01:30-03:29
-   134	    else if(totalMin>=210&&totalMin<330)hji=2;   // 寅時 03:30-05:29
-   135	    else if(totalMin>=330&&totalMin<450)hji=3;   // 卯時 05:30-07:29
-   136	    else if(totalMin>=450&&totalMin<570)hji=4;   // 辰時 07:30-09:29
-   137	    else if(totalMin>=570&&totalMin<690)hji=5;   // 巳時 09:30-11:29
-   138	    else if(totalMin>=690&&totalMin<810)hji=6;   // 午時 11:30-13:29
-   139	    else if(totalMin>=810&&totalMin<930)hji=7;   // 未時 13:30-15:29
-   140	    else if(totalMin>=930&&totalMin<1050)hji=8;  // 申時 15:30-17:29 ✅
-   141	    else if(totalMin>=1050&&totalMin<1170)hji=9; // 酉時 17:30-19:29
-   142	    else if(totalMin>=1170&&totalMin<1290)hji=10;// 戌時 19:30-21:29
-   143	    else hji=11;                                 // 亥時 21:30-23:29
-   144	    
-   145	    const hgi=((dci%5)*2+hji)%10;
-   146	    return{cheongan:G[hgi],jiji:Z[hji],cheongName:GN[hgi],jijiName:ZN[hji]};
-   147	}
-   148	
-   149	const sd=JSON.parse(localStorage.getItem('sajuData')||'{}');
-   150	if(sd.birthdate){
-   151	    document.getElementById('birthdate').textContent=sd.birthdate;
-   152	    document.getElementById('calendar').textContent=sd.calendar==='solar'?'양력':'음력';
-   153	    document.getElementById('gender').textContent=sd.gender==='male'?'남성':'여성';
-   154	    let [y,m,d]=sd.birthdate.split('-').map(Number);
-   155	    
-   156	    // 시간 파싱: "17", "17:20", "16" 등 지원
-   157	    let h=12,min=0;
-   158	    if(sd.hour){
-   159	        const hourStr=String(sd.hour);
-   160	        if(hourStr.includes(':')){
-   161	            const [hh,mm]=hourStr.split(':').map(Number);
-   162	            h=hh;min=mm;
-   163	        }else{
-   164	            h=parseInt(hourStr);
-   165	        }
-   166	    }
-   167	    
-   168	    const isL=sd.calendar==='lunar';
-   169	    if(isL&&typeof Lunar!=='undefined'){try{const l=Lunar.fromYmd(y,m,d),s=l.getSolar();y=s.getYear();m=s.getMonth();d=s.getDay();}catch(e){}}
-   170	    const yp=yearPillar(y,m,d),mp=monthPillar(y,m,d),dp=dayPillar(y,m,d),hp=hourPillar(dp.cheongan,h,min);
-   171	    
-   172	    console.log('🕐 시간 정보:', {hour:h, minute:min, totalMin:h*60+min});
-   173	    console.log('🔮 시주 계산 결과:', hp);
-   174	    
-   175	    document.getElementById('year-sky').textContent=yp.cheongan;
-   176	    document.getElementById('year-ground').textContent=yp.jiji;
-   177	    document.getElementById('year-element').textContent=E[yp.cheongan]+' '+E[yp.jiji];
-   178	    document.getElementById('month-sky').textContent=mp.cheongan;
-   179	    document.getElementById('month-ground').textContent=mp.jiji;
-   180	    document.getElementById('month-element').textContent=E[mp.cheongan]+' '+E[mp.jiji];
-   181	    document.getElementById('day-sky').textContent=dp.cheongan;
-   182	    document.getElementById('day-ground').textContent=dp.jiji;
-   183	    document.getElementById('day-element').textContent=E[dp.cheongan]+' '+E[dp.jiji];
-   184	    document.getElementById('time-sky').textContent=hp.cheongan;
-   185	    document.getElementById('time-ground').textContent=hp.jiji;
-   186	    document.getElementById('time-element').textContent=E[hp.cheongan]+' '+E[hp.jiji];
-   187	    const dm=dp.cheongan,dme=E[dm],ee={'木':'🌳','火':'🔥','土':'🏔️','金':'⚙️','水':'💧'};
-   188	    document.getElementById('day-master-title').innerHTML=`${ee[dme]} 당신의 일간: ${dm}${dme} (${dp.cheongName}${dme})`;
-   189	    const desc={'甲':'갑목은 큰 나무와 같은 성격으로, 곧고 정직하며 리더십이 강합니다.','乙':'을목은 덩굴과 같은 성격으로, 유연하고 적응력이 뛰어납니다.','丙':'병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다.','丁':'정화는 촛불과 같은 성격으로, 세심하고 따뜻한 마음을 가졌습니다.','戊':'무토는 산과 같은 성격으로, 안정적이고 믿음직합니다.','己':'기토는 대지와 같은 성격으로, 포용력이 크고 실용적입니다.','庚':'경금은 바위와 같은 성격으로, 강직하고 의지가 강합니다.','辛':'신금은 보석과 같은 성격으로, 세련되고 예민합니다.','壬':'임수는 큰 강과 같은 성격으로, 활동적이고 지혜롭습니다.','癸':'계수는 빗물과 같은 성격으로, 섬세하고 통찰력이 뛰어납니다.'};
-   190	    document.getElementById('day-master-desc').textContent=desc[dm];
-   191	    const ec={'木':0,'火':0,'土':0,'金':0,'水':0};
-   192	    [yp.cheongan,yp.jiji,mp.cheongan,mp.jiji,dp.cheongan,dp.jiji,hp.cheongan,hp.jiji].forEach(c=>{const e=E[c];if(e)ec[e]++;});
-   193	    const ep={};Object.keys(ec).forEach(k=>ep[k]=Math.round(ec[k]/8*100));
-   194	    document.querySelectorAll('.fortune-bar').forEach(b=>{const el=b.getAttribute('data-element'),pc=ep[el];b.querySelector('.percent').textContent=`${pc}%`;b.querySelector('.fortune-bar-fill').style.width=`${pc}%`;b.querySelector('.fortune-bar-fill').textContent=`${pc}%`;});
-   195	    
-   196	    // 🔥 계산된 사주팔자 정보를 localStorage에 다시 저장 (AI 상담 연동용)
-   197	    sd.yearPillar = `${yp.cheongan}${yp.jiji} (${yp.cheongName}${yp.jijiName})`;
-   198	    sd.monthPillar = `${mp.cheongan}${mp.jiji} (${mp.cheongName}${mp.jijiName})`;
-   199	    sd.dayPillar = `${dp.cheongan}${dp.jiji} (${dp.cheongName}${dp.jijiName})`;
-   200	    sd.hourPillar = `${hp.cheongan}${hp.jiji} (${hp.cheongName}${hp.jijiName})`;
-   201	    sd.dayMaster = `${dm}${dme}`;
-   202	    localStorage.setItem('sajuData', JSON.stringify(sd));
-   203	    console.log('✅ 사주 정보 저장 완료:', sd);
-   204	}
-   205	window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.fortune-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>b.style.width=w,100);});},500);});
-   206	
-   207	// ===== Global Error Handler =====
-   208	window.addEventListener('error', function(e) {
-   209	    // aisaju1000.com 외의 스크립트 에러 무시
-   210	    if (e.filename && !e.filename.includes('aisaju1000.com')) {
-   211	        e.preventDefault();
-   212	        return false;
-   213	    }
-   214	});
-   215	
-   216	console.log('✅ 사주팔자 결과 페이지 로드 완료');
-   217	    </script>
-   218	</body>
-   219	</html>
-   220	
+     7	    <meta name="description" content="AI 기반 정통 사주팔자 분석 결과를 확인하세요.">
+     8	    
+     9	    <!-- Favicon -->
+    10	    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    11	    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    12	    
+    13	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    14	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    15	    
+    16	    <!-- Lunar JavaScript Library -->
+    17	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+    18	    
+    19	    <style>
+    20	        * {
+    21	            margin: 0;
+    22	            padding: 0;
+    23	            box-sizing: border-box;
+    24	        }
+    25	
+    26	        body {
+    27	            font-family: 'Noto Sans KR', sans-serif;
+    28	            line-height: 1.6;
+    29	            color: #333;
+    30	            background: #f5f5f5;
+    31	        }
+    32	
+    33	        /* ===== 네비게이션 ===== */
+    34	        .navbar {
+    35	            background: #1a1a1a;
+    36	            padding: 1rem 0;
+    37	            position: sticky;
+    38	            top: 0;
+    39	            z-index: 1000;
+    40	            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    41	        }
+    42	        
+    43	        .nav-container {
+    44	            max-width: 1200px;
+    45	            margin: 0 auto;
+    46	            padding: 0 20px;
+    47	            display: flex;
+    48	            justify-content: space-between;
+    49	            align-items: center;
+    50	        }
+    51	        
+    52	        .nav-brand {
+    53	            color: #d4af37;
+    54	            text-decoration: none;
+    55	            font-size: 1.5rem;
+    56	            font-weight: 700;
+    57	            font-family: 'Noto Serif KR', serif;
+    58	            display: flex;
+    59	            align-items: center;
+    60	            gap: 0.5rem;
+    61	        }
+    62	        
+    63	        .hamburger {
+    64	            display: none;
+    65	            flex-direction: column;
+    66	            cursor: pointer;
+    67	            gap: 4px;
+    68	        }
+    69	        
+    70	        .hamburger span {
+    71	            width: 25px;
+    72	            height: 3px;
+    73	            background: #d4af37;
+    74	            border-radius: 3px;
+    75	            transition: all 0.3s ease;
+    76	        }
+    77	        
+    78	        .nav-menu {
+    79	            display: flex;
+    80	            list-style: none;
+    81	            gap: 2rem;
+    82	            align-items: center;
+    83	        }
+    84	        
+    85	        .nav-menu a {
+    86	            color: white;
+    87	            text-decoration: none;
+    88	            font-weight: 500;
+    89	            transition: color 0.3s ease;
+    90	            padding: 0.5rem 0;
+    91	        }
+    92	        
+    93	        .nav-menu a:hover {
+    94	            color: #d4af37;
+    95	        }
+    96	        
+    97	        .dropdown {
+    98	            position: relative;
+    99	        }
+   100	        
