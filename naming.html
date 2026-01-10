@@ -1,100 +1,237 @@
- 1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>작명/개명 - AI 사주 천년지기</title>
-     7	    <link rel="stylesheet" href="css/style.css">
-     8	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     9	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    10	    <style>
-    11	        .naming-hero { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 4rem 0; color: white; text-align: center; }
-    12	        .naming-form { background: white; border-radius: 20px; padding: 2.5rem; margin: -2rem auto 3rem; max-width: 700px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-    13	        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-    14	        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; }
-    15	        .form-group input, .form-group select { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; }
-    16	        .btn-generate { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
-    17	        .name-card { background: white; border-radius: 15px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    18	        .name-hanja { font-size: 2rem; font-weight: 700; color: #f5576c; margin-bottom: 0.5rem; }
-    19	        .score-badge { display: inline-block; padding: 0.5rem 1rem; background: #f093fb; color: white; border-radius: 20px; font-weight: 600; }
-    20	    </style>
-    21	</head>
-    22	<body>
-    23	    <nav class="navbar">
-    24	        <div class="container">
-    25	            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
-    26	            <ul class="nav-menu">
-    27	                <li><a href="index.html">홈</a></li>
-    28	                <li><a href="naming.html" class="active">작명</a></li>
-    29	                <li><a href="pricing.html">프리미엄</a></li>
-    30	            </ul>
-    31	            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
-    32	        </div>
-    33	    </nav>
-    34	
-    35	    <section class="naming-hero">
-    36	        <div class="container">
-    37	            <h1>✍️ AI 작명/개명</h1>
-    38	            <p>성명학 기반 좋은 이름을 추천해드립니다</p>
-    39	        </div>
-    40	    </section>
-    41	
-    42	    <div class="container">
-    43	        <div class="naming-form">
-    44	            <h3 style="margin-bottom: 1.5rem;">정보 입력</h3>
-    45	            <div class="form-row">
-    46	                <div class="form-group">
-    47	                    <label>성(姓)</label>
-    48	                    <input type="text" id="surname" placeholder="김" required>
-    49	                </div>
-    50	                <div class="form-group">
-    51	                    <label>성별</label>
-    52	                    <select id="gender">
-    53	                        <option value="male">남자</option>
-    54	                        <option value="female">여자</option>
-    55	                    </select>
-    56	                </div>
-    57	            </div>
-    58	            <div class="form-row">
-    59	                <div class="form-group">
-    60	                    <label>생년월일</label>
-    61	                    <input type="date" id="birthdate" required>
-    62	                </div>
-    63	                <div class="form-group">
-    64	                    <label>양력/음력</label>
-    65	                    <select id="calendar">
-    66	                        <option value="solar">양력</option>
-    67	                        <option value="lunar">음력</option>
-    68	                    </select>
-    69	                </div>
-    70	            </div>
-    71	            <button class="btn-generate" onclick="generateNames()"><i class="fas fa-wand-magic-sparkles"></i> 이름 추천받기</button>
-    72	        </div>
-    73	
-    74	        <div id="namesResult" style="display:none;">
-    75	            <h2 style="text-align: center; margin: 2rem 0;">추천 이름 (10개)</h2>
-    76	            <div id="namesList"></div>
-    77	        </div>
-    78	    </div>
-    79	
-    80	    <footer class="footer">
-    81	        <div class="container">
-    82	            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
-    83	        </div>
-    84	    </footer>
-    85	
-    86	    <script src="js/page-handler.js"></script>
-    87	    <script>
-    88	        const NAME_POOL_MALE = [
-    89	            { name: '민준', hanja: '敏俊', score: 95, meaning: '민첩하고 준수함' },
-    90	            { name: '지훈', hanja: '智勳', score: 92, meaning: '지혜롭고 공을 세움' },
-    91	            { name: '서준', hanja: '瑞俊', score: 90, meaning: '상서롭고 준수함' },
-    92	            { name: '도윤', hanja: '道允', score: 88, meaning: '도리에 밝고 허락함' },
-    93	            { name: '시우', hanja: '時雨', score: 87, meaning: '때맞춰 내리는 비' },
-    94	            { name: '주원', hanja: '柱元', score: 89, meaning: '기둥이 되는 근본' },
-    95	            { name: '현우', hanja: '賢宇', score: 91, meaning: '어질고 하늘같음' },
-    96	            { name: '준서', hanja: '俊瑞', score: 93, meaning: '준수하고 상서로움' },
-    97	            { name: '은우', hanja: '恩友', score: 86, meaning: '은혜로운 벗' },
-    98	            { name: '건우', hanja: '健宇', score: 88, meaning: '건강하고 넓음' }
-    99	        ];
-   100	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작명/개명 - AI 사주 천년지기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; padding-top: 70px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* 네비게이션 */
+        .navbar { background: #1a1a1a; padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1001; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; z-index: 1001; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 25px; height: 3px; background: #d4af37; margin: 3px 0; transition: 0.3s; border-radius: 3px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-size: 1rem; }
+        .nav-menu a:hover { color: #d4af37; }
+        .dropdown { position: relative; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #2a2a2a; min-width: 200px; border-radius: 8px; padding: 0.5rem 0; margin-top: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { display: block; padding: 0.75rem 1.5rem; color: white; text-decoration: none; transition: background 0.3s; }
+        .dropdown-menu a:hover { background: #3a3a3a; color: #d4af37; }
+        .language-switcher { position: relative; }
+        .lang-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
+        .lang-btn:hover { background: rgba(255,255,255,0.15); border-color: #d4af37; }
+        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; background: #2a2a2a; min-width: 150px; border-radius: 8px; padding: 0.5rem 0; margin-top: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .lang-dropdown.active { display: block; }
+        .lang-option { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.75rem 1rem; background: none; border: none; color: white; cursor: pointer; transition: background 0.3s; }
+        .lang-option:hover { background: #3a3a3a; }
+        .lang-option.active { color: #d4af37; }
+        .lang-option .fa-check { opacity: 0; }
+        .lang-option.active .fa-check { opacity: 1; }
+        .mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 999; padding: 2rem; overflow-y: auto; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu ul { list-style: none; }
+        .mobile-menu li { margin: 1.5rem 0; }
+        .mobile-menu a { color: white; text-decoration: none; font-size: 1.3rem; display: block; padding: 0.5rem 0; transition: color 0.3s; }
+        .mobile-menu a:hover { color: #d4af37; }
+
+        .naming-hero { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 4rem 0; color: white; text-align: center; }
+        .naming-form { background: white; border-radius: 20px; padding: 2.5rem; margin: -2rem auto 3rem; max-width: 700px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; }
+        .btn-generate { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
+        .name-card { background: white; border-radius: 15px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .name-hanja { font-size: 2rem; font-weight: 700; color: #f5576c; margin-bottom: 0.5rem; }
+        .score-badge { display: inline-block; padding: 0.5rem 1rem; background: #f093fb; color: white; border-radius: 20px; font-weight: 600; }
+        footer { background: #1a1a1a; color: white; padding: 3rem 0; text-align: center; margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
+            .hamburger { display: flex; }
+            .nav-menu, .language-switcher { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn"><span class="lang-flag" id="currentFlag">🇰🇷</span><span id="currentLang">한국어</span><i class="fas fa-chevron-down"></i></button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko"><span class="lang-flag">🇰🇷</span> 한국어<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="zh"><span class="lang-flag">🇨🇳</span> 中文<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="ja"><span class="lang-flag">🇯🇵</span> 日本語<i class="fas fa-check"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
+
+    <section class="naming-hero">
+        <div class="container">
+            <h1>✍️ AI 작명/개명</h1>
+            <p>성명학 기반 좋은 이름을 추천해드립니다</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="naming-form">
+            <h3 style="margin-bottom: 1.5rem;">정보 입력</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>성(姓)</label>
+                    <input type="text" id="surname" placeholder="김" required>
+                </div>
+                <div class="form-group">
+                    <label>성별</label>
+                    <select id="gender">
+                        <option value="male">남자</option>
+                        <option value="female">여자</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>생년월일</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label>양력/음력</label>
+                    <select id="calendar">
+                        <option value="solar">양력</option>
+                        <option value="lunar">음력</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-generate" onclick="generateNames()"><i class="fas fa-wand-magic-sparkles"></i> 이름 추천받기</button>
+        </div>
+
+        <div id="namesResult" style="display:none;">
+            <h2 style="text-align: center; margin: 2rem 0;">추천 이름 (10개)</h2>
+            <div id="namesList"></div>
+        </div>
+    </div>
+
+    <footer><p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p></footer>
+
+    <script>
+        var hamburger = document.getElementById('hamburger');
+        var mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', function() { this.classList.toggle('active'); mobileMenu.classList.toggle('active'); });
+        var langBtn = document.getElementById('langBtn');
+        var langDropdown = document.getElementById('langDropdown');
+        langBtn.addEventListener('click', function() { langDropdown.classList.toggle('active'); });
+        document.querySelectorAll('.lang-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                if (lang !== 'ko') { alert('다국어 서비스는 준비 중입니다.'); langDropdown.classList.remove('active'); return; }
+                document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.remove('active'); });
+                this.classList.add('active');
+                langDropdown.classList.remove('active');
+            });
+        });
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.language-switcher')) { langDropdown.classList.remove('active'); }
+        });
+
+        const NAME_POOL_MALE = [
+            { name: '민준', hanja: '敏俊', score: 95, meaning: '민첩하고 준수함' },
+            { name: '지훈', hanja: '智勳', score: 92, meaning: '지혜롭고 공을 세움' },
+            { name: '서준', hanja: '瑞俊', score: 90, meaning: '상서롭고 준수함' },
+            { name: '도윤', hanja: '道允', score: 88, meaning: '도리에 밝고 허락함' },
+            { name: '시우', hanja: '時雨', score: 87, meaning: '때맞춰 내리는 비' },
+            { name: '주원', hanja: '柱元', score: 89, meaning: '기둥이 되는 근본' },
+            { name: '현우', hanja: '賢宇', score: 91, meaning: '어질고 하늘같음' },
+            { name: '준서', hanja: '俊瑞', score: 93, meaning: '준수하고 상서로움' },
+            { name: '은우', hanja: '恩友', score: 86, meaning: '은혜로운 벗' },
+            { name: '건우', hanja: '健宇', score: 88, meaning: '건강하고 넓음' }
+        ];
+
+        const NAME_POOL_FEMALE = [
+            { name: '서연', hanja: '瑞妍', score: 96, meaning: '상서롭고 아름다움' },
+            { name: '지우', hanja: '智優', score: 94, meaning: '지혜롭고 우수함' },
+            { name: '하은', hanja: '夏恩', score: 92, meaning: '여름의 은혜' },
+            { name: '민서', hanja: '敏瑞', score: 90, meaning: '민첩하고 상서로움' },
+            { name: '지안', hanja: '智安', score: 91, meaning: '지혜롭고 편안함' },
+            { name: '수아', hanja: '秀雅', score: 93, meaning: '뛰어나고 우아함' },
+            { name: '유나', hanja: '柔娜', score: 89, meaning: '부드럽고 곱다' },
+            { name: '지윤', hanja: '智允', score: 95, meaning: '지혜롭고 허락함' },
+            { name: '소윤', hanja: '昭允', score: 88, meaning: '밝고 허락함' },
+            { name: '예은', hanja: '睿恩', score: 90, meaning: '슬기롭고 은혜로움' }
+        ];
+
+        function generateNames() {
+            const surname = document.getElementById('surname').value.trim();
+            const gender = document.getElementById('gender').value;
+
+            if (!surname) { alert('성을 입력해주세요.'); return; }
+
+            const names = gender === 'male' ? NAME_POOL_MALE : NAME_POOL_FEMALE;
+            const namesList = document.getElementById('namesList');
+            
+            namesList.innerHTML = names.map(n => `
+                <div class="name-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="name-hanja">${surname}${n.name} (${surname}${n.hanja})</div>
+                            <p style="color: #666; margin: 0.5rem 0;">${n.meaning}</p>
+                        </div>
+                        <div class="score-badge">${n.score}점</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('namesResult').style.display = 'block';
+            document.getElementById('namesResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.addEventListener('error', function(e) { if (e.filename && !e.filename.includes('aisaju1000.com')) { e.preventDefault(); return false; } });
+        console.log('✅ 작명/개명 페이지 로드 완료');
+    </script>
+</body>
+</html>
