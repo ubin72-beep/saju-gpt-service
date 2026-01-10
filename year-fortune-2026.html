@@ -11,7 +11,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans KR', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; padding-top: 70px; }
 
-        /* 네비게이션 */
         .navbar { background: #1a1a1a; padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1001; }
@@ -288,12 +287,150 @@
         });
 
         function showFortune(zodiac) {
-            var zodiacNames = {
-                rat: '🐭 쥐띠', ox: '🐮 소띠', tiger: '🐯 호랑이띠', rabbit: '🐰 토끼띠',
-                dragon: '🐉 용띠', snake: '🐍 뱀띠', horse: '🐴 말띠', sheep: '🐑 양띠',
-                monkey: '🐵 원숭이띠', rooster: '🐓 닭띠', dog: '🐕 개띠', pig: '🐷 돼지띠'
+            var fortunes = {
+                rat: {
+                    name: '🐭 쥐띠',
+                    score: '88점',
+                    rating: '⭐⭐⭐⭐',
+                    summary: '도약의 한 해! 새로운 기회 포착',
+                    overall: '2026년 병오년은 쥐띠에게 새로운 기회가 찾아오는 해입니다. 창의적인 아이디어와 빠른 판단력으로 성공을 거둘 수 있습니다. 대인관계가 활발해지며, 협력을 통한 시너지가 기대됩니다.',
+                    highlights: '• 사업 확장과 투자 기회가 많음<br>• 인맥이 넓어지고 귀인을 만날 가능성 높음<br>• 커리어 전환기, 새로운 도전 추천<br>• 건강관리에 신경 써야 하는 시기',
+                    wealth: '<strong>상반기:</strong> 투자와 부업으로 추가 수입 가능. 신중한 판단 필요.<br><br><strong>하반기:</strong> 안정적인 재정 관리. 부동산 투자 길함.',
+                    love: '인연운이 좋아 새로운 만남의 기회가 많습니다. 솔로는 친구 소개로 좋은 인연을 만날 수 있으며, 기존 관계는 더욱 깊어집니다.',
+                    health: '소화기와 스트레스 관리가 중요합니다. 규칙적인 식사와 충분한 수면을 취하세요.'
+                },
+                ox: {
+                    name: '🐮 소띠',
+                    score: '92점',
+                    rating: '⭐⭐⭐⭐⭐',
+                    summary: '최고의 운세! 성실함이 빛나는 해',
+                    overall: '2026년은 소띠에게 최고의 운세가 찾아오는 해입니다. 그동안의 노력이 결실을 맺으며, 사회적으로 인정받는 시기입니다. 성실함과 인내심이 빛을 발하는 한 해가 될 것입니다.',
+                    highlights: '• 승진과 인정, 사회적 지위 상승<br>• 재물운이 매우 좋음, 투자 수익 기대<br>• 가정 화목, 가족 간 유대 강화<br>• 전반적으로 안정적이고 평화로운 해',
+                    wealth: '<strong>상반기:</strong> 큰 수입이 예상됩니다. 부동산, 주식 투자 길함.<br><br><strong>하반기:</strong> 안정적인 재산 증식. 저축과 재테크 추천.',
+                    love: '기존 관계가 결혼으로 이어질 가능성이 높습니다. 솔로는 직장이나 모임에서 인연을 만날 수 있습니다.',
+                    health: '전체적으로 건강한 한 해입니다. 다만 과로를 피하고 적절한 휴식을 취하세요.'
+                },
+                tiger: {
+                    name: '🐯 호랑이띠',
+                    score: '85점',
+                    rating: '⭐⭐⭐⭐',
+                    summary: '도전과 모험! 용감하게 나아가는 해',
+                    overall: '2026년은 호랑이띠에게 도전과 변화의 해입니다. 새로운 프로젝트나 사업에 뛰어들기 좋은 시기이며, 과감한 결단이 성공으로 이어질 것입니다. 리더십을 발휘할 기회가 많습니다.',
+                    highlights: '• 새로운 사업이나 프로젝트 시작하기 좋음<br>• 리더십을 인정받아 승진 가능성 높음<br>• 해외 출장이나 여행 기회 많음<br>• 인간관계에서 주도권을 갖게 됨',
+                    wealth: '<strong>상반기:</strong> 투자와 사업 확장으로 수입 증가. 과감한 결정 필요.<br><br><strong>하반기:</strong> 안정적인 수입 유지. 불필요한 지출 줄이기.',
+                    love: '매력이 돋보이는 시기로 이성의 관심을 많이 받습니다. 적극적인 표현이 좋은 결과를 가져옵니다.',
+                    health: '활동량이 많아 피로가 쌓일 수 있습니다. 충분한 휴식과 규칙적인 운동이 필요합니다.'
+                },
+                rabbit: {
+                    name: '🐰 토끼띠',
+                    score: '78점',
+                    rating: '⭐⭐⭐',
+                    summary: '안정과 조화! 차분하게 준비하는 해',
+                    overall: '2026년은 토끼띠에게 안정과 조화를 추구하는 해입니다. 급한 결정보다는 신중하게 준비하고 계획하는 것이 좋습니다. 대인관계에서 조화를 이루며 평화로운 한 해를 보낼 수 있습니다.',
+                    highlights: '• 차분하고 신중한 준비가 필요한 시기<br>• 대인관계에서 조율 능력 발휘<br>• 학업과 자기계발에 집중하기 좋음<br>• 급한 투자나 사업 확장은 신중히',
+                    wealth: '<strong>상반기:</strong> 안정적인 수입 유지. 저축 추천.<br><br><strong>하반기:</strong> 소액 투자 가능. 무리한 확장은 피하세요.',
+                    love: '차분하고 온화한 매력으로 좋은 인연을 만날 수 있습니다. 서두르지 말고 천천히 관계를 발전시키세요.',
+                    health: '전반적으로 양호합니다. 규칙적인 생활 습관을 유지하세요.'
+                },
+                dragon: {
+                    name: '🐉 용띠',
+                    score: '95점',
+                    rating: '⭐⭐⭐⭐⭐',
+                    summary: '최상의 운세! 비상하는 한 해',
+                    overall: '2026년은 용띠에게 최상의 운세가 찾아오는 해입니다. 모든 일이 순조롭게 풀리며, 큰 성공을 거둘 수 있는 기회가 많습니다. 카리스마와 리더십이 빛을 발하는 시기입니다.',
+                    highlights: '• 사업과 투자에서 큰 성공 기대<br>• 승진과 포상, 사회적 인정 받음<br>• 해외 진출이나 대규모 프로젝트 추진 가능<br>• 모든 분야에서 호운이 함께 함',
+                    wealth: '<strong>상반기:</strong> 대규모 투자와 사업 확장 적기. 큰 수익 예상.<br><br><strong>하반기:</strong> 안정적인 수익 관리. 재투자 추천.',
+                    love: '강한 카리스마로 이성의 관심을 한 몸에 받습니다. 이상적인 파트너를 만날 확률이 높습니다.',
+                    health: '전체적으로 건강하지만, 과욕을 부리지 말고 적절한 휴식을 취하세요.'
+                },
+                snake: {
+                    name: '🐍 뱀띠',
+                    score: '83점',
+                    rating: '⭐⭐⭐⭐',
+                    summary: '지혜의 해! 통찰력이 빛나는 시기',
+                    overall: '2026년은 뱀띠에게 지혜와 통찰력이 돋보이는 해입니다. 전략적인 사고와 계획으로 목표를 달성할 수 있습니다. 차분하고 냉철한 판단이 성공의 열쇠가 됩니다.',
+                    highlights: '• 전략적 계획과 실행으로 목표 달성<br>• 재테크와 투자에서 좋은 성과<br>• 학문과 연구 분야에서 두각<br>• 신중한 결정이 성공으로 이어짐',
+                    wealth: '<strong>상반기:</strong> 신중한 투자로 안정적인 수익. 재테크 성공.<br><br><strong>하반기:</strong> 장기 투자 시작하기 좋은 시기.',
+                    love: '신비로운 매력으로 이성의 호감을 사게 됩니다. 깊이 있는 대화를 나눌 수 있는 인연을 만날 수 있습니다.',
+                    health: '스트레스 관리가 중요합니다. 명상이나 요가 같은 심신 안정 활동을 추천합니다.'
+                },
+                horse: {
+                    name: '🐴 말띠',
+                    score: '92점',
+                    rating: '⭐⭐⭐⭐⭐',
+                    summary: '본명년! 최고의 도약의 해',
+                    overall: '2026년 병오년은 말띠에게 본명년(本命年)으로, 12년에 한 번 찾아오는 특별한 해입니다. 열정과 활력이 넘치며, 새로운 도전과 변화를 두려워하지 않는 한 해가 될 것입니다.',
+                    highlights: '• 사업운과 재물운이 상승하는 시기<br>• 대인관계가 확장되고 인맥이 늘어남<br>• 승진, 이직 등 커리어 변화 가능성 높음<br>• 건강관리에 특히 신경 써야 하는 해',
+                    wealth: '<strong>상반기:</strong> 투자와 사업 확장에 좋은 시기입니다. 새로운 수입원이 생길 수 있습니다.<br><br><strong>하반기:</strong> 안정적인 재정 관리가 필요합니다. 불필요한 지출을 줄이세요.',
+                    love: '인연운이 좋아 새로운 만남의 기회가 많습니다. 기존 관계는 더욱 깊어지고, 결혼을 고려하는 커플에게는 길한 해입니다.',
+                    health: '과로와 스트레스 관리가 중요합니다. 정기적인 운동과 충분한 휴식을 취하세요.'
+                },
+                sheep: {
+                    name: '🐑 양띠',
+                    score: '75점',
+                    rating: '⭐⭐⭐',
+                    summary: '온화한 운세! 배려와 협력의 해',
+                    overall: '2026년은 양띠에게 온화하고 부드러운 운세가 찾아오는 해입니다. 혼자보다는 협력과 팀워크를 통해 더 큰 성과를 낼 수 있습니다. 배려심과 공감 능력이 빛을 발하는 시기입니다.',
+                    highlights: '• 팀워크와 협력이 성공의 열쇠<br>• 예술과 창작 활동에 좋은 시기<br>• 대인관계에서 인정받음<br>• 급한 결정보다 신중한 선택 필요',
+                    wealth: '<strong>상반기:</strong> 안정적인 수입 유지. 협업을 통한 수익 가능.<br><br><strong>하반기:</strong> 소액 저축과 재테크. 무리한 투자는 피하세요.',
+                    love: '온화하고 배려심 있는 모습으로 좋은 인연을 만날 수 있습니다. 진심을 다하면 좋은 결과가 따릅니다.',
+                    health: '심신의 안정이 중요합니다. 충분한 휴식과 여유를 가지세요.'
+                },
+                monkey: {
+                    name: '🐵 원숭이띠',
+                    score: '87점',
+                    rating: '⭐⭐⭐⭐',
+                    summary: '영리함이 빛나는 해! 기회 포착',
+                    overall: '2026년은 원숭이띠에게 영리함과 재치가 돋보이는 해입니다. 빠른 적응력과 창의적인 아이디어로 새로운 기회를 포착할 수 있습니다. 다재다능함을 발휘할 수 있는 시기입니다.',
+                    highlights: '• 창의적인 아이디어로 성공 거둠<br>• 다양한 분야에서 기회 많음<br>• 네트워킹과 인맥 관리 중요<br>• 재빠른 판단과 실행력이 핵심',
+                    wealth: '<strong>상반기:</strong> 다양한 수입원 확보. 부업이나 사이드 프로젝트 추천.<br><br><strong>하반기:</strong> 안정적인 재정 관리. 충동 소비 주의.',
+                    love: '유머와 재치로 이성의 호감을 사게 됩니다. 가벼운 만남보다는 진지한 관계를 추구하세요.',
+                    health: '활동량이 많아 피로가 쌓일 수 있습니다. 규칙적인 생활 습관을 유지하세요.'
+                },
+                rooster: {
+                    name: '🐓 닭띠',
+                    score: '81점',
+                    rating: '⭐⭐⭐⭐',
+                    summary: '성실함의 결실! 계획적인 한 해',
+                    overall: '2026년은 닭띠에게 성실함이 결실을 맺는 해입니다. 꼼꼼한 계획과 실행으로 목표를 달성할 수 있습니다. 원칙을 지키며 정직하게 행동하면 좋은 결과가 따릅니다.',
+                    highlights: '• 계획적인 실행으로 목표 달성<br>• 직장에서 인정받아 승진 가능성<br>• 재정 관리 능력 발휘<br>• 성실함과 정직함이 빛나는 시기',
+                    wealth: '<strong>상반기:</strong> 안정적인 수입과 저축. 계획적인 재정 관리.<br><br><strong>하반기:</strong> 부동산이나 장기 투자 검토 가능.',
+                    love: '진지하고 성실한 태도로 좋은 인연을 만날 수 있습니다. 솔직한 대화가 관계를 돈독하게 만듭니다.',
+                    health: '규칙적인 생활 습관이 건강을 지켜줍니다. 정기 검진을 받으세요.'
+                },
+                dog: {
+                    name: '🐕 개띠',
+                    score: '76점',
+                    rating: '⭐⭐⭐',
+                    summary: '충실함의 가치! 신뢰가 쌓이는 해',
+                    overall: '2026년은 개띠에게 충실함과 신뢰가 중요한 해입니다. 주변 사람들과의 관계에서 의리를 지키면 좋은 결과가 따릅니다. 정직하고 성실한 태도가 인정받는 시기입니다.',
+                    highlights: '• 신뢰와 의리로 인정받음<br>• 안정적인 직장 생활과 수입<br>• 가족과 친구 관계 돈독<br>• 급한 변화보다 현상 유지 추천',
+                    wealth: '<strong>상반기:</strong> 안정적인 수입 유지. 큰 변화는 피하세요.<br><br><strong>하반기:</strong> 저축과 안정적인 재테크 추천.',
+                    love: '진실되고 충실한 태도로 좋은 인연을 만날 수 있습니다. 기존 관계는 더욱 돈독해집니다.',
+                    health: '스트레스 관리와 충분한 휴식이 필요합니다. 산책이나 가벼운 운동을 추천합니다.'
+                },
+                pig: {
+                    name: '🐷 돼지띠',
+                    score: '90점',
+                    rating: '⭐⭐⭐⭐⭐',
+                    summary: '풍요의 해! 복이 들어오는 시기',
+                    overall: '2026년은 돼지띠에게 풍요와 행복이 찾아오는 해입니다. 재물운이 좋아 수입이 증가하고, 대인관계도 원만합니다. 복이 많이 들어오는 한 해가 될 것입니다.',
+                    highlights: '• 재물운이 매우 좋음, 횡재수도 있음<br>• 인간관계 원만, 도움 받을 일 많음<br>• 사업 확장과 투자에 좋은 시기<br>• 가정 화목, 경사 많은 해',
+                    wealth: '<strong>상반기:</strong> 큰 수입 예상. 투자와 사업 확장 길함.<br><br><strong>하반기:</strong> 안정적인 재산 증식. 부동산 투자 추천.',
+                    love: '풍부한 감성과 따뜻한 마음으로 좋은 인연을 만날 수 있습니다. 결혼운도 매우 좋습니다.',
+                    health: '전체적으로 건강하지만, 과식을 주의하고 규칙적인 운동을 하세요.'
+                }
             };
-            document.getElementById('zodiacTitle').textContent = zodiacNames[zodiac] + ' 2026년 운세';
+
+            var data = fortunes[zodiac];
+            document.getElementById('zodiacTitle').textContent = data.name + ' 2026년 운세';
+            document.querySelector('.fortune-summary .score').textContent = data.score;
+            document.querySelector('.fortune-summary .rating').textContent = data.rating;
+            document.querySelector('.fortune-summary p').innerHTML = '<strong>' + data.summary + '</strong>';
+            document.querySelectorAll('.section-content')[0].innerHTML = '<p>' + data.overall + '</p><div class="highlight-box"><strong>✨ 주요 특징</strong><br>' + data.highlights + '</div>';
+            document.querySelectorAll('.section-content')[1].innerHTML = '<div class="highlight-box">' + data.wealth + '</div>';
+            document.querySelectorAll('.section-content')[2].innerHTML = '<p>' + data.love + '</p>';
+            document.querySelectorAll('.section-content')[3].innerHTML = '<p>' + data.health + '</p>';
             document.getElementById('resultCard').classList.add('show');
             setTimeout(() => { document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
         }
