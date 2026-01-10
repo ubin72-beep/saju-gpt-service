@@ -162,6 +162,12 @@
             margin-left: auto;
         }
         
+        @media (max-width: 768px) {
+            .language-switcher {
+                display: none !important;
+            }
+        }
+       
         .lang-btn {
             background: transparent;
             border: 2px solid #d4af37;
@@ -232,15 +238,17 @@
         .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
         .lang-option.active i { display: inline; }
         
-        /* 햄버거 메뉴 (모바일) */
+               /* 햄버거 메뉴 (모바일) */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
             padding: 10px;
             margin-right: 15px;
+            position: relative;
+            z-index: 10001;
         }
-        
+     
         .hamburger span {
             width: 25px;
             height: 3px;
@@ -262,7 +270,7 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
         
-        /* 모바일 메뉴 */
+                /* 모바일 메뉴 */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -273,10 +281,10 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
-            z-index: 999;
+            z-index: 10000;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
+       
         .mobile-menu.active {
             max-height: 500px;
         }
@@ -1534,8 +1542,11 @@
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         
-        if (hamburger && mobileMenu) {
-            hamburger.addEventListener('click', function() {
+                if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🍔 Hamburger clicked!');
                 hamburger.classList.toggle('active');
                 mobileMenu.classList.toggle('active');
             });
