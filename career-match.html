@@ -1,139 +1,643 @@
-     1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>직업 적성 분석 - AI 사주 천년지기</title>
-     7	    <link rel="stylesheet" href="css/style.css">
-     8	    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     9	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    10	    <style>
-    11	        .career-hero { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 4rem 0; text-align: center; }
-    12	        .career-input { background: white; border-radius: 20px; padding: 2rem; margin: -2rem auto 3rem; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-    13	        .btn-analyze { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; }
-    14	        .job-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-    15	        .job-card { background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
-    16	        .job-card:hover { transform: translateY(-5px); }
-    17	        .match-score { font-size: 2.5rem; font-weight: 700; color: #a8edea; text-align: center; margin-bottom: 0.5rem; }
-    18	        .job-title { font-size: 1.3rem; font-weight: 600; text-align: center; margin-bottom: 1rem; color: #333; }
-    19	    </style>
-    20	</head>
-    21	<body>
-    22	    <nav class="navbar">
-    23	        <div class="container">
-    24	            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
-    25	            <ul class="nav-menu">
-    26	                <li><a href="index.html">홈</a></li>
-    27	                <li><a href="career-match.html" class="active">직업 적성</a></li>
-    28	                <li><a href="pricing.html">프리미엄</a></li>
-    29	            </ul>
-    30	            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
-    31	        </div>
-    32	    </nav>
-    33	
-    34	    <section class="career-hero">
-    35	        <div class="container">
-    36	            <h1>💼 AI 직업 적성 매칭</h1>
-    37	            <p>사주 기반 200+ 직업 데이터베이스로 최적의 직업을 찾아드립니다</p>
-    38	        </div>
-    39	    </section>
-    40	
-    41	    <div class="container">
-    42	        <div class="career-input">
-    43	            <h3 style="margin-bottom: 1.5rem; text-align: center;">간단한 정보로 분석하기</h3>
-    44	            <form id="careerForm">
-    45	                <div style="margin-bottom: 1rem;">
-    46	                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">생년월일</label>
-    47	                    <input type="date" id="birthdate" required style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px;">
-    48	                </div>
-    49	                <div style="margin-bottom: 1.5rem;">
-    50	                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">관심 분야 (선택)</label>
-    51	                    <select id="field" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px;">
-    52	                        <option value="all">모든 분야</option>
-    53	                        <option value="tech">기술/IT</option>
-    54	                        <option value="business">경영/비즈니스</option>
-    55	                        <option value="creative">창작/예술</option>
-    56	                        <option value="service">서비스/영업</option>
-    57	                        <option value="education">교육/연구</option>
-    58	                        <option value="medical">의료/보건</option>
-    59	                    </select>
-    60	                </div>
-    61	                <button type="submit" class="btn-analyze"><i class="fas fa-briefcase"></i> 적성 직업 찾기</button>
-    62	            </form>
-    63	        </div>
-    64	
-    65	        <div id="resultsSection" style="display:none;">
-    66	            <h2 style="text-align: center; margin: 3rem 0 2rem;">추천 직업 TOP 6</h2>
-    67	            <div class="job-grid" id="jobGrid"></div>
-    68	        </div>
-    69	    </div>
-    70	
-    71	    <footer class="footer">
-    72	        <div class="container">
-    73	            <div class="footer-bottom"><p>&copy; 2026 Saju2026. All rights reserved.</p></div>
-    74	        </div>
-    75	    </footer>
-    76	
-    77	    <script src="js/page-handler.js"></script>
-    78	    <script>
-    79	        const JOB_DATABASE = [
-    80	            { title: '소프트웨어 개발자', field: 'tech', description: '논리적 사고와 창의성이 요구됩니다', icon: '💻' },
-    81	            { title: 'UX/UI 디자이너', field: 'creative', description: '사용자 경험 설계 전문가', icon: '🎨' },
-    82	            { title: '마케팅 전문가', field: 'business', description: '시장 분석과 전략 수립', icon: '📊' },
-    83	            { title: '교사/교육자', field: 'education', description: '지식 전달과 인재 양성', icon: '👨‍🏫' },
-    84	            { title: '간호사', field: 'medical', description: '환자 돌봄과 의료 지원', icon: '⚕️' },
-    85	            { title: '영업 관리자', field: 'service', description: '고객 관계 및 판매 관리', icon: '💼' },
-    86	            { title: '작가/저널리스트', field: 'creative', description: '스토리텔링과 콘텐츠 제작', icon: '✍️' },
-    87	            { title: '데이터 분석가', field: 'tech', description: '빅데이터 분석 및 인사이트 도출', icon: '📈' },
-    88	            { title: '의사', field: 'medical', description: '진료와 치료 전문가', icon: '🩺' },
-    89	            { title: 'CEO/창업가', field: 'business', description: '비즈니스 리더십과 경영', icon: '🚀' },
-    90	            { title: '연구원', field: 'education', description: '학술 연구와 개발', icon: '🔬' },
-    91	            { title: '음악가/뮤지션', field: 'creative', description: '음악 창작과 공연', icon: '🎵' }
-    92	        ];
-    93	
-    94	        document.getElementById('careerForm').addEventListener('submit', function(e) {
-    95	            e.preventDefault();
-    96	            analyzeCareer();
-    97	        });
-    98	
-    99	        function analyzeCareer() {
-   100	            const field = document.getElementById('field').value;
-   101	            let jobs = field === 'all' ? JOB_DATABASE : JOB_DATABASE.filter(j => j.field === field);
-   102	            
-   103	            jobs = jobs.slice(0, 6).map(job => ({
-   104	                ...job,
-   105	                matchScore: 70 + Math.floor(Math.random() * 30)
-   106	            })).sort((a, b) => b.matchScore - a.matchScore);
-   107	
-   108	            const jobGrid = document.getElementById('jobGrid');
-   109	            jobGrid.innerHTML = jobs.map(job => `
-   110	                <div class="job-card">
-   111	                    <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">${job.icon}</div>
-   112	                    <div class="match-score">${job.matchScore}점</div>
-   113	                    <div class="job-title">${job.title}</div>
-   114	                    <p style="color: #666; text-align: center; line-height: 1.6;">${job.description}</p>
-   115	                    <div style="text-align: center; margin-top: 1rem;">
-   116	                        <span style="padding: 0.5rem 1rem; background: #f0f0f0; border-radius: 20px; font-size: 0.9rem;">${getFieldLabel(job.field)}</span>
-   117	                    </div>
-   118	                </div>
-   119	            `).join('');
-   120	
-   121	            document.getElementById('resultsSection').style.display = 'block';
-   122	            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
-   123	        }
-   124	
-   125	        function getFieldLabel(field) {
-   126	            const labels = {
-   127	                'tech': '기술/IT',
-   128	                'business': '경영/비즈니스',
-   129	                'creative': '창작/예술',
-   130	                'service': '서비스/영업',
-   131	                'education': '교육/연구',
-   132	                'medical': '의료/보건'
-   133	            };
-   134	            return labels[field] || '기타';
-   135	        }
-   136	    </script>
-   137	</body>
-   138	</html>
-   139	
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직업 적성 분석 - AI 사주 천년지기</title>
+    <meta name="description" content="사주 기반 200+ 직업 데이터베이스로 최적의 직업을 찾아드립니다">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #d4af37;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #333;
+        }
+
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
+        }
+
+        .language-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 히어로 섹션 */
+        .career-hero {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-hero::before {
+            content: '💼';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.1;
+            top: -5%;
+            right: -5%;
+        }
+
+        .career-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .career-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 입력 폼 */
+        .career-input {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: -3rem auto 3rem;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .career-input h3 {
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #a8edea;
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 결과 섹션 */
+        #resultsSection {
+            padding: 2rem 0;
+        }
+
+        #resultsSection h2 {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            font-size: 2rem;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .match-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #a8edea;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .job-description {
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .job-field {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .field-badge {
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 푸터 */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* 모바일 메뉴 */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 400px;
+            height: 100%;
+            background: #1a1a1a;
+            z-index: 1000;
+            transition: right 0.3s;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-items {
+            list-style: none;
+        }
+
+        .mobile-menu-items li {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-menu-items a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .mobile-menu-items a:hover {
+            background: rgba(212,175,55,0.2);
+        }
+
+        .mobile-submenu {
+            list-style: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .mobile-submenu a {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .language-switcher {
+                display: none;
+            }
+
+            .career-hero h1 {
+                font-size: 2rem;
+            }
+
+            .career-hero p {
+                font-size: 1rem;
+            }
+
+            .career-input {
+                padding: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        서비스 <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💑 궁합 보기</a>
+                        <a href="saju-matching.html">💕 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li class="language-switcher">
+                    <button class="lang-btn">
+                        🇰🇷 한국어 <i class="fas fa-chevron-down"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 모바일 메뉴 오버레이 -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        </div>
+        <ul class="mobile-menu-items">
+            <li><a href="index.html">🏠 홈</a></li>
+            <li>
+                <a href="#" onclick="return false;">📋 서비스</a>
+                <ul class="mobile-submenu">
+                    <li><a href="compatibility.html">💑 궁합 보기</a></li>
+                    <li><a href="saju-matching.html">💕 궁합 매칭</a></li>
+                    <li><a href="community.html">💬 커뮤니티</a></li>
+                    <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+                </ul>
+            </li>
+            <li><a href="ai-chat.html">💬 AI 상담</a></li>
+            <li><a href="saju-guide.html">📚 명리학 가이드</a></li>
+            <li><a href="blog.html">✍️ 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
+
+    <!-- 히어로 섹션 -->
+    <section class="career-hero">
+        <div class="container">
+            <h1>💼 AI 직업 적성 매칭</h1>
+            <p>사주 기반 200+ 직업 데이터베이스로 최적의 직업을 찾아드립니다</p>
+        </div>
+    </section>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <div class="career-input">
+            <h3>간단한 정보로 분석하기</h3>
+            <form id="careerForm">
+                <div class="form-group">
+                    <label>생년월일</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label>관심 분야 (선택)</label>
+                    <select id="field">
+                        <option value="all">모든 분야</option>
+                        <option value="tech">기술/IT</option>
+                        <option value="business">경영/비즈니스</option>
+                        <option value="creative">창작/예술</option>
+                        <option value="service">서비스/영업</option>
+                        <option value="education">교육/연구</option>
+                        <option value="medical">의료/보건</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-analyze">
+                    <i class="fas fa-briefcase"></i> 적성 직업 찾기 (₩14,900)
+                </button>
+            </form>
+        </div>
+
+        <div id="resultsSection" style="display:none;">
+            <h2>추천 직업 TOP 6</h2>
+            <div class="job-grid" id="jobGrid"></div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 햄버거 메뉴
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+        });
+
+        mobileMenuClose?.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
+        mobileMenuOverlay?.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
+        // 직업 데이터베이스
+        const JOB_DATABASE = [
+            { title: '소프트웨어 개발자', field: 'tech', description: '논리적 사고와 창의성이 요구됩니다', icon: '💻' },
+            { title: 'UX/UI 디자이너', field: 'creative', description: '사용자 경험 설계 전문가', icon: '🎨' },
+            { title: '마케팅 전문가', field: 'business', description: '시장 분석과 전략 수립', icon: '📊' },
+            { title: '교사/교육자', field: 'education', description: '지식 전달과 인재 양성', icon: '👨‍🏫' },
+            { title: '간호사', field: 'medical', description: '환자 돌봄과 의료 지원', icon: '⚕️' },
+            { title: '영업 관리자', field: 'service', description: '고객 관계 및 판매 관리', icon: '💼' },
+            { title: '작가/저널리스트', field: 'creative', description: '스토리텔링과 콘텐츠 제작', icon: '✍️' },
+            { title: '데이터 분석가', field: 'tech', description: '빅데이터 분석 및 인사이트 도출', icon: '📈' },
+            { title: '의사', field: 'medical', description: '진료와 치료 전문가', icon: '🩺' },
+            { title: 'CEO/창업가', field: 'business', description: '비즈니스 리더십과 경영', icon: '🚀' },
+            { title: '연구원', field: 'education', description: '학술 연구와 개발', icon: '🔬' },
+            { title: '음악가/뮤지션', field: 'creative', description: '음악 창작과 공연', icon: '🎵' }
+        ];
+
+        // 폼 제출
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            analyzeCareer();
+        });
+
+        function analyzeCareer() {
+            const field = document.getElementById('field').value;
+            let jobs = field === 'all' ? JOB_DATABASE : JOB_DATABASE.filter(j => j.field === field);
+            
+            jobs = jobs.slice(0, 6).map(job => ({
+                ...job,
+                matchScore: 70 + Math.floor(Math.random() * 30)
+            })).sort((a, b) => b.matchScore - a.matchScore);
+
+            const jobGrid = document.getElementById('jobGrid');
+            jobGrid.innerHTML = jobs.map(job => `
+                <div class="job-card">
+                    <div class="job-icon">${job.icon}</div>
+                    <div class="match-score">${job.matchScore}점</div>
+                    <div class="job-title">${job.title}</div>
+                    <p class="job-description">${job.description}</p>
+                    <div class="job-field">
+                        <span class="field-badge">${getFieldLabel(job.field)}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getFieldLabel(field) {
+            const labels = {
+                'tech': '기술/IT',
+                'business': '경영/비즈니스',
+                'creative': '창작/예술',
+                'service': '서비스/영업',
+                'education': '교육/연구',
+                'medical': '의료/보건'
+            };
+            return labels[field] || '기타';
+        }
+
+        // 전역 에러 핸들러
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return true;
+            }
+        }, true);
+
+        console.log('✅ 직업 적성 분석 페이지 로드 완료');
+    </script>
+</body>
+</html>
