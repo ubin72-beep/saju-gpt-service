@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사주 블로그 - AI 사주 천년지기</title>
-    <meta name="description" content="2026년 병오년 운세, 사주 활용법, 명리학 실전 가이드를 제공하는 블로그">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E☯️%3C/text%3E%3C/svg%3E">
+    <title>사주 가이드 - AI 사주 천년지기</title>
+    <meta name="description" content="2026년 병오년 운세, 사주 기초 지식, 명리학 정보를 제공하는 블로그">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -30,19 +37,23 @@
         
         /* 네비게이션 */
         .navbar {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
+            background: #1a1a1a;
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        .navbar .container {
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        
         .nav-brand {
             color: #d4af37;
             font-size: 1.5rem;
@@ -50,108 +61,252 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
+        
         .nav-menu {
             display: flex;
-            gap: 2rem;
             list-style: none;
+            gap: 2rem;
             align-items: center;
+            margin-left: 3rem;
         }
+        
         .nav-menu li {
             position: relative;
         }
+        
         .nav-menu a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s;
-            display: block;
-            white-space: nowrap;
-        }
-        .nav-menu a:hover {
-            background: rgba(212, 175, 55, 0.2);
-            color: #d4af37;
-        }
-        .nav-menu a.active {
-            background: #d4af37;
-            color: #1a1a1a;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        /* 드롭다운 */
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        .nav-menu a.active {
+            color: #d4af37;
+            font-weight: 700;
+        }
+        
+        /* 드롭다운 메뉴 */
         .dropdown {
             position: relative;
         }
-        .dropdown-toggle {
-            cursor: pointer;
-        }
+        
         .dropdown-menu {
-            display: none;
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(26, 26, 26, 0.98);
-            min-width: 200px;
+            background: white;
+            min-width: 220px;
             border-radius: 10px;
-            margin-top: 0.5rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            padding: 0.5rem 0;
-        }
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-        .dropdown-menu a {
-            padding: 12px 20px;
-            border-radius: 0;
-        }
-        .dropdown-menu a:hover {
-            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            margin-top: 10px;
         }
         
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dropdown-menu a:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #c41e3a;
+            padding-left: 25px;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+            margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .language-switcher {
+                display: none !important;
+            }
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .lang-flag { font-size: 18px; }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        
+        .lang-option:first-child { border-radius: 13px 13px 0 0; }
+        .lang-option:last-child { border-radius: 0 0 13px 13px; }
+        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
+        .lang-option.active { 
+            background: rgba(212, 175, 55, 0.2); 
+            font-weight: 700; 
+            color: #c41e3a; 
+        }
+        .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
+        .lang-option.active i { display: inline; }
+        
+        /* 햄버거 메뉴 (모바일) */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 4px;
+            padding: 15px;
+            margin-right: 0;
+            position: relative;
+            z-index: 10001;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            -webkit-tap-highlight-color: transparent;
         }
+        
+        .hamburger:active {
+            background: rgba(212, 175, 55, 0.3);
+        }
+        
         .hamburger span {
             width: 25px;
             height: 3px;
             background: #d4af37;
+            margin: 3px 0;
+            transition: all 0.3s;
             border-radius: 3px;
-            transition: 0.3s;
         }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* 모바일 메뉴 */
         .mobile-menu {
             display: none;
-            background: rgba(26, 26, 26, 0.98);
             position: fixed;
-            top: 70px;
+            top: 64px;
             left: 0;
             right: 0;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            max-height: calc(100vh - 70px);
-            overflow-y: auto;
+            background: #1a1a1a;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .mobile-menu.active { display: block; }
-        .mobile-menu a {
-            display: block;
-            color: rgba(255,255,255,0.9);
-            padding: 15px;
-            text-decoration: none;
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mobile-menu ul li {
             border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .mobile-menu ul li a {
+            display: block;
+            padding: 15px 20px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
             transition: all 0.3s;
         }
-        .mobile-menu a:hover {
-            background: rgba(212, 175, 55, 0.2);
+        
+        .mobile-menu ul li a:hover {
+            background: rgba(212,175,55,0.1);
             color: #d4af37;
-            padding-left: 25px;
-        }
-        .mobile-menu a.active {
-            background: #d4af37;
-            color: #1a1a1a;
-            font-weight: 600;
+            padding-left: 30px;
         }
         
         /* 히어로 섹션 */
@@ -177,6 +332,13 @@
         .blog-section {
             padding: 60px 20px;
             background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
         }
         
         .blog-grid {
@@ -336,65 +498,149 @@
         
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .hamburger { display: flex; }
-            .hero h1 { font-size: 2rem; }
-            .blog-grid { grid-template-columns: 1fr; }
-            .featured-post { grid-template-columns: 1fr; }
+            .hero {
+                padding: 30px 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                z-index: 10000 !important;
+                background: rgba(212, 175, 55, 0.3) !important;
+                padding: 15px !important;
+                border-radius: 8px !important;
+                cursor: pointer !important;
+                -webkit-tap-highlight-color: transparent !important;
+                width: 50px !important;
+                height: 50px !important;
+            }
+            
+            .hamburger span {
+                display: block !important;
+                width: 25px !important;
+                height: 3px !important;
+                background: #d4af37 !important;
+                margin: 3px 0 !important;
+                border-radius: 3px !important;
+            }
+            
+            .hamburger:active {
+                background: rgba(212, 175, 55, 0.5) !important;
+            }
+            
+            .mobile-menu {
+                display: block !important;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            
             .featured-image {
                 height: 200px;
                 font-size: 4rem;
             }
-            .featured-content { padding: 2rem; }
-            .featured-title { font-size: 1.8rem; }
+            
+            .featured-content {
+                padding: 2rem;
+            }
+            
+            .featured-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 네비게이션 -->
     <nav class="navbar">
-        <div class="container">
+        <div class="nav-container">
             <a href="index.html" class="nav-brand">
                 <i class="fas fa-yin-yang"></i>
                 AI 사주 천년지기
             </a>
-            <div class="hamburger" onclick="toggleMobileMenu()">
+            
+            <!-- 햄버거 메뉴 (모바일) -->
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+            
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">서비스 ▼</a>
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
                     <div class="dropdown-menu">
-                        <a href="compatibility.html">궁합 보기</a>
-                        <a href="tojeong.html">토정비결</a>
-                        <a href="dream.html">꿈해몽</a>
-                        <a href="naming.html">작명·개명</a>
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티 프리미엄</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
                     </div>
                 </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-                <li><a href="blog.html" class="active">📰 블로그</a></li>
+                <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
+                <li><a href="blog.html" class="active"><i class="fas fa-newspaper"></i> 블로그</a></li>
                 <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html">마이페이지</a></li>
             </ul>
+            
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
-
+    
     <!-- 모바일 메뉴 -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html">홈</a>
-        <a href="ai-chat.html">AI 상담</a>
-        <a href="compatibility.html">궁합 보기</a>
-        <a href="tojeong.html">토정비결</a>
-        <a href="dream.html">꿈해몽</a>
-        <a href="naming.html">작명·개명</a>
-        <a href="saju-guide.html">명리학 가이드</a>
-        <a href="blog.html" class="active">블로그</a>
-        <a href="pricing.html">가격표</a>
-        <a href="mypage.html">마이페이지</a>
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
     </div>
 
     <!-- 히어로 섹션 -->
@@ -425,13 +671,17 @@
                     </div>
                 </a>
 
-                <!-- 블로그 카드들 -->
+                <!-- 블로그 카드 1 -->
                 <a href="saju-guide.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📚</div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        📚
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">사주 기초</span>
                         <h3 class="blog-title">사주팔자란 무엇인가?</h3>
-                        <p class="blog-excerpt">사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.</p>
+                        <p class="blog-excerpt">
+                            사주팔자의 기본 개념부터 천간지지, 오행까지 초보자도 쉽게 이해할 수 있도록 설명합니다.
+                        </p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.20</span>
                             <span><i class="fas fa-eye"></i> 1,234</span>
@@ -439,12 +689,17 @@
                     </div>
                 </a>
 
+                <!-- 블로그 카드 2 -->
                 <a href="year-fortune-2026.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">🌟</div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        🌟
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">운세 분석</span>
                         <h3 class="blog-title">12띠별 2026년 운세 총정리</h3>
-                        <p class="blog-excerpt">쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.</p>
+                        <p class="blog-excerpt">
+                            쥐띠부터 돼지띠까지, 12띠별로 2026년 병오년 운세를 상세하게 분석해드립니다.
+                        </p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.18</span>
                             <span><i class="fas fa-eye"></i> 2,456</span>
@@ -452,12 +707,17 @@
                     </div>
                 </a>
 
+                <!-- 블로그 카드 3 -->
                 <a href="compatibility.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">💑</div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        💑
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">궁합</span>
                         <h3 class="blog-title">궁합 보는 법 완벽 가이드</h3>
-                        <p class="blog-excerpt">천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.</p>
+                        <p class="blog-excerpt">
+                            천생연분을 찾는 법! 사주 궁합의 원리와 상생상극 관계를 자세히 알아봅니다.
+                        </p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.15</span>
                             <span><i class="fas fa-eye"></i> 3,789</span>
@@ -465,80 +725,110 @@
                     </div>
                 </a>
 
+                <!-- 블로그 카드 4 -->
                 <a href="career-match.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">🎯</div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                        🎯
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">직업운</span>
                         <h3 class="blog-title">사주로 보는 직업 적성</h3>
-                        <p class="blog-excerpt">내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.</p>
+                        <p class="blog-excerpt">
+                            내 사주에 맞는 직업은? 일간별 직업 적성과 성공하는 업종을 분석해드립니다.
+                        </p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.12</span>
+                            <span><i class="fas fa-eye"></i> 1,567</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 블로그 카드 5 -->
+                <a href="wealth-forecast.html" class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        💰
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category">재물운</span>
+                        <h3 class="blog-title">2026년 재물운 상승 시기</h3>
+                        <p class="blog-excerpt">
+                            병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.
+                        </p>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> 2025.12.10</span>
                             <span><i class="fas fa-eye"></i> 4,123</span>
                         </div>
                     </div>
                 </a>
 
-                <a href="wealth-forecast.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">💰</div>
+                <!-- 블로그 카드 6 -->
+                <a href="love-fortune.html" class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                        ❤️
+                    </div>
                     <div class="blog-content">
-                        <span class="blog-category">재물운</span>
-                        <h3 class="blog-title">2026년 재물운 상승 시기</h3>
-                        <p class="blog-excerpt">병오년에 재물운이 좋은 사주와 시기를 분석하고, 재물운을 높이는 방법을 소개합니다.</p>
+                        <span class="blog-category">연애운</span>
+                        <h3 class="blog-title">사주로 보는 이상형 찾기</h3>
+                        <p class="blog-excerpt">
+                            내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.
+                        </p>
                         <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.10</span>
+                            <span><i class="fas fa-calendar"></i> 2025.12.08</span>
                             <span><i class="fas fa-eye"></i> 5,678</span>
                         </div>
                     </div>
                 </a>
 
-                <a href="love-fortune.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">❤️</div>
+                <!-- 블로그 카드 7 -->
+                <a href="taekil.html" class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                        🏠
+                    </div>
                     <div class="blog-content">
-                        <span class="blog-category">연애운</span>
-                        <h3 class="blog-title">사주로 보는 이상형 찾기</h3>
-                        <p class="blog-excerpt">내 사주와 가장 잘 맞는 이상형은? 궁합이 좋은 사주 조합을 알려드립니다.</p>
+                        <span class="blog-category">택일</span>
+                        <h3 class="blog-title">이사 · 결혼 좋은 날 고르기</h3>
+                        <p class="blog-excerpt">
+                            명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.
+                        </p>
                         <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.08</span>
+                            <span><i class="fas fa-calendar"></i> 2025.12.05</span>
                             <span><i class="fas fa-eye"></i> 2,890</span>
                         </div>
                     </div>
                 </a>
 
-                <a href="taekil.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">🏠</div>
+                <!-- 블로그 카드 8 -->
+                <a href="tojeong.html" class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">
+                        🌙
+                    </div>
                     <div class="blog-content">
-                        <span class="blog-category">택일</span>
-                        <h3 class="blog-title">이사 · 결혼 좋은 날 고르기</h3>
-                        <p class="blog-excerpt">명리학 기반의 택일 방법과 2026년 좋은 날짜를 소개합니다.</p>
+                        <span class="blog-category">토정비결</span>
+                        <h3 class="blog-title">토정비결로 보는 월별 운세</h3>
+                        <p class="blog-excerpt">
+                            2026년 토정비결 월별 운세와 해석 방법을 알아봅니다.
+                        </p>
                         <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.05</span>
+                            <span><i class="fas fa-calendar"></i> 2025.12.03</span>
                             <span><i class="fas fa-eye"></i> 1,234</span>
                         </div>
                     </div>
                 </a>
 
-                <a href="tojeong.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">🌙</div>
-                    <div class="blog-content">
-                        <span class="blog-category">사주 상식</span>
-                        <h3 class="blog-title">음력과 양력, 어떻게 다를까?</h3>
-                        <p class="blog-excerpt">사주를 볼 때 음력과 양력의 차이점과 정확한 사주 계산법을 알아봅니다.</p>
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> 2025.12.03</span>
-                            <span><i class="fas fa-eye"></i> 987</span>
-                        </div>
-                    </div>
-                </a>
-
+                <!-- 블로그 카드 9 -->
                 <a href="saju-guide.html" class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">🎓</div>
+                    <div class="blog-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
+                        🎓
+                    </div>
                     <div class="blog-content">
                         <span class="blog-category">명리학 기초</span>
                         <h3 class="blog-title">천간과 지지 완벽 정리</h3>
-                        <p class="blog-excerpt">사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.</p>
+                        <p class="blog-excerpt">
+                            사주의 기본인 십간십이지에 대해 체계적으로 학습합니다.
+                        </p>
                         <div class="blog-meta">
                             <span><i class="fas fa-calendar"></i> 2025.12.01</span>
-                            <span><i class="fas fa-eye"></i> 1,567</span>
+                            <span><i class="fas fa-eye"></i> 987</span>
                         </div>
                     </div>
                 </a>
@@ -549,25 +839,119 @@
     <!-- 푸터 -->
     <footer class="footer">
         <div class="container">
-            <p>© 2025 AI 사주 천년지기. All rights reserved.</p>
-            <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;">
-                <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a>
-                <span style="margin: 0 5px;">|</span>
-                <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
-                <span style="margin: 0 5px;">|</span>
-                <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a>
-            </p>
+            <p style="margin-bottom: 10px; font-size: 14px; font-weight: 500;"><strong>큐브박스</strong> | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
+            <p style="margin-bottom: 15px; font-size: 13px; opacity: 0.8;">주소: 서울 송파구 송파대로14길 7-10 2층 | 개인정보보호책임자: 김유빈</p>
+            <p>© 2026 AI 사주 천년지기. All rights reserved.</p>
+            <p style="margin-top: 15px; font-size: 13px; opacity: 0.8;"><i class="fas fa-phone"></i> 전화: 0502-1909-7788 | <i class="fas fa-fax"></i> 팩스: 0504-150-7783 | <i class="fas fa-envelope"></i> 이메일: aisaju1000@gmail.com</p>
+            <p style="margin-top: 15px; font-size: 13px; opacity: 0.6;"><a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">이용약관</a> | <a href="privacy.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">개인정보처리방침</a> | <a href="refund.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px;">환불정책</a></p>
         </div>
     </footer>
 
     <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('active');
+        // 햄버거 메뉴 토글
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        console.log('✅ Mobile menu script loaded');
+        console.log('Hamburger:', hamburger);
+        console.log('MobileMenu:', mobileMenu);
+        
+        if (hamburger && mobileMenu) {
+            // 클릭 이벤트
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🍔 Hamburger clicked!');
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // 터치 이벤트 추가 (모바일)
+            hamburger.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('👆 Hamburger touched!');
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // 모바일 메뉴 링크 클릭 시 메뉴 닫기
+            const mobileLinks = document.querySelectorAll('.mobile-menu a');
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+            });
         }
-
+        
+        // 언어 선택기 (다국어 준비 중)
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        
+        if (langBtn && langDropdown) {
+            // 언어 버튼 클릭 이벤트
+            langBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                langDropdown.classList.toggle('active');
+            });
+            
+            // 언어 옵션 클릭 이벤트
+            const langOptions = document.querySelectorAll('.lang-option');
+            
+            langOptions.forEach(function(option) {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // 한국어가 아닌 다른 언어 선택 시
+                    if (lang !== 'ko') {
+                        // 준비 중 알림
+                        alert('🌏 다국어 서비스 준비 중입니다.\n\n현재 한국어만 지원됩니다.\n빠른 시일 내에 ' + 
+                            (lang === 'en' ? 'English' : lang === 'zh' ? '中文' : '日本語') + 
+                            ' 서비스를 제공하겠습니다.\n\n감사합니다! 🙏');
+                        
+                        // 드롭다운 닫기
+                        langDropdown.classList.remove('active');
+                        return;
+                    }
+                    
+                    // 한국어 선택 시에는 그냥 드롭다운만 닫기
+                    langDropdown.classList.remove('active');
+                });
+            });
+            
+            // 외부 클릭시 드롭다운 닫기
+            document.addEventListener('click', function(e) {
+                if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('active');
+                }
+            });
+        }
+        
+        // 부드러운 스크롤
+        try {
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        } catch (err) {
+            console.error('Smooth scroll error:', err);
+        }
+        
+        // 크롬 확장 프로그램 오류 무시
         window.addEventListener('error', function(e) {
-            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+            if (e.message && e.message.indexOf('Extension') > -1) {
                 e.preventDefault();
                 return true;
             }
