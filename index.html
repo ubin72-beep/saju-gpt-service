@@ -238,16 +238,24 @@
         .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
         .lang-option.active i { display: inline; }
         
-               /* 햄버거 메뉴 (모바일) */
+                /* 햄버거 메뉴 (모바일) */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 10px;
-            margin-right: 15px;
+            padding: 15px;                                    ← 10px → 15px
+            margin-right: 0;                                  ← 15px → 0
             position: relative;
             z-index: 10001;
+            background: rgba(212, 175, 55, 0.1);             ← 추가
+            border-radius: 8px;                               ← 추가
+            -webkit-tap-highlight-color: transparent;         ← 추가
         }
+        
+        .hamburger:active {                                   ← 추가
+            background: rgba(212, 175, 55, 0.3);             ← 추가
+        }                                                     ← 추가
+  
      
         .hamburger span {
             width: 25px;
@@ -1541,8 +1549,8 @@
         // 햄버거 메뉴 토글
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-        
                 if (hamburger && mobileMenu) {
+            // 클릭 이벤트
             hamburger.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1550,6 +1558,17 @@
                 hamburger.classList.toggle('active');
                 mobileMenu.classList.toggle('active');
             });
+            
+            // 터치 이벤트 추가 (모바일)                        ← 추가
+            hamburger.addEventListener('touchend', function(e) { ← 추가
+                e.preventDefault();                             ← 추가
+                e.stopPropagation();                            ← 추가
+                console.log('👆 Hamburger touched!');          ← 추가
+                hamburger.classList.toggle('active');           ← 추가
+                mobileMenu.classList.toggle('active');          ← 추가
+            });                                                 ← 추가
+
+                
             
             // 모바일 메뉴 링크 클릭 시 메뉴 닫기
             const mobileLinks = document.querySelectorAll('.mobile-menu a');
