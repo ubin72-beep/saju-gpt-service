@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>커뮤니티 프리미엄 - AI 사주 천년지기</title>
     <meta name="description" content="사주 전문가와 함께하는 커뮤니티! 궁금한 점을 묻고 경험을 공유하며 수익도 얻으세요">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,7 +15,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
             color: #333;
             background: #f5f5f5;
@@ -54,6 +56,21 @@
             gap: 10px;
         }
         
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
         .nav-menu {
             display: flex;
             list-style: none;
@@ -81,6 +98,65 @@
         .nav-menu a.active {
             color: #d4af37;
             font-weight: 600;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #333;
+        }
+
+        .dropdown-menu a:hover {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            color: white;
+        }
+
+        .language-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         /* 히어로 섹션 */
@@ -598,9 +674,102 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.9rem;
         }
+
+        /* 모바일 메뉴 */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 400px;
+            height: 100%;
+            background: #1a1a1a;
+            z-index: 1000;
+            transition: right 0.3s;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu-items {
+            list-style: none;
+        }
+
+        .mobile-menu-items li {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-menu-items a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .mobile-menu-items a:hover {
+            background: rgba(212,175,55,0.2);
+        }
+
+        .mobile-submenu {
+            list-style: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .mobile-submenu a {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
         
         /* 반응형 */
         @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .language-switcher {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 2.2rem;
             }
@@ -621,11 +790,6 @@
                 font-size: 2rem;
             }
             
-            .nav-menu {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-            
             .features-grid,
             .pricing-grid,
             .posts-grid,
@@ -644,17 +808,69 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
-                🔮 AI 사주 천년지기
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
             </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        서비스 <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💑 궁합 보기</a>
+                        <a href="saju-matching.html">💕 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="compatibility.html">궁합 보기</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
                 <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html">마이페이지</a></li>
+                <li class="language-switcher">
+                    <button class="lang-btn">
+                        🇰🇷 한국어 <i class="fas fa-chevron-down"></i>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
+
+    <!-- 모바일 메뉴 오버레이 -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        </div>
+        <ul class="mobile-menu-items">
+            <li><a href="index.html">🏠 홈</a></li>
+            <li>
+                <a href="#" onclick="return false;">📋 서비스</a>
+                <ul class="mobile-submenu">
+                    <li><a href="compatibility.html">💑 궁합 보기</a></li>
+                    <li><a href="saju-matching.html">💕 궁합 매칭</a></li>
+                    <li><a href="community.html">💬 커뮤니티</a></li>
+                    <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+                </ul>
+            </li>
+            <li><a href="ai-chat.html">💬 AI 상담</a></li>
+            <li><a href="saju-guide.html">📚 명리학 가이드</a></li>
+            <li><a href="blog.html">✍️ 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
 
     <!-- 히어로 섹션 -->
     <section class="hero">
@@ -969,12 +1185,32 @@
             </div>
             <div class="footer-copyright">
                 <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
-                <p>사업자등록번호: 123-45-67890 | 통신판매업신고: 2024-서울강남-12345</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // 햄버거 메뉴
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+        hamburger?.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+        });
+
+        mobileMenuClose?.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
+        mobileMenuOverlay?.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
         // FAQ 토글
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
