@@ -1,100 +1,1122 @@
- 1	<!DOCTYPE html>
-     2	<html lang="ko">
-     3	<head>
-     4	    <meta charset="UTF-8">
-     5	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6	    <title>사주팔자 결과 - AI 사주 천년지기</title>
-     7	    <meta name="description" content="AI 기반 정통 사주팔자 분석 결과를 확인하세요.">
-     8	    
-     9	    <!-- Favicon -->
-    10	    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    11	    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    12	    
-    13	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    14	    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    15	    
-    16	    <!-- Lunar JavaScript Library -->
-    17	    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
-    18	    
-    19	    <style>
-    20	        * {
-    21	            margin: 0;
-    22	            padding: 0;
-    23	            box-sizing: border-box;
-    24	        }
-    25	
-    26	        body {
-    27	            font-family: 'Noto Sans KR', sans-serif;
-    28	            line-height: 1.6;
-    29	            color: #333;
-    30	            background: #f5f5f5;
-    31	        }
-    32	
-    33	        /* ===== 네비게이션 ===== */
-    34	        .navbar {
-    35	            background: #1a1a1a;
-    36	            padding: 1rem 0;
-    37	            position: sticky;
-    38	            top: 0;
-    39	            z-index: 1000;
-    40	            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    41	        }
-    42	        
-    43	        .nav-container {
-    44	            max-width: 1200px;
-    45	            margin: 0 auto;
-    46	            padding: 0 20px;
-    47	            display: flex;
-    48	            justify-content: space-between;
-    49	            align-items: center;
-    50	        }
-    51	        
-    52	        .nav-brand {
-    53	            color: #d4af37;
-    54	            text-decoration: none;
-    55	            font-size: 1.5rem;
-    56	            font-weight: 700;
-    57	            font-family: 'Noto Serif KR', serif;
-    58	            display: flex;
-    59	            align-items: center;
-    60	            gap: 0.5rem;
-    61	        }
-    62	        
-    63	        .hamburger {
-    64	            display: none;
-    65	            flex-direction: column;
-    66	            cursor: pointer;
-    67	            gap: 4px;
-    68	        }
-    69	        
-    70	        .hamburger span {
-    71	            width: 25px;
-    72	            height: 3px;
-    73	            background: #d4af37;
-    74	            border-radius: 3px;
-    75	            transition: all 0.3s ease;
-    76	        }
-    77	        
-    78	        .nav-menu {
-    79	            display: flex;
-    80	            list-style: none;
-    81	            gap: 2rem;
-    82	            align-items: center;
-    83	        }
-    84	        
-    85	        .nav-menu a {
-    86	            color: white;
-    87	            text-decoration: none;
-    88	            font-weight: 500;
-    89	            transition: color 0.3s ease;
-    90	            padding: 0.5rem 0;
-    91	        }
-    92	        
-    93	        .nav-menu a:hover {
-    94	            color: #d4af37;
-    95	        }
-    96	        
-    97	        .dropdown {
-    98	            position: relative;
-    99	        }
-   100	        
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주팔자 결과 - AI 사주 천년지기</title>
+    <meta name="description" content="AI 기반 정통 사주팔자 분석 결과를 확인하세요.">
+    
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Noto Serif KR', serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #333;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: #c41e3a;
+        }
+        
+        .language-switcher {
+            position: relative;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            min-width: 150px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+        }
+        
+        .lang-dropdown.active {
+            display: block;
+        }
+        
+        .lang-option {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+            transition: background 0.3s ease;
+        }
+        
+        .lang-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .lang-option i {
+            margin-left: auto;
+            color: #c41e3a;
+            display: none;
+        }
+        
+        .lang-option.active i {
+            display: inline;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            padding: 2rem 0;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background: #f8f9fa;
+            color: #c41e3a;
+        }
+
+        .result-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .result-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .result-header .user-info {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .input-form-container {
+            max-width: 600px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+        }
+
+        .input-form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #c41e3a;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        .result-container {
+            max-width: 1000px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #d4af37;
+            font-weight: 700;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .saju-table {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .saju-column {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+        }
+
+        .saju-column h3 {
+            font-size: 1.1rem;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .saju-column .hanja {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0.5rem 0;
+        }
+
+        .saju-column .element {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .analysis-section {
+            margin-top: 2rem;
+        }
+
+        .analysis-item {
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d4af37;
+        }
+
+        .analysis-item h4 {
+            font-size: 1.2rem;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .analysis-item p {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .fortune-bar {
+            margin-top: 1rem;
+        }
+
+        .fortune-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .fortune-bar-bg {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .fortune-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4e5b5);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: #1a1a1a;
+            font-weight: 700;
+            transition: width 1s ease;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196,30,58,0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #c41e3a;
+            border: 2px solid #c41e3a;
+        }
+
+        .btn-secondary:hover {
+            background: #c41e3a;
+            color: white;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37, #f4e5b5);
+            color: #1a1a1a;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer p {
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .language-switcher {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .saju-table {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .result-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .result-header h1 {
+                font-size: 2rem;
+            }
+
+            .input-form-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+            
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
+
+    <section class="result-header">
+        <h1>🎴 사주팔자 결과</h1>
+        <div class="user-info">
+            <span id="headerInfo">생년월일을 입력하고 사주를 확인하세요</span>
+        </div>
+    </section>
+
+    <div class="input-form-container" id="inputForm">
+        <div class="input-form-card">
+            <h2 class="form-title">📅 사주 정보 입력</h2>
+            <form id="sajuForm">
+                <div class="form-group">
+                    <label for="birthdate">생년월일 *</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="calendar">양력/음력 *</label>
+                    <select id="calendar" required>
+                        <option value="solar">양력</option>
+                        <option value="lunar">음력</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="birthtime">태어난 시간 (선택)</label>
+                    <input type="time" id="birthtime" placeholder="예: 14:30">
+                </div>
+                <div class="form-group">
+                    <label for="gender">성별 *</label>
+                    <select id="gender" required>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+                <button type="submit" class="calculate-btn">
+                    🔮 사주팔자 보기
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="result-container" id="resultContainer">
+        <div class="result-card">
+            <h2 class="section-title">⭐ 당신의 사주팔자</h2>
+            <div class="saju-table">
+                <div class="saju-column">
+                    <h3>時柱 (시주)</h3>
+                    <div class="hanja" id="time-sky">甲</div>
+                    <div class="hanja" id="time-ground">子</div>
+                    <div class="element" id="time-element">木 水</div>
+                </div>
+                <div class="saju-column">
+                    <h3>日柱 (일주)</h3>
+                    <div class="hanja" id="day-sky">丙</div>
+                    <div class="hanja" id="day-ground">午</div>
+                    <div class="element" id="day-element">火 火</div>
+                </div>
+                <div class="saju-column">
+                    <h3>月柱 (월주)</h3>
+                    <div class="hanja" id="month-sky">戊</div>
+                    <div class="hanja" id="month-ground">寅</div>
+                    <div class="element" id="month-element">土 木</div>
+                </div>
+                <div class="saju-column">
+                    <h3>年柱 (연주)</h3>
+                    <div class="hanja" id="year-sky">庚</div>
+                    <div class="hanja" id="year-ground">申</div>
+                    <div class="element" id="year-element">金 金</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-card">
+            <h2 class="section-title">👤 일간 (日干) 분석</h2>
+            <div class="analysis-section">
+                <div class="analysis-item">
+                    <h4 id="day-master-title">🔥 당신의 일간: 丙火 (병화)</h4>
+                    <p id="day-master-desc">병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-card">
+            <h2 class="section-title">📊 오행 (五行) 균형</h2>
+            <div class="analysis-section">
+                <div class="fortune-bar" data-element="木">
+                    <div class="fortune-bar-label">
+                        <span>🌳 木 (목)</span>
+                        <span class="percent">20%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width:20%">20%</div>
+                    </div>
+                </div>
+                <div class="fortune-bar" data-element="火">
+                    <div class="fortune-bar-label">
+                        <span>🔥 火 (화)</span>
+                        <span class="percent">35%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width:35%">35%</div>
+                    </div>
+                </div>
+                <div class="fortune-bar" data-element="土">
+                    <div class="fortune-bar-label">
+                        <span>🏔️ 土 (토)</span>
+                        <span class="percent">15%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width:15%">15%</div>
+                    </div>
+                </div>
+                <div class="fortune-bar" data-element="金">
+                    <div class="fortune-bar-label">
+                        <span>⚙️ 金 (금)</span>
+                        <span class="percent">20%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width:20%">20%</div>
+                    </div>
+                </div>
+                <div class="fortune-bar" data-element="水">
+                    <div class="fortune-bar-label">
+                        <span>💧 水 (수)</span>
+                        <span class="percent">10%</span>
+                    </div>
+                    <div class="fortune-bar-bg">
+                        <div class="fortune-bar-fill" style="width:10%">10%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="index.html" class="action-btn btn-secondary">🏠 홈으로</a>
+            <a href="pricing.html" class="action-btn btn-gold">👑 프리미엄 분석</a>
+            <a href="ai-chat.html" class="action-btn btn-primary">🤖 AI 상담하기</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="terms.html">이용약관</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="refund.html">환불정책</a>
+                <a href="faq.html">자주 묻는 질문</a>
+            </div>
+            <p>
+                <strong>AI 사주 천년지기</strong><br>
+                큐브박스 | 대표: 김미화 | 사업자등록번호: 537-08-03349<br>
+                전화: 0502-1909-7788 | 팩스: 0504-150-7783 | 이메일: aisaju1000@gmail.com<br>
+                © 2026 AI 사주 천년지기. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+
+        hamburger.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('active');
+            }
+        });
+
+        const langOptions = document.querySelectorAll('.lang-option');
+        langOptions.forEach(function(option) {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                const flags = {'ko': '🇰🇷', 'en': '🇺🇸', 'zh': '🇨🇳', 'ja': '🇯🇵'};
+                const names = {'ko': '한국어', 'en': 'English', 'zh': '中文', 'ja': '日本語'};
+                
+                document.getElementById('currentFlag').textContent = flags[lang];
+                document.getElementById('currentLang').textContent = names[lang];
+                
+                langOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                langDropdown.classList.remove('active');
+            });
+        });
+
+        const G = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+        const GN = ['갑','을','병','정','무','기','경','신','임','계'];
+        const Z = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+        const ZN = ['자','축','인','묘','진','사','오','미','신','유','술','해'];
+        const E = {
+            '甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土',
+            '庚':'金','辛':'金','壬':'水','癸':'水','子':'水','丑':'土',
+            '寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土',
+            '申':'金','酉':'金','戌':'土','亥':'水'
+        };
+
+        function yearPillar(y, m, d) {
+            let sy = y;
+            if (m === 1 || (m === 2 && d < 4)) sy--;
+            const o = (sy - 1924 + 60) % 60;
+            return {
+                cheongan: G[o % 10],
+                jiji: Z[o % 12],
+                cheongName: GN[o % 10],
+                jijiName: ZN[o % 12]
+            };
+        }
+
+        function monthPillar(y, m, d) {
+            if (typeof Solar !== 'undefined') {
+                try {
+                    const s = Solar.fromYmd(y, m, d);
+                    const l = s.getLunar();
+                    const gz = l.getMonthInGanZhi();
+                    const g = gz[0], j = gz[1];
+                    const gi = G.indexOf(g), ji = Z.indexOf(j);
+                    if (gi >= 0 && ji >= 0) {
+                        return {
+                            cheongan: g,
+                            jiji: j,
+                            cheongName: GN[gi],
+                            jijiName: ZN[ji]
+                        };
+                    }
+                } catch (e) {
+                    console.error('월주 계산 오류:', e);
+                }
+            }
+            const mji = (m + 1) % 12;
+            const mgi = (G.indexOf(yearPillar(y, m, d).cheongan) * 2 + m) % 10;
+            return {
+                cheongan: G[mgi],
+                jiji: Z[mji],
+                cheongName: GN[mgi],
+                jijiName: ZN[mji]
+            };
+        }
+
+        function dayPillar(y, m, d) {
+            if (typeof Solar !== 'undefined') {
+                try {
+                    const s = Solar.fromYmd(y, m, d);
+                    const l = s.getLunar();
+                    const gz = l.getDayInGanZhi();
+                    const g = gz[0], j = gz[1];
+                    const gi = G.indexOf(g), ji = Z.indexOf(j);
+                    if (gi >= 0 && ji >= 0) {
+                        return {
+                            cheongan: g,
+                            jiji: j,
+                            cheongName: GN[gi],
+                            jijiName: ZN[ji]
+                        };
+                    }
+                } catch (e) {
+                    console.error('일주 계산 오류:', e);
+                }
+            }
+            const base = new Date(1900, 0, 1);
+            const target = new Date(y, m - 1, d);
+            const diff = Math.floor((target - base) / 864e5);
+            const gi = (6 + diff) % 10;
+            const ji = (4 + diff) % 12;
+            return {
+                cheongan: G[gi < 0 ? gi + 10 : gi],
+                jiji: Z[ji < 0 ? ji + 12 : ji],
+                cheongName: GN[gi < 0 ? gi + 10 : gi],
+                jijiName: ZN[ji < 0 ? ji + 12 : ji]
+            };
+        }
+
+        function hourPillar(dc, h, min = 0) {
+            const dci = G.indexOf(dc);
+            const totalMin = h * 60 + min;
+            
+            let hji;
+            if (totalMin >= 1410 || totalMin < 90) hji = 0;
+            else if (totalMin >= 90 && totalMin < 210) hji = 1;
+            else if (totalMin >= 210 && totalMin < 330) hji = 2;
+            else if (totalMin >= 330 && totalMin < 450) hji = 3;
+            else if (totalMin >= 450 && totalMin < 570) hji = 4;
+            else if (totalMin >= 570 && totalMin < 690) hji = 5;
+            else if (totalMin >= 690 && totalMin < 810) hji = 6;
+            else if (totalMin >= 810 && totalMin < 930) hji = 7;
+            else if (totalMin >= 930 && totalMin < 1050) hji = 8;
+            else if (totalMin >= 1050 && totalMin < 1170) hji = 9;
+            else if (totalMin >= 1170 && totalMin < 1290) hji = 10;
+            else hji = 11;
+            
+            const hgi = ((dci % 5) * 2 + hji) % 10;
+            return {
+                cheongan: G[hgi],
+                jiji: Z[hji],
+                cheongName: GN[hgi],
+                jijiName: ZN[hji]
+            };
+        }
+
+        function calculateSaju(birthdate, calendar, birthtime, gender) {
+            let [y, m, d] = birthdate.split('-').map(Number);
+            
+            let h = 12, min = 0;
+            if (birthtime) {
+                const [hh, mm] = birthtime.split(':').map(Number);
+                h = hh;
+                min = mm;
+            }
+            
+            const isLunar = calendar === 'lunar';
+            if (isLunar && typeof Lunar !== 'undefined') {
+                try {
+                    const l = Lunar.fromYmd(y, m, d);
+                    const s = l.getSolar();
+                    y = s.getYear();
+                    m = s.getMonth();
+                    d = s.getDay();
+                } catch (e) {
+                    console.error('음력 변환 오류:', e);
+                }
+            }
+            
+            const yp = yearPillar(y, m, d);
+            const mp = monthPillar(y, m, d);
+            const dp = dayPillar(y, m, d);
+            const hp = hourPillar(dp.cheongan, h, min);
+            
+            return { yp, mp, dp, hp, y, m, d, h, min };
+        }
+
+        function displayResult(data) {
+            const { yp, mp, dp, hp, y, m, d, h, min } = data;
+            
+            const birthdate = document.getElementById('birthdate').value;
+            const calendar = document.getElementById('calendar').value;
+            const gender = document.getElementById('gender').value;
+            const calendarText = calendar === 'solar' ? '양력' : '음력';
+            const genderText = gender === 'male' ? '남성' : '여성';
+            
+            document.getElementById('headerInfo').textContent = 
+                `생년월일: ${birthdate} (${calendarText}) | 성별: ${genderText}`;
+            
+            document.getElementById('year-sky').textContent = yp.cheongan;
+            document.getElementById('year-ground').textContent = yp.jiji;
+            document.getElementById('year-element').textContent = E[yp.cheongan] + ' ' + E[yp.jiji];
+            
+            document.getElementById('month-sky').textContent = mp.cheongan;
+            document.getElementById('month-ground').textContent = mp.jiji;
+            document.getElementById('month-element').textContent = E[mp.cheongan] + ' ' + E[mp.jiji];
+            
+            document.getElementById('day-sky').textContent = dp.cheongan;
+            document.getElementById('day-ground').textContent = dp.jiji;
+            document.getElementById('day-element').textContent = E[dp.cheongan] + ' ' + E[dp.jiji];
+            
+            document.getElementById('time-sky').textContent = hp.cheongan;
+            document.getElementById('time-ground').textContent = hp.jiji;
+            document.getElementById('time-element').textContent = E[hp.cheongan] + ' ' + E[hp.jiji];
+            
+            const dm = dp.cheongan;
+            const dme = E[dm];
+            const ee = {'木':'🌳','火':'🔥','土':'🏔️','金':'⚙️','水':'💧'};
+            document.getElementById('day-master-title').innerHTML = 
+                `${ee[dme]} 당신의 일간: ${dm}${dme} (${dp.cheongName}${dme})`;
+            
+            const desc = {
+                '甲':'갑목은 큰 나무와 같은 성격으로, 곧고 정직하며 리더십이 강합니다.',
+                '乙':'을목은 덩굴과 같은 성격으로, 유연하고 적응력이 뛰어납니다.',
+                '丙':'병화는 태양의 불과 같은 성격으로, 밝고 긍정적이며 리더십이 강합니다.',
+                '丁':'정화는 촛불과 같은 성격으로, 세심하고 따뜻한 마음을 가졌습니다.',
+                '戊':'무토는 산과 같은 성격으로, 안정적이고 믿음직합니다.',
+                '己':'기토는 대지와 같은 성격으로, 포용력이 크고 실용적입니다.',
+                '庚':'경금은 바위와 같은 성격으로, 강직하고 의지가 강합니다.',
+                '辛':'신금은 보석과 같은 성격으로, 세련되고 예민합니다.',
+                '壬':'임수는 큰 강과 같은 성격으로, 활동적이고 지혜롭습니다.',
+                '癸':'계수는 빗물과 같은 성격으로, 섬세하고 통찰력이 뛰어납니다.'
+            };
+            document.getElementById('day-master-desc').textContent = desc[dm];
+            
+            const ec = {'木':0,'火':0,'土':0,'金':0,'水':0};
+            [yp.cheongan, yp.jiji, mp.cheongan, mp.jiji, dp.cheongan, dp.jiji, hp.cheongan, hp.jiji]
+                .forEach(c => {
+                    const e = E[c];
+                    if (e) ec[e]++;
+                });
+            
+            const ep = {};
+            Object.keys(ec).forEach(k => ep[k] = Math.round(ec[k] / 8 * 100));
+            
+            document.querySelectorAll('.fortune-bar').forEach(b => {
+                const el = b.getAttribute('data-element');
+                const pc = ep[el];
+                b.querySelector('.percent').textContent = `${pc}%`;
+                b.querySelector('.fortune-bar-fill').style.width = `${pc}%`;
+                b.querySelector('.fortune-bar-fill').textContent = `${pc}%`;
+            });
+            
+            document.getElementById('inputForm').style.display = 'none';
+            document.getElementById('resultContainer').classList.add('show');
+            
+            const sajuData = {
+                birthdate: document.getElementById('birthdate').value,
+                calendar: calendar,
+                gender: gender,
+                hour: document.getElementById('birthtime').value,
+                yearPillar: `${yp.cheongan}${yp.jiji} (${yp.cheongName}${yp.jijiName})`,
+                monthPillar: `${mp.cheongan}${mp.jiji} (${mp.cheongName}${mp.jijiName})`,
+                dayPillar: `${dp.cheongan}${dp.jiji} (${dp.cheongName}${dp.jijiName})`,
+                hourPillar: `${hp.cheongan}${hp.jiji} (${hp.cheongName}${hp.jijiName})`,
+                dayMaster: `${dm}${dme}`
+            };
+            localStorage.setItem('sajuData', JSON.stringify(sajuData));
+            
+            setTimeout(() => {
+                document.querySelectorAll('.fortune-bar-fill').forEach(b => {
+                    const w = b.style.width;
+                    b.style.width = '0';
+                    setTimeout(() => b.style.width = w, 100);
+                });
+            }, 500);
+        }
+
+        document.getElementById('sajuForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const birthdate = document.getElementById('birthdate').value;
+            const calendar = document.getElementById('calendar').value;
+            const birthtime = document.getElementById('birthtime').value;
+            const gender = document.getElementById('gender').value;
+            
+            if (!birthdate) {
+                alert('생년월일을 입력해주세요.');
+                return;
+            }
+            
+            const data = calculateSaju(birthdate, calendar, birthtime, gender);
+            displayResult(data);
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const sajuData = JSON.parse(localStorage.getItem('sajuData') || '{}');
+            
+            if (sajuData.birthdate) {
+                document.getElementById('birthdate').value = sajuData.birthdate;
+                document.getElementById('calendar').value = sajuData.calendar || 'solar';
+                document.getElementById('birthtime').value = sajuData.hour || '';
+                document.getElementById('gender').value = sajuData.gender || 'male';
+                
+                const data = calculateSaju(
+                    sajuData.birthdate,
+                    sajuData.calendar || 'solar',
+                    sajuData.hour || '',
+                    sajuData.gender || 'male'
+                );
+                displayResult(data);
+            }
+        });
+
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('처리되지 않은 Promise 거부:', e.reason);
+        });
+
+        console.log('✅ 사주팔자 결과 페이지 (독립 실행형) 로드 완료');
+    </script>
+</body>
+</html>
