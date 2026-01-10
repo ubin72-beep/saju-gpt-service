@@ -5,326 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>재물운 분석 - AI 사주 천년지기</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* 기본 스타일 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; padding-top: 70px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
         /* 네비게이션 */
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 20px;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fcb69f;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: #fcb69f;
-        }
-        
-        .nav-actions .btn-login {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #333;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s;
-        }
-        
-        .nav-actions .btn-login:hover {
-            transform: scale(1.05);
-        }
-        
-        /* 히어로 섹션 */
-        .wealth-hero {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 4rem 0;
-            text-align: center;
-        }
-        
-        .wealth-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .wealth-hero p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-        
-        /* 입력 폼 */
-        .wealth-input {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: -2rem auto 3rem;
-            max-width: 600px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        
-        .input-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .input-row input,
-        .input-row select {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-        
-        .input-row input:focus,
-        .input-row select:focus {
-            outline: none;
-            border-color: #fcb69f;
-        }
-        
-        .btn-analyze {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #333;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .btn-analyze:hover {
-            transform: scale(1.05);
-        }
-        
-        /* 차트 컨테이너 */
-        .chart-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            display: none;
-        }
-        
-        .chart-container.active {
-            display: block;
-        }
-        
-        canvas {
-            height: 400px !important;
-        }
-        
-        /* 재물운 팁 */
-        .wealth-tips {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        
-        .tip-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .tip-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .tip-card h3 {
-            color: #fcb69f;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .tip-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        /* 분석 결과 */
-        .wealth-summary {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .wealth-summary h3 {
-            color: #fcb69f;
-            margin-bottom: 1rem;
-        }
-        
-        .peak-periods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .period-card {
-            background: #fff3e0;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .period-card .age {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fcb69f;
-        }
-        
-        .period-card .label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-        
-        /* 푸터 */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 5rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-section h3,
-        .footer-section h4 {
-            margin-bottom: 1rem;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        /* 반응형 */
+        .navbar { background: #1a1a1a; padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1001; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; z-index: 1001; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 25px; height: 3px; background: #d4af37; margin: 3px 0; transition: 0.3s; border-radius: 3px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; font-size: 1rem; }
+        .nav-menu a:hover { color: #d4af37; }
+        .dropdown { position: relative; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: #2a2a2a; min-width: 200px; border-radius: 8px; padding: 0.5rem 0; margin-top: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { display: block; padding: 0.75rem 1.5rem; color: white; text-decoration: none; transition: background 0.3s; }
+        .dropdown-menu a:hover { background: #3a3a3a; color: #d4af37; }
+        .language-switcher { position: relative; }
+        .lang-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
+        .lang-btn:hover { background: rgba(255,255,255,0.15); border-color: #d4af37; }
+        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; background: #2a2a2a; min-width: 150px; border-radius: 8px; padding: 0.5rem 0; margin-top: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .lang-dropdown.active { display: block; }
+        .lang-option { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.75rem 1rem; background: none; border: none; color: white; cursor: pointer; transition: background 0.3s; }
+        .lang-option:hover { background: #3a3a3a; }
+        .lang-option.active { color: #d4af37; }
+        .lang-option .fa-check { opacity: 0; }
+        .lang-option.active .fa-check { opacity: 1; }
+        .mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 999; padding: 2rem; overflow-y: auto; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu ul { list-style: none; }
+        .mobile-menu li { margin: 1.5rem 0; }
+        .mobile-menu a { color: white; text-decoration: none; font-size: 1.3rem; display: block; padding: 0.5rem 0; transition: color 0.3s; }
+        .mobile-menu a:hover { color: #d4af37; }
+
+        .wealth-hero { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 4rem 0; text-align: center; }
+        .wealth-hero h1 { font-size: 3rem; margin-bottom: 1rem; color: #333; }
+        .chart-container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        canvas { max-height: 400px; }
+        .wealth-tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .tip-card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .tip-card h3 { color: #fcb69f; margin-bottom: 1rem; }
+        footer { background: #1a1a1a; color: white; padding: 3rem 0; text-align: center; margin-top: 4rem; }
+
         @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .wealth-hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .input-row {
-                flex-direction: column;
-            }
-            
-            .chart-container {
-                padding: 1rem;
-            }
-            
-            canvas {
-                height: 300px !important;
-            }
-            
-            .wealth-tips {
-                grid-template-columns: 1fr;
-            }
+            body { padding-top: 60px; }
+            .hamburger { display: flex; }
+            .nav-menu, .language-switcher { display: none; }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
-            <div class="logo"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</div>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="wealth-forecast.html" class="active">재물운</a></li>
-                <li><a href="pricing.html">프리미엄</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html">마이페이지</a></li>
             </ul>
-            <div class="nav-actions"><a href="login.html" class="btn-login">로그인</a></div>
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn"><span class="lang-flag" id="currentFlag">🇰🇷</span><span id="currentLang">한국어</span><i class="fas fa-chevron-down"></i></button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko"><span class="lang-flag">🇰🇷</span> 한국어<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span> English<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="zh"><span class="lang-flag">🇨🇳</span> 中文<i class="fas fa-check"></i></button>
+                    <button class="lang-option" data-lang="ja"><span class="lang-flag">🇯🇵</span> 日本語<i class="fas fa-check"></i></button>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
 
     <section class="wealth-hero">
         <div class="container">
@@ -334,250 +119,86 @@
     </section>
 
     <div class="container">
-        <!-- 입력 폼 -->
-        <div class="wealth-input">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">생년월일을 입력하세요</h2>
-            <form id="wealthForm">
-                <div class="input-row">
-                    <input type="number" id="birthYear" placeholder="생년 (예: 1990)" min="1900" max="2024" required>
-                    <input type="number" id="birthMonth" placeholder="월 (1-12)" min="1" max="12" required>
-                    <input type="number" id="birthDay" placeholder="일 (1-31)" min="1" max="31" required>
-                </div>
-                
-                <div style="margin-bottom: 1.5rem;">
-                    <select id="calendar" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                        <option value="solar">양력</option>
-                        <option value="lunar">음력</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn-analyze">
-                    <i class="fas fa-chart-line"></i> 재물운 분석하기
-                </button>
-            </form>
+        <div class="chart-container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">20세~80세 재물운 그래프</h2>
+            <canvas id="wealthChart"></canvas>
         </div>
 
-        <!-- 분석 결과 -->
-        <div id="resultSection">
-            <!-- 요약 -->
-            <div class="wealth-summary" id="summarySection" style="display: none;">
-                <h3><i class="fas fa-star"></i> 재물운 분석 요약</h3>
-                <p id="summaryText"></p>
-                <div class="peak-periods" id="peakPeriods"></div>
+        <div class="wealth-tips">
+            <div class="tip-card">
+                <h3><i class="fas fa-chart-line"></i> 투자 적기</h3>
+                <p style="color: #666;">30대 중반과 50대 초반이 재물운이 가장 좋은 시기입니다. 이 시기에 부동산이나 주식 투자를 고려하세요.</p>
             </div>
-
-            <!-- 차트 -->
-            <div class="chart-container" id="chartContainer">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">20세~80세 재물운 그래프</h2>
-                <canvas id="wealthChart"></canvas>
+            <div class="tip-card">
+                <h3><i class="fas fa-piggy-bank"></i> 저축 전략</h3>
+                <p style="color: #666;">40대까지 꾸준히 저축하고, 50대부터는 안정적인 자산 관리에 집중하세요.</p>
             </div>
-
-            <!-- 팁 카드 -->
-            <div class="wealth-tips" id="tipsSection" style="display: none;">
-                <div class="tip-card">
-                    <h3><i class="fas fa-chart-line"></i> 투자 적기</h3>
-                    <p id="investmentTip"></p>
-                </div>
-                <div class="tip-card">
-                    <h3><i class="fas fa-piggy-bank"></i> 저축 전략</h3>
-                    <p id="savingTip"></p>
-                </div>
-                <div class="tip-card">
-                    <h3><i class="fas fa-exclamation-triangle"></i> 주의 시기</h3>
-                    <p id="cautionTip"></p>
-                </div>
+            <div class="tip-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> 주의 시기</h3>
+                <p style="color: #666;">60대 중반은 재물운이 다소 낮아지는 시기입니다. 무리한 투자는 피하고 안정을 추구하세요.</p>
             </div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>AI 사주 천년지기</h3>
-                    <p>정통 사주팔자와 AI가 만나다</p>
-                </div>
-                <div class="footer-section">
-                    <h4>서비스</h4>
-                    <ul>
-                        <li><a href="index.html">사주팔자</a></li>
-                        <li><a href="ai-chat.html">AI 상담</a></li>
-                        <li><a href="tojeong.html">토정비결</a></li>
-                        <li><a href="compatibility.html">궁합</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>고객지원</h4>
-                    <ul>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="terms.html">이용약관</a></li>
-                        <li><a href="privacy.html">개인정보처리방침</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Saju2026. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <footer><p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p></footer>
 
-    <script src="js/page-handler.js"></script>
     <script>
-        let wealthChart = null;
-
-        document.getElementById('wealthForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            analyzeWealth();
+        var hamburger = document.getElementById('hamburger');
+        var mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', function() { this.classList.toggle('active'); mobileMenu.classList.toggle('active'); });
+        var langBtn = document.getElementById('langBtn');
+        var langDropdown = document.getElementById('langDropdown');
+        langBtn.addEventListener('click', function() { langDropdown.classList.toggle('active'); });
+        document.querySelectorAll('.lang-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                if (lang !== 'ko') { alert('다국어 서비스는 준비 중입니다.'); langDropdown.classList.remove('active'); return; }
+                document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.remove('active'); });
+                this.classList.add('active');
+                langDropdown.classList.remove('active');
+            });
+        });
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.language-switcher')) { langDropdown.classList.remove('active'); }
         });
 
-        function analyzeWealth() {
-            const birthYear = parseInt(document.getElementById('birthYear').value);
-            const birthMonth = parseInt(document.getElementById('birthMonth').value);
-            const birthDay = parseInt(document.getElementById('birthDay').value);
+        const ages = Array.from({length: 61}, (_, i) => i + 20);
+        const wealthScores = ages.map(age => {
+            let base = 50;
+            if (age >= 30 && age <= 40) base += 20 + Math.random() * 10;
+            else if (age >= 45 && age <= 55) base += 25 + Math.random() * 15;
+            else if (age >= 60 && age <= 70) base += 10 + Math.random() * 10;
+            else base += Math.random() * 20 - 5;
+            return Math.min(100, Math.max(30, base));
+        });
 
-            if (!birthYear || !birthMonth || !birthDay) {
-                alert('생년월일을 모두 입력해주세요.');
-                return;
-            }
-
-            // 나이별 재물운 계산
-            const currentYear = 2026;
-            const currentAge = currentYear - birthYear;
-            const ages = Array.from({length: 61}, (_, i) => i + 20);
-            
-            // 사주 기반 재물운 계산 (간단한 알고리즘)
-            const wealthScores = ages.map(age => {
-                let base = 50;
-                
-                // 생년 기반 패턴
-                const yearMod = birthYear % 12;
-                if (yearMod === 0 || yearMod === 6) base += 10; // 자년, 오년 - 재물운 강함
-                
-                // 생월 기반 조정
-                if (birthMonth >= 3 && birthMonth <= 5) base += 5; // 봄 - 성장
-                else if (birthMonth >= 9 && birthMonth <= 11) base += 8; // 가을 - 수확
-                
-                // 나이대별 패턴
-                if (age >= 28 && age <= 35) base += 15 + Math.random() * 10; // 청년기 상승
-                else if (age >= 42 && age <= 52) base += 20 + Math.random() * 15; // 중년기 전성기
-                else if (age >= 60 && age <= 70) base += 5 + Math.random() * 10; // 노년기 안정
-                else base += Math.random() * 15 - 5;
-                
-                // 12년 주기 (대운)
-                const cycle = (age - 20) % 12;
-                if (cycle >= 2 && cycle <= 5) base += 10; // 상승기
-                else if (cycle >= 8 && cycle <= 11) base -= 10; // 조정기
-                
-                return Math.min(100, Math.max(30, base));
-            });
-
-            // 최고 재물운 시기 찾기
-            const peakAges = [];
-            for (let i = 0; i < wealthScores.length; i++) {
-                if (wealthScores[i] >= 75) {
-                    peakAges.push(ages[i]);
+        new Chart(document.getElementById('wealthChart'), {
+            type: 'line',
+            data: {
+                labels: ages,
+                datasets: [{
+                    label: '재물운 지수',
+                    data: wealthScores,
+                    borderColor: '#fcb69f',
+                    backgroundColor: 'rgba(252, 182, 159, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { display: true, position: 'top' } },
+                scales: {
+                    y: { beginAtZero: true, max: 100, title: { display: true, text: '재물운 점수' } },
+                    x: { title: { display: true, text: '나이' } }
                 }
             }
+        });
 
-            // 결과 표시
-            displayResults(ages, wealthScores, peakAges, currentAge);
-        }
-
-        function displayResults(ages, wealthScores, peakAges, currentAge) {
-            // 요약 섹션
-            document.getElementById('summarySection').style.display = 'block';
-            
-            const avgScore = wealthScores.reduce((a, b) => a + b, 0) / wealthScores.length;
-            let summaryText = '';
-            
-            if (avgScore >= 70) {
-                summaryText = '전반적으로 재물운이 매우 좋은 사주입니다. 꾸준히 노력하면 큰 부를 이룰 수 있습니다.';
-            } else if (avgScore >= 55) {
-                summaryText = '평균 이상의 재물운을 가지고 있습니다. 적절한 투자와 저축으로 안정적인 재산을 형성할 수 있습니다.';
-            } else {
-                summaryText = '안정적인 재물운입니다. 무리한 투자보다는 꾸준한 저축과 자산 관리가 중요합니다.';
-            }
-            
-            document.getElementById('summaryText').textContent = summaryText;
-
-            // 재물운 정점 시기
-            const peakPeriodsDiv = document.getElementById('peakPeriods');
-            peakPeriodsDiv.innerHTML = '';
-            
-            const topPeaks = peakAges.slice(0, 3);
-            topPeaks.forEach(age => {
-                const periodCard = document.createElement('div');
-                periodCard.className = 'period-card';
-                periodCard.innerHTML = `
-                    <div class="age">${age}세</div>
-                    <div class="label">재물운 정점</div>
-                `;
-                peakPeriodsDiv.appendChild(periodCard);
-            });
-
-            // 차트 표시
-            document.getElementById('chartContainer').classList.add('active');
-            
-            if (wealthChart) {
-                wealthChart.destroy();
-            }
-
-            wealthChart = new Chart(document.getElementById('wealthChart'), {
-                type: 'line',
-                data: {
-                    labels: ages,
-                    datasets: [{
-                        label: '재물운 지수',
-                        data: wealthScores,
-                        borderColor: '#fcb69f',
-                        backgroundColor: 'rgba(252, 182, 159, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: true, position: 'top' }
-                    },
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            max: 100, 
-                            title: { display: true, text: '재물운 점수' } 
-                        },
-                        x: { 
-                            title: { display: true, text: '나이' } 
-                        }
-                    }
-                }
-            });
-
-            // 팁 카드
-            document.getElementById('tipsSection').style.display = 'grid';
-            
-            if (topPeaks.length > 0) {
-                document.getElementById('investmentTip').textContent = 
-                    `${topPeaks[0]}세~${topPeaks[topPeaks.length - 1]}세 사이가 재물운이 가장 좋은 시기입니다. 이 시기에 부동산이나 주식 투자를 고려하세요.`;
-            }
-            
-            document.getElementById('savingTip').textContent = 
-                `${currentAge}세부터 꾸준히 저축하고, 50대부터는 안정적인 자산 관리에 집중하세요.`;
-            
-            const lowPeriods = ages.filter((age, i) => wealthScores[i] < 50);
-            if (lowPeriods.length > 0) {
-                document.getElementById('cautionTip').textContent = 
-                    `${lowPeriods[0]}세~${lowPeriods[lowPeriods.length - 1]}세는 재물운이 다소 낮은 시기입니다. 무리한 투자는 피하고 안정을 추구하세요.`;
-            } else {
-                document.getElementById('cautionTip').textContent = 
-                    '전 생애에 걸쳐 안정적인 재물운을 유지합니다. 균형 잡힌 재테크를 추천합니다.';
-            }
-
-            // 결과 섹션으로 스크롤
-            document.getElementById('summarySection').scrollIntoView({ behavior: 'smooth' });
-        }
+        window.addEventListener('error', function(e) { if (e.filename && !e.filename.includes('aisaju1000.com')) { e.preventDefault(); return false; } });
+        console.log('✅ 재물운 분석 페이지 로드 완료');
     </script>
 </body>
 </html>
