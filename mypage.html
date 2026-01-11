@@ -644,6 +644,8 @@
                     </div>
                 </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="saju-guide.html">명리학 가이드</a></li>
+                <li><a href="blog.html">블로그</a></li>
                 <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html" class="active">마이페이지</a></li>
             </ul>
@@ -977,28 +979,21 @@
 
         // 로컬스토리지와 Firestore 동기화
         async function syncData() {
-            // 1. 로컬스토리지 데이터 확인
             const localData = localStorage.getItem('sajuData');
-            
-            // 2. Firestore 데이터 확인
             const firestoreData = await loadSajuFromFirestore();
             
             if (localData && !firestoreData) {
-                // 로컬에만 있으면 → Firestore에 백업
                 console.log('📤 로컬 데이터를 Firestore에 백업 중...');
                 await saveSajuToFirestore(JSON.parse(localData));
             } else if (!localData && firestoreData) {
-                // Firestore에만 있으면 → 로컬에 복사
                 console.log('📥 Firestore 데이터를 로컬에 복사 중...');
                 localStorage.setItem('sajuData', JSON.stringify(firestoreData));
             } else if (localData && firestoreData) {
-                // 둘 다 있으면 → 최신 데이터 확인 (일단 로컬 우선)
                 console.log('🔄 로컬 데이터로 동기화 중...');
                 await saveSajuToFirestore(JSON.parse(localData));
             }
         }
 
-        // 페이지 로드 시 동기화
         syncData();
 
         // 로컬스토리지에서 사주 정보 불러오기
@@ -1008,7 +1003,6 @@
                 try {
                     const data = JSON.parse(sajuData);
                     
-                    // 생년월일 형식 변환
                     if (data.birthdate) {
                         const date = new Date(data.birthdate);
                         const year = date.getFullYear();
@@ -1017,12 +1011,10 @@
                         document.getElementById('birthDate').textContent = `${year}년 ${month}월 ${day}일`;
                     }
                     
-                    // 음력/양력
                     if (data.calendar) {
                         document.getElementById('calendar').textContent = data.calendar === 'solar' ? '양력' : '음력';
                     }
                     
-                    // 태어난 시간
                     if (data.birthtime && data.birthtime !== '') {
                         const timeMap = {
                             '23-01': '자시 (23:00-01:00)',
@@ -1043,7 +1035,6 @@
                         document.getElementById('birthTime').textContent = '미입력';
                     }
                     
-                    // 성별
                     if (data.gender) {
                         document.getElementById('gender').textContent = data.gender === 'male' ? '남성' : '여성';
                     }
@@ -1053,10 +1044,8 @@
             }
         }
 
-        // 페이지 로드 시 데이터 불러오기
-        setTimeout(loadUserData, 1000); // Firebase 동기화 후 로드
+        setTimeout(loadUserData, 1000);
 
-        // localStorage 변경 감지 시 Firestore 동기화
         window.addEventListener('storage', async function(e) {
             if (e.key === 'sajuData' && e.newValue) {
                 console.log('📝 localStorage 변경 감지! Firestore 동기화 중...');
@@ -1064,7 +1053,6 @@
             }
         });
 
-        // 전역으로 내보내기 (다른 스크립트에서 사용 가능)
         window.saveSajuToFirestore = saveSajuToFirestore;
         window.loadSajuFromFirestore = loadSajuFromFirestore;
 
@@ -1131,7 +1119,6 @@
             return false;
         }
 
-        // 전역 오류 핸들러
         window.addEventListener('error', function(e) {
             console.error('전역 에러:', e.error);
         });
