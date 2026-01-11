@@ -96,6 +96,42 @@
             font-weight: 700;
         }
         
+        /* 드롭다운 */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 10px 0;
+            margin-top: 10px;
+            z-index: 1000;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #c41e3a;
+        }
+        
         /* 언어 전환 */
         .language-switcher {
             position: relative;
@@ -490,11 +526,16 @@
                 </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">홈</a></li>
-                    <li><a href="compatibility.html">궁합 보기</a></li>
-                    <li><a href="saju-matching.html">궁합 매칭</a></li>
-                    <li><a href="community.html">커뮤니티</a></li>
-                    <li><a href="hr-solution.html">HR 솔루션</a></li>
-                    <li><a href="ai-chat.html"><i class="fas fa-robot"></i> AI 상담</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="compatibility.html">💕 궁합 보기</a>
+                            <a href="saju-matching.html">💑 궁합 매칭</a>
+                            <a href="community.html">💬 커뮤니티 프리미엄</a>
+                            <a href="hr-solution.html">💼 HR 솔루션</a>
+                        </div>
+                    </li>
+                    <li><a href="ai-chat.html">AI 상담</a></li>
                     <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
                     <li><a href="blog.html" class="active"><i class="fas fa-newspaper"></i> 블로그</a></li>
                     <li><a href="pricing.html">가격표</a></li>
