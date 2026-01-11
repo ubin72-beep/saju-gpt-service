@@ -1153,9 +1153,13 @@
         // 로컬스토리지에서 사주 정보 불러오기
         async function loadUserData() {
             const sajuData = localStorage.getItem('sajuData');
+            console.log('📦 localStorage sajuData:', sajuData); // 디버깅
+            
             if (sajuData) {
                 try {
                     const data = JSON.parse(sajuData);
+                    console.log('✅ 파싱된 사주 데이터:', data); // 디버깅
+                    console.log('🕐 birthtime 값:', data.birthtime); // 디버깅
                     
                     // 생년월일 형식 변환
                     if (data.birthdate) {
@@ -1172,22 +1176,28 @@
                     }
                     
                     // 태어난 시간
-                    if (data.birthtime) {
-                        const timeMap = {
-                            '23-01': '자시 (23:00-01:00)',
-                            '01-03': '축시 (01:00-03:00)',
-                            '03-05': '인시 (03:00-05:00)',
-                            '05-07': '묘시 (05:00-07:00)',
-                            '07-09': '진시 (07:00-09:00)',
-                            '09-11': '사시 (09:00-11:00)',
-                            '11-13': '오시 (11:00-13:00)',
-                            '13-15': '미시 (13:00-15:00)',
-                            '15-17': '신시 (15:00-17:00)',
-                            '17-19': '유시 (17:00-19:00)',
-                            '19-21': '술시 (19:00-21:00)',
-                            '21-23': '해시 (21:00-23:00)'
-                        };
-                        document.getElementById('birthTime').textContent = timeMap[data.birthtime] || '미입력';
+                    const timeMap = {
+                        '23-01': '자시 (23:00-01:00)',
+                        '01-03': '축시 (01:00-03:00)',
+                        '03-05': '인시 (03:00-05:00)',
+                        '05-07': '묘시 (05:00-07:00)',
+                        '07-09': '진시 (07:00-09:00)',
+                        '09-11': '사시 (09:00-11:00)',
+                        '11-13': '오시 (11:00-13:00)',
+                        '13-15': '미시 (13:00-15:00)',
+                        '15-17': '신시 (15:00-17:00)',
+                        '17-19': '유시 (17:00-19:00)',
+                        '19-21': '술시 (19:00-21:00)',
+                        '21-23': '해시 (21:00-23:00)'
+                    };
+                    
+                    if (data.birthtime && data.birthtime !== '') {
+                        const displayTime = timeMap[data.birthtime] || '미입력';
+                        console.log('🕐 표시할 시간:', displayTime); // 디버깅
+                        document.getElementById('birthTime').textContent = displayTime;
+                    } else {
+                        console.log('⚠️ birthtime이 비어있습니다.'); // 디버깅
+                        document.getElementById('birthTime').textContent = '미입력';
                     }
                     
                     // 성별
@@ -1195,8 +1205,10 @@
                         document.getElementById('gender').textContent = data.gender === 'male' ? '남성' : '여성';
                     }
                 } catch (e) {
-                    console.error('사주 데이터 로드 실패:', e);
+                    console.error('❌ 사주 데이터 로드 실패:', e);
                 }
+            } else {
+                console.log('⚠️ localStorage에 sajuData가 없습니다.');
             }
         }
 
