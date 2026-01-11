@@ -5,8 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지 - AI 사주 천년지기</title>
     <meta name="description" content="내 사주 정보, 구독 관리, 이용 내역을 확인하세요.">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XC6T1DH7BP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XC6T1DH7BP');
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
     <style>
         * {
             margin: 0;
@@ -27,7 +42,7 @@
             padding: 0 20px;
         }
         
-        /* 네비게이션 */
+        /* 네비게이션 (메인과 동일) */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -61,7 +76,7 @@
             list-style: none;
             gap: 2rem;
             align-items: center;
-            margin-left: 6rem;
+            margin-left: 3rem;
         }
         
         .nav-menu li {
@@ -149,22 +164,27 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
             transition: all 0.3s;
         }
         
         .lang-btn:hover {
-            background: #d4af37;
-            color: #1a1a1a;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
         }
+        
+        .lang-flag { font-size: 18px; }
         
         .lang-dropdown {
             position: absolute;
-            top: calc(100% + 10px);
+            top: 120%;
             right: 0;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            min-width: 150px;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
@@ -179,38 +199,30 @@
         }
         
         .lang-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             width: 100%;
             padding: 12px 20px;
             border: none;
-            background: transparent;
-            color: #333;
+            background: white;
+            text-align: left;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
             transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
+            color: #333;
         }
         
-        .lang-option:first-child {
-            border-radius: 10px 10px 0 0;
+        .lang-option:first-child { border-radius: 13px 13px 0 0; }
+        .lang-option:last-child { border-radius: 0 0 13px 13px; }
+        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
+        .lang-option.active { 
+            background: rgba(212, 175, 55, 0.2); 
+            font-weight: 700; 
+            color: #c41e3a; 
         }
-        
-        .lang-option:last-child {
-            border-bottom: none;
-            border-radius: 0 0 10px 10px;
-        }
-        
-        .lang-option:hover {
-            background: rgba(212,175,55,0.1);
-            color: #c41e3a;
-        }
-        
-        .lang-option.active {
-            background: rgba(212,175,55,0.2);
-            color: #c41e3a;
-            font-weight: 600;
-        }
+        .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
+        .lang-option.active i { display: inline; }
         
         /* 히어로 섹션 */
         .mypage-hero {
@@ -240,7 +252,7 @@
         
         .mypage-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 2rem;
         }
         
@@ -579,6 +591,10 @@
                 display: none;
             }
             
+            .language-switcher {
+                display: none !important;
+            }
+            
             .mypage-grid {
                 grid-template-columns: 1fr;
             }
@@ -609,7 +625,7 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
+    <!-- 네비게이션 (메인과 동일) -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -621,10 +637,10 @@
                 <li class="dropdown">
                     <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
                     <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
                         <a href="saju-matching.html">💑 궁합 매칭</a>
                         <a href="community.html">💬 커뮤니티 프리미엄</a>
                         <a href="hr-solution.html">💼 HR 솔루션</a>
-                        <a href="b2b.html">🏢 B2B 기업 서비스</a>
                     </div>
                 </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
@@ -885,7 +901,7 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK + 스크립트 -->
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -1109,13 +1125,20 @@
         // 로그아웃
         function logout() {
             if (confirm('로그아웃 하시겠습니까?')) {
-                // 로컬스토리지 클리어 (선택사항)
-                // localStorage.clear();
                 alert('로그아웃되었습니다.');
                 window.location.href = 'index.html';
             }
             return false;
         }
+
+        // 전역 오류 핸들러
+        window.addEventListener('error', function(e) {
+            console.error('전역 에러:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('처리되지 않은 Promise 거부:', e.reason);
+        });
     </script>
 </body>
 </html>
