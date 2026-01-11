@@ -6,7 +6,6 @@
     <title>마이페이지 - AI 사주 천년지기</title>
     <meta name="description" content="내 사주 정보, 구독 관리, 이용 내역을 확인하세요.">
     
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XC6T1DH7BP"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -37,7 +36,6 @@
             padding: 0 20px;
         }
         
-        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -92,7 +90,6 @@
             color: #d4af37;
         }
         
-        /* 드롭다운 메뉴 */
         .dropdown {
             position: relative;
         }
@@ -139,7 +136,6 @@
             padding-left: 25px;
         }
         
-        /* 언어 선택기 */
         .language-switcher {
             margin-left: auto;
         }
@@ -218,7 +214,6 @@
             margin-left: auto;
         }
         
-        /* 히어로 섹션 */
         .hero {
             background: linear-gradient(135deg, #c41e3a 0%, #8b1425 100%);
             padding: 3rem 0;
@@ -237,7 +232,6 @@
             opacity: 0.95;
         }
         
-        /* 마이페이지 레이아웃 */
         .mypage-container {
             max-width: 1200px;
             margin: 3rem auto;
@@ -250,7 +244,6 @@
             gap: 2rem;
         }
         
-        /* 사이드바 */
         .sidebar {
             background: white;
             border-radius: 15px;
@@ -339,6 +332,51 @@
             justify-content: center;
         }
         
+        .birthtime-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .birthtime-edit {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .birthtime-select {
+            padding: 10px 12px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .birthtime-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-edit-time {
+            background: transparent;
+            border: none;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-edit-time:hover {
+            color: #c41e3a;
+        }
+        
         .user-email {
             color: #666;
             font-size: 0.9rem;
@@ -374,7 +412,6 @@
             text-align: center;
         }
         
-        /* 메인 콘텐츠 */
         .main-content {
             background: white;
             border-radius: 15px;
@@ -411,7 +448,6 @@
             color: #c41e3a;
         }
         
-        /* 사주 정보 그리드 */
         .saju-info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -438,7 +474,6 @@
             color: #1a1a1a;
         }
         
-        /* 버튼 */
         .btn {
             padding: 12px 24px;
             border: none;
@@ -471,7 +506,6 @@
             background: #c49e2b;
         }
         
-        /* 구독 정보 */
         .subscription-info {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(196, 30, 58, 0.05));
             padding: 2rem;
@@ -495,7 +529,6 @@
             margin-bottom: 1rem;
         }
         
-        /* 이용 내역 */
         .history-list {
             list-style: none;
         }
@@ -550,7 +583,6 @@
             color: #c41e3a;
         }
         
-        /* 카드 그리드 */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -588,7 +620,6 @@
             font-size: 0.9rem;
         }
         
-        /* 설정 */
         .settings-group {
             margin-bottom: 2rem;
         }
@@ -645,7 +676,6 @@
             cursor: pointer;
         }
         
-        /* 푸터 */
         .footer {
             background: #1a1a1a;
             color: rgba(255,255,255,0.8);
@@ -699,7 +729,6 @@
             color: rgba(255,255,255,0.6);
         }
         
-        /* 반응형 */
         @media (max-width: 768px) {
             .mypage-grid {
                 grid-template-columns: 1fr;
@@ -734,7 +763,6 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -790,16 +818,13 @@
         </div>
     </nav>
 
-    <!-- 히어로 섹션 -->
     <section class="hero">
         <h1>👤 마이페이지</h1>
         <p>내 정보와 서비스 이용 내역을 관리하세요</p>
     </section>
 
-    <!-- 마이페이지 컨테이너 -->
     <div class="mypage-container">
         <div class="mypage-grid">
-            <!-- 사이드바 -->
             <aside class="sidebar">
                 <div class="user-profile">
                     <div class="user-avatar">
@@ -830,9 +855,7 @@
                 </ul>
             </aside>
 
-            <!-- 메인 콘텐츠 -->
             <main class="main-content">
-                <!-- 내 사주 정보 -->
                 <section class="content-section" id="my-saju">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -847,7 +870,7 @@
                     <div class="saju-info-grid">
                         <div class="saju-info-item">
                             <label>생년월일</label>
-                            <div class="value" id="birthDate">1990년 1월 1일</div>
+                            <div class="value" id="birthDate">년 월 일</div>
                         </div>
                         <div class="saju-info-item">
                             <label>양력/음력</label>
@@ -855,7 +878,37 @@
                         </div>
                         <div class="saju-info-item">
                             <label>태어난 시간</label>
-                            <div class="value" id="birthTime">오시 (11:00-13:00)</div>
+                            <div class="birthtime-display" id="birthTimeDisplay">
+                                <div class="value" id="birthTime">미입력</div>
+                                <button class="btn-edit-time" onclick="toggleBirthTimeEdit()" title="시간 수정">
+                                    <i class="fas fa-edit"></i> 수정
+                                </button>
+                            </div>
+                            <div class="birthtime-edit" id="birthTimeEdit" style="display: none;">
+                                <select class="birthtime-select" id="birthTimeSelect">
+                                    <option value="">모름/미입력</option>
+                                    <option value="23-01">자시</option>
+                                    <option value="01-03">축시</option>
+                                    <option value="03-05">인시</option>
+                                    <option value="05-07">묘시</option>
+                                    <option value="07-09">진시</option>
+                                    <option value="09-11">사시</option>
+                                    <option value="11-13">오시</option>
+                                    <option value="13-15">미시</option>
+                                    <option value="15-17">신시</option>
+                                    <option value="17-19">유시</option>
+                                    <option value="19-21">술시</option>
+                                    <option value="21-23">해시</option>
+                                </select>
+                                <div class="birthtime-buttons">
+                                    <button class="btn-save-name" onclick="saveBirthTime()">
+                                        <i class="fas fa-check"></i> 저장
+                                    </button>
+                                    <button class="btn-save-name" style="background: #999;" onclick="cancelBirthTimeEdit()">
+                                        <i class="fas fa-times"></i> 취소
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="saju-info-item">
                             <label>성별</label>
@@ -870,7 +923,6 @@
                     </div>
                 </section>
 
-                <!-- 구독 관리 -->
                 <section class="content-section" id="subscription">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -891,7 +943,6 @@
                     </div>
                 </section>
 
-                <!-- 이용 내역 -->
                 <section class="content-section" id="history">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -908,39 +959,14 @@
                                 </div>
                                 <div class="history-details">
                                     <h4>상세 사주팔자</h4>
-                                    <p>2026.01.01 14:30</p>
+                                    <p>최근 이용</p>
                                 </div>
                             </div>
-                            <div class="history-price">₩4,900</div>
-                        </li>
-                        <li class="history-item">
-                            <div class="history-info">
-                                <div class="history-icon">
-                                    <i class="fas fa-heart"></i>
-                                </div>
-                                <div class="history-details">
-                                    <h4>정밀 궁합</h4>
-                                    <p>2025.12.28 10:15</p>
-                                </div>
-                            </div>
-                            <div class="history-price">₩9,900</div>
-                        </li>
-                        <li class="history-item">
-                            <div class="history-info">
-                                <div class="history-icon">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
-                                <div class="history-details">
-                                    <h4>이사/결혼 택일</h4>
-                                    <p>2025.12.25 16:00</p>
-                                </div>
-                            </div>
-                            <div class="history-price">₩5,900</div>
+                            <div class="history-price">무료</div>
                         </li>
                     </ul>
                 </section>
 
-                <!-- 최근 본 서비스 -->
                 <section class="content-section" id="recent">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -968,7 +994,6 @@
                     </div>
                 </section>
 
-                <!-- 설정 -->
                 <section class="content-section" id="settings">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -1012,16 +1037,15 @@
         </div>
     </div>
 
-    <!-- 푸터 -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>AI 사주 천년지기</h3>
-                <p>2026 병오년, 정통 명리학과 AI가 만나</p>
+                <p>정통 명리학과 AI가 만나</p>
                 <p>당신의 운명을 밝혀드립니다.</p>
                 <p style="margin-top: 1rem;">
                     <i class="fas fa-envelope"></i> contact@aisaju1000.com<br>
-                    <i class="fas fa-phone"></i> 1588-0000
+                    <i class="fas fa-phone"></i> 문의 전화
                 </p>
             </div>
             <div class="footer-section">
@@ -1043,16 +1067,14 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+            <p>&copy; AI 사주 천년지기. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // Firebase 설정
         const firebaseConfig = {
             apiKey: "AIzaSyARk1l_3Itli14aE4RaSfllJRaBQmzvDVA",
             authDomain: "aisaju1000-59385.firebaseapp.com",
@@ -1063,13 +1085,11 @@
             measurementId: "G-DGY0NX0E7M"
         };
 
-        // Firebase 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        console.log('🔥 Firebase 연동 성공!');
+        console.log('Firebase 연동 성공');
 
-        // 사용자 ID 생성 또는 가져오기
         function getUserId() {
             let userId = localStorage.getItem('userId');
             if (!userId) {
@@ -1079,7 +1099,6 @@
             return userId;
         }
 
-        // Firestore에 사주 데이터 저장
         async function saveSajuToFirestore(sajuData) {
             try {
                 const userId = getUserId();
@@ -1091,13 +1110,12 @@
                     createdAt: new Date().toISOString()
                 }, { merge: true });
                 
-                console.log('✅ Firestore에 사주 데이터 저장 완료!');
+                console.log('Firestore에 사주 데이터 저장 완료');
             } catch (e) {
-                console.error('❌ Firestore 저장 실패:', e);
+                console.error('Firestore 저장 실패:', e);
             }
         }
 
-        // Firestore에서 사주 데이터 불러오기
         async function loadSajuFromFirestore() {
             try {
                 const userId = getUserId();
@@ -1106,62 +1124,50 @@
                 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    console.log('✅ Firestore 데이터 불러오기 완료!');
+                    console.log('Firestore 데이터 불러오기 완료');
                     return data;
                 } else {
-                    console.log('ℹ️ Firestore에 저장된 데이터가 없습니다.');
+                    console.log('Firestore에 저장된 데이터가 없습니다');
                     return null;
                 }
             } catch (error) {
-                console.error('❌ Firestore 불러오기 실패:', error);
+                console.error('Firestore 불러오기 실패:', error);
                 return null;
             }
         }
 
-        // 로컬스토리지와 Firestore 동기화
         async function syncData() {
-            // 1. 로컬스토리지 데이터 확인
             const localData = localStorage.getItem('sajuData');
             const localName = localStorage.getItem('userName');
-            
-            // 2. Firestore 데이터 확인
             const firestoreData = await loadSajuFromFirestore();
             
             if (localData && !firestoreData) {
-                // 로컬에만 있으면 → Firestore에 백업
-                console.log('📤 로컬 데이터를 Firestore에 백업 중...');
+                console.log('로컬 데이터를 Firestore에 백업 중');
                 await saveSajuToFirestore(JSON.parse(localData));
             } else if (!localData && firestoreData) {
-                // Firestore에만 있으면 → 로컬에 복사
-                console.log('📥 Firestore 데이터를 로컬에 복사 중...');
+                console.log('Firestore 데이터를 로컬에 복사 중');
                 localStorage.setItem('sajuData', JSON.stringify(firestoreData.sajuData || firestoreData));
                 
-                // 이름도 복사
                 if (firestoreData.userName) {
                     localStorage.setItem('userName', firestoreData.userName);
                 }
             } else if (localData && firestoreData) {
-                // 둘 다 있으면 → 최신 데이터 확인 (일단 로컬 우선)
-                console.log('🔄 로컬 데이터로 동기화 중...');
+                console.log('로컬 데이터로 동기화 중');
                 await saveSajuToFirestore(JSON.parse(localData));
             }
         }
 
-        // 페이지 로드 시 동기화
         syncData();
 
-        // 로컬스토리지에서 사주 정보 불러오기
         async function loadUserData() {
             const sajuData = localStorage.getItem('sajuData');
-            console.log('📦 localStorage sajuData:', sajuData); // 디버깅
+            console.log('localStorage sajuData:', sajuData);
             
             if (sajuData) {
                 try {
                     const data = JSON.parse(sajuData);
-                    console.log('✅ 파싱된 사주 데이터:', data); // 디버깅
-                    console.log('🕐 birthtime 값:', data.birthtime); // 디버깅
+                    console.log('파싱된 사주 데이터:', data);
                     
-                    // 생년월일 형식 변환
                     if (data.birthdate) {
                         const date = new Date(data.birthdate);
                         const year = date.getFullYear();
@@ -1170,49 +1176,48 @@
                         document.getElementById('birthDate').textContent = `${year}년 ${month}월 ${day}일`;
                     }
                     
-                    // 음력/양력
                     if (data.calendar) {
                         document.getElementById('calendar').textContent = data.calendar === 'lunar' ? '음력' : '양력';
                     }
                     
-                    // 태어난 시간
                     const timeMap = {
-                        '23-01': '자시 (23:00-01:00)',
-                        '01-03': '축시 (01:00-03:00)',
-                        '03-05': '인시 (03:00-05:00)',
-                        '05-07': '묘시 (05:00-07:00)',
-                        '07-09': '진시 (07:00-09:00)',
-                        '09-11': '사시 (09:00-11:00)',
-                        '11-13': '오시 (11:00-13:00)',
-                        '13-15': '미시 (13:00-15:00)',
-                        '15-17': '신시 (15:00-17:00)',
-                        '17-19': '유시 (17:00-19:00)',
-                        '19-21': '술시 (19:00-21:00)',
-                        '21-23': '해시 (21:00-23:00)'
+                        '23-01': '자시',
+                        '01-03': '축시',
+                        '03-05': '인시',
+                        '05-07': '묘시',
+                        '07-09': '진시',
+                        '09-11': '사시',
+                        '11-13': '오시',
+                        '13-15': '미시',
+                        '15-17': '신시',
+                        '17-19': '유시',
+                        '19-21': '술시',
+                        '21-23': '해시'
                     };
                     
-                    if (data.birthtime && data.birthtime !== '') {
-                        const displayTime = timeMap[data.birthtime] || '미입력';
-                        console.log('🕐 표시할 시간:', displayTime); // 디버깅
+                    const birthTimeValue = data.birthtime || data.hour || '';
+                    console.log('birthtime/hour 값:', birthTimeValue);
+                    
+                    if (birthTimeValue && birthTimeValue !== '') {
+                        const displayTime = timeMap[birthTimeValue] || '미입력';
+                        console.log('표시할 시간:', displayTime);
                         document.getElementById('birthTime').textContent = displayTime;
                     } else {
-                        console.log('⚠️ birthtime이 비어있습니다.'); // 디버깅
+                        console.log('birthtime/hour이 비어있습니다');
                         document.getElementById('birthTime').textContent = '미입력';
                     }
                     
-                    // 성별
                     if (data.gender) {
                         document.getElementById('gender').textContent = data.gender === 'male' ? '남성' : '여성';
                     }
                 } catch (e) {
-                    console.error('❌ 사주 데이터 로드 실패:', e);
+                    console.error('사주 데이터 로드 실패:', e);
                 }
             } else {
-                console.log('⚠️ localStorage에 sajuData가 없습니다.');
+                console.log('localStorage에 sajuData가 없습니다');
             }
         }
 
-        // 이름 불러오기
         function loadUserName() {
             const userName = localStorage.getItem('userName');
             if (userName) {
@@ -1220,7 +1225,6 @@
             }
         }
 
-        // 이름 수정 모드 토글
         function toggleNameEdit() {
             const displayDiv = document.getElementById('userNameDisplay');
             const editDiv = document.getElementById('userNameEdit');
@@ -1233,32 +1237,25 @@
             nameInput.focus();
         }
 
-        // 이름 저장
         async function saveUserName() {
             const nameInput = document.getElementById('userNameInput');
             const newName = nameInput.value.trim();
             
             if (!newName) {
-                alert('이름을 입력해주세요.');
+                alert('이름을 입력해주세요');
                 return;
             }
             
             if (newName.length > 20) {
-                alert('이름은 20자 이하로 입력해주세요.');
+                alert('이름은 스무자 이하로 입력해주세요');
                 return;
             }
             
-            // 1) localStorage에 저장
             localStorage.setItem('userName', newName);
-            
-            // 2) 화면에 표시
             document.getElementById('userName').textContent = newName;
-            
-            // 3) 편집 모드 종료
             document.getElementById('userNameDisplay').style.display = 'flex';
             document.getElementById('userNameEdit').style.display = 'none';
             
-            // 4) Firestore에 저장
             try {
                 const userId = getUserId();
                 const userRef = doc(db, 'users', userId);
@@ -1268,15 +1265,90 @@
                     updatedAt: new Date().toISOString()
                 }, { merge: true });
                 
-                console.log('✅ Firestore에 이름 저장 완료!');
-                alert('이름이 저장되었습니다! 😊');
+                console.log('Firestore에 이름 저장 완료');
+                alert('이름이 저장되었습니다');
             } catch (e) {
-                console.error('❌ Firestore 저장 실패:', e);
-                alert('이름은 로컬에 저장되었으나, 클라우드 동기화는 실패했습니다.');
+                console.error('Firestore 저장 실패:', e);
+                alert('이름은 로컬에 저장되었으나 클라우드 동기화는 실패했습니다');
             }
         }
 
-        // Enter 키로 저장
+        function toggleBirthTimeEdit() {
+            const displayDiv = document.getElementById('birthTimeDisplay');
+            const editDiv = document.getElementById('birthTimeEdit');
+            const selectElement = document.getElementById('birthTimeSelect');
+            
+            const sajuData = localStorage.getItem('sajuData');
+            if (sajuData) {
+                const data = JSON.parse(sajuData);
+                const currentTime = data.birthtime || data.hour || '';
+                selectElement.value = currentTime;
+            }
+            
+            displayDiv.style.display = 'none';
+            editDiv.style.display = 'flex';
+        }
+
+        function cancelBirthTimeEdit() {
+            document.getElementById('birthTimeDisplay').style.display = 'flex';
+            document.getElementById('birthTimeEdit').style.display = 'none';
+        }
+
+        async function saveBirthTime() {
+            const selectElement = document.getElementById('birthTimeSelect');
+            const newBirthTime = selectElement.value;
+            
+            const timeMap = {
+                '': '미입력',
+                '23-01': '자시',
+                '01-03': '축시',
+                '03-05': '인시',
+                '05-07': '묘시',
+                '07-09': '진시',
+                '09-11': '사시',
+                '11-13': '오시',
+                '13-15': '미시',
+                '15-17': '신시',
+                '17-19': '유시',
+                '19-21': '술시',
+                '21-23': '해시'
+            };
+            
+            const sajuData = localStorage.getItem('sajuData');
+            if (sajuData) {
+                const data = JSON.parse(sajuData);
+                data.birthtime = newBirthTime;
+                
+                if (data.hour !== undefined) {
+                    delete data.hour;
+                }
+                
+                localStorage.setItem('sajuData', JSON.stringify(data));
+                console.log('태어난 시간 저장:', newBirthTime);
+            }
+            
+            document.getElementById('birthTime').textContent = timeMap[newBirthTime];
+            document.getElementById('birthTimeDisplay').style.display = 'flex';
+            document.getElementById('birthTimeEdit').style.display = 'none';
+            
+            try {
+                const userId = getUserId();
+                const userRef = doc(db, 'users', userId);
+                
+                const sajuData = JSON.parse(localStorage.getItem('sajuData'));
+                await setDoc(userRef, {
+                    sajuData: sajuData,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+                
+                console.log('Firestore에 태어난 시간 저장 완료');
+                alert('태어난 시간이 저장되었습니다');
+            } catch (e) {
+                console.error('Firestore 저장 실패:', e);
+                alert('시간은 로컬에 저장되었으나 클라우드 동기화는 실패했습니다');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.getElementById('userNameInput');
             if (nameInput) {
@@ -1288,27 +1360,26 @@
             }
         });
 
-        // 페이지 로드 시 데이터 불러오기
         setTimeout(() => {
-            loadUserName(); // 이름 먼저 로드
-            loadUserData(); // 사주 데이터 로드
-        }, 1000); // Firebase 동기화 후 로드
+            loadUserName();
+            loadUserData();
+        }, 1000);
 
-        // localStorage 변경 감지 시 Firestore 동기화
         window.addEventListener('storage', async function(e) {
             if (e.key === 'sajuData' && e.newValue) {
-                console.log('📝 localStorage 변경 감지! Firestore 동기화 중...');
+                console.log('localStorage 변경 감지 Firestore 동기화 중');
                 await saveSajuToFirestore(JSON.parse(e.newValue));
             }
         });
 
-        // 전역으로 내보내기 (다른 스크립트에서 사용 가능)
         window.saveSajuToFirestore = saveSajuToFirestore;
         window.loadSajuFromFirestore = loadSajuFromFirestore;
         window.toggleNameEdit = toggleNameEdit;
         window.saveUserName = saveUserName;
+        window.toggleBirthTimeEdit = toggleBirthTimeEdit;
+        window.cancelBirthTimeEdit = cancelBirthTimeEdit;
+        window.saveBirthTime = saveBirthTime;
 
-        // 언어 선택기
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
 
@@ -1344,7 +1415,6 @@
             });
         }
 
-        // 사이드바 메뉴 활성화
         const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
         sidebarLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1362,12 +1432,9 @@
             });
         });
 
-        // 로그아웃
         function logout() {
-            if (confirm('로그아웃 하시겠습니까?')) {
-                // 로컬스토리지 클리어 (선택사항)
-                // localStorage.clear();
-                alert('로그아웃되었습니다.');
+            if (confirm('로그아웃 하시겠습니까')) {
+                alert('로그아웃되었습니다');
                 window.location.href = 'index.html';
             }
             return false;
