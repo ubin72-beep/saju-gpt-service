@@ -17,11 +17,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    
     <style>
         * {
             margin: 0;
@@ -42,7 +37,7 @@
             padding: 0 20px;
         }
         
-        /* 네비게이션 (메인과 동일) */
+        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -76,7 +71,7 @@
             list-style: none;
             gap: 2rem;
             align-items: center;
-            margin-left: 3rem;
+            margin-left: 6rem;
         }
         
         .nav-menu li {
@@ -113,9 +108,7 @@
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
-            margin-top: 10px;
+            transition: all 0.3s ease;
         }
         
         .dropdown:hover .dropdown-menu {
@@ -125,12 +118,10 @@
         }
         
         .dropdown-menu a {
-            display: block;
             padding: 12px 20px;
             color: #333;
-            text-decoration: none;
-            transition: all 0.2s;
             border-bottom: 1px solid #f0f0f0;
+            display: block;
         }
         
         .dropdown-menu a:first-child {
@@ -143,14 +134,13 @@
         }
         
         .dropdown-menu a:hover {
-            background: rgba(212,175,55,0.1);
+            background: rgba(212, 175, 55, 0.1);
             color: #c41e3a;
             padding-left: 25px;
         }
         
         /* 언어 선택기 */
         .language-switcher {
-            position: relative;
             margin-left: auto;
         }
         
@@ -161,20 +151,17 @@
             padding: 8px 16px;
             border-radius: 25px;
             cursor: pointer;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
             transition: all 0.3s;
         }
         
         .lang-btn:hover {
-            background: rgba(212, 175, 55, 0.1);
-            transform: translateY(-2px);
+            background: #d4af37;
+            color: #1a1a1a;
         }
-        
-        .lang-flag { font-size: 18px; }
         
         .lang-dropdown {
             position: absolute;
@@ -182,14 +169,13 @@
             right: 0;
             background: white;
             border: 2px solid #d4af37;
-            border-radius: 15px;
+            border-radius: 10px;
             min-width: 180px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         .lang-dropdown.active {
@@ -199,54 +185,62 @@
         }
         
         .lang-option {
-            width: 100%;
             padding: 12px 20px;
-            border: none;
-            background: white;
-            text-align: left;
             cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 14px;
-            transition: all 0.2s;
-            color: #333;
+            transition: background 0.3s;
         }
         
-        .lang-option:first-child { border-radius: 13px 13px 0 0; }
-        .lang-option:last-child { border-radius: 0 0 13px 13px; }
-        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
-        .lang-option.active { 
-            background: rgba(212, 175, 55, 0.2); 
-            font-weight: 700; 
-            color: #c41e3a; 
+        .lang-option:last-child {
+            border-bottom: none;
         }
-        .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
-        .lang-option.active i { display: inline; }
+        
+        .lang-option:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .lang-option.active {
+            background: rgba(212, 175, 55, 0.2);
+            font-weight: 600;
+            color: #c41e3a;
+        }
+        
+        .lang-option.active .lang-check {
+            display: inline;
+        }
+        
+        .lang-check {
+            display: none;
+            color: #c41e3a;
+            margin-left: auto;
+        }
         
         /* 히어로 섹션 */
-        .mypage-hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
-            color: white;
-            padding: 60px 0 40px;
+        .hero {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1425 100%);
+            padding: 3rem 0;
             text-align: center;
+            color: white;
         }
         
-        .mypage-hero h1 {
-            font-family: 'Noto Serif KR', serif;
+        .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            font-family: 'Noto Serif KR', serif;
         }
         
-        .mypage-hero p {
+        .hero p {
             font-size: 1.1rem;
-            opacity: 0.9;
+            opacity: 0.95;
         }
         
-        /* 마이페이지 컨테이너 */
+        /* 마이페이지 레이아웃 */
         .mypage-container {
             max-width: 1200px;
-            margin: -30px auto 50px;
+            margin: 3rem auto;
             padding: 0 20px;
         }
         
@@ -259,10 +253,9 @@
         /* 사이드바 */
         .sidebar {
             background: white;
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            height: fit-content;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
             position: sticky;
             top: 100px;
         }
@@ -294,6 +287,58 @@
             color: #1a1a1a;
         }
         
+        .user-name-edit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+        
+        .user-name-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .btn-edit-name {
+            background: transparent;
+            border: none;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        
+        .btn-edit-name:hover {
+            color: #c41e3a;
+        }
+        
+        .btn-save-name {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .btn-save-name:hover {
+            background: #c41e3a;
+        }
+        
+        .user-name-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
         .user-email {
             color: #666;
             font-size: 0.9rem;
@@ -320,7 +365,7 @@
         
         .sidebar-menu a:hover,
         .sidebar-menu a.active {
-            background: rgba(212,175,55,0.1);
+            background: rgba(212, 175, 55, 0.1);
             color: #c41e3a;
         }
         
@@ -331,29 +376,30 @@
         
         /* 메인 콘텐츠 */
         .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
         }
         
         .content-section {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .content-section:last-child {
+            margin-bottom: 0;
         }
         
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid #f0f0f0;
         }
         
         .section-title {
-            font-family: 'Noto Serif KR', serif;
             font-size: 1.5rem;
             color: #1a1a1a;
             display: flex;
@@ -365,60 +411,88 @@
             color: #c41e3a;
         }
         
-        /* 내 사주 정보 */
+        /* 사주 정보 그리드 */
         .saju-info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
         
         .saju-info-item {
             background: #f9f9f9;
             padding: 1.5rem;
-            border-radius: 15px;
+            border-radius: 10px;
             border-left: 4px solid #d4af37;
         }
         
         .saju-info-item label {
             display: block;
-            font-size: 0.9rem;
             color: #666;
+            font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
         
         .saju-info-item .value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #1a1a1a;
         }
         
-        /* 구독 정보 */
-        .subscription-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
+        /* 버튼 */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
             align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
         
-        .subscription-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+        .btn-primary {
+            background: linear-gradient(135deg, #c41e3a, #8b1425);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #d4af37;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #c49e2b;
+        }
+        
+        /* 구독 정보 */
+        .subscription-info {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(196, 30, 58, 0.05));
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+        }
+        
+        .subscription-badge {
+            display: inline-block;
+            background: #d4af37;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
         
         .subscription-status {
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 1rem;
-        }
-        
-        .subscription-actions {
-            display: flex;
-            gap: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
         
         /* 이용 내역 */
@@ -431,39 +505,38 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.3s;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
         }
         
         .history-item:hover {
-            background: #f9f9f9;
-        }
-        
-        .history-item:last-child {
-            border-bottom: none;
+            background: #f0f0f0;
+            transform: translateX(5px);
         }
         
         .history-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 15px;
         }
         
         .history-icon {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(212,175,55,0.1);
+            background: linear-gradient(135deg, #c41e3a, #d4af37);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
             font-size: 1.5rem;
         }
         
         .history-details h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
             color: #1a1a1a;
+            margin-bottom: 0.3rem;
         }
         
         .history-details p {
@@ -472,107 +545,141 @@
         }
         
         .history-price {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: #c41e3a;
         }
         
-        /* 최근 본 서비스 */
-        .recent-services-grid {
+        /* 카드 그리드 */
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
         
-        .recent-service-card {
+        .card {
             background: #f9f9f9;
+            border-radius: 10px;
             padding: 1.5rem;
-            border-radius: 15px;
             text-align: center;
             transition: all 0.3s;
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         
-        .recent-service-card:hover {
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
-        .recent-service-icon {
-            font-size: 3rem;
+        .card-icon {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
         
-        .recent-service-title {
-            font-weight: 600;
+        .card h3 {
             margin-bottom: 0.5rem;
             color: #1a1a1a;
         }
         
-        .recent-service-date {
-            color: #999;
+        .card p {
+            color: #666;
             font-size: 0.9rem;
         }
         
-        /* 버튼 */
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
+        /* 설정 */
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .setting-label {
+            font-weight: 500;
+        }
+        
+        .toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            transition: background 0.3s;
         }
         
-        .btn-primary {
-            background: #c41e3a;
-            color: white;
+        .toggle.active {
+            background: #d4af37;
         }
         
-        .btn-primary:hover {
-            background: #a01830;
-            transform: scale(1.05);
-        }
-        
-        .btn-secondary {
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
             background: white;
-            color: #c41e3a;
-            border: 2px solid #c41e3a;
+            border-radius: 50%;
+            transition: left 0.3s;
         }
         
-        .btn-secondary:hover {
-            background: #c41e3a;
-            color: white;
+        .toggle.active::after {
+            left: 33px;
         }
         
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-        
-        .btn-outline:hover {
-            background: white;
-            color: #764ba2;
+        select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
         }
         
         /* 푸터 */
         .footer {
             background: #1a1a1a;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.8);
             padding: 3rem 0 1rem;
-            text-align: center;
-            margin-top: 3rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
         }
         
         .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
         }
         
         .footer-links a {
@@ -585,16 +692,15 @@
             color: #d4af37;
         }
         
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+        
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .language-switcher {
-                display: none !important;
-            }
-            
             .mypage-grid {
                 grid-template-columns: 1fr;
             }
@@ -603,29 +709,32 @@
                 position: static;
             }
             
-            .mypage-hero h1 {
-                font-size: 1.8rem;
+            .saju-info-grid {
+                grid-template-columns: 1fr;
             }
             
-            .subscription-card {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
                 flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
+                gap: 1rem;
+                margin-left: 0;
             }
             
-            .subscription-actions {
-                flex-direction: column;
-                width: 100%;
+            .footer-content {
+                grid-template-columns: 1fr;
             }
             
-            .subscription-actions .btn {
-                width: 100%;
+            .language-switcher {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 (메인과 동일) -->
+    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -635,7 +744,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
                 <li class="dropdown">
-                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <a href="#">서비스 <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-menu">
                         <a href="compatibility.html">💕 궁합 보기</a>
                         <a href="saju-matching.html">💑 궁합 매칭</a>
@@ -644,90 +753,106 @@
                     </div>
                 </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-guide.html">명리학 가이드</a></li>
-                <li><a href="blog.html">블로그</a></li>
+                <li><a href="saju-guide.html">📚 명리학 가이드</a></li>
+                <li><a href="blog.html">📖 블로그</a></li>
                 <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html" class="active">마이페이지</a></li>
             </ul>
             <div class="language-switcher">
                 <button class="lang-btn" id="langBtn">
-                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentFlag">🇰🇷</span>
                     <span id="currentLang">한국어</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option active" data-lang="ko">
-                        <span class="lang-flag">🇰🇷</span> 한국어
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="en">
-                        <span class="lang-flag">🇺🇸</span> English
-                    </button>
-                    <button class="lang-option" data-lang="zh">
-                        <span class="lang-flag">🇨🇳</span> 中文
-                    </button>
-                    <button class="lang-option" data-lang="ja">
-                        <span class="lang-flag">🇯🇵</span> 日本語
-                    </button>
+                    <div class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span>
+                        <span>한국어</span>
+                        <i class="fas fa-check lang-check"></i>
+                    </div>
+                    <div class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span>
+                        <span>English</span>
+                        <i class="fas fa-check lang-check"></i>
+                    </div>
+                    <div class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span>
+                        <span>中文</span>
+                        <i class="fas fa-check lang-check"></i>
+                    </div>
+                    <div class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span>
+                        <span>日本語</span>
+                        <i class="fas fa-check lang-check"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- 히어로 섹션 -->
-    <section class="mypage-hero">
-        <div class="container">
-            <h1>👤 마이페이지</h1>
- <p>내 정보와 서비스 이용 내역을 관리하세요</p>
- </div>
-  </section>
+    <section class="hero">
+        <h1>👤 마이페이지</h1>
+        <p>내 정보와 서비스 이용 내역을 관리하세요</p>
+    </section>
 
-  <!-- 마이페이지 컨테이너 -->
- <div class="mypage-container">
-  <div class="mypage-grid">
-  <!-- 사이드바 -->
-  <aside class="sidebar">
-  <div class="user-profile">
-   <div class="user-avatar">
-  <i class="fas fa-user"></i>
-  </div>
-  <div class="user-name" id="userName">홍길동</div>
-  <div class="user-email" id="userEmail">user@example.com</div>
-   </div>
+    <!-- 마이페이지 컨테이너 -->
+    <div class="mypage-container">
+        <div class="mypage-grid">
+            <!-- 사이드바 -->
+            <aside class="sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-name-display" id="userNameDisplay">
+                        <div class="user-name" id="userName">이름을 입력해주세요</div>
+                        <button class="btn-edit-name" onclick="toggleNameEdit()" title="이름 수정">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div class="user-name-edit" id="userNameEdit" style="display: none;">
+                        <input type="text" class="user-name-input" id="userNameInput" placeholder="이름을 입력하세요" maxlength="20">
+                        <button class="btn-save-name" onclick="saveUserName()">
+                            <i class="fas fa-check"></i> 저장
+                        </button>
+                    </div>
+                    <div class="user-email" id="userEmail">user@example.com</div>
+                </div>
+                
+                <ul class="sidebar-menu">
+                    <li><a href="#my-saju" class="active"><i class="fas fa-yin-yang"></i> 내 사주 정보</a></li>
+                    <li><a href="#subscription"><i class="fas fa-crown"></i> 구독 관리</a></li>
+                    <li><a href="#history"><i class="fas fa-history"></i> 이용 내역</a></li>
+                    <li><a href="#recent"><i class="fas fa-clock"></i> 최근 본 서비스</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> 설정</a></li>
+                    <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
+                </ul>
+            </aside>
 
-  <ul class="sidebar-menu">
-    <li><a href="#my-saju" class="active"><i class="fas fa-yin-yang"></i> 내 사주 정보</a></li>
-    <li><a href="#subscription"><i class="fas fa-crown"></i> 구독 관리</a></li>
-   <li><a href="#history"><i class="fas fa-history"></i> 이용 내역</a></li>
-  <li><a href="#recent"><i class="fas fa-clock"></i> 최근 본 서비스</a></li>
-     <li><a href="#settings"><i class="fas fa-cog"></i> 설정</a></li>
-    <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
-   </ul>
-    </aside>
-  
-    <!-- 메인 콘텐츠 -->
-     <main class="main-content">
-      <!-- 내 사주 정보 -->
-       <section class="content-section" id="my-saju">
-     <div class="section-header">
-        <h2 class="section-title">
-         <i class="fas fa-yin-yang"></i>
-        내 사주 정보
-          </h2>
-      <button class="btn btn-primary" onclick="location.href='index.html#saju-form'">
-      <i class="fas fa-edit"></i> 정보 수정
-        </button>
-    </div>
-  
-    <div class="saju-info-grid">
-       <div class="saju-info-item">
-            <label>생년월일</label>
-   <div class="value" id="birthDate">1990년 1월 1일</div>
-        </div>
-  <div class="saju-info-item">
-      <label>양력/음력</label>
-      <div class="value" id="calendar">양력</div>
-      </div>
+            <!-- 메인 콘텐츠 -->
+            <main class="main-content">
+                <!-- 내 사주 정보 -->
+                <section class="content-section" id="my-saju">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-yin-yang"></i>
+                            내 사주 정보
+                        </h2>
+                        <button class="btn btn-primary" onclick="location.href='index.html#saju-form'">
+                            <i class="fas fa-edit"></i> 정보 수정
+                        </button>
+                    </div>
+                    
+                    <div class="saju-info-grid">
+                        <div class="saju-info-item">
+                            <label>생년월일</label>
+                            <div class="value" id="birthDate">1990년 1월 1일</div>
+                        </div>
+                        <div class="saju-info-item">
+                            <label>양력/음력</label>
+                            <div class="value" id="calendar">양력</div>
+                        </div>
                         <div class="saju-info-item">
                             <label>태어난 시간</label>
                             <div class="value" id="birthTime">오시 (11:00-13:00)</div>
@@ -739,7 +864,7 @@
                     </div>
                     
                     <div style="margin-top: 2rem; text-align: center;">
-                        <button class="btn btn-primary" onclick="location.href='result.html'">
+                        <button class="btn btn-secondary" onclick="location.href='result.html'">
                             <i class="fas fa-star"></i> 내 사주 결과 보기
                         </button>
                     </div>
@@ -754,19 +879,15 @@
                         </h2>
                     </div>
                     
-                    <div class="subscription-card">
-                        <div class="subscription-info">
-                            <h3>무료 체험</h3>
-                            <p>프리미엄 기능을 사용하려면 구독하세요</p>
-                            <div class="subscription-status">
-                                <i class="fas fa-check-circle"></i> 활성
-                            </div>
+                    <div class="subscription-info">
+                        <span class="subscription-badge">무료 체험</span>
+                        <div class="subscription-status">
+                            <strong>활성</strong> 상태입니다
                         </div>
-                        <div class="subscription-actions">
-                            <button class="btn btn-outline" onclick="location.href='pricing.html'">
-                                <i class="fas fa-arrow-up"></i> 업그레이드
-                            </button>
-                        </div>
+                        <p style="margin-bottom: 1.5rem;">프리미엄 구독으로 업그레이드하여 더 많은 서비스를 이용하세요!</p>
+                        <button class="btn btn-primary" onclick="location.href='pricing.html'">
+                            <i class="fas fa-arrow-up"></i> 업그레이드
+                        </button>
                     </div>
                 </section>
 
@@ -782,7 +903,9 @@
                     <ul class="history-list">
                         <li class="history-item">
                             <div class="history-info">
-                                <div class="history-icon">🔮</div>
+                                <div class="history-icon">
+                                    <i class="fas fa-yin-yang"></i>
+                                </div>
                                 <div class="history-details">
                                     <h4>상세 사주팔자</h4>
                                     <p>2026.01.01 14:30</p>
@@ -792,7 +915,9 @@
                         </li>
                         <li class="history-item">
                             <div class="history-info">
-                                <div class="history-icon">💑</div>
+                                <div class="history-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
                                 <div class="history-details">
                                     <h4>정밀 궁합</h4>
                                     <p>2025.12.28 10:15</p>
@@ -802,7 +927,9 @@
                         </li>
                         <li class="history-item">
                             <div class="history-info">
-                                <div class="history-icon">📅</div>
+                                <div class="history-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
                                 <div class="history-details">
                                     <h4>이사/결혼 택일</h4>
                                     <p>2025.12.25 16:00</p>
@@ -822,22 +949,22 @@
                         </h2>
                     </div>
                     
-                    <div class="recent-services-grid">
-                        <div class="recent-service-card" onclick="location.href='result.html'">
-                            <div class="recent-service-icon">🔮</div>
-                            <div class="recent-service-title">상세 사주팔자</div>
-                            <div class="recent-service-date">1시간 전</div>
-                        </div>
-                        <div class="recent-service-card" onclick="location.href='compatibility.html'">
-                            <div class="recent-service-icon">💑</div>
-                            <div class="recent-service-title">정밀 궁합</div>
-                            <div class="recent-service-date">3일 전</div>
-                        </div>
-                        <div class="recent-service-card" onclick="location.href='tojeong.html'">
-                            <div class="recent-service-icon">📖</div>
-                            <div class="recent-service-title">토정비결 2026</div>
-                            <div class="recent-service-date">1주일 전</div>
-                        </div>
+                    <div class="cards-grid">
+                        <a href="result.html" class="card">
+                            <div class="card-icon">🔮</div>
+                            <h3>사주팔자</h3>
+                            <p>나의 운명을 확인하세요</p>
+                        </a>
+                        <a href="compatibility.html" class="card">
+                            <div class="card-icon">💕</div>
+                            <h3>궁합 분석</h3>
+                            <p>두 사람의 궁합을 알아보세요</p>
+                        </a>
+                        <a href="tojeong.html" class="card">
+                            <div class="card-icon">📅</div>
+                            <h3>택일</h3>
+                            <p>좋은 날을 선택하세요</p>
+                        </a>
                     </div>
                 </section>
 
@@ -850,38 +977,33 @@
                         </h2>
                     </div>
                     
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: #f9f9f9; border-radius: 10px;">
-                            <div>
-                                <h4 style="margin-bottom: 0.5rem;">알림 설정</h4>
-                                <p style="color: #666; font-size: 0.9rem;">새로운 서비스와 이벤트 소식을 받아보세요</p>
+                    <div class="settings-group">
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <strong>알림 설정</strong>
+                                <p style="color: #666; font-size: 0.9rem;">중요한 업데이트를 받아보세요</p>
                             </div>
-                            <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
-                                <input type="checkbox" style="opacity: 0; width: 0; height: 0;" checked>
-                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
-                            </label>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: #f9f9f9; border-radius: 10px;">
-                            <div>
-                                <h4 style="margin-bottom: 0.5rem;">언어 설정</h4>
-                                <p style="color: #666; font-size: 0.9rem;">서비스 언어를 변경하세요</p>
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <strong>언어 설정</strong>
                             </div>
-                            <select style="padding: 10px 20px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                                <option>한국어</option>
-                                <option>English</option>
-                                <option>中文</option>
-                                <option>日本語</option>
+                            <select>
+                                <option value="ko">한국어</option>
+                                <option value="en">English</option>
+                                <option value="zh">中文</option>
+                                <option value="ja">日本語</option>
                             </select>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: #f9f9f9; border-radius: 10px;">
-                            <div>
-                                <h4 style="margin-bottom: 0.5rem;">계정 관리</h4>
-                                <p style="color: #666; font-size: 0.9rem;">비밀번호 변경 및 계정 정보 수정</p>
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <strong>계정 관리</strong>
                             </div>
-                            <button class="btn btn-secondary" onclick="alert('준비 중인 기능입니다.')">
-                                수정
+                            <button class="btn btn-secondary" onclick="alert('준비 중입니다!')">
+                                <i class="fas fa-user-cog"></i> 수정
                             </button>
                         </div>
                     </div>
@@ -892,24 +1014,45 @@
 
     <!-- 푸터 -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="terms.html">이용약관</a>
-                <a href="privacy.html">개인정보처리방침</a>
-                <a href="refund.html">환불정책</a>
-                <a href="admin-login.html">Admin</a>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AI 사주 천년지기</h3>
+                <p>2026 병오년, 정통 명리학과 AI가 만나</p>
+                <p>당신의 운명을 밝혀드립니다.</p>
+                <p style="margin-top: 1rem;">
+                    <i class="fas fa-envelope"></i> contact@aisaju1000.com<br>
+                    <i class="fas fa-phone"></i> 1588-0000
+                </p>
             </div>
+            <div class="footer-section">
+                <h3>바로가기</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">홈</a></li>
+                    <li><a href="ai-chat.html">AI 상담</a></li>
+                    <li><a href="pricing.html">가격표</a></li>
+                    <li><a href="blog.html">블로그</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>고객지원</h3>
+                <ul class="footer-links">
+                    <li><a href="terms.html">이용약관</a></li>
+                    <li><a href="privacy.html">개인정보처리방침</a></li>
+                    <li><a href="refund.html">환불정책</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
             <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase SDK + 스크립트 -->
+    <!-- Firebase SDK -->
     <script type="module">
-        // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, doc, setDoc, getDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // Firebase configuration
+        // Firebase 설정
         const firebaseConfig = {
             apiKey: "AIzaSyARk1l_3Itli14aE4RaSfllJRaBQmzvDVA",
             authDomain: "aisaju1000-59385.firebaseapp.com",
@@ -920,7 +1063,7 @@
             measurementId: "G-DGY0NX0E7M"
         };
 
-        // Initialize Firebase
+        // Firebase 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -949,10 +1092,8 @@
                 }, { merge: true });
                 
                 console.log('✅ Firestore에 사주 데이터 저장 완료!');
-                return true;
-            } catch (error) {
-                console.error('❌ Firestore 저장 실패:', error);
-                return false;
+            } catch (e) {
+                console.error('❌ Firestore 저장 실패:', e);
             }
         }
 
@@ -965,8 +1106,8 @@
                 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    console.log('✅ Firestore에서 사주 데이터 불러오기 완료!');
-                    return data.sajuData;
+                    console.log('✅ Firestore 데이터 불러오기 완료!');
+                    return data;
                 } else {
                     console.log('ℹ️ Firestore에 저장된 데이터가 없습니다.');
                     return null;
@@ -979,21 +1120,34 @@
 
         // 로컬스토리지와 Firestore 동기화
         async function syncData() {
+            // 1. 로컬스토리지 데이터 확인
             const localData = localStorage.getItem('sajuData');
+            const localName = localStorage.getItem('userName');
+            
+            // 2. Firestore 데이터 확인
             const firestoreData = await loadSajuFromFirestore();
             
             if (localData && !firestoreData) {
+                // 로컬에만 있으면 → Firestore에 백업
                 console.log('📤 로컬 데이터를 Firestore에 백업 중...');
                 await saveSajuToFirestore(JSON.parse(localData));
             } else if (!localData && firestoreData) {
+                // Firestore에만 있으면 → 로컬에 복사
                 console.log('📥 Firestore 데이터를 로컬에 복사 중...');
-                localStorage.setItem('sajuData', JSON.stringify(firestoreData));
+                localStorage.setItem('sajuData', JSON.stringify(firestoreData.sajuData || firestoreData));
+                
+                // 이름도 복사
+                if (firestoreData.userName) {
+                    localStorage.setItem('userName', firestoreData.userName);
+                }
             } else if (localData && firestoreData) {
+                // 둘 다 있으면 → 최신 데이터 확인 (일단 로컬 우선)
                 console.log('🔄 로컬 데이터로 동기화 중...');
                 await saveSajuToFirestore(JSON.parse(localData));
             }
         }
 
+        // 페이지 로드 시 동기화
         syncData();
 
         // 로컬스토리지에서 사주 정보 불러오기
@@ -1003,6 +1157,7 @@
                 try {
                     const data = JSON.parse(sajuData);
                     
+                    // 생년월일 형식 변환
                     if (data.birthdate) {
                         const date = new Date(data.birthdate);
                         const year = date.getFullYear();
@@ -1011,11 +1166,13 @@
                         document.getElementById('birthDate').textContent = `${year}년 ${month}월 ${day}일`;
                     }
                     
+                    // 음력/양력
                     if (data.calendar) {
-                        document.getElementById('calendar').textContent = data.calendar === 'solar' ? '양력' : '음력';
+                        document.getElementById('calendar').textContent = data.calendar === 'lunar' ? '음력' : '양력';
                     }
                     
-                    if (data.birthtime && data.birthtime !== '') {
+                    // 태어난 시간
+                    if (data.birthtime) {
                         const timeMap = {
                             '23-01': '자시 (23:00-01:00)',
                             '01-03': '축시 (01:00-03:00)',
@@ -1031,10 +1188,9 @@
                             '21-23': '해시 (21:00-23:00)'
                         };
                         document.getElementById('birthTime').textContent = timeMap[data.birthtime] || '미입력';
-                    } else {
-                        document.getElementById('birthTime').textContent = '미입력';
                     }
                     
+                    // 성별
                     if (data.gender) {
                         document.getElementById('gender').textContent = data.gender === 'male' ? '남성' : '여성';
                     }
@@ -1044,8 +1200,89 @@
             }
         }
 
-        setTimeout(loadUserData, 1000);
+        // 이름 불러오기
+        function loadUserName() {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('userName').textContent = userName;
+            }
+        }
 
+        // 이름 수정 모드 토글
+        function toggleNameEdit() {
+            const displayDiv = document.getElementById('userNameDisplay');
+            const editDiv = document.getElementById('userNameEdit');
+            const nameInput = document.getElementById('userNameInput');
+            const currentName = document.getElementById('userName').textContent;
+            
+            displayDiv.style.display = 'none';
+            editDiv.style.display = 'flex';
+            nameInput.value = currentName === '이름을 입력해주세요' ? '' : currentName;
+            nameInput.focus();
+        }
+
+        // 이름 저장
+        async function saveUserName() {
+            const nameInput = document.getElementById('userNameInput');
+            const newName = nameInput.value.trim();
+            
+            if (!newName) {
+                alert('이름을 입력해주세요.');
+                return;
+            }
+            
+            if (newName.length > 20) {
+                alert('이름은 20자 이하로 입력해주세요.');
+                return;
+            }
+            
+            // 1) localStorage에 저장
+            localStorage.setItem('userName', newName);
+            
+            // 2) 화면에 표시
+            document.getElementById('userName').textContent = newName;
+            
+            // 3) 편집 모드 종료
+            document.getElementById('userNameDisplay').style.display = 'flex';
+            document.getElementById('userNameEdit').style.display = 'none';
+            
+            // 4) Firestore에 저장
+            try {
+                const userId = getUserId();
+                const userRef = doc(db, 'users', userId);
+                
+                await setDoc(userRef, {
+                    userName: newName,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+                
+                console.log('✅ Firestore에 이름 저장 완료!');
+                alert('이름이 저장되었습니다! 😊');
+            } catch (e) {
+                console.error('❌ Firestore 저장 실패:', e);
+                alert('이름은 로컬에 저장되었으나, 클라우드 동기화는 실패했습니다.');
+            }
+        }
+
+        // Enter 키로 저장
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('userNameInput');
+            if (nameInput) {
+                nameInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        saveUserName();
+                    }
+                });
+            }
+        });
+
+        // 페이지 로드 시 데이터 불러오기
+        setTimeout(() => {
+            loadUserName(); // 이름 먼저 로드
+            loadUserData(); // 사주 데이터 로드
+        }, 1000); // Firebase 동기화 후 로드
+
+        // localStorage 변경 감지 시 Firestore 동기화
         window.addEventListener('storage', async function(e) {
             if (e.key === 'sajuData' && e.newValue) {
                 console.log('📝 localStorage 변경 감지! Firestore 동기화 중...');
@@ -1053,8 +1290,11 @@
             }
         });
 
+        // 전역으로 내보내기 (다른 스크립트에서 사용 가능)
         window.saveSajuToFirestore = saveSajuToFirestore;
         window.loadSajuFromFirestore = loadSajuFromFirestore;
+        window.toggleNameEdit = toggleNameEdit;
+        window.saveUserName = saveUserName;
 
         // 언어 선택기
         const langBtn = document.getElementById('langBtn');
@@ -1113,19 +1353,13 @@
         // 로그아웃
         function logout() {
             if (confirm('로그아웃 하시겠습니까?')) {
+                // 로컬스토리지 클리어 (선택사항)
+                // localStorage.clear();
                 alert('로그아웃되었습니다.');
                 window.location.href = 'index.html';
             }
             return false;
         }
-
-        window.addEventListener('error', function(e) {
-            console.error('전역 에러:', e.error);
-        });
-
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('처리되지 않은 Promise 거부:', e.reason);
-        });
     </script>
 </body>
 </html>
