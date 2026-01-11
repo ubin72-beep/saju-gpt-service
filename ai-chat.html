@@ -64,6 +64,251 @@
             color: #1a1a1a;
         }
         
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            margin-left: 3rem;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        .nav-menu a.active {
+            color: #d4af37;
+            font-weight: 700;
+        }
+        
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dropdown-menu a:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #c41e3a;
+            padding-left: 25px;
+        }
+        
+        /* 언어 선택기 */
+        .language-switcher {
+            position: relative;
+            margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .language-switcher {
+                display: none !important;
+            }
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .lang-flag { font-size: 18px; }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        
+        .lang-option:first-child { border-radius: 13px 13px 0 0; }
+        .lang-option:last-child { border-radius: 0 0 13px 13px; }
+        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
+        .lang-option.active { 
+            background: rgba(212, 175, 55, 0.2); 
+            font-weight: 700; 
+            color: #c41e3a; 
+        }
+        .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
+        .lang-option.active i { display: inline; }
+        
+        /* 햄버거 메뉴 (모바일) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 15px;
+            margin-right: 0;
+            position: relative;
+            z-index: 10001;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .hamburger:active {
+            background: rgba(212, 175, 55, 0.3);
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            margin: 3px 0;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* 모바일 메뉴 */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .mobile-menu ul li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .mobile-menu ul li a {
+            display: block;
+            padding: 15px 20px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu ul li a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #d4af37;
+            padding-left: 30px;
+        }
+        
         /* 히어로 섹션 */
         .hero {
             text-align: center;
@@ -327,7 +572,42 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .message-bubble { max-width: 85%; }
-            .nav-links { display: none; }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                z-index: 10000 !important;
+                background: rgba(212, 175, 55, 0.3) !important;
+                padding: 15px !important;
+                border-radius: 8px !important;
+                cursor: pointer !important;
+                -webkit-tap-highlight-color: transparent !important;
+                width: 50px !important;
+                height: 50px !important;
+            }
+            
+            .hamburger span {
+                display: block !important;
+                width: 25px !important;
+                height: 3px !important;
+                background: #d4af37 !important;
+                margin: 3px 0 !important;
+                border-radius: 3px !important;
+            }
+            
+            .hamburger:active {
+                background: rgba(212, 175, 55, 0.5) !important;
+            }
+            
+            .mobile-menu {
+                display: block !important;
+            }
         }
     </style>
 </head>
@@ -339,14 +619,75 @@
                 <i class="fas fa-yin-yang"></i>
                 AI 사주 천년지기
             </a>
-            <div class="nav-links">
-                <a href="index.html">홈</a>
-                <a href="pricing.html">가격표</a>
-                <a href="ai-chat.html" class="active">AI 상담</a>
-                <a href="mypage.html">마이페이지</a>
+            
+            <!-- 햄버거 메뉴 (모바일) -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="compatibility.html">💕 궁합 보기</a>
+                        <a href="saju-matching.html">💑 궁합 매칭</a>
+                        <a href="community.html">💬 커뮤니티</a>
+                        <a href="hr-solution.html">💼 HR 솔루션</a>
+                    </div>
+                </li>
+                <li><a href="ai-chat.html" class="active">AI 상담</a></li>
+                <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
+                <li><a href="blog.html"><i class="fas fa-newspaper"></i> 블로그</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+            
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
+                    <span id="currentLang">한국어</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="ko">
+                        <span class="lang-flag">🇰🇷</span> 한국어
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span> English
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="zh">
+                        <span class="lang-flag">🇨🇳</span> 中文
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="lang-option" data-lang="ja">
+                        <span class="lang-flag">🇯🇵</span> 日本語
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
+    
+    <!-- 모바일 메뉴 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">🏠 홈</a></li>
+            <li><a href="compatibility.html">💕 궁합 보기</a></li>
+            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
+            <li><a href="community.html">💬 커뮤니티</a></li>
+            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
+            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
+            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
+            <li><a href="blog.html">📰 블로그</a></li>
+            <li><a href="pricing.html">💰 가격표</a></li>
+            <li><a href="mypage.html">👤 마이페이지</a></li>
+        </ul>
+    </div>
 
     <!-- 히어로 -->
     <section class="hero">
@@ -464,7 +805,6 @@
     <script>
         // 사주 정보 로드
         function loadSajuInfo() {
-            // 🔥 궁합 데이터 먼저 확인
             const compatibilityDataStr = localStorage.getItem('compatibilityData');
             const sajuDataStr = localStorage.getItem('sajuData');
             const card = document.getElementById('sajuInfoCard');
@@ -473,7 +813,6 @@
             console.log('📦 궁합 데이터:', compatibilityDataStr);
             console.log('📦 사주 데이터:', sajuDataStr);
             
-            // 💕 궁합 모드 확인
             if (compatibilityDataStr) {
                 try {
                     const compatibilityData = JSON.parse(compatibilityDataStr);
@@ -506,7 +845,6 @@
                         </div>
                     `;
                     
-                    // 자동 AI 메시지 추가
                     setTimeout(() => {
                         addMessage('ai', `안녕하세요! ${compatibilityData.person1.name}님과 ${compatibilityData.person2.name}님의 ${typeLabels[compatibilityData.type]}을 분석해드릴게요.\n\n궁합 점수는 ${compatibilityData.score}점입니다. 구체적으로 어떤 부분이 궁금하신가요?`);
                     }, 500);
@@ -517,7 +855,6 @@
                 }
             }
             
-            // 일반 사주 모드
             if (!sajuDataStr) {
                 document.getElementById('sajuInfoContent').innerHTML = `
                     <p>⚠️ 사주 정보 없음</p>
@@ -530,7 +867,6 @@
                 const sajuData = JSON.parse(sajuDataStr);
                 console.log('📋 사주 데이터:', sajuData);
                 
-                // 🔥 사주팔자가 없으면 result.html로 안내
                 if (!sajuData.yearPillar) {
                     document.getElementById('sajuInfoContent').innerHTML = `
                         <p><strong>생년월일:</strong> ${sajuData.birthdate || '미상'} (${sajuData.calendar === 'lunar' ? '음력' : '양력'})</p>
@@ -568,17 +904,14 @@
             }
         }
         
-        // 🔥 새로고침 함수 추가
         function refreshSajuInfo() {
             console.log('🔄 사주 정보 새로고침...');
             loadSajuInfo();
         }
         
-        // 🔥 Gemini API 연동
         const GEMINI_API_KEY = 'AIzaSyBqVH1yCQYQqNjrBcgNzMzQoYz1M_NZvBQ';
         const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
         
-        // 메시지 전송
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const sendBtn = document.getElementById('sendBtn');
@@ -586,40 +919,31 @@
             
             if (!message) return;
             
-            // 버튼 비활성화
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
             
-            // 사용자 메시지 추가
             addMessage('user', message);
             input.value = '';
             
             try {
-                // 🔥 실제 Gemini API 호출
                 const aiResponse = await callGeminiAPI(message);
                 addMessage('ai', aiResponse);
-                
-                // 대화 히스토리 저장
                 saveToHistory(message, aiResponse);
             } catch (error) {
                 console.error('❌ API 호출 실패:', error);
                 addMessage('ai', '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요. 🙏');
             } finally {
-                // 버튼 활성화
                 sendBtn.disabled = false;
                 sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 전송';
             }
         }
         
-        // 🔥 Gemini API 호출 함수
         async function callGeminiAPI(userMessage) {
-            // 사주 데이터 가져오기
             const sajuDataStr = localStorage.getItem('sajuData');
             const compatibilityDataStr = localStorage.getItem('compatibilityData');
             
             let systemContext = '당신은 사주팔자 전문가입니다. 한국 전통 명리학에 대해 깊은 지식을 가지고 있으며, 친절하고 따뜻한 어조로 상담합니다.';
             
-            // 궁합 모드
             if (compatibilityDataStr) {
                 try {
                     const compatibilityData = JSON.parse(compatibilityDataStr);
@@ -628,7 +952,6 @@
                     console.error('궁합 데이터 파싱 실패:', e);
                 }
             }
-            // 일반 사주 모드
             else if (sajuDataStr) {
                 try {
                     const sajuData = JSON.parse(sajuDataStr);
@@ -644,7 +967,6 @@
                 }
             }
             
-            // API 요청
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
                 headers: {
@@ -670,11 +992,9 @@
             const data = await response.json();
             console.log('✅ Gemini API 응답:', data);
             
-            // 응답 텍스트 추출
             return data.candidates[0].content.parts[0].text;
         }
         
-        // 🔥 대화 히스토리 저장
         function saveToHistory(userMessage, aiResponse) {
             try {
                 const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
@@ -684,7 +1004,6 @@
                     ai: aiResponse
                 });
                 
-                // 최근 개만 저장
                 if (history.length > 50) {
                     history.shift();
                 }
@@ -696,7 +1015,6 @@
             }
         }
         
-        // 메시지 추가
         function addMessage(sender, text) {
             const messagesDiv = document.getElementById('chatMessages');
             const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -719,7 +1037,6 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
-        // Enter 키로 전송
         document.getElementById('chatInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -727,17 +1044,13 @@
             }
         });
         
-        // 페이지 로드 시 사주 정보 로드
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadSajuInfo);
         } else {
-            // DOMContentLoaded 이미 발생했으면 즉시 실행
             loadSajuInfo();
         }
 
-        // ===== Global Error Handler =====
         window.addEventListener('error', function(e) {
-            // aisaju1000.com 외의 스크립트 에러 무시
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
                 return false;
@@ -745,6 +1058,66 @@
         });
 
         console.log('✅ AI 사주 상담 페이지 로드 완료');
+        
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                console.log('🍔 햄버거 메뉴 토글');
+            });
+            
+            const mobileLinks = document.querySelectorAll('.mobile-menu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+        }
+        
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        
+        if (langBtn && langDropdown) {
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.classList.toggle('active');
+            });
+            
+            const langOptions = document.querySelectorAll('.lang-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    const flag = this.querySelector('.lang-flag').textContent;
+                    const langName = this.textContent.trim().replace('✓', '').trim();
+                    
+                    document.getElementById('currentFlag').textContent = flag;
+                    document.getElementById('currentLang').textContent = langName;
+                    
+                    langOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    langDropdown.classList.remove('active');
+                    
+                    console.log('🌐 언어 변경:', lang);
+                });
+            });
+            
+            document.addEventListener('click', () => {
+                langDropdown.classList.remove('active');
+            });
+        }
     </script>
 </body>
 </html>
