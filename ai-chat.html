@@ -2,35 +2,30 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 사주 상담 - AI 사주 천년지기</title>
-    <meta name="description" content="ChatGPT 기반 AI 사주팔자 상담. 24시간 실시간 맞춤형 운세 조언.">
-    
+    <meta name="description" content="ChatGPT 기반 AI 사주팔자 상담. 실시간 맞춤형 운세 조언.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
             background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
             min-height: 100vh;
+            color: #333;
         }
         
         /* 네비게이션 */
         .navbar {
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-        
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -39,7 +34,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        
         .nav-brand {
             color: #d4af37;
             font-size: 1.5rem;
@@ -47,247 +41,27 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
-        
-        .nav-menu {
+        .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
             align-items: center;
-            margin-left: 3rem;
         }
-        
-        .nav-menu li {
-            position: relative;
-        }
-        
-        .nav-menu a {
+        .nav-links a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .nav-menu a:hover {
-            color: #d4af37;
-        }
-        
-        /* 드롭다운 메뉴 */
-        .dropdown {
-            position: relative;
-        }
-        
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 220px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
-            margin-top: 10px;
-        }
-        
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .dropdown-menu a:first-child {
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-            border-radius: 0 0 10px 10px;
-        }
-        
-        .dropdown-menu a:hover {
-            background: rgba(212,175,55,0.1);
-            color: #c41e3a;
-            padding-left: 25px;
-        }
-        
-        /* 언어 선택기 */
-        .language-switcher {
-            position: relative;
-            margin-left: auto;
-        }
-        
-        @media (max-width: 768px) {
-            .language-switcher {
-                display: none !important;
-            }
-        }
-        
-        .lang-btn {
-            background: transparent;
-            border: 2px solid #d4af37;
-            color: #d4af37;
             padding: 8px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: 20px;
             transition: all 0.3s;
         }
-        
-        .lang-btn:hover {
-            background: rgba(212, 175, 55, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .lang-flag { font-size: 18px; }
-        
-        .lang-dropdown {
-            position: absolute;
-            top: 120%;
-            right: 0;
-            background: white;
-            border: 2px solid #d4af37;
-            border-radius: 15px;
-            min-width: 180px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-        
-        .lang-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        .lang-option {
-            width: 100%;
-            padding: 12px 20px;
-            border: none;
-            background: white;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            transition: all 0.2s;
-            color: #333;
-        }
-        
-        .lang-option:first-child { border-radius: 13px 13px 0 0; }
-        .lang-option:last-child { border-radius: 0 0 13px 13px; }
-        .lang-option:hover { background: rgba(212, 175, 55, 0.1); }
-        .lang-option.active { 
-            background: rgba(212, 175, 55, 0.2); 
-            font-weight: 700; 
-            color: #c41e3a; 
-        }
-        .lang-option i { margin-left: auto; color: #c41e3a; display: none; }
-        .lang-option.active i { display: inline; }
-        
-        /* 햄버거 메뉴 (모바일) */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 15px;
-            margin-right: 0;
-            position: relative;
-            z-index: 10001;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .hamburger:active {
-            background: rgba(212, 175, 55, 0.3);
-        }
-        
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #d4af37;
-            margin: 3px 0;
-            transition: all 0.3s;
-            border-radius: 3px;
-        }
-        
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-        
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-        
-        /* 모바일 메뉴 */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 64px;
-            left: 0;
-            right: 0;
-            background: #1a1a1a;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            z-index: 10000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .mobile-menu.active {
-            max-height: 500px;
-        }
-        
-        .mobile-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .mobile-menu ul li {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .mobile-menu ul li a {
-            display: block;
-            padding: 15px 20px;
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .mobile-menu ul li a:hover {
-            background: rgba(212,175,55,0.1);
+        .nav-links a:hover {
+            background: rgba(212, 175, 55, 0.2);
             color: #d4af37;
-            padding-left: 30px;
+        }
+        .nav-links a.active {
+            background: #d4af37;
+            color: #1a1a1a;
         }
         
         /* 히어로 섹션 */
@@ -550,46 +324,10 @@
             text-align: center;
         }
         
-        /* 반응형 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .message-bubble { max-width: 85%; }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .hamburger {
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                z-index: 10000 !important;
-                background: rgba(212, 175, 55, 0.3) !important;
-                padding: 15px !important;
-                border-radius: 8px !important;
-                cursor: pointer !important;
-                -webkit-tap-highlight-color: transparent !important;
-                width: 50px !important;
-                height: 50px !important;
-            }
-            
-            .hamburger span {
-                display: block !important;
-                width: 25px !important;
-                height: 3px !important;
-                background: #d4af37 !important;
-                margin: 3px 0 !important;
-                border-radius: 3px !important;
-            }
-            
-            .hamburger:active {
-                background: rgba(212, 175, 55, 0.5) !important;
-            }
-            
-            .mobile-menu {
-                display: block !important;
-            }
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -601,75 +339,14 @@
                 <i class="fas fa-yin-yang"></i>
                 AI 사주 천년지기
             </a>
-            
-            <!-- 햄버거 메뉴 (모바일) -->
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
-                    <div class="dropdown-menu">
-                        <a href="compatibility.html">💕 궁합 보기</a>
-                        <a href="saju-matching.html">💑 궁합 매칭</a>
-                        <a href="community.html">💬 커뮤니티 프리미엄</a>
-                        <a href="hr-solution.html">💼 HR 솔루션</a>
-                    </div>
-                </li>
-                <li><a href="ai-chat.html" class="active" style="color: #d4af37;">AI 상담</a></li>
-                <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
-                <li><a href="blog.html"><i class="fas fa-newspaper"></i> 블로그</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-            </ul>
-            
-            <div class="language-switcher">
-                <button class="lang-btn" id="langBtn">
-                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
-                    <span id="currentLang">한국어</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option active" data-lang="ko">
-                        <span class="lang-flag">🇰🇷</span> 한국어
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="en">
-                        <span class="lang-flag">🇺🇸</span> English
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="zh">
-                        <span class="lang-flag">🇨🇳</span> 中文
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="ja">
-                        <span class="lang-flag">🇯🇵</span> 日本語
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="pricing.html">가격표</a>
+                <a href="ai-chat.html" class="active">AI 상담</a>
+                <a href="mypage.html">마이페이지</a>
             </div>
         </div>
     </nav>
-    
-    <!-- 모바일 메뉴 -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="index.html">🏠 홈</a></li>
-            <li><a href="compatibility.html">💕 궁합 보기</a></li>
-            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
-            <li><a href="community.html">💬 커뮤니티</a></li>
-            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
-            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
-            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-            <li><a href="blog.html">📰 블로그</a></li>
-            <li><a href="pricing.html">💰 가격표</a></li>
-            <li><a href="mypage.html">👤 마이페이지</a></li>
-        </ul>
-    </div>
 
     <!-- 히어로 -->
     <section class="hero">
@@ -677,7 +354,7 @@
             <i class="fas fa-robot"></i>
             AI 사주 상담
         </h1>
-        <p>ChatGPT 기반 AI가 24시간 실시간으로 당신의 사주를 분석하고 맞춤 조언을 드립니다</p>
+        <p>실시간 AI가 당신의 사주를 분석하고 맞춤 조언을 드립니다</p>
     </section>
 
     <!-- 메인 컨테이너 -->
@@ -727,7 +404,7 @@
                 <div class="input-wrapper">
                     <textarea 
                         id="chatInput" 
-                        placeholder="메시지를 입력하세요... (예: 2026년 나의 연애운은 어떤가요?)"
+                        placeholder="메시지를 입력하세요... (예: 올해 나의 연애운은 어떤가요?)"
                         rows="2"
                     ></textarea>
                 </div>
@@ -743,9 +420,9 @@
             <div class="price-card">
                 <div class="price-icon">🆓</div>
                 <h3>무료</h3>
-                <div class="price">₩0</div>
+                <div class="price">무료</div>
                 <ul>
-                    <li>✅ 매일 3개 질문</li>
+                    <li>✅ 매일 질문 가능</li>
                     <li>✅ 기본 사주 해석</li>
                     <li>✅ 간단한 조언</li>
                 </ul>
@@ -755,10 +432,10 @@
             <div class="price-card featured">
                 <div class="badge">인기</div>
                 <div class="price-icon">💬</div>
-                <h3>추가 10개 질문</h3>
-                <div class="price">₩2,900</div>
+                <h3>추가 질문</h3>
+                <div class="price">추가 질문권</div>
                 <ul>
-                    <li>✅ 즉시 10개 질문 추가</li>
+                    <li>✅ 즉시 질문 추가</li>
                     <li>✅ 상세한 해석</li>
                     <li>✅ 채팅 히스토리 저장</li>
                 </ul>
@@ -768,7 +445,7 @@
             <div class="price-card">
                 <div class="price-icon">♾️</div>
                 <h3>무제한 구독</h3>
-                <div class="price">₩9,900<small>/월</small></div>
+                <div class="price">월 구독</div>
                 <ul>
                     <li>✅ 무제한 질문</li>
                     <li>✅ 우선 응답</li>
@@ -781,93 +458,22 @@
 
     <!-- 푸터 -->
     <footer class="footer">
-        <p>&copy; 2025-2026 AI 사주 천년지기. All rights reserved.</p>
+        <p>&copy; AI 사주 천년지기. All rights reserved.</p>
     </footer>
 
     <script>
-        // 햄버거 메뉴 토글
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        console.log('✅ Mobile menu script loaded');
-        console.log('Hamburger:', hamburger);
-        console.log('MobileMenu:', mobileMenu);
-        
-        if (hamburger && mobileMenu) {
-            hamburger.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('🍔 Hamburger clicked!');
-                hamburger.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-            });
-            
-            hamburger.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('👆 Hamburger touched!');
-                hamburger.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-            });
-            
-            const mobileLinks = document.querySelectorAll('.mobile-menu a');
-            mobileLinks.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    hamburger.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                });
-            });
-        }
-        
-        // 언어 선택기
-        const langBtn = document.getElementById('langBtn');
-        const langDropdown = document.getElementById('langDropdown');
-        
-        if (langBtn && langDropdown) {
-            langBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                langDropdown.classList.toggle('active');
-            });
-            
-            const langOptions = document.querySelectorAll('.lang-option');
-            
-            langOptions.forEach(function(option) {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const lang = this.getAttribute('data-lang');
-                    
-                    if (lang !== 'ko') {
-                        alert('🌏 다국어 서비스 준비 중입니다.\n\n현재 한국어만 지원됩니다.\n빠른 시일 내에 ' + 
-                            (lang === 'en' ? 'English' : lang === 'zh' ? '中文' : '日本語') + 
-                            ' 서비스를 제공하겠습니다.\n\n감사합니다! 🙏');
-                        
-                        langDropdown.classList.remove('active');
-                        return;
-                    }
-                    
-                    langDropdown.classList.remove('active');
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-                    langDropdown.classList.remove('active');
-                }
-            });
-        }
-        
         // 사주 정보 로드
         function loadSajuInfo() {
+            // 🔥 궁합 데이터 먼저 확인
             const compatibilityDataStr = localStorage.getItem('compatibilityData');
             const sajuDataStr = localStorage.getItem('sajuData');
             const card = document.getElementById('sajuInfoCard');
             
-            console.log('🔄 AI 채팅 페이지 로드 시각:', new Date().toLocaleTimeString());
+            console.log('🔄 AI 채팅 페이지 로드');
             console.log('📦 궁합 데이터:', compatibilityDataStr);
             console.log('📦 사주 데이터:', sajuDataStr);
             
+            // 💕 궁합 모드 확인
             if (compatibilityDataStr) {
                 try {
                     const compatibilityData = JSON.parse(compatibilityDataStr);
@@ -900,6 +506,7 @@
                         </div>
                     `;
                     
+                    // 자동 AI 메시지 추가
                     setTimeout(() => {
                         addMessage('ai', `안녕하세요! ${compatibilityData.person1.name}님과 ${compatibilityData.person2.name}님의 ${typeLabels[compatibilityData.type]}을 분석해드릴게요.\n\n궁합 점수는 ${compatibilityData.score}점입니다. 구체적으로 어떤 부분이 궁금하신가요?`);
                     }, 500);
@@ -910,6 +517,7 @@
                 }
             }
             
+            // 일반 사주 모드
             if (!sajuDataStr) {
                 document.getElementById('sajuInfoContent').innerHTML = `
                     <p>⚠️ 사주 정보 없음</p>
@@ -922,10 +530,11 @@
                 const sajuData = JSON.parse(sajuDataStr);
                 console.log('📋 사주 데이터:', sajuData);
                 
+                // 🔥 사주팔자가 없으면 result.html로 안내
                 if (!sajuData.yearPillar) {
                     document.getElementById('sajuInfoContent').innerHTML = `
                         <p><strong>생년월일:</strong> ${sajuData.birthdate || '미상'} (${sajuData.calendar === 'lunar' ? '음력' : '양력'})</p>
-                        <p><strong>태어난 시간:</strong> ${sajuData.hour || '미상'}</p>
+                        <p><strong>태어난 시간:</strong> ${sajuData.hour || sajuData.birthtime || '미상'}</p>
                         <p><strong>성별:</strong> ${sajuData.gender === 'male' ? '남성' : '여성'}</p>
                         <hr>
                         <p style="color: rgba(255,255,255,0.9); margin: 15px 0;">
@@ -940,7 +549,7 @@
                 
                 document.getElementById('sajuInfoContent').innerHTML = `
                     <p><strong>생년월일:</strong> ${sajuData.birthdate || '미상'} (${sajuData.calendar === 'lunar' ? '음력' : '양력'})</p>
-                    <p><strong>태어난 시간:</strong> ${sajuData.hour || '미상'}</p>
+                    <p><strong>태어난 시간:</strong> ${sajuData.hour || sajuData.birthtime || '미상'}</p>
                     <p><strong>성별:</strong> ${sajuData.gender === 'male' ? '남성' : '여성'}</p>
                     ${sajuData.yearPillar ? `
                     <hr>
@@ -959,26 +568,135 @@
             }
         }
         
+        // 🔥 새로고침 함수 추가
         function refreshSajuInfo() {
             console.log('🔄 사주 정보 새로고침...');
             loadSajuInfo();
         }
         
-        function sendMessage() {
+        // 🔥 Gemini API 연동
+        const GEMINI_API_KEY = 'AIzaSyBqVH1yCQYQqNjrBcgNzMzQoYz1M_NZvBQ';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        
+        // 메시지 전송
+        async function sendMessage() {
             const input = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
             const message = input.value.trim();
             
             if (!message) return;
             
+            // 버튼 비활성화
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
+            
+            // 사용자 메시지 추가
             addMessage('user', message);
             input.value = '';
             
-            setTimeout(() => {
-                const demoResponse = getDemoResponse(message);
-                addMessage('ai', demoResponse);
-            }, 1000);
+            try {
+                // 🔥 실제 Gemini API 호출
+                const aiResponse = await callGeminiAPI(message);
+                addMessage('ai', aiResponse);
+                
+                // 대화 히스토리 저장
+                saveToHistory(message, aiResponse);
+            } catch (error) {
+                console.error('❌ API 호출 실패:', error);
+                addMessage('ai', '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요. 🙏');
+            } finally {
+                // 버튼 활성화
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 전송';
+            }
         }
         
+        // 🔥 Gemini API 호출 함수
+        async function callGeminiAPI(userMessage) {
+            // 사주 데이터 가져오기
+            const sajuDataStr = localStorage.getItem('sajuData');
+            const compatibilityDataStr = localStorage.getItem('compatibilityData');
+            
+            let systemContext = '당신은 사주팔자 전문가입니다. 한국 전통 명리학에 대해 깊은 지식을 가지고 있으며, 친절하고 따뜻한 어조로 상담합니다.';
+            
+            // 궁합 모드
+            if (compatibilityDataStr) {
+                try {
+                    const compatibilityData = JSON.parse(compatibilityDataStr);
+                    systemContext += `\n\n[궁합 정보]\n- 첫 번째 사람: ${compatibilityData.person1.name} (생년월일: ${compatibilityData.person1.birthdate}, ${compatibilityData.person1.calendar === 'lunar' ? '음력' : '양력'}, 성별: ${compatibilityData.person1.gender === 'male' ? '남성' : '여성'})\n- 두 번째 사람: ${compatibilityData.person2.name} (생년월일: ${compatibilityData.person2.birthdate}, ${compatibilityData.person2.calendar === 'lunar' ? '음력' : '양력'}, 성별: ${compatibilityData.person2.gender === 'male' ? '남성' : '여성'})\n- 궁합 점수: ${compatibilityData.score}점\n- 궁합 유형: ${compatibilityData.type === 'love' ? '연애' : compatibilityData.type === 'marriage' ? '결혼' : compatibilityData.type === 'business' ? '사업' : '친구'}\n\n위 정보를 바탕으로 궁합에 대해 상담해주세요.`;
+                } catch (e) {
+                    console.error('궁합 데이터 파싱 실패:', e);
+                }
+            }
+            // 일반 사주 모드
+            else if (sajuDataStr) {
+                try {
+                    const sajuData = JSON.parse(sajuDataStr);
+                    systemContext += `\n\n[사주 정보]\n- 생년월일: ${sajuData.birthdate} (${sajuData.calendar === 'lunar' ? '음력' : '양력'})\n- 태어난 시간: ${sajuData.hour || sajuData.birthtime || '미상'}\n- 성별: ${sajuData.gender === 'male' ? '남성' : '여성'}`;
+                    
+                    if (sajuData.yearPillar) {
+                        systemContext += `\n- 사주팔자:\n  연주: ${sajuData.yearPillar}\n  월주: ${sajuData.monthPillar}\n  일주: ${sajuData.dayPillar}\n  시주: ${sajuData.hourPillar}\n  일간: ${sajuData.dayMaster}`;
+                    }
+                    
+                    systemContext += '\n\n위 사주 정보를 바탕으로 상담해주세요. 올해 운세를 중심으로 답변해주세요.';
+                } catch (e) {
+                    console.error('사주 데이터 파싱 실패:', e);
+                }
+            }
+            
+            // API 요청
+            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `${systemContext}\n\n[사용자 질문]\n${userMessage}`
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 1000
+                    }
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API 오류: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('✅ Gemini API 응답:', data);
+            
+            // 응답 텍스트 추출
+            return data.candidates[0].content.parts[0].text;
+        }
+        
+        // 🔥 대화 히스토리 저장
+        function saveToHistory(userMessage, aiResponse) {
+            try {
+                const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                history.push({
+                    timestamp: new Date().toISOString(),
+                    user: userMessage,
+                    ai: aiResponse
+                });
+                
+                // 최근 개만 저장
+                if (history.length > 50) {
+                    history.shift();
+                }
+                
+                localStorage.setItem('chatHistory', JSON.stringify(history));
+                console.log('💾 대화 히스토리 저장 완료');
+            } catch (e) {
+                console.error('대화 저장 실패:', e);
+            }
+        }
+        
+        // 메시지 추가
         function addMessage(sender, text) {
             const messagesDiv = document.getElementById('chatMessages');
             const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -1001,55 +719,7 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
-        function getDemoResponse(message) {
-            const compatibilityDataStr = localStorage.getItem('compatibilityData');
-            if (compatibilityDataStr) {
-                try {
-                    const compatibilityData = JSON.parse(compatibilityDataStr);
-                    const msg = message.toLowerCase();
-                    
-                    if (msg.includes('연애') || msg.includes('사랑') || msg.includes('애정')) {
-                        return `두 분의 연애운을 보면, ${compatibilityData.score >= 70 ? '서로를 끌어당기는 강한 인연이 느껴집니다.' : '조금 더 서로를 이해하려는 노력이 필요합니다.'}\n\n${compatibilityData.person1.name}님은 상대방에게 안정감을, ${compatibilityData.person2.name}님은 활력을 줄 수 있는 관계입니다. 서로의 장점을 인정하고 존중하는 자세가 중요합니다.`;
-                    }
-                    
-                    if (msg.includes('결혼') || msg.includes('부부')) {
-                        return `결혼 궁합은 ${compatibilityData.score}점으로, ${compatibilityData.score >= 80 ? '매우 좋은' : compatibilityData.score >= 60 ? '양호한' : '노력이 필요한'} 편입니다.\n\n두 분은 서로 다른 면에서 보완해주는 관계입니다. 결혼 생활에서는 소통과 배려가 가장 중요하며, 정기적인 대화 시간을 가지시는 것을 추천드립니다.`;
-                    }
-                    
-                    if (msg.includes('직업') || msg.includes('사업') || msg.includes('일')) {
-                        return `사업 파트너로서의 궁합을 보면, ${compatibilityData.person1.name}님은 계획과 전략을, ${compatibilityData.person2.name}님은 실행력을 담당하시면 좋은 시너지가 예상됩니다.\n\n서로의 역할을 명확히 하고 정기적으로 소통하시면 성공적인 협업이 가능합니다.`;
-                    }
-                    
-                    if (msg.includes('재물') || msg.includes('돈') || msg.includes('금전')) {
-                        return `재물운 측면에서 보면, 두 분은 서로 다른 금전 가치관을 가지고 계실 수 있습니다.\n\n${compatibilityData.person1.name}님은 안정적인 저축을, ${compatibilityData.person2.name}님은 적극적인 투자를 선호하실 수 있으니, 재정 계획은 함께 상의하여 결정하시는 것이 좋습니다.`;
-                    }
-                    
-                    if (msg.includes('성격') || msg.includes('성향') || msg.includes('궁합')) {
-                        return `두 분의 성격 궁합은 ${compatibilityData.score}점입니다.\n\n${compatibilityData.person1.name}님은 ${compatibilityData.person1.gender === 'male' ? '차분하고 신중한' : '섬세하고 배려심 있는'} 성향이, ${compatibilityData.person2.name}님은 ${compatibilityData.person2.gender === 'male' ? '적극적이고 활동적인' : '온화하고 포용력 있는'} 성향이 강합니다.\n\n서로 다른 점이 갈등의 원인이 아닌 보완점이 될 수 있도록 노력해보세요.`;
-                    }
-                    
-                    return `${compatibilityData.person1.name}님과 ${compatibilityData.person2.name}님의 궁합에 대해 더 구체적으로 알려드릴게요.\n\n궁합 점수 ${compatibilityData.score}점은 ${compatibilityData.score >= 80 ? '매우 좋은 관계' : compatibilityData.score >= 60 ? '좋은 관계' : '노력이 필요한 관계'}를 의미합니다.\n\n어떤 부분이 더 궁금하신가요? (연애, 결혼, 사업, 재물, 성격 등)`;
-                } catch (e) {
-                    console.error('궁합 응답 생성 실패:', e);
-                }
-            }
-            
-            const responses = {
-                '연애': '2026년 병오년은 불의 기운이 강한 해입니다. 연애운은 전반적으로 활발하며, 특히 봄과 가을에 좋은 인연을 만날 가능성이 높습니다.',
-                '직업': '직업운은 상반기에 특히 좋습니다. 새로운 도전이나 이직을 고려하신다면 3월~5월이 적기입니다.',
-                '재물': '재물운은 안정적인 편입니다. 큰 투자보다는 꾸준한 저축과 안전한 투자가 권장됩니다.',
-                '건강': '건강 관리에 주의가 필요한 시기입니다. 특히 소화기와 심장 건강을 챙기시기 바랍니다.'
-            };
-            
-            for (const [keyword, response] of Object.entries(responses)) {
-                if (message.includes(keyword)) {
-                    return response;
-                }
-            }
-            
-            return `질문 주셔서 감사합니다!\n\n2026년 병오년은 붉은 불의 말띠 해로, 변화와 열정의 기운이 넘치는 해입니다.\n\n더 구체적인 조언을 위해서는 생년월일시를 알려주시면 정확한 사주 분석이 가능합니다.`;
-        }
-        
+        // Enter 키로 전송
         document.getElementById('chatInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -1057,13 +727,17 @@
             }
         });
         
+        // 페이지 로드 시 사주 정보 로드
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadSajuInfo);
         } else {
+            // DOMContentLoaded 이미 발생했으면 즉시 실행
             loadSajuInfo();
         }
 
+        // ===== Global Error Handler =====
         window.addEventListener('error', function(e) {
+            // aisaju1000.com 외의 스크립트 에러 무시
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
                 return false;
