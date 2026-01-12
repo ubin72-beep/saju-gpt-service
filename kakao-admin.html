@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 구독자 관리</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+        
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #e53e3e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 101, 101, 0.4);
+        }
+        
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: #667eea;
+            color: white;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        tbody tr:hover {
+            background: #f7fafc;
+        }
+        
+        .zodiac-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .date-text {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>📱 카카오 구독자 관리</h1>
+            <p>매일 운세 구독자 현황</p>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">총 구독자</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number" id="todayCount">0</div>
+                <div class="stat-label">오늘 신규</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-number" id="topZodiac">-</div>
+                <div class="stat-label">최다 띠</div>
+            </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="refreshData()">
+                <i class="fas fa-sync"></i> 새로고침
+            </button>
+            <button class="btn btn-success" onclick="exportToCSV()">
+                <i class="fas fa-download"></i> CSV 다운로드
+            </button>
+            <button class="btn btn-success" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i> 엑셀 다운로드
+            </button>
+            <button class="btn btn-danger" onclick="clearAllData()">
+                <i class="fas fa-trash"></i> 전체 삭제
+            </button>
+        </div>
+
+        <!-- 테이블 -->
+        <div class="table-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 이름, 전화번호, 띠로 검색..." onkeyup="filterTable()">
+            </div>
+            
+            <div id="tableContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // 데이터 로드
+        function loadData() {
+            const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
+            return subscribers;
+        }
+
+        // 통계 계산
+        function calculateStats() {
+            const subscribers = loadData();
+            const total = subscribers.length;
+            
+            // 오늘 가입자
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = subscribers.filter(sub => 
+                sub.subscribedAt.split('T')[0] === today
+            ).length;
+            
+            // 띠별 통계
+            const zodiacStats = {};
+            subscribers.forEach(sub => {
+                zodiacStats[sub.zodiac] = (zodiacStats[sub.zodiac] || 0) + 1;
+            });
+            
+            const topZodiac = Object.entries(zodiacStats)
+                .sort((a, b) => b[1] - a[1])[0];
+            
+            return {
+                total,
+                todayCount,
+                topZodiac: topZodiac ? `${topZodiac[0]}띠 (${topZodiac[1]}명)` : '-'
+            };
+        }
+
+        // 테이블 렌더링
+        function renderTable() {
+            const subscribers = loadData();
+            const stats = calculateStats();
+            
+            // 통계 업데이트
+            document.getElementById('totalCount').textContent = stats.total;
+            document.getElementById('todayCount').textContent = stats.todayCount;
+            document.getElementById('topZodiac').textContent = stats.topZodiac;
+            
+            // 테이블 콘텐츠
+            const tableContent = document.getElementById('tableContent');
+            
+            if (subscribers.length === 0) {
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>구독자가 없습니다</h3>
+                        <p>첫 번째 구독자를 기다리고 있습니다!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 최신순 정렬
+            const sortedSubscribers = [...subscribers].sort((a, b) => 
+                new Date(b.subscribedAt) - new Date(a.subscribedAt)
+            );
+            
+            let html = `
+                <table id="subscriberTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>이름</th>
+                            <th>전화번호</th>
+                            <th>생년</th>
+                            <th>띠</th>
+                            <th>가입일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            sortedSubscribers.forEach((sub, index) => {
+                const date = new Date(sub.subscribedAt);
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+                
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${sub.userName}</strong></td>
+                        <td>${sub.userPhone}</td>
+                        <td>${sub.birthYear}년</td>
+                        <td><span class="zodiac-badge">${sub.zodiac}띠</span></td>
+                        <td class="date-text">${formattedDate}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            tableContent.innerHTML = html;
+        }
+
+        // 검색 필터
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('subscriberTable');
+            
+            if (!table) return;
+            
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            }
+        }
+
+        // 새로고침
+        function refreshData() {
+            renderTable();
+            alert('✅ 데이터를 새로고침했습니다!');
+        }
+
+        // CSV 다운로드
+        function exportToCSV() {
+            const subscribers = loadData();
+            
+            if (subscribers.length === 0) {
+                alert('⚠️ 다운로드할 데이터가 없습니다.');
+                return;
+            }
+            
+            let csv = '이름,전화번호,생년,띠,가입일시\n';
+            
+            subscribers.forEach(sub => {
+                const date = new Date(sub.subscribedAt);
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+                
+                csv += `${sub.userName},${sub.userPhone},${sub.birthYear}년,${sub.zodiac}띠,${formattedDate}\n`;
+            });
+            
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `카카오구독자_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ CSV 파일을 다운로드했습니다!');
+        }
+
+        // 엑셀 형식 다운로드
+        function exportToExcel() {
+            const subscribers = loadData();
+            
+            if (subscribers.length === 0) {
+                alert('⚠️ 다운로드할 데이터가 없습니다.');
+                return;
+            }
+            
+            let html = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">
+                <head><meta charset="UTF-8"></head>
+                <body>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>이름</th>
+                            <th>전화번호</th>
+                            <th>생년</th>
+                            <th>띠</th>
+                            <th>가입일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            subscribers.forEach((sub, index) => {
+                const date = new Date(sub.subscribedAt);
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')} ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+                
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${sub.userName}</td>
+                        <td>${sub.userPhone}</td>
+                        <td>${sub.birthYear}년</td>
+                        <td>${sub.zodiac}띠</td>
+                        <td>${formattedDate}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `카카오구독자_${new Date().toISOString().split('T')[0]}.xls`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ 엑셀 파일을 다운로드했습니다!');
+        }
+
+        // 전체 삭제
+        function clearAllData() {
+            if (!confirm('⚠️ 정말로 모든 구독자 데이터를 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다!')) {
+                return;
+            }
+            
+            if (!confirm('⚠️⚠️ 한 번 더 확인합니다. 정말 삭제하시겠습니까?')) {
+                return;
+            }
+            
+            localStorage.removeItem('kakaoSubscribers');
+            renderTable();
+            alert('✅ 모든 데이터를 삭제했습니다.');
+        }
+
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+        });
+    </script>
+</body>
+</html>
