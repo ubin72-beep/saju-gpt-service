@@ -839,10 +839,6 @@
             display: none;
         }
         
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-        
         /* 푸터 */
         .footer {
             background: #1a1a1a;
@@ -1183,6 +1179,9 @@
             </div>
         </div>
     </section>
+
+    <!-- 카카오톡 매일 운세 배너 -->
+    <div id="kakao-subscription-banner"></div>
 
     <!-- 신뢰 지표 -->
     <section class="trust-section">
@@ -1604,6 +1603,7 @@
             });
         }
         
+        
         // 언어 선택기 (다국어 준비 중)
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
@@ -1650,15 +1650,6 @@
             });
         }
         
-        // FAQ 토글
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(function(item) {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', function() {
-                item.classList.toggle('active');
-            });
-        });
-        
         // 폼 제출
         const sajuForm = document.getElementById('sajuForm');
         if (sajuForm) {
@@ -1669,18 +1660,71 @@
                 formData.forEach(function(value, key) {
                     data[key] = value;
                 });
+                
+                // hour 필드 제거 (birthtime과 중복)
+                if (data.hour !== undefined) {
+                    delete data.hour;
+                }
+                
+                console.log('💾 저장할 데이터:', data); // 디버깅
                 localStorage.setItem('sajuData', JSON.stringify(data));
                 window.location.href = 'result.html';
             });
         }
         
-        // 크롬 확장 프로그램 오류 무시
-        window.addEventListener('error', function(e) {
-            if (e.message && e.message.indexOf('Extension') > -1) {
+        // FAQ 토글
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(function(question) {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                
+                // 모든 답변 닫기
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                allAnswers.forEach(function(ans) {
+                    ans.style.display = 'none';
+                });
+                
+                // 클릭한 답변만 열기
+                if (!isOpen) {
+                    answer.style.display = 'block';
+                }
+            });
+        });
+        
+        // 부드러운 스크롤
+        const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+        smoothScrollLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                return true;
-            }
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
+
+    <!-- 카카오톡 구독 배너 로드 -->
+    <script>
+        // 카카오 배너 컴포넌트 로드
+        fetch('kakao-subscription-banner.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('kakao-subscription-banner').innerHTML = html;
+                console.log('✅ 카카오 배너 로드 완료');
+            })
+            .catch(error => {
+                console.error('❌ 카카오 배너 로드 실패:', error);
+            });
+    </script>
+
+    <!-- 운세 생성 시스템 로드 -->
+    <script src="fortune-generator.js"></script>
+
 </body>
 </html>
