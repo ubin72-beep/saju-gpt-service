@@ -2076,7 +2076,64 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 폼 제출 처리
-async function handleSubscription(event) {
+function handleSubscription(event) {
+    event.preventDefault();
+    
+    // 입력값 검증
+    const userName = document.getElementById('userName').value.trim();
+    const userPhone = document.getElementById('userPhone').value.trim();
+    const birthYear = document.getElementById('birthYear').value;
+    
+    if (!userName) {
+        alert('이름을 입력해주세요.');
+        return;
+    }
+    
+    if (!userPhone) {
+        alert('휴대폰 번호를 입력해주세요.');
+        return;
+    }
+    
+    if (!birthYear) {
+        alert('생년을 선택해주세요.');
+        return;
+    }
+    
+    const formData = {
+        userName: userName,
+        userPhone: userPhone,
+        birthYear: birthYear,
+        zodiac: getZodiac(parseInt(birthYear)),
+        subscribedAt: new Date().toISOString()
+    };
+    
+    console.log('📝 구독 신청:', formData);
+    
+    try {
+        // localStorage에 저장
+        const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
+        subscribers.push(formData);
+        localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
+        
+        console.log('✅ 구독 신청 완료');
+        
+        // 성공 메시지 표시
+        document.getElementById('kakaoSubscriptionForm').style.display = 'none';
+        document.getElementById('subscriptionSuccess').style.display = 'block';
+        
+        // Google Analytics 이벤트
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'subscription', {
+                'event_category': 'kakao',
+                'event_label': formData.zodiac
+            });
+        }
+        
+    } catch (error) {
+        console.error('❌ 구독 신청 실패:', error);
+        alert('구독 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+}
     event.preventDefault();
     
     const formData = {
