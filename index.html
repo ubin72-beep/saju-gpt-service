@@ -239,31 +239,31 @@
         .lang-option.active i { display: inline; }
         
         /* 햄버거 메뉴 (모바일) */
-      .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 15px;
-    margin-right: 0;
-    position: relative;
-    z-index: 10001;
-    background: rgba(212, 175, 55, 0.2);
-    border-radius: 8px;
-    -webkit-tap-highlight-color: transparent;
-    width: 50px;
-    height: 50px;
-    justify-content: center;
-    align-items: center;
-}
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 15px;
+            margin-right: 0;
+            position: relative;
+            z-index: 10001;
+            background: #d4af37;
+            border-radius: 8px;
+            -webkit-tap-highlight-color: transparent;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+        }
      
         .hamburger:active {
-            background: rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.8);
         }
         
         .hamburger span {
             width: 25px;
             height: 3px;
-            background: #d4af37;
+            background: #1a1a1a;
             margin: 3px 0;
             transition: all 0.3s;
             border-radius: 3px;
@@ -292,12 +292,14 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
-            z-index: 10000;
+            z-index: 99999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
         .mobile-menu.active {
+            display: block !important;
             max-height: 500px;
+            overflow-y: auto;
         }
         
         .mobile-menu ul {
@@ -323,42 +325,43 @@
             color: #d4af37;
             padding-left: 30px;
         }
-       /* 모바일 서브메뉴 */
-.mobile-submenu {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
+        
+        /* 모바일 서브메뉴 */
+        .mobile-submenu {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-.mobile-submenu-title {
-    padding: 15px 20px;
-    color: rgba(255,255,255,0.9);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
+        .mobile-submenu-title {
+            padding: 15px 20px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-.mobile-submenu-title:hover {
-    background: rgba(212,175,55,0.1);
-    color: #d4af37;
-}
+        .mobile-submenu-title:hover {
+            background: rgba(212,175,55,0.1);
+            color: #d4af37;
+        }
 
-.mobile-submenu-items {
-    background: rgba(0,0,0,0.3);
-}
+        .mobile-submenu-items {
+            background: rgba(0,0,0,0.3);
+        }
 
-.mobile-submenu-items a {
-    display: block;
-    padding: 12px 20px 12px 40px;
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s;
-}
+        .mobile-submenu-items a {
+            display: block;
+            padding: 12px 20px 12px 40px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
 
-.mobile-submenu-items a:hover {
-    background: rgba(212,175,55,0.1);
-    color: #d4af37;
-    padding-left: 50px;
-}
+        .mobile-submenu-items a:hover {
+            background: rgba(212,175,55,0.1);
+            color: #d4af37;
+            padding-left: 50px;
+        }
 
         /* 히어로 섹션 */
         .hero {
@@ -899,189 +902,189 @@
         }
         
         /* 카카오 배너 스타일 */
-.kakao-banner-container {
-    background: linear-gradient(135deg, #FEE500 0%, #FFD700 100%);
-    padding: 1.5rem;
-    margin: 2rem 0;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(254, 229, 0, 0.3);
-    animation: pulse 3s infinite;
-}
+        .kakao-banner-container {
+            background: linear-gradient(135deg, #FEE500 0%, #FFD700 100%);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(254, 229, 0, 0.3);
+            animation: pulse 3s infinite;
+        }
 
-.kakao-banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+        .kakao-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.banner-icon {
-    font-size: 3rem;
-    color: #3C1E1E;
-    animation: bounce 2s infinite;
-}
+        .banner-icon {
+            font-size: 3rem;
+            color: #3C1E1E;
+            animation: bounce 2s infinite;
+        }
 
-.banner-content {
-    flex: 1;
-}
+        .banner-content {
+            flex: 1;
+        }
 
-.banner-content h3 {
-    font-size: 1.5rem;
-    color: #3C1E1E;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
+        .banner-content h3 {
+            font-size: 1.5rem;
+            color: #3C1E1E;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
 
-.banner-content p {
-    color: #3C1E1E;
-    margin: 0.3rem 0;
-    font-size: 1rem;
-}
+        .banner-content p {
+            color: #3C1E1E;
+            margin: 0.3rem 0;
+            font-size: 1rem;
+        }
 
-.banner-highlight {
-    font-weight: bold;
-    color: #c41e3a;
-    font-size: 1.1rem;
-}
+        .banner-highlight {
+            font-weight: bold;
+            color: #c41e3a;
+            font-size: 1.1rem;
+        }
 
-.kakao-btn {
-    background: #3C1E1E;
-    color: #FEE500;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s;
-    font-size: 1.1rem;
-    white-space: nowrap;
-}
+        .kakao-btn {
+            background: #3C1E1E;
+            color: #FEE500;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
 
-.kakao-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    background: #2C1414;
-}
+        .kakao-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #2C1414;
+        }
 
-/* 구독 폼 스타일 */
-.subscription-form-container {
-    max-width: 600px;
-    margin: 3rem auto;
-    padding: 0 1rem;
-}
+        /* 구독 폼 스타일 */
+        .subscription-form-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
 
-.subscription-form {
-    background: white;
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-}
+        .subscription-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
 
-.subscription-form h2 {
-    text-align: center;
-    color: #1a1a1a;
-    margin-bottom: 0.5rem;
-    font-size: 1.8rem;
-}
+        .subscription-form h2 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
 
-.form-description {
-    text-align: center;
-    color: #666;
-    margin-bottom: 2rem;
-}
+        .form-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
 
-.form-group small {
-    display: block;
-    margin-top: 0.3rem;
-    color: #999;
-    font-size: 0.85rem;
-}
+        .form-group small {
+            display: block;
+            margin-top: 0.3rem;
+            color: #999;
+            font-size: 0.85rem;
+        }
 
-.zodiac-display {
-    margin-top: 0.5rem;
-    padding: 0.8rem;
-    background: linear-gradient(135deg, #FEE500 0%, #FFD700 100%);
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    color: #3C1E1E;
-    font-size: 1.1rem;
-    display: none;
-}
+        .zodiac-display {
+            margin-top: 0.5rem;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #FEE500 0%, #FFD700 100%);
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #3C1E1E;
+            font-size: 1.1rem;
+            display: none;
+        }
 
-.consent {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 10px;
-}
+        .consent {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 10px;
+        }
 
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-}
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
 
-.checkbox-label input[type="checkbox"] {
-    width: auto;
-    margin: 0;
-}
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
 
-.form-note {
-    text-align: center;
-    margin-top: 1rem;
-    color: #666;
-    font-size: 0.9rem;
-}
+        .form-note {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
 
-.success-message {
-    text-align: center;
-    padding: 2rem;
-}
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
 
-.success-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
 
-.success-message h3 {
-    color: #4CAF50;
-    margin-bottom: 1rem;
-}
+        .success-message h3 {
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
 
-.success-detail {
-    color: #666;
-    margin-top: 0.5rem;
-}
+        .success-detail {
+            color: #666;
+            margin-top: 0.5rem;
+        }
 
-.btn-restart {
-    margin-top: 1.5rem;
-    padding: 0.8rem 2rem;
-    background: #e0e0e0;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: 600;
-}
+        .btn-restart {
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
 
-.btn-restart:hover {
-    background: #d0d0d0;
-}
+        .btn-restart:hover {
+            background: #d0d0d0;
+        }
 
-/* 애니메이션 */
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.01); }
-}
+        /* 애니메이션 */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+        }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
         
         /* 반응형 */
         @media (max-width: 1024px) {
@@ -1139,13 +1142,14 @@
                 width: 100%;
                 max-width: 300px;
             }
-        .nav-menu {
-    display: none;
-}
+            
+            .nav-menu {
+                display: none;
+            }
 
-.language-switcher {
-    display: none !important;
-}
+            .language-switcher {
+                display: none !important;
+            }
            
             .hamburger {
                 display: flex !important;
@@ -1153,7 +1157,7 @@
                 justify-content: center !important;
                 align-items: center !important;
                 z-index: 10000 !important;
-                background: rgba(212, 175, 55, 0.3) !important;
+                background: #d4af37 !important;
                 padding: 15px !important;
                 border-radius: 8px !important;
                 cursor: pointer !important;
@@ -1166,16 +1170,14 @@
                 display: block !important;
                 width: 25px !important;
                 height: 3px !important;
-                background: #d4af37 !important;
+                background: #1a1a1a !important;
                 margin: 3px 0 !important;
                 border-radius: 3px !important;
             }
             
             .hamburger:active {
-                background: rgba(212, 175, 55, 0.5) !important;
+                background: rgba(212, 175, 55, 0.8) !important;
             }
-            
-          /* 모바일 메뉴는 기본 숨김 - active 클래스로 토글 */
            
             .trust-section {
                 padding: 20px 15px;
@@ -1294,25 +1296,25 @@
             }
             
             .kakao-banner {
-        flex-direction: column;
-        text-align: center;
-    }
+                flex-direction: column;
+                text-align: center;
+            }
     
-    .banner-content h3 {
-        font-size: 1.2rem;
-    }
+            .banner-content h3 {
+                font-size: 1.2rem;
+            }
     
-    .banner-content p {
-        font-size: 0.9rem;
-    }
+            .banner-content p {
+                font-size: 0.9rem;
+            }
     
-    .subscription-form {
-        padding: 1.5rem;
-    }
+            .subscription-form {
+                padding: 1.5rem;
+            }
     
-    .subscription-form h2 {
-        font-size: 1.4rem;
-    }
+            .subscription-form h2 {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
@@ -1381,16 +1383,21 @@
     <!-- 모바일 메뉴 -->
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li><a href="index.html">🏠 홈</a></li>
-            <li><a href="compatibility.html">💕 궁합 보기</a></li>
-            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
-            <li><a href="community.html">💬 커뮤니티</a></li>
-            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
-            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
-            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-            <li><a href="blog.html">📰 블로그</a></li>
-            <li><a href="pricing.html">💰 가격표</a></li>
-            <li><a href="mypage.html">👤 마이페이지</a></li>
+            <li><a href="index.html">홈</a></li>
+            <li class="mobile-submenu">
+                <div class="mobile-submenu-title">서비스</div>
+                <div class="mobile-submenu-items">
+                    <a href="compatibility.html">💕 궁합 보기</a>
+                    <a href="saju-matching.html">💑 궁합 매칭</a>
+                    <a href="community.html">💬 커뮤니티 프리미엄</a>
+                    <a href="hr-solution.html">💼 HR 솔루션</a>
+                </div>
+            </li>
+            <li><a href="ai-chat.html">AI 상담</a></li>
+            <li><a href="saju-guide.html">명리학 가이드</a></li>
+            <li><a href="blog.html">블로그</a></li>
+            <li><a href="pricing.html">가격표</a></li>
+            <li><a href="mypage.html">마이페이지</a></li>
         </ul>
     </div>
 
@@ -1429,150 +1436,150 @@
 
     <!-- 카카오톡 매일 운세 배너 -->
     <div class="kakao-banner-container">
-    <div class="kakao-banner">
-        <div class="banner-icon">
-            <i class="fas fa-comment-dots"></i>
-        </div>
-        <div class="banner-content">
-            <h3>📱 매일 아침 7시, 무료 운세 받기!</h3>
-            <p>AI가 분석하는 정확한 사주·연애운·오늘의 운세를 카톡으로!</p>
-            <p class="banner-highlight">⏰ 선착순 100명 매일 무료 발송 중!</p>
-        </div>
-        <div class="banner-action">
-            <a href="#kakao-subscription-form" class="kakao-btn" onclick="scrollToSubscription(event)">
-                <i class="fas fa-comment"></i> 무료로 받기
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- 카카오톡 구독 신청 폼 -->
-<div id="kakao-subscription-form" class="subscription-form-container">
-    <div class="subscription-form">
-        <h2>🌅 매일 아침 7시, 무료 운세 카톡 받기</h2>
-        <p class="form-description">AI가 당신의 띠에 맞춰 매일 새로운 운세를 보내드립니다</p>
-        
-        <form id="kakaoSubscriptionForm" onsubmit="handleSubscription(event)">
-            <div class="form-group">
-                <label for="userName">
-                    <i class="fas fa-user"></i> 이름
-                </label>
-                <input type="text" id="userName" name="userName" required 
-                       placeholder="홍길동" maxlength="20">
+        <div class="kakao-banner">
+            <div class="banner-icon">
+                <i class="fas fa-comment-dots"></i>
             </div>
-
-            <div class="form-group">
-                <label for="userPhone">
-                    <i class="fas fa-phone"></i> 휴대폰 번호
-                </label>
-                <input type="tel" id="userPhone" name="userPhone" required 
-                       placeholder="01012345678 (숫자만 입력)" 
-maxlength="13">
-                <small>카카오톡 알림 수신용 (안심하세요, 광고 없어요!)</small>
+            <div class="banner-content">
+                <h3>📱 매일 아침 7시, 무료 운세 받기!</h3>
+                <p>AI가 분석하는 정확한 사주·연애운·오늘의 운세를 카톡으로!</p>
+                <p class="banner-highlight">🎉 첫 달 100명 완전 무료! (선착순 마감)</p>
             </div>
-
-            <div class="form-group">
-                <label for="birthYear">
-                    <i class="fas fa-calendar"></i> 생년 (띠 확인용)
-                </label>
-                <select id="birthYear" name="birthYear" required onchange="updateZodiac()">
-                    <option value="">생년을 선택하세요</option>
-                    <option value="2024">2024년 (용띠)</option>
-                    <option value="2023">2023년 (토끼띠)</option>
-                    <option value="2022">2022년 (호랑이띠)</option>
-                    <option value="2021">2021년 (소띠)</option>
-                    <option value="2020">2020년 (쥐띠)</option>
-                    <option value="2019">2019년 (돼지띠)</option>
-                    <option value="2018">2018년 (개띠)</option>
-                    <option value="2017">2017년 (닭띠)</option>
-                    <option value="2016">2016년 (원숭이띠)</option>
-                    <option value="2015">2015년 (양띠)</option>
-                    <option value="2014">2014년 (말띠)</option>
-                    <option value="2013">2013년 (뱀띠)</option>
-                    <option value="2012">2012년 (용띠)</option>
-                    <option value="2011">2011년 (토끼띠)</option>
-                    <option value="2010">2010년 (호랑이띠)</option>
-                    <option value="2009">2009년 (소띠)</option>
-                    <option value="2008">2008년 (쥐띠)</option>
-                    <option value="2007">2007년 (돼지띠)</option>
-                    <option value="2006">2006년 (개띠)</option>
-                    <option value="2005">2005년 (닭띠)</option>
-                    <option value="2004">2004년 (원숭이띠)</option>
-                    <option value="2003">2003년 (양띠)</option>
-                    <option value="2002">2002년 (말띠)</option>
-                    <option value="2001">2001년 (뱀띠)</option>
-                    <option value="2000">2000년 (용띠)</option>
-                    <option value="1999">1999년 (토끼띠)</option>
-                    <option value="1998">1998년 (호랑이띠)</option>
-                    <option value="1997">1997년 (소띠)</option>
-                    <option value="1996">1996년 (쥐띠)</option>
-                    <option value="1995">1995년 (돼지띠)</option>
-                    <option value="1994">1994년 (개띠)</option>
-                    <option value="1993">1993년 (닭띠)</option>
-                    <option value="1992">1992년 (원숭이띠)</option>
-                    <option value="1991">1991년 (양띠)</option>
-                    <option value="1990">1990년 (말띠)</option>
-                    <option value="1989">1989년 (뱀띠)</option>
-                    <option value="1988">1988년 (용띠)</option>
-                    <option value="1987">1987년 (토끼띠)</option>
-                    <option value="1986">1986년 (호랑이띠)</option>
-                    <option value="1985">1985년 (소띠)</option>
-                    <option value="1984">1984년 (쥐띠)</option>
-                    <option value="1983">1983년 (돼지띠)</option>
-                    <option value="1982">1982년 (개띠)</option>
-                    <option value="1981">1981년 (닭띠)</option>
-                    <option value="1980">1980년 (원숭이띠)</option>
-                    <option value="1979">1979년 (양띠)</option>
-                    <option value="1978">1978년 (말띠)</option>
-                    <option value="1977">1977년 (뱀띠)</option>
-                    <option value="1976">1976년 (용띠)</option>
-                    <option value="1975">1975년 (토끼띠)</option>
-                    <option value="1974">1974년 (호랑이띠)</option>
-                    <option value="1973">1973년 (소띠)</option>
-                    <option value="1972">1972년 (쥐띠)</option>
-                    <option value="1971">1971년 (돼지띠)</option>
-                    <option value="1970">1970년 (개띠)</option>
-                    <option value="1969">1969년 (닭띠)</option>
-                    <option value="1968">1968년 (원숭이띠)</option>
-                    <option value="1967">1967년 (양띠)</option>
-                    <option value="1966">1966년 (말띠)</option>
-                    <option value="1965">1965년 (뱀띠)</option>
-                    <option value="1964">1964년 (용띠)</option>
-                    <option value="1963">1963년 (토끼띠)</option>
-                    <option value="1962">1962년 (호랑이띠)</option>
-                    <option value="1961">1961년 (소띠)</option>
-                    <option value="1960">1960년 (쥐띠)</option>
-                </select>
-                <div id="zodiacDisplay" class="zodiac-display"></div>
+            <div class="banner-action">
+                <a href="#kakao-subscription-form" class="kakao-btn" onclick="scrollToSubscription(event)">
+                    <i class="fas fa-comment"></i> 무료로 받기
+                </a>
             </div>
-
-            <div class="form-group consent">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="consent" name="consent" required>
-                    <span>개인정보 수집 및 카카오톡 알림 수신에 동의합니다</span>
-                </label>
-                <small>수집 항목: 이름, 휴대폰번호, 생년 | 목적: 매일 운세 발송 | 보관 기간: 구독 해지 시까지</small>
-            </div>
-
-            <button type="submit" class="submit-btn">
-                <i class="fas fa-check-circle"></i> 무료 구독 신청하기
-            </button>
-
-            <p class="form-note">
-                💝 첫 달 완전 무료 | 📱 매일 아침 7시 자동 발송 | 🚫 언제든 해지 가능
-            </p>
-        </form>
-
-         <div id="subscriptionSuccess" class="success-message" style="display: none;">
-            <div class="success-icon">✅</div>
-            <h3>🎉 축하합니다! 구독 신청 완료!</h3>
-            <p><strong>첫 달 무료 혜택이 적용되었습니다!</strong></p>
-            <p>내일 아침 7시부터 매일 운세를 받으실 수 있습니다.</p>
-            <p class="success-detail">카카오톡으로 알림이 발송됩니다 📱</p>
-            <button onclick="location.reload()" class="btn-restart">다른 사람 신청하기</button>
         </div>
     </div>
-</div>
+
+    <!-- 카카오톡 구독 신청 폼 -->
+    <div id="kakao-subscription-form" class="subscription-form-container">
+        <div class="subscription-form">
+            <h2>🌅 매일 아침 7시, 무료 운세 카톡 받기</h2>
+            <p class="form-description">🎁 첫 달 완전 무료! AI가 당신의 띠에 맞춰 매일 새로운 운세를 보내드립니다</p>
+            
+            <form id="kakaoSubscriptionForm" onsubmit="handleSubscription(event)">
+                <div class="form-group">
+                    <label for="userName">
+                        <i class="fas fa-user"></i> 이름
+                    </label>
+                    <input type="text" id="userName" name="userName" required 
+                           placeholder="홍길동" maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label for="userPhone">
+                        <i class="fas fa-phone"></i> 휴대폰 번호
+                    </label>
+                    <input type="tel" id="userPhone" name="userPhone" required 
+                           placeholder="01012345678 (숫자만 입력)" 
+                           maxlength="13">
+                    <small>카카오톡 알림 수신용 (안심하세요, 광고 없어요!)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthYear">
+                        <i class="fas fa-calendar"></i> 생년 (띠 확인용)
+                    </label>
+                    <select id="birthYear" name="birthYear" required onchange="updateZodiac()">
+                        <option value="">생년을 선택하세요</option>
+                        <option value="2024">2024년 (용띠)</option>
+                        <option value="2023">2023년 (토끼띠)</option>
+                        <option value="2022">2022년 (호랑이띠)</option>
+                        <option value="2021">2021년 (소띠)</option>
+                        <option value="2020">2020년 (쥐띠)</option>
+                        <option value="2019">2019년 (돼지띠)</option>
+                        <option value="2018">2018년 (개띠)</option>
+                        <option value="2017">2017년 (닭띠)</option>
+                        <option value="2016">2016년 (원숭이띠)</option>
+                        <option value="2015">2015년 (양띠)</option>
+                        <option value="2014">2014년 (말띠)</option>
+                        <option value="2013">2013년 (뱀띠)</option>
+                        <option value="2012">2012년 (용띠)</option>
+                        <option value="2011">2011년 (토끼띠)</option>
+                        <option value="2010">2010년 (호랑이띠)</option>
+                        <option value="2009">2009년 (소띠)</option>
+                        <option value="2008">2008년 (쥐띠)</option>
+                        <option value="2007">2007년 (돼지띠)</option>
+                        <option value="2006">2006년 (개띠)</option>
+                        <option value="2005">2005년 (닭띠)</option>
+                        <option value="2004">2004년 (원숭이띠)</option>
+                        <option value="2003">2003년 (양띠)</option>
+                        <option value="2002">2002년 (말띠)</option>
+                        <option value="2001">2001년 (뱀띠)</option>
+                        <option value="2000">2000년 (용띠)</option>
+                        <option value="1999">1999년 (토끼띠)</option>
+                        <option value="1998">1998년 (호랑이띠)</option>
+                        <option value="1997">1997년 (소띠)</option>
+                        <option value="1996">1996년 (쥐띠)</option>
+                        <option value="1995">1995년 (돼지띠)</option>
+                        <option value="1994">1994년 (개띠)</option>
+                        <option value="1993">1993년 (닭띠)</option>
+                        <option value="1992">1992년 (원숭이띠)</option>
+                        <option value="1991">1991년 (양띠)</option>
+                        <option value="1990">1990년 (말띠)</option>
+                        <option value="1989">1989년 (뱀띠)</option>
+                        <option value="1988">1988년 (용띠)</option>
+                        <option value="1987">1987년 (토끼띠)</option>
+                        <option value="1986">1986년 (호랑이띠)</option>
+                        <option value="1985">1985년 (소띠)</option>
+                        <option value="1984">1984년 (쥐띠)</option>
+                        <option value="1983">1983년 (돼지띠)</option>
+                        <option value="1982">1982년 (개띠)</option>
+                        <option value="1981">1981년 (닭띠)</option>
+                        <option value="1980">1980년 (원숭이띠)</option>
+                        <option value="1979">1979년 (양띠)</option>
+                        <option value="1978">1978년 (말띠)</option>
+                        <option value="1977">1977년 (뱀띠)</option>
+                        <option value="1976">1976년 (용띠)</option>
+                        <option value="1975">1975년 (토끼띠)</option>
+                        <option value="1974">1974년 (호랑이띠)</option>
+                        <option value="1973">1973년 (소띠)</option>
+                        <option value="1972">1972년 (쥐띠)</option>
+                        <option value="1971">1971년 (돼지띠)</option>
+                        <option value="1970">1970년 (개띠)</option>
+                        <option value="1969">1969년 (닭띠)</option>
+                        <option value="1968">1968년 (원숭이띠)</option>
+                        <option value="1967">1967년 (양띠)</option>
+                        <option value="1966">1966년 (말띠)</option>
+                        <option value="1965">1965년 (뱀띠)</option>
+                        <option value="1964">1964년 (용띠)</option>
+                        <option value="1963">1963년 (토끼띠)</option>
+                        <option value="1962">1962년 (호랑이띠)</option>
+                        <option value="1961">1961년 (소띠)</option>
+                        <option value="1960">1960년 (쥐띠)</option>
+                    </select>
+                    <div id="zodiacDisplay" class="zodiac-display"></div>
+                </div>
+
+                <div class="form-group consent">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="consent" name="consent" required>
+                        <span>개인정보 수집 및 카카오톡 알림 수신에 동의합니다</span>
+                    </label>
+                    <small>수집 항목: 이름, 휴대폰번호, 생년 | 목적: 매일 운세 발송 | 보관 기간: 구독 해지 시까지</small>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-check-circle"></i> 무료 구독 신청하기
+                </button>
+
+                <p class="form-note">
+                    🎁 첫 달 완전 무료 | 📱 매일 아침 7시 자동 발송 | 🚫 언제든 해지 가능
+                </p>
+            </form>
+
+            <div id="subscriptionSuccess" class="success-message" style="display: none;">
+                <div class="success-icon">✅</div>
+                <h3>🎉 축하합니다! 구독 신청 완료!</h3>
+                <p><strong>첫 달 무료 혜택이 적용되었습니다!</strong></p>
+                <p>내일 아침 7시부터 매일 운세를 받으실 수 있습니다.</p>
+                <p class="success-detail">카카오톡으로 알림이 발송됩니다 📱</p>
+                <button onclick="location.reload()" class="btn-restart">다른 사람 신청하기</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 신뢰 지표 -->
     <section class="trust-section">
@@ -2027,7 +2034,7 @@ maxlength="13">
                     delete data.hour;
                 }
                 
-                console.log('💾 저장할 데이터:', data); // 디버깅
+                console.log('💾 저장할 데이터:', data);
                 localStorage.setItem('sajuData', JSON.stringify(data));
                 window.location.href = 'result.html';
             });
@@ -2070,155 +2077,114 @@ maxlength="13">
         });
         
         // 띠 계산 함수
-function getZodiac(year) {
-    const zodiacs = ['원숭이', '닭', '개', '돼지', '쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양'];
-    return zodiacs[year % 12];
-}
+        function getZodiac(year) {
+            const zodiacs = ['원숭이', '닭', '개', '돼지', '쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양'];
+            return zodiacs[year % 12];
+        }
 
-// 띠 표시 업데이트
-function updateZodiac() {
-    const birthYear = document.getElementById('birthYear').value;
-    const zodiacDisplay = document.getElementById('zodiacDisplay');
-    
-    if (birthYear) {
-        const zodiac = getZodiac(parseInt(birthYear));
-        zodiacDisplay.textContent = `🐾 ${zodiac}띠입니다!`;
-        zodiacDisplay.style.display = 'block';
-    } else {
-        zodiacDisplay.style.display = 'none';
-    }
-}
-
-// 스크롤 이동
-function scrollToSubscription(event) {
-    event.preventDefault();
-    document.getElementById('kakao-subscription-form').scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'center'
-    });
-}
-
-// 전화번호 자동 포맷
-document.addEventListener('DOMContentLoaded', function() {
-    const phoneInput = document.getElementById('userPhone');
-    
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/[^0-9]/g, '');
+        // 띠 표시 업데이트
+        function updateZodiac() {
+            const birthYear = document.getElementById('birthYear').value;
+            const zodiacDisplay = document.getElementById('zodiacDisplay');
             
-            if (value.length <= 3) {
-                e.target.value = value;
-            } else if (value.length <= 7) {
-                e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+            if (birthYear) {
+                const zodiac = getZodiac(parseInt(birthYear));
+                zodiacDisplay.textContent = `🐾 ${zodiac}띠입니다!`;
+                zodiacDisplay.style.display = 'block';
             } else {
-                e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+                zodiacDisplay.style.display = 'none';
+            }
+        }
+
+        // 스크롤 이동
+        function scrollToSubscription(event) {
+            event.preventDefault();
+            document.getElementById('kakao-subscription-form').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        // 전화번호 자동 포맷
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('userPhone');
+            
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/[^0-9]/g, '');
+                    
+                    if (value.length <= 3) {
+                        e.target.value = value;
+                    } else if (value.length <= 7) {
+                        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+                    } else {
+                        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+                    }
+                });
             }
         });
-    }
-});
 
-// 폼 제출 처리
-function handleSubscription(event) {
-    event.preventDefault();
-    
-    // 입력값 검증
-    const userName = document.getElementById('userName').value.trim();
-    const userPhone = document.getElementById('userPhone').value.trim();
-    const birthYear = document.getElementById('birthYear').value;
-    
-    if (!userName) {
-        alert('이름을 입력해주세요.');
-        return;
-    }
-    
-    if (!userPhone) {
-        alert('휴대폰 번호를 입력해주세요.');
-        return;
-    }
-    
-    if (!birthYear) {
-        alert('생년을 선택해주세요.');
-        return;
-    }
-    
-    const formData = {
-        userName: userName,
-        userPhone: userPhone,
-        birthYear: birthYear,
-        zodiac: getZodiac(parseInt(birthYear)),
-        subscribedAt: new Date().toISOString()
-    };
-    
-    console.log('📝 구독 신청:', formData);
-    
-    try {
-        // localStorage에 저장
-        const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
-        subscribers.push(formData);
-        localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
-        
-        console.log('✅ 구독 신청 완료');
-        
-        // 성공 메시지 표시
-        document.getElementById('kakaoSubscriptionForm').style.display = 'none';
-        document.getElementById('subscriptionSuccess').style.display = 'block';
-        
-        // Google Analytics 이벤트
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'subscription', {
-                'event_category': 'kakao',
-                'event_label': formData.zodiac
-            });
+        // 폼 제출 처리
+        function handleSubscription(event) {
+            event.preventDefault();
+            
+            // 입력값 검증
+            const userName = document.getElementById('userName').value.trim();
+            const userPhone = document.getElementById('userPhone').value.trim();
+            const birthYear = document.getElementById('birthYear').value;
+            
+            if (!userName) {
+                alert('이름을 입력해주세요.');
+                return;
+            }
+            
+            if (!userPhone) {
+                alert('휴대폰 번호를 입력해주세요.');
+                return;
+            }
+            
+            if (!birthYear) {
+                alert('생년을 선택해주세요.');
+                return;
+            }
+            
+            const formData = {
+                userName: userName,
+                userPhone: userPhone,
+                birthYear: birthYear,
+                zodiac: getZodiac(parseInt(birthYear)),
+                subscribedAt: new Date().toISOString()
+            };
+            
+            console.log('📝 구독 신청:', formData);
+            
+            try {
+                // localStorage에 저장
+                const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
+                subscribers.push(formData);
+                localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
+                
+                console.log('✅ 구독 신청 완료');
+                
+                // 성공 메시지 표시
+                document.getElementById('kakaoSubscriptionForm').style.display = 'none';
+                document.getElementById('subscriptionSuccess').style.display = 'block';
+                
+                // Google Analytics 이벤트
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'subscription', {
+                        'event_category': 'kakao',
+                        'event_label': formData.zodiac
+                    });
+                }
+                
+            } catch (error) {
+                console.error('❌ 구독 신청 실패:', error);
+                alert('구독 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
         }
-        
-    } catch (error) {
-        console.error('❌ 구독 신청 실패:', error);
-        alert('구독 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
-    }
-}
-    event.preventDefault();
-    
-    const formData = {
-        userName: document.getElementById('userName').value,
-        userPhone: document.getElementById('userPhone').value,
-        birthYear: document.getElementById('birthYear').value,
-        zodiac: getZodiac(parseInt(document.getElementById('birthYear').value)),
-        subscribedAt: new Date().toISOString()
-    };
-    
-    console.log('📝 구독 신청:', formData);
-    
-    try {
-        // Firebase에 저장
-        const db = firebase.firestore();
-        await db.collection('kakao_subscribers').add(formData);
-        
-        // localStorage에도 백업
-        const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
-        subscribers.push(formData);
-        localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
-        
-        console.log('✅ 구독 신청 완료');
-        
-        // 성공 메시지 표시
-        document.getElementById('kakaoSubscriptionForm').style.display = 'none';
-        document.getElementById('subscriptionSuccess').style.display = 'block';
-        
-        // Google Analytics 이벤트
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'subscription', {
-                'event_category': 'kakao',
-                'event_label': formData.zodiac
-            });
-        }
-        
-    } catch (error) {
-        console.error('❌ 구독 신청 실패:', error);
-        alert('구독 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
-    }
-}
 
-console.log('✅ 카카오톡 구독 배너 로드 완료');
+        console.log('✅ 카카오톡 구독 배너 로드 완료');
     </script>
 
     <!-- 운세 생성 시스템 로드 -->
