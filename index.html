@@ -37,7 +37,9 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+         html {
+            scroll-behavior: auto;
+         }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
@@ -2097,13 +2099,32 @@
         }
 
         // 스크롤 이동
-        function scrollToSubscription(event) {
-            event.preventDefault();
-            document.getElementById('kakao-subscription-form').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
+       function scrollToSubscription(event) {
+    event.preventDefault();
+    const target = document.getElementById('kakao-subscription-form');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition - 100; // 100px 여유
+    const duration = 600; // 0.6초 (빠르게)
+    let start = null;
+    
+    function animation(currentTime) {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+    
+    function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+    
+    requestAnimationFrame(animation);
+}
 
         // 전화번호 자동 포맷
         document.addEventListener('DOMContentLoaded', function() {
