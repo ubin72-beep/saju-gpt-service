@@ -489,3 +489,40 @@ smoothScrollLinks.forEach(function(link) {
 - **상태**: ⏳ 진행 중 (API 키 발급 대기)
 
 ### 🔗 Google Sheets 연동 완료!
+
+## 최신 업데이트 (오늘)
+
+### 🚀 사주 엔진 연동 완료! (최신! 2026-01-28)
+- **날짜**: 2026-01-28
+- **내용**: index.html과 사주 계산 엔진 완전 연동 완료
+- **완료 작업**:
+  - ✅ index.html에 사주 엔진 스크립트 추가 (`js/saju-engine.js`)
+  - ✅ 사주 입력 폼 제출 로직 확인 및 검증
+  - ✅ SajuEngine 클래스와 폼 연동 완료
+  - ✅ localStorage 저장 기능 구현
+  - ✅ RESTful API (`tables/saju_records`) 연동
+  - ✅ result.html 자동 이동 기능 확인
+  - ✅ Google Analytics 이벤트 트래킹 추가
+  - ✅ 테스트 페이지 생성 (`test-saju-integration.html`)
+- **데이터 흐름**:
+  ```
+  사용자 입력 → FormData 수집 → SajuEngine.calculate()
+  → localStorage 저장 → RESTful API 저장
+  → result.html 이동 → 결과 표시
+  ```
+- **주요 기능**:
+  - 천간지지 자동 계산
+  - 사주팔자 분석 (년주/월주/일주/시주)
+  - 오행 분석 (목화토금수)
+  - 십성 계산
+  - 운세 분석 (성격/직업/재물/애정/건강)
+  - 2026 병오년 특별 운세
+- **문서**:
+  - `SAJU_ENGINE_INTEGRATION_COMPLETE.md` - 상세 연동 보고서
+  - `BACKEND_PROGRESS_REPORT.md` - 백엔드 진행 상황
+- **테스트**:
+  - 테스트 페이지: `test-saju-integration.html`
+  - 로컬 서버 실행: `npx http-server . -p 8080`
+- **상태**: ✅ 완료 (GitHub 업로드 필요!)
+
+### 🎉 아이폰 "출렁출렁" 현상 완전 해결! (2026-01-27 17:00)
