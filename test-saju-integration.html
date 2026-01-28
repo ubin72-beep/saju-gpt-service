@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주 엔진 연동 테스트</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+        .result {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .success {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        .error {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        pre {
+            background: #333;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-section">
+        <h1>🧪 사주 엔진 연동 테스트</h1>
+        
+        <form id="testForm">
+            <div class="form-group">
+                <label>생년월일</label>
+                <input type="date" name="birthdate" value="1990-01-15" required>
+            </div>
+            
+            <div class="form-group">
+                <label>음력/양력</label>
+                <select name="calendar">
+                    <option value="solar">양력</option>
+                    <option value="lunar">음력</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>태어난 시간 (선택)</label>
+                <select name="birthtime">
+                    <option value="">모름</option>
+                    <option value="23-01">자시 (23:00-01:00)</option>
+                    <option value="01-03">축시 (01:00-03:00)</option>
+                    <option value="03-05">인시 (03:00-05:00)</option>
+                    <option value="05-07">묘시 (05:00-07:00)</option>
+                    <option value="07-09" selected>진시 (07:00-09:00)</option>
+                    <option value="09-11">사시 (09:00-11:00)</option>
+                    <option value="11-13">오시 (11:00-13:00)</option>
+                    <option value="13-15">미시 (13:00-15:00)</option>
+                    <option value="15-17">신시 (15:00-17:00)</option>
+                    <option value="17-19">유시 (17:00-19:00)</option>
+                    <option value="19-21">술시 (19:00-21:00)</option>
+                    <option value="21-23">해시 (21:00-23:00)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>성별</label>
+                <select name="gender">
+                    <option value="male">남성</option>
+                    <option value="female">여성</option>
+                </select>
+            </div>
+            
+            <button type="submit">🔮 사주 계산하기</button>
+        </form>
+        
+        <div id="result" class="result">
+            <h2>계산 결과</h2>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <!-- 사주 엔진 로드 -->
+    <script src="js/saju-engine.js"></script>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            // 폼 데이터 수집
+            const formData = new FormData(this);
+            const data = {
+                birthdate: formData.get('birthdate'),
+                birthtime: formData.get('birthtime'),
+                calendar: formData.get('calendar'),
+                gender: formData.get('gender')
+            };
+            
+            console.log('📝 입력 데이터:', data);
+            
+            try {
+                // 사주 엔진 존재 확인
+                if (typeof SajuEngine === 'undefined') {
+                    throw new Error('SajuEngine이 로드되지 않았습니다.');
+                }
+                
+                // 사주 계산
+                const sajuEngine = new SajuEngine();
+                const result = sajuEngine.calculate(data);
+                
+                console.log('✅ 계산 결과:', result);
+                
+                if (result.success) {
+                    resultContent.innerHTML = `
+                        <div class="success">✅ 사주 계산 성공!</div>
+                        <h3>입력 정보</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        
+                        <h3>사주팔자</h3>
+                        <pre>${JSON.stringify(result.pillars, null, 2)}</pre>
+                        
+                        <h3>운세 분석</h3>
+                        <pre>${JSON.stringify(result.fortune, null, 2)}</pre>
+                        
+                        <h3>로컬스토리지 저장</h3>
+                        <pre>sajuData: ${localStorage.getItem('sajuData') ? '✅ 저장됨' : '❌ 저장 안됨'}
+sajuResult: ${localStorage.getItem('sajuResult') ? '✅ 저장됨' : '❌ 저장 안됨'}</pre>
+                        
+                        <p style="margin-top: 20px;">
+                            <a href="result.html" style="color: #d4af37; font-weight: 600;">
+                                👉 결과 페이지로 이동하기
+                            </a>
+                        </p>
+                    `;
+                    
+                    // 로컬스토리지에 저장 (result.html에서 사용)
+                    localStorage.setItem('sajuData', JSON.stringify(data));
+                    localStorage.setItem('sajuResult', JSON.stringify(result));
+                    
+                } else {
+                    throw new Error(result.error || '계산 실패');
+                }
+                
+                resultDiv.classList.add('show');
+                
+            } catch (error) {
+                console.error('❌ 오류:', error);
+                resultContent.innerHTML = `
+                    <div class="error">❌ 오류 발생</div>
+                    <pre>${error.message}</pre>
+                    <pre>${error.stack}</pre>
+                `;
+                resultDiv.classList.add('show');
+            }
+        });
+        
+        // 페이지 로드 시 SajuEngine 확인
+        window.addEventListener('load', function() {
+            if (typeof SajuEngine !== 'undefined') {
+                console.log('✅ SajuEngine 로드 완료');
+            } else {
+                console.error('❌ SajuEngine 로드 실패');
+            }
+        });
+    </script>
+</body>
+</html>
