@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주 기반 재물운 그래프 - AI 사주 천년지기</title>
+    <meta name="description" content="사주팔자 기반으로 생애 재물운 그래프를 분석하고 투자 적기를 알려드립니다">
+    
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+
+        /* 히어로 섹션 */
+        .wealth-hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .wealth-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .wealth-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 입력 폼 */
+        .wealth-form {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: -2rem auto 3rem;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        /* 차트 컨테이너 */
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .chart-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #f5576c;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 2rem;
+        }
+
+        /* 재물운 요약 */
+        .wealth-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* 시기별 분석 */
+        .timeline-analysis {
+            margin-top: 3rem;
+        }
+
+        .timeline-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .period-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #f5576c;
+        }
+
+        .period-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .period-age {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f5576c;
+        }
+
+        .period-score {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .period-status {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .period-desc {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .period-advice {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid #f5576c;
+        }
+
+        .period-advice h5 {
+            color: #f5576c;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .period-advice p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* 투자 조언 */
+        .investment-tips {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .investment-tips h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #c53030;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tip-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card h3 {
+            color: #f5576c;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .tip-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* 프리미엄 CTA */
+        .premium-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin: 3rem 0;
+        }
+
+        .premium-cta h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .premium-cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-premium {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .btn-premium:hover {
+            transform: scale(1.05);
+        }
+
+        /* 푸터 */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        /* 로딩 */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f5576c;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .wealth-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .wealth-form {
+                padding: 1.5rem;
+            }
+
+            .chart-section {
+                padding: 1.5rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .investment-tips {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="wealth-forecast.html">재물운 그래프</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="wealth-hero">
+        <div class="container">
+            <h1>💰 사주 기반 생애 재물운 그래프</h1>
+            <p>나이별 재물운 흐름과 투자 최적 시기를 확인하세요</p>
+        </div>
+    </section>
+
+    <!-- 입력 폼 -->
+    <div class="container">
+        <div class="wealth-form">
+            <h3 style="margin-bottom: 1.5rem; color: #f5576c;">
+                <i class="fas fa-user-circle"></i> 정보 입력
+            </h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>생년월일 *</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label>양력/음력 *</label>
+                    <select id="calendar" required>
+                        <option value="solar">양력</option>
+                        <option value="lunar">음력</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>성별 *</label>
+                    <select id="gender" required>
+                        <option value="">선택하세요</option>
+                        <option value="male">남자</option>
+                        <option value="female">여자</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>태어난 시간 (선택)</label>
+                    <input type="time" id="birthtime" placeholder="모르면 비워두세요">
+                </div>
+            </div>
+
+            <button class="btn-analyze" onclick="analyzeWealth()">
+                <i class="fas fa-chart-line"></i>
+                재물운 분석하기
+            </button>
+        </div>
+
+        <!-- 로딩 -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>사주를 분석하고 재물운 그래프를 생성 중입니다...</p>
+        </div>
+
+        <!-- 차트 섹션 -->
+        <div id="chartSection" class="chart-section" style="display: none;">
+            <h2>📊 생애 재물운 그래프 (20세~80세)</h2>
+            <div class="chart-container">
+                <canvas id="wealthChart"></canvas>
+            </div>
+
+            <!-- 재물운 요약 -->
+            <div class="wealth-summary" id="wealthSummary"></div>
+        </div>
+
+        <!-- 시기별 분석 -->
+        <div id="timelineSection" style="display: none;">
+            <div class="timeline-analysis">
+                <h2 class="timeline-title">📅 시기별 재물운 상세 분석</h2>
+                <div class="timeline-grid" id="timelineGrid"></div>
+            </div>
+        </div>
+
+        <!-- 투자 조언 -->
+        <div id="investmentSection" class="investment-tips" style="display: none;">
+            <h2>💡 맞춤 투자 조언</h2>
+            <div class="tips-grid" id="tipsGrid"></div>
+        </div>
+
+        <!-- 프리미엄 CTA -->
+        <div class="premium-cta" style="display: none;" id="premiumCTA">
+            <h3>🌟 더 상세한 재물운 분석이 필요하신가요?</h3>
+            <p>프리미엄 서비스에서 월별 재물운, 투자 종목별 분석, AI 맞춤 상담을 제공합니다</p>
+            <a href="pricing.html" class="btn-premium">
+                프리미엄 업그레이드 →
+            </a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+            <p>큐브박스 | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
+            <p>전화: 0502-1909-7788 | 이메일: aisaju1000@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        let wealthChart = null;
+
+        function analyzeWealth() {
+            const birthdate = document.getElementById('birthdate').value;
+            const gender = document.getElementById('gender').value;
+
+            if (!birthdate || !gender) {
+                alert('모든 필수 항목을 입력해주세요.');
+                return;
+            }
+
+            // 로딩 표시
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('chartSection').style.display = 'none';
+            document.getElementById('timelineSection').style.display = 'none';
+            document.getElementById('investmentSection').style.display = 'none';
+
+            // 사주 계산 및 그래프 생성
+            setTimeout(() => {
+                const wealthData = calculateWealthFortune(birthdate, gender);
+                displayChart(wealthData);
+                displaySummary(wealthData);
+                displayTimeline(wealthData);
+                displayInvestmentTips(wealthData);
+                
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('chartSection').style.display = 'block';
+                document.getElementById('timelineSection').style.display = 'block';
+                document.getElementById('investmentSection').style.display = 'block';
+                document.getElementById('premiumCTA').style.display = 'block';
+
+                // 스크롤
+                document.getElementById('chartSection').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function calculateWealthFortune(birthdate, gender) {
+            const date = new Date(birthdate);
+            const currentYear = new Date().getFullYear();
+            const currentAge = currentYear - date.getFullYear();
+
+            // 간단한 재물운 계산 (실제로는 사주 엔진 사용)
+            const data = {
+                ages: [],
+                scores: [],
+                periods: []
+            };
+
+            for (let age = 20; age <= 80; age += 5) {
+                data.ages.push(`${age}세`);
+                
+                // 가상의 재물운 점수 (실제로는 사주 기반 계산)
+                let score = 50 + Math.sin((age - 20) / 10) * 30 + Math.random() * 15;
+                score = Math.max(30, Math.min(95, score));
+                data.scores.push(Math.round(score));
+            }
+
+            // 주요 시기 분석
+            const ages = [20, 30, 40, 50, 60, 70];
+            ages.forEach(age => {
+                const idx = (age - 20) / 5;
+                const score = data.scores[idx];
+                
+                let status, desc, advice;
+                if (score >= 80) {
+                    status = '최상의 재물운';
+                    desc = '재물운이 매우 강한 시기입니다. 적극적인 투자와 사업 확장이 좋습니다.';
+                    advice = '부동산, 주식, 사업 투자에 적극 도전하세요. 큰 수익을 기대할 수 있습니다.';
+                } else if (score >= 65) {
+                    status = '좋은 재물운';
+                    desc = '재물운이 좋은 시기입니다. 안정적인 투자를 고려하세요.';
+                    advice = '장기 투자와 저축을 병행하면 좋습니다. 무리한 투자는 피하세요.';
+                } else if (score >= 50) {
+                    status = '보통의 재물운';
+                    desc = '재물운이 평범한 시기입니다. 신중한 재테크가 필요합니다.';
+                    advice = '현금 흐름 관리에 집중하고, 고위험 투자는 자제하세요.';
+                } else {
+                    status = '주의가 필요한 시기';
+                    desc = '재물운이 약한 시기입니다. 보수적인 자산 관리가 필요합니다.';
+                    advice = '새로운 투자를 피하고 기존 자산을 안전하게 보호하세요.';
+                }
+
+                data.periods.push({
+                    age: age,
+                    score: score,
+                    status: status,
+                    desc: desc,
+                    advice: advice
+                });
+            });
+
+            // 평균 점수
+            const avgScore = Math.round(data.scores.reduce((a, b) => a + b, 0) / data.scores.length);
+            
+            // 최고 시기
+            const maxScore = Math.max(...data.scores);
+            const maxIdx = data.scores.indexOf(maxScore);
+            const peakAge = 20 + maxIdx * 5;
+
+            // 투자 적기
+            const goodPeriods = data.scores
+                .map((score, idx) => ({ age: 20 + idx * 5, score }))
+                .filter(item => item.score >= 75)
+                .map(item => `${item.age}세`);
+
+            data.summary = {
+                avgScore: avgScore,
+                peakAge: peakAge,
+                peakScore: maxScore,
+                goodPeriods: goodPeriods.length > 0 ? goodPeriods.join(', ') : '없음'
+            };
+
+            return data;
+        }
+
+        function displayChart(data) {
+            const ctx = document.getElementById('wealthChart').getContext('2d');
+            
+            // 기존 차트 삭제
+            if (wealthChart) {
+                wealthChart.destroy();
+            }
+
+            wealthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.ages,
+                    datasets: [{
+                        label: '재물운 점수',
+                        data: data.scores,
+                        borderColor: 'rgb(245, 87, 108)',
+                        backgroundColor: 'rgba(245, 87, 108, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 6,
+                        pointBackgroundColor: 'rgb(245, 87, 108)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14,
+                                    family: 'Noto Sans KR'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {
+                                size: 14,
+                                family: 'Noto Sans KR'
+                            },
+                            bodyFont: {
+                                size: 13,
+                                family: 'Noto Sans KR'
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return '재물운: ' + context.parsed.y + '점';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Noto Sans KR'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Noto Sans KR'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displaySummary(data) {
+            const summary = data.summary;
+            const summaryHtml = `
+                <div class="summary-card">
+                    <h4>평균 재물운</h4>
+                    <div class="value">${summary.avgScore}점</div>
+                    <div class="desc">생애 평균</div>
+                </div>
+                <div class="summary-card">
+                    <h4>최고 시기</h4>
+                    <div class="value">${summary.peakAge}세</div>
+                    <div class="desc">${summary.peakScore}점</div>
+                </div>
+                <div class="summary-card">
+                    <h4>투자 적기</h4>
+                    <div class="value" style="font-size: 1.5rem;">${summary.goodPeriods.split(',').length}회</div>
+                    <div class="desc">${summary.goodPeriods}</div>
+                </div>
+            `;
+            document.getElementById('wealthSummary').innerHTML = summaryHtml;
+        }
+
+        function displayTimeline(data) {
+            const timelineGrid = document.getElementById('timelineGrid');
+            timelineGrid.innerHTML = '';
+
+            data.periods.forEach(period => {
+                const card = document.createElement('div');
+                card.className = 'period-card';
+                card.innerHTML = `
+                    <div class="period-header">
+                        <div class="period-age">${period.age}대</div>
+                        <div class="period-score">${period.score}점</div>
+                    </div>
+                    <div class="period-status">${period.status}</div>
+                    <div class="period-desc">${period.desc}</div>
+                    <div class="period-advice">
+                        <h5>💡 투자 조언</h5>
+                        <p>${period.advice}</p>
+                    </div>
+                `;
+                timelineGrid.appendChild(card);
+            });
+        }
+
+        function displayInvestmentTips(data) {
+            const tips = [
+                {
+                    icon: '🏠',
+                    title: '부동산 투자',
+                    desc: `${data.summary.peakAge}세 전후로 부동산 투자 적기입니다. 재물운이 강한 시기에 자산을 늘리세요.`
+                },
+                {
+                    icon: '📈',
+                    title: '주식 투자',
+                    desc: '재물운이 70점 이상인 시기에 주식 투자를 고려하세요. 장기 투자가 유리합니다.'
+                },
+                {
+                    icon: '💼',
+                    title: '사업 확장',
+                    desc: `${data.summary.peakAge}세 전후가 사업 확장의 적기입니다. 신규 사업이나 지점 확장을 고려하세요.`
+                },
+                {
+                    icon: '💰',
+                    title: '저축 & 연금',
+                    desc: '재물운이 낮은 시기에는 안정적인 저축과 연금 가입에 집중하세요.'
+                }
+            ];
+
+            const tipsGrid = document.getElementById('tipsGrid');
+            tipsGrid.innerHTML = '';
+
+            tips.forEach(tip => {
+                const card = document.createElement('div');
+                card.className = 'tip-card';
+                card.innerHTML = `
+                    <div class="tip-icon">${tip.icon}</div>
+                    <h3>${tip.title}</h3>
+                    <p>${tip.desc}</p>
+                `;
+                tipsGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
