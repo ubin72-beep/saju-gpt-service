@@ -6,12 +6,14 @@
     <title>사주팔자 결과 - AI 사주 천년지기</title>
     <meta name="description" content="AI 기반 정통 사주팔자 분석 결과를 확인하세요.">
     
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Lunar JavaScript Library -->
     <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
     
     <style>
@@ -28,6 +30,7 @@
             background: #f5f5f5;
         }
 
+        /* ===== 네비게이션 ===== */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -192,6 +195,7 @@
             display: inline;
         }
 
+        /* 모바일 메뉴 */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -230,6 +234,7 @@
             color: #c41e3a;
         }
 
+        /* ===== 헤더 ===== */
         .result-header {
             background: linear-gradient(135deg, #1a1a1a 0%, #8b0000 50%, #c41e3a 100%);
             color: white;
@@ -249,6 +254,7 @@
             opacity: 0.9;
         }
 
+        /* ===== 입력 폼 (데이터 없을 때) ===== */
         .input-form-container {
             max-width: 600px;
             margin: -40px auto 60px;
@@ -315,6 +321,7 @@
             box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
         }
 
+        /* ===== 결과 컨테이너 ===== */
         .result-container {
             max-width: 1000px;
             margin: -40px auto 60px;
@@ -344,6 +351,7 @@
             font-family: 'Noto Serif KR', serif;
         }
 
+        /* ===== 사주 테이블 ===== */
         .saju-table {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -378,6 +386,7 @@
             color: #666;
         }
 
+        /* ===== 분석 섹션 ===== */
         .analysis-section {
             margin-top: 2rem;
         }
@@ -402,6 +411,7 @@
             line-height: 1.8;
         }
 
+        /* ===== 오행 바 ===== */
         .fortune-bar {
             margin-top: 1rem;
         }
@@ -432,6 +442,7 @@
             transition: width 1s ease;
         }
 
+        /* ===== 액션 버튼 ===== */
         .action-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -483,6 +494,348 @@
             box-shadow: 0 10px 30px rgba(212,175,55,0.5);
         }
 
+        /* ===== 프리미엄 업그레이드 배너 ===== */
+        .premium-upgrade-banner {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 15px 50px rgba(255, 165, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 15px 50px rgba(255, 165, 0, 0.4); }
+            50% { transform: scale(1.01); box-shadow: 0 20px 60px rgba(255, 165, 0, 0.6); }
+        }
+
+        .premium-badge-top {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .badge-hot, .badge-discount {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            animation: shake 1s ease-in-out infinite;
+        }
+
+        .badge-hot {
+            background: #FF4444;
+            color: white;
+        }
+
+        .badge-discount {
+            background: #1a1a1a;
+            color: #FFD700;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+
+        .premium-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .premium-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .premium-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+        }
+
+        .benefit-text {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .premium-price-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .price-comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .old-price {
+            font-size: 1.5rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .arrow {
+            font-size: 1.8rem;
+            color: #FF4444;
+            font-weight: 700;
+        }
+
+        .new-price {
+            font-size: 2.5rem;
+            color: #FF4444;
+            font-weight: 900;
+        }
+
+        .price-save {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-premium-mega {
+            width: 100%;
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+            border: none;
+            padding: 25px 40px;
+            border-radius: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(196, 30, 58, 0.5);
+        }
+
+        .btn-premium-mega:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(196, 30, 58, 0.7);
+        }
+
+        .btn-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-arrow {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .limited-time {
+            text-align: center;
+            font-size: 1rem;
+            color: #FF4444;
+            font-weight: 700;
+            margin-top: 15px;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===== 무료 vs 프리미엄 비교표 ===== */
+        .comparison-section {
+            margin: 40px 0;
+        }
+
+        .comparison-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .comparison-table-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .comparison-column {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .comparison-column:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .free-column {
+            border: 2px solid #ddd;
+        }
+
+        .premium-column {
+            border: 3px solid #FFD700;
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #FF4444;
+            color: white;
+            padding: 8px 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transform: rotate(45deg);
+            box-shadow: 0 4px 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .column-header {
+            padding: 30px 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .premium-header {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .column-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .premium-header h3 {
+            color: #1a1a1a;
+            font-weight: 800;
+        }
+
+        .column-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #333;
+        }
+
+        .column-price .old {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .column-price .new {
+            font-size: 2.2rem;
+            color: #FF4444;
+        }
+
+        .discount-label {
+            display: inline-block;
+            background: #FF4444;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .column-items {
+            padding: 30px 20px;
+        }
+
+        .column-items .item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .item.included {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .item.excluded {
+            background: #ffebee;
+            color: #999;
+        }
+
+        .item.premium-highlight {
+            background: linear-gradient(135deg, #fff8dc, #fffacd);
+            border-left: 4px solid #FFD700;
+            font-weight: 700;
+        }
+
+        .item.premium-highlight:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-select-premium {
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+            background: linear-gradient(135deg, #c41e3a, #8b0000);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-select-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(196, 30, 58, 0.5);
+        }
+
+        /* ===== 푸터 ===== */
         .footer {
             background: #1a1a1a;
             color: white;
@@ -520,6 +873,7 @@
             line-height: 1.8;
         }
 
+        /* ===== 반응형 ===== */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -557,10 +911,62 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            /* 프리미엄 배너 모바일 */
+            .premium-upgrade-banner {
+                padding: 25px 20px;
+            }
+
+            .premium-title {
+                font-size: 1.5rem;
+            }
+
+            .premium-subtitle {
+                font-size: 1rem;
+            }
+
+            .premium-benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .btn-premium-mega {
+                padding: 20px;
+                font-size: 1.1rem;
+            }
+
+            .btn-arrow {
+                font-size: 1.5rem;
+            }
+
+            /* 비교표 모바일 */
+            .comparison-title {
+                font-size: 1.5rem;
+            }
+
+            .comparison-table-wrapper {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .popular-badge {
+                font-size: 0.75rem;
+                padding: 6px 40px;
+            }
+
+            .column-header {
+                padding: 20px 15px;
+            }
+
+            .column-items .item {
+                font-size: 0.9rem;
+                padding: 10px 12px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 표준 네비게이션 바 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
@@ -568,6 +974,7 @@
                 AI 사주 천년지기
             </a>
             
+            <!-- 햄버거 메뉴 (모바일) -->
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -620,6 +1027,7 @@
         </div>
     </nav>
 
+    <!-- 모바일 메뉴 -->
     <div class="mobile-menu" id="mobileMenu">
         <ul>
             <li><a href="index.html">🏠 홈</a></li>
@@ -635,6 +1043,7 @@
         </ul>
     </div>
 
+    <!-- 헤더 -->
     <section class="result-header">
         <h1>🎴 사주팔자 결과</h1>
         <div class="user-info">
@@ -642,6 +1051,7 @@
         </div>
     </section>
 
+    <!-- 입력 폼 (데이터 없을 때) -->
     <div class="input-form-container" id="inputForm">
         <div class="input-form-card">
             <h2 class="form-title">📅 사주 정보 입력</h2>
@@ -675,6 +1085,7 @@
         </div>
     </div>
 
+    <!-- 결과 컨테이너 -->
     <div class="result-container" id="resultContainer">
         <div class="result-card">
             <h2 class="section-title">⭐ 당신의 사주팔자</h2>
@@ -767,6 +1178,135 @@
             </div>
         </div>
 
+        <!-- 프리미엄 업그레이드 배너 -->
+        <div class="premium-upgrade-banner">
+            <div class="premium-badge-top">
+                <span class="badge-hot">🔥 오늘만 특가!</span>
+                <span class="badge-discount">50% 할인</span>
+            </div>
+            
+            <h2 class="premium-title">
+                🌟 프리미엄 상세 분석으로 업그레이드하세요
+            </h2>
+            
+            <p class="premium-subtitle">
+                지금 보시는 것은 <strong>무료 기본 분석</strong>입니다. 
+                프리미엄으로 업그레이드하고 <strong>9가지 상세 운세</strong>를 확인하세요!
+            </p>
+            
+            <div class="premium-benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">📊</div>
+                    <div class="benefit-text">성격 분석 (AI 기반)</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💼</div>
+                    <div class="benefit-text">직업운 + 추천</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💰</div>
+                    <div class="benefit-text">재물운 + 그래프</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💕</div>
+                    <div class="benefit-text">애정운 + 궁합</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🏥</div>
+                    <div class="benefit-text">건강운 + 주의사항</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🐴</div>
+                    <div class="benefit-text">2026 병오년 운세</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📅</div>
+                    <div class="benefit-text">월별 운세 (12개월)</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-text">대운 (평생 흐름)</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📄</div>
+                    <div class="benefit-text">100p PDF 리포트</div>
+                </div>
+            </div>
+            
+            <div class="premium-price-box">
+                <div class="price-comparison">
+                    <span class="old-price">₩99,000</span>
+                    <span class="arrow">→</span>
+                    <span class="new-price">₩49,000</span>
+                </div>
+                <p class="price-save">50% 할인으로 <strong>₩50,000</strong> 절약!</p>
+            </div>
+            
+            <button class="btn-premium-mega" onclick="location.href='pricing.html'">
+                <span class="btn-text">지금 바로 프리미엄 업그레이드</span>
+                <span class="btn-arrow">→</span>
+            </button>
+            
+            <p class="limited-time">⏰ 24시간 한정 특가! 내일부터 정상가로 복귀됩니다</p>
+        </div>
+
+        <!-- 무료 vs 프리미엄 비교표 -->
+        <div class="comparison-section">
+            <h2 class="comparison-title">💎 무료 vs 프리미엄 비교</h2>
+            
+            <div class="comparison-table-wrapper">
+                <div class="comparison-column free-column">
+                    <div class="column-header">
+                        <h3>무료 (현재)</h3>
+                        <p class="column-price">₩0</p>
+                    </div>
+                    <div class="column-items">
+                        <div class="item included">✅ 사주팔자 (년월일시)</div>
+                        <div class="item included">✅ 오행 균형</div>
+                        <div class="item included">✅ 일간 분석 (간단)</div>
+                        <div class="item excluded">❌ 성격 분석 (AI)</div>
+                        <div class="item excluded">❌ 직업운 분석</div>
+                        <div class="item excluded">❌ 재물운 분석</div>
+                        <div class="item excluded">❌ 애정운 분석</div>
+                        <div class="item excluded">❌ 건강운 분석</div>
+                        <div class="item excluded">❌ 2026년 운세</div>
+                        <div class="item excluded">❌ 월별 운세</div>
+                        <div class="item excluded">❌ 대운 분석</div>
+                        <div class="item excluded">❌ PDF 리포트</div>
+                    </div>
+                </div>
+                
+                <div class="comparison-column premium-column">
+                    <div class="popular-badge">가장 인기!</div>
+                    <div class="column-header premium-header">
+                        <h3>프리미엄</h3>
+                        <p class="column-price">
+                            <span class="old">₩99,000</span>
+                            <span class="new">₩49,000</span>
+                        </p>
+                        <span class="discount-label">50% OFF</span>
+                    </div>
+                    <div class="column-items">
+                        <div class="item included">✅ 사주팔자 (년월일시)</div>
+                        <div class="item included">✅ 오행 균형</div>
+                        <div class="item included">✅ 일간 분석 (상세)</div>
+                        <div class="item included premium-highlight">✅ 성격 분석 (AI 기반)</div>
+                        <div class="item included premium-highlight">✅ 직업운 + 추천</div>
+                        <div class="item included premium-highlight">✅ 재물운 + 그래프</div>
+                        <div class="item included premium-highlight">✅ 애정운 + 궁합</div>
+                        <div class="item included premium-highlight">✅ 건강운 + 주의사항</div>
+                        <div class="item included premium-highlight">✅ 2026 병오년 운세</div>
+                        <div class="item included premium-highlight">✅ 월별 운세 (12개월)</div>
+                        <div class="item included premium-highlight">✅ 대운 (평생 흐름)</div>
+                        <div class="item included premium-highlight">✅ 100p PDF 리포트</div>
+                    </div>
+                    <button class="btn-select-premium" onclick="location.href='pricing.html'">
+                        선택하기 →
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="action-buttons">
             <a href="index.html" class="action-btn btn-secondary">🏠 홈으로</a>
             <a href="pricing.html" class="action-btn btn-gold">👑 프리미엄 분석</a>
@@ -774,6 +1314,7 @@
         </div>
     </div>
 
+    <!-- 푸터 -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -792,6 +1333,7 @@
     </footer>
 
     <script>
+        // ===== 네비게이션 =====
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const langBtn = document.getElementById('langBtn');
@@ -834,6 +1376,7 @@
             });
         });
 
+        // ===== 사주 계산 로직 =====
         const G = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
         const GN = ['갑','을','병','정','무','기','경','신','임','계'];
         const Z = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -981,6 +1524,7 @@
         function displayResult(data) {
             const { yp, mp, dp, hp, y, m, d, h, min } = data;
             
+            // 헤더 업데이트
             const birthdate = document.getElementById('birthdate').value;
             const calendar = document.getElementById('calendar').value;
             const gender = document.getElementById('gender').value;
@@ -990,6 +1534,7 @@
             document.getElementById('headerInfo').textContent = 
                 `생년월일: ${birthdate} (${calendarText}) | 성별: ${genderText}`;
             
+            // 사주 테이블 업데이트
             document.getElementById('year-sky').textContent = yp.cheongan;
             document.getElementById('year-ground').textContent = yp.jiji;
             document.getElementById('year-element').textContent = E[yp.cheongan] + ' ' + E[yp.jiji];
@@ -1006,6 +1551,7 @@
             document.getElementById('time-ground').textContent = hp.jiji;
             document.getElementById('time-element').textContent = E[hp.cheongan] + ' ' + E[hp.jiji];
             
+            // 일간 분석
             const dm = dp.cheongan;
             const dme = E[dm];
             const ee = {'木':'🌳','火':'🔥','土':'🏔️','金':'⚙️','水':'💧'};
@@ -1026,6 +1572,7 @@
             };
             document.getElementById('day-master-desc').textContent = desc[dm];
             
+            // 오행 균형
             const ec = {'木':0,'火':0,'土':0,'金':0,'水':0};
             [yp.cheongan, yp.jiji, mp.cheongan, mp.jiji, dp.cheongan, dp.jiji, hp.cheongan, hp.jiji]
                 .forEach(c => {
@@ -1044,9 +1591,11 @@
                 b.querySelector('.fortune-bar-fill').textContent = `${pc}%`;
             });
             
+            // 결과 표시
             document.getElementById('inputForm').style.display = 'none';
             document.getElementById('resultContainer').classList.add('show');
             
+            // 로컬 스토리지 저장
             const sajuData = {
                 birthdate: document.getElementById('birthdate').value,
                 calendar: calendar,
@@ -1060,6 +1609,7 @@
             };
             localStorage.setItem('sajuData', JSON.stringify(sajuData));
             
+            // 애니메이션
             setTimeout(() => {
                 document.querySelectorAll('.fortune-bar-fill').forEach(b => {
                     const w = b.style.width;
@@ -1069,6 +1619,7 @@
             }, 500);
         }
 
+        // 폼 제출 처리
         document.getElementById('sajuForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1086,25 +1637,55 @@
             displayResult(data);
         });
 
+        // 페이지 로드 시 localStorage 확인
         window.addEventListener('DOMContentLoaded', function() {
             const sajuData = JSON.parse(localStorage.getItem('sajuData') || '{}');
+            const sajuResult = JSON.parse(localStorage.getItem('sajuResult') || '{}');
+            
+            console.log('📝 사주 데이터:', sajuData);
+            console.log('✅ 사주 결과:', sajuResult);
             
             if (sajuData.birthdate) {
+                // 기존 데이터가 있으면 자동으로 계산
                 document.getElementById('birthdate').value = sajuData.birthdate;
                 document.getElementById('calendar').value = sajuData.calendar || 'solar';
-                document.getElementById('birthtime').value = sajuData.hour || '';
+                document.getElementById('birthtime').value = sajuData.birthtime || '';
                 document.getElementById('gender').value = sajuData.gender || 'male';
                 
                 const data = calculateSaju(
                     sajuData.birthdate,
                     sajuData.calendar || 'solar',
-                    sajuData.hour || '',
+                    sajuData.birthtime || '',
                     sajuData.gender || 'male'
                 );
                 displayResult(data);
+                
+                // 사주 엔진 결과가 있으면 콘솔에 출력
+                if (sajuResult.success && sajuResult.fortune) {
+                    console.log('🌟 사주 엔진 운세 분석:', sajuResult.fortune);
+                    console.log('💡 프리미엄으로 업그레이드하면 이 모든 내용을 확인할 수 있습니다!');
+                    
+                    // 프리미엄 배너에 실제 데이터 힌트 추가
+                    const premiumBanner = document.querySelector('.premium-upgrade-banner');
+                    if (premiumBanner && sajuResult.fortune.personality) {
+                        const hint = document.createElement('div');
+                        hint.style.cssText = 'background:rgba(0,0,0,0.7);color:#FFD700;padding:20px;border-radius:10px;margin-top:20px;text-align:center;';
+                        hint.innerHTML = `
+                            <p style="margin-bottom:10px;font-size:1.1rem;font-weight:600;">💡 프리미엄 성격 분석 미리보기</p>
+                            <p style="font-size:0.95rem;line-height:1.8;filter:blur(3px);user-select:none;">
+                                ${sajuResult.fortune.personality.substring(0, 80)}...
+                            </p>
+                            <p style="margin-top:15px;font-weight:700;color:#FF4444;">
+                                🔒 나머지 분석을 보려면 프리미엄으로 업그레이드하세요!
+                            </p>
+                        `;
+                        premiumBanner.appendChild(hint);
+                    }
+                }
             }
         });
 
+        // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
