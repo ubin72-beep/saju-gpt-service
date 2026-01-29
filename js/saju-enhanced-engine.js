@@ -158,6 +158,118 @@ class SajuEnhancedEngine {
     }
     
     /**
+     * 일간별 상세 직업 추천 (신규 함수)
+     */
+    getCareerRecommendations(dayMaster) {
+        const stemElement = this.elements[dayMaster];
+        const stemChar = this.getStemCharacteristics(dayMaster);
+        
+        // 일간별 맞춤 직업 추천
+        const detailedCareers = this.getDetailedCareersByDayMaster(dayMaster);
+        
+        return {
+            dayMaster: dayMaster,
+            element: stemElement,
+            title: stemChar.title,
+            personality: stemChar.personality,
+            keywords: stemChar.keywords,
+            best: detailedCareers,
+            strengths: stemChar.strengths,
+            weaknesses: stemChar.weaknesses
+        };
+    }
+    
+    /**
+     * 일간별 상세 직업 데이터 (10천간)
+     */
+    getDetailedCareersByDayMaster(dayMaster) {
+        const careerData = {
+            '甲': [
+                { career: 'CEO/창업가', score: 95, reason: '타고난 리더십과 개척정신으로 새로운 사업을 시작하고 조직을 이끄는 능력이 탁월합니다.', field: '경영/비즈니스', traits: ['리더십', '추진력', '독립심'] },
+                { career: '프로젝트 매니저', score: 92, reason: '강한 책임감과 조직력으로 대규모 프로젝트를 성공적으로 이끌 수 있습니다.', field: 'IT/관리', traits: ['조직력', '결단력', '책임감'] },
+                { career: '변호사/법무사', score: 90, reason: '정직하고 원칙을 중시하는 성격으로 법률 분야에서 뛰어난 역량을 발휘합니다.', field: '법률', traits: ['정의감', '논리력', '원칙'] },
+                { career: '건축가/토목 엔지니어', score: 88, reason: '큰 나무처럼 든든한 구조물을 설계하고 건설하는 일에 적합합니다.', field: '건설/건축', traits: ['구조적 사고', '안정성', '창의성'] },
+                { career: '대학교수/연구원', score: 85, reason: '깊이 있는 연구와 후학 양성을 통해 사회에 기여하는 일에 보람을 느낍니다.', field: '교육/연구', traits: ['전문성', '책임감', '통찰력'] },
+                { career: '임원/관리자', score: 83, reason: '조직의 방향을 제시하고 팀을 이끄는 관리 업무에 탁월한 능력을 보입니다.', field: '경영/관리', traits: ['리더십', '전략', '조직력'] }
+            ],
+            '乙': [
+                { career: '디자이너/아트디렉터', score: 95, reason: '섬세한 감각과 예술적 감성으로 아름다운 작품을 창조합니다.', field: '예술/디자인', traits: ['감성', '창의성', '섬세함'] },
+                { career: 'UX/UI 기획자', score: 92, reason: '사용자의 마음을 이해하고 유연하게 대응하는 능력이 뛰어납니다.', field: 'IT/기획', traits: ['공감능력', '유연성', '분석력'] },
+                { career: '상담사/심리치료사', score: 90, reason: '타인의 감정을 섬세하게 이해하고 배려하는 능력이 탁월합니다.', field: '상담/심리', traits: ['공감능력', '배려', '인내심'] },
+                { career: '패션 디자이너', score: 88, reason: '유연한 사고와 예술적 감각으로 트렌드를 선도합니다.', field: '패션/의류', traits: ['트렌드 감각', '창의성', '섬세함'] },
+                { career: '원예가/조경사', score: 85, reason: '식물을 다루고 자연과 조화를 이루는 일에 천부적인 재능이 있습니다.', field: '농업/원예', traits: ['자연친화', '섬세함', '인내심'] },
+                { career: '작가/카피라이터', score: 83, reason: '섬세한 감성을 글로 표현하는 능력이 뛰어납니다.', field: '문학/광고', traits: ['표현력', '감성', '창의성'] }
+            ],
+            '丙': [
+                { career: '연예인/방송인', score: 95, reason: '태양처럼 밝은 에너지와 카리스마로 대중의 사랑을 받습니다.', field: '방송/연예', traits: ['카리스마', '표현력', '대중성'] },
+                { career: '마케팅 디렉터', score: 92, reason: '열정적인 추진력과 창의성으로 시장을 선도하는 전략을 수립합니다.', field: '마케팅/광고', traits: ['창의성', '추진력', '전략'] },
+                { career: '영업 관리자', score: 90, reason: '밝은 에너지와 설득력으로 높은 성과를 달성합니다.', field: '영업/세일즈', traits: ['설득력', '에너지', '친화력'] },
+                { career: '이벤트 기획자', score: 88, reason: '활동적이고 창의적인 성격으로 성공적인 이벤트를 기획하고 실행합니다.', field: '기획/이벤트', traits: ['창의성', '추진력', '기획력'] },
+                { career: '스타트업 대표', score: 85, reason: '열정과 도전정신으로 새로운 비즈니스를 시작하고 성장시킵니다.', field: '창업/경영', traits: ['도전정신', '열정', '추진력'] },
+                { career: '영화감독/PD', score: 83, reason: '강한 창의성과 표현력으로 작품을 만들어냅니다.', field: '영상/제작', traits: ['창의성', '리더십', '표현력'] }
+            ],
+            '丁': [
+                { career: '교사/강사', score: 95, reason: '따뜻한 마음으로 학생들을 가르치고 이끄는 일에 천직을 느낍니다.', field: '교육', traits: ['배려', '헌신', '인내심'] },
+                { career: '간호사/의료인', score: 92, reason: '환자를 돌보고 치료하는 일에 깊은 보람을 느낍니다.', field: '의료/간호', traits: ['배려', '헌신', '섬세함'] },
+                { career: '사회복지사', score: 90, reason: '약자를 돕고 사회에 기여하는 일에 정의감을 발휘합니다.', field: '복지/NGO', traits: ['정의감', '헌신', '공감능력'] },
+                { career: '요리사/셰프', score: 88, reason: '음식을 통해 사람들에게 따뜻함과 행복을 선사합니다.', field: '요식/외식', traits: ['섬세함', '창의성', '정성'] },
+                { career: '예술가/화가', score: 85, reason: '감성적이고 예술적인 표현을 통해 작품을 만들어냅니다.', field: '예술/미술', traits: ['감성', '예술성', '표현력'] },
+                { career: '인테리어 디자이너', score: 83, reason: '따뜻하고 편안한 공간을 만드는 일에 재능이 있습니다.', field: '디자인/인테리어', traits: ['감성', '섬세함', '창의성'] }
+            ],
+            '戊': [
+                { career: '부동산 전문가', score: 95, reason: '토지와 부동산에 대한 이해가 깊고 안정적인 투자 판단을 합니다.', field: '부동산', traits: ['안정성', '신뢰', '분석력'] },
+                { career: '금융 애널리스트', score: 92, reason: '신중하고 실용적인 분석으로 안전한 투자 전략을 수립합니다.', field: '금융/투자', traits: ['분석력', '신중함', '안정성'] },
+                { career: '회계사/세무사', score: 90, reason: '꼼꼼하고 정확한 업무 처리로 신뢰를 얻습니다.', field: '회계/세무', traits: ['정확성', '신뢰', '꼼꼼함'] },
+                { career: '건설 현장 관리자', score: 88, reason: '든든하고 안정적인 구조물을 만드는 일에 적합합니다.', field: '건설/토목', traits: ['안정성', '책임감', '관리력'] },
+                { career: '보험 설계사', score: 85, reason: '고객의 안정적인 미래를 설계하는 일에 보람을 느낍니다.', field: '보험/금융', traits: ['신뢰', '안정성', '설득력'] },
+                { career: '농업 경영인', score: 83, reason: '땅과 자연을 활용한 안정적인 사업에 재능이 있습니다.', field: '농업/경영', traits: ['실용성', '인내심', '안정성'] }
+            ],
+            '己': [
+                { career: '행정 공무원', score: 95, reason: '꼼꼼하고 성실한 업무 처리로 공공 서비스를 제공합니다.', field: '공무원/행정', traits: ['성실함', '꼼꼼함', '봉사정신'] },
+                { career: '비서/사무관리자', score: 92, reason: '섬세한 배려와 지원으로 조직의 효율성을 높입니다.', field: '사무/지원', traits: ['배려', '꼼꼼함', '지원력'] },
+                { career: '약사', score: 90, reason: '정확하고 세심하게 약을 조제하고 상담합니다.', field: '의료/약학', traits: ['정확성', '섬세함', '배려'] },
+                { career: '영양사', score: 88, reason: '건강한 식단을 계획하고 관리하는 일에 재능이 있습니다.', field: '영양/식품', traits: ['꼼꼼함', '배려', '전문성'] },
+                { career: '물류 관리자', score: 85, reason: '체계적이고 효율적인 물류 관리로 업무를 최적화합니다.', field: '물류/유통', traits: ['체계성', '꼼꼼함', '관리력'] },
+                { career: '품질 관리 전문가', score: 83, reason: '세심한 점검과 관리로 최고의 품질을 유지합니다.', field: '제조/품질', traits: ['꼼꼼함', '정확성', '책임감'] }
+            ],
+            '庚': [
+                { career: '판사/검사', score: 95, reason: '강한 정의감과 원칙으로 법을 집행하고 정의를 구현합니다.', field: '법조/사법', traits: ['정의감', '결단력', '원칙'] },
+                { career: '경찰/군인', score: 92, reason: '강인한 의지와 책임감으로 국가와 국민을 지킵니다.', field: '공안/국방', traits: ['강인함', '책임감', '용기'] },
+                { career: '외과 의사', score: 90, reason: '정확하고 과감한 수술로 생명을 살립니다.', field: '의료/외과', traits: ['결단력', '정확성', '용기'] },
+                { career: '기계 엔지니어', score: 88, reason: '금속과 기계를 다루는 일에 천부적인 재능이 있습니다.', field: '공학/기계', traits: ['기술력', '정확성', '분석력'] },
+                { career: '투자 전문가', score: 85, reason: '과감한 결단과 정확한 판단으로 높은 수익을 창출합니다.', field: '금융/투자', traits: ['결단력', '분석력', '과감함'] },
+                { career: '스포츠 선수', score: 83, reason: '강인한 체력과 의지로 최고의 성과를 달성합니다.', field: '스포츠', traits: ['체력', '의지', '경쟁력'] }
+            ],
+            '辛': [
+                { career: '보석 디자이너', score: 95, reason: '섬세한 감각과 예술성으로 아름다운 보석을 디자인합니다.', field: '보석/디자인', traits: ['섬세함', '예술성', '완벽주의'] },
+                { career: '치과 의사', score: 92, reason: '정교하고 섬세한 시술로 환자의 건강을 책임집니다.', field: '의료/치과', traits: ['섬세함', '정확성', '완벽주의'] },
+                { career: '품질 관리 총괄', score: 90, reason: '완벽주의적 성격으로 최고 수준의 품질을 유지합니다.', field: '제조/품질', traits: ['완벽주의', '분석력', '정확성'] },
+                { career: 'IT 보안 전문가', score: 88, reason: '예리한 분석력으로 시스템의 취약점을 찾아 보완합니다.', field: 'IT/보안', traits: ['분석력', '예리함', '정확성'] },
+                { career: '피아니스트/음악가', score: 85, reason: '섬세한 감각으로 아름다운 음악을 연주합니다.', field: '음악/공연', traits: ['섬세함', '예술성', '표현력'] },
+                { career: '편집자/교정자', score: 83, reason: '완벽주의적 성격으로 세세한 오류까지 찾아냅니다.', field: '출판/편집', traits: ['꼼꼼함', '분석력', '완벽주의'] }
+            ],
+            '壬': [
+                { career: '경영 컨설턴트', score: 95, reason: '깊은 통찰력과 전략적 사고로 기업의 문제를 해결합니다.', field: '컨설팅/경영', traits: ['통찰력', '전략', '유연성'] },
+                { career: '외교관/통역사', score: 92, reason: '유연한 사고와 소통 능력으로 국제 관계를 이끕니다.', field: '외교/국제', traits: ['소통력', '유연성', '지혜'] },
+                { career: '무역 전문가', score: 90, reason: '흐름을 읽고 국제 거래를 성공적으로 이끕니다.', field: '무역/유통', traits: ['전략', '소통력', '적응력'] },
+                { career: '전략 기획자', score: 88, reason: '넓은 시야와 전략적 사고로 장기적인 비전을 제시합니다.', field: '기획/전략', traits: ['전략', '통찰력', '분석력'] },
+                { career: '연구원/학자', score: 85, reason: '깊이 있는 연구와 탐구로 새로운 지식을 창출합니다.', field: '연구/학술', traits: ['탐구심', '지혜', '통찰력'] },
+                { career: '여행 작가/가이드', score: 83, reason: '다양한 경험과 유연한 사고로 여행을 풍부하게 만듭니다.', field: '관광/여행', traits: ['유연성', '적응력', '표현력'] }
+            ],
+            '癸': [
+                { career: '작가/소설가', score: 95, reason: '깊은 내면의 통찰과 창의성으로 감동적인 작품을 씁니다.', field: '문학/창작', traits: ['창의성', '통찰력', '감성'] },
+                { career: 'UX 리서처', score: 92, reason: '사용자의 숨은 니즈를 발견하고 혁신적인 해결책을 제시합니다.', field: 'IT/리서치', traits: ['통찰력', '분석력', '창의성'] },
+                { career: '심리상담사', score: 90, reason: '깊은 공감 능력으로 내담자의 마음을 이해하고 치유합니다.', field: '상담/심리', traits: ['공감능력', '통찰력', '인내심'] },
+                { career: 'R&D 연구원', score: 88, reason: '혁신적인 아이디어와 창의적 사고로 신제품을 개발합니다.', field: '연구/개발', traits: ['창의성', '혁신', '탐구심'] },
+                { career: '영상 편집자', score: 85, reason: '섬세한 감각으로 이야기를 영상에 담아냅니다.', field: '영상/편집', traits: ['감성', '섬세함', '창의성'] },
+                { career: '점술가/역술인', score: 83, reason: '뛰어난 직관력으로 운명의 흐름을 읽어냅니다.', field: '역술/상담', traits: ['직관력', '통찰력', '감수성'] }
+            ]
+        };
+        
+        return careerData[dayMaster] || careerData['甲'];
+    }
+    
+    /**
      * 직업 추천 생성 (10가지)
      */
     generateCareers(stem, branch) {
