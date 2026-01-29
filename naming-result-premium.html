@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작명/개명 프리미엄 결과 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #6a4c93 0%, #9b59b6 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .result-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 100%);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .result-header h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.8rem;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+
+        .result-header .subtitle {
+            font-size: 1.2rem;
+            color: #2a2a3e;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .user-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            color: #1a1a2e;
+        }
+
+        .user-info-item i {
+            color: #6a4c93;
+        }
+
+        /* 섹션 */
+        .result-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            color: #f4e5a1;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 이름 카드 그리드 */
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .name-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(244, 229, 161, 0.15) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .name-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #d4af37, #f4e5a1, #d4af37);
+        }
+
+        .name-card.tier-top {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(244, 229, 161, 0.25) 100%);
+        }
+
+        .name-card.tier-good {
+            border-color: #9b59b6;
+        }
+
+        .name-card.tier-alt {
+            border-color: #7e57c2;
+        }
+
+        .name-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.35);
+            border-color: #f4e5a1;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #f4e5a1);
+            color: #1a1a2e;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .name-main {
+            margin-bottom: 15px;
+        }
+
+        .name-hangul {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            color: #f4e5a1;
+            margin-bottom: 8px;
+        }
+
+        .name-hanja {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+
+        .name-meaning {
+            font-size: 0.95rem;
+            color: #b8b8b8;
+        }
+
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .score-bar .label {
+            font-size: 0.9rem;
+            color: #d0d0d0;
+            min-width: 50px;
+        }
+
+        .score-bar .bar {
+            flex: 1;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .score-bar .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4e5a1);
+            transition: width 0.8s ease;
+        }
+
+        .score-bar .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f4e5a1;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .strokes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stroke-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .stroke-item .label {
+            font-size: 0.8rem;
+            color: #d0d0d0;
+            margin-bottom: 5px;
+        }
+
+        .stroke-item .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f4e5a1;
+        }
+
+        .stroke-item .luck {
+            font-size: 0.75rem;
+            color: #b8b8b8;
+            margin-top: 3px;
+        }
+
+        .stroke-item.lucky {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+        }
+
+        .stroke-item.unlucky {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+        }
+
+        .detail-row {
+            margin: 12px 0;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .detail-row .label {
+            font-size: 0.9rem;
+            color: #d0d0d0;
+            margin-bottom: 5px;
+        }
+
+        .detail-row .content {
+            font-size: 1rem;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* 티어 헤더 */
+        .tier-header {
+            text-align: center;
+            margin: 40px 0 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(244, 229, 161, 0.2) 100%);
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .tier-header h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.8rem;
+            color: #f4e5a1;
+            margin-bottom: 8px;
+        }
+
+        .tier-header p {
+            font-size: 1rem;
+            color: #d0d0d0;
+        }
+
+        /* PDF 다운로드 버튼 */
+        .download-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #f4e5a1, #d4af37);
+            color: #1a1a2e;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6);
+        }
+
+        .download-btn i {
+            margin-right: 12px;
+        }
+
+        /* 로딩 */
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .loading .spinner {
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-top: 5px solid #d4af37;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            font-size: 1.3rem;
+            color: #f4e5a1;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .result-header h1 {
+                font-size: 2rem;
+            }
+
+            .names-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .strokes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 로딩 -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>최적의 이름을 분석하고 있습니다...</p>
+        </div>
+
+        <!-- 결과 -->
+        <div id="resultContainer" style="display: none;">
+            <!-- 헤더 -->
+            <div class="result-header">
+                <h1>✨ 작명/개명 프리미엄 결과</h1>
+                <p class="subtitle">성명학 81수리 + 오행 + 발음 종합 분석</p>
+                <div class="user-info">
+                    <div class="user-info-item">
+                        <i class="fas fa-user"></i>
+                        <span id="userName"></span>
+                    </div>
+                    <div class="user-info-item">
+                        <i class="fas fa-venus-mars"></i>
+                        <span id="userGender"></span>
+                    </div>
+                    <div class="user-info-item">
+                        <i class="fas fa-calendar"></i>
+                        <span id="userBirth"></span>
+                    </div>
+                    <div class="user-info-item">
+                        <i class="fas fa-yin-yang"></i>
+                        <span id="userElement"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOP 10 -->
+            <div class="tier-header">
+                <h2>🏆 TOP 10 추천 이름 (95-100점)</h2>
+                <p>가장 뛰어난 이름들입니다. 성명학적으로 최고의 조합입니다.</p>
+            </div>
+            <div class="names-grid" id="topNames"></div>
+
+            <!-- GOOD 10 -->
+            <div class="tier-header">
+                <h2>⭐ GOOD 10 추천 이름 (85-94점)</h2>
+                <p>매우 좋은 이름들입니다. 안정적이고 조화로운 조합입니다.</p>
+            </div>
+            <div class="names-grid" id="goodNames"></div>
+
+            <!-- ALTERNATIVE 10 -->
+            <div class="tier-header">
+                <h2>💎 ALTERNATIVE 10 추천 이름 (75-84점)</h2>
+                <p>좋은 대안 이름들입니다. 실용적이고 균형잡힌 조합입니다.</p>
+            </div>
+            <div class="names-grid" id="altNames"></div>
+
+            <!-- PDF 다운로드 -->
+            <div class="download-section">
+                <a href="#" class="download-btn" id="downloadBtn">
+                    <i class="fas fa-file-pdf"></i>
+                    30개 전체 결과 PDF 다운로드
+                </a>
+                <p style="margin-top: 20px; color: #d0d0d0; font-size: 0.95rem;">
+                    * 프리미엄 회원 전용 기능입니다
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/naming-premium-engine.js"></script>
+    <script>
+        // URL 파라미터 가져오기
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                lastName: params.get('lastName') || '김',
+                gender: params.get('gender') || 'male',
+                birth: params.get('birth') || '1990-01-01',
+                element: params.get('element') || '목'
+            };
+        }
+
+        // 메인 함수
+        async function displayResult() {
+            const params = getQueryParams();
+
+            // 로딩 시작
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultContainer').style.display = 'none';
+
+            // 2초 로딩
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // 헤더 정보
+            document.getElementById('userName').textContent = `${params.lastName}씨`;
+            document.getElementById('userGender').textContent = params.gender === 'male' ? '남성' : '여성';
+            document.getElementById('userBirth').textContent = params.birth;
+            document.getElementById('userElement').textContent = `${params.element}일주`;
+
+            // 30개 이름 생성
+            const birthYear = parseInt(params.birth.split('-')[0]);
+            const names = namingEngine.generateNames(params.lastName, params.gender, params.element, birthYear);
+
+            // TOP 10
+            const topNames = names.slice(0, 10);
+            renderNames(topNames, 'topNames', 'top');
+
+            // GOOD 10
+            const goodNames = names.slice(10, 20);
+            renderNames(goodNames, 'goodNames', 'good');
+
+            // ALTERNATIVE 10
+            const altNames = names.slice(20, 30);
+            renderNames(altNames, 'altNames', 'alt');
+
+            // PDF 다운로드 버튼
+            document.getElementById('downloadBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('PDF 다운로드 기능은 프리미엄 회원 전용입니다.\\n\\n업그레이드하시면 전체 30개 이름을 PDF로 다운로드하실 수 있습니다.');
+            });
+
+            // 로딩 종료, 결과 표시
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+
+            // 부드러운 스크롤
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 이름 렌더링
+        function renderNames(names, containerId, tier) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = names.map(name => `
+                <div class="name-card tier-${tier}">
+                    <div class="tier-badge">${name.tier}</div>
+                    <div class="name-main">
+                        <div class="name-hangul">${name.hangul}</div>
+                        <div class="name-hanja">${name.hanja}</div>
+                        <div class="name-meaning">${name.meaning}</div>
+                    </div>
+                    <div class="score-bar">
+                        <span class="label">종합</span>
+                        <div class="bar">
+                            <div class="bar-fill" style="width: ${name.score}%"></div>
+                        </div>
+                        <span class="value">${name.score}점</span>
+                    </div>
+                    <div class="strokes-grid">
+                        <div class="stroke-item ${getLuckClass(name.strokes.cheonGyeok.luck)}">
+                            <div class="label">천격</div>
+                            <div class="value">${name.strokes.cheonGyeok.value}</div>
+                            <div class="luck">${name.strokes.cheonGyeok.luck}</div>
+                        </div>
+                        <div class="stroke-item ${getLuckClass(name.strokes.inGyeok.luck)}">
+                            <div class="label">인격</div>
+                            <div class="value">${name.strokes.inGyeok.value}</div>
+                            <div class="luck">${name.strokes.inGyeok.luck}</div>
+                        </div>
+                        <div class="stroke-item ${getLuckClass(name.strokes.jiGyeok.luck)}">
+                            <div class="label">지격</div>
+                            <div class="value">${name.strokes.jiGyeok.value}</div>
+                            <div class="luck">${name.strokes.jiGyeok.luck}</div>
+                        </div>
+                        <div class="stroke-item ${getLuckClass(name.strokes.oeGyeok.luck)}">
+                            <div class="label">외격</div>
+                            <div class="value">${name.strokes.oeGyeok.value}</div>
+                            <div class="luck">${name.strokes.oeGyeok.luck}</div>
+                        </div>
+                        <div class="stroke-item ${getLuckClass(name.strokes.chongGyeok.luck)}">
+                            <div class="label">총격</div>
+                            <div class="value">${name.strokes.chongGyeok.value}</div>
+                            <div class="luck">${name.strokes.chongGyeok.luck}</div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">직업운</div>
+                        <div class="content">${name.career}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">재물운</div>
+                        <div class="content">${name.wealth}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="label">성격</div>
+                        <div class="content">${name.personality}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 길흉 클래스
+        function getLuckClass(luck) {
+            if (luck === '대길' || luck === '길') return 'lucky';
+            if (luck === '흉') return 'unlucky';
+            return '';
+        }
+
+        // 페이지 로드 시 실행
+        window.addEventListener('DOMContentLoaded', displayResult);
+    </script>
+</body>
+</html>
