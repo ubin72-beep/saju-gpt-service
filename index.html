@@ -812,56 +812,102 @@
         
         /* 프리미엄 서비스 */
         .services-section {
-            background: #f5f5f5;
-            padding: 60px 20px;
+            background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+            padding: 80px 20px;
+            position: relative;
+        }
+        
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37 0%, #f5d876 50%, #d4af37 100%);
         }
         
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
             margin-top: 3rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .service-card {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: visible;
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(212,175,55,0.25);
+            border-color: rgba(212,175,55,0.3);
         }
         
         .service-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
         }
         
         .service-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
             color: #1a1a1a;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
         
         .service-description {
             color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            min-height: 40px;
         }
         
         .service-price {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: #c41e3a;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* 무료 서비스 특별 스타일 */
+        .service-card .service-price:contains("무료") {
+            color: #27ae60;
+        }
+        
+        /* 카테고리 구분선 추가 */
+        .service-card:nth-child(4)::after,
+        .service-card:nth-child(7)::after,
+        .service-card:nth-child(11)::after,
+        .service-card:nth-child(12)::after {
+            content: '';
+            position: absolute;
+            bottom: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.3) 50%, transparent 100%);
         }
         
         /* 유명인 섹션 */
@@ -1249,12 +1295,56 @@
         /* 반응형 */
         @media (max-width: 1024px) {
             .services-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr) !important;
                 gap: 1.5rem;
+            }
+            
+            /* 프리미엄 & 기업 솔루션은 2열 유지 */
+            .services-grid[style*="max-width: 1200px"] {
+                grid-template-columns: repeat(2, 1fr) !important;
             }
         }
         
         @media (max-width: 768px) {
+            .services-section {
+                padding: 60px 15px;
+            }
+            
+            .section-title {
+                font-size: 2rem !important;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.2rem;
+            }
+            
+            /* 프리미엄 & 기업 솔루션도 모바일에서는 1열 */
+            .services-grid[style*="max-width: 1200px"] {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .service-card {
+                padding: 1.5rem 1.2rem;
+            }
+            
+            .service-icon {
+                font-size: 3rem;
+            }
+            
+            .service-title {
+                font-size: 1.15rem;
+            }
+            
+            .service-description {
+                font-size: 0.85rem;
+                min-height: auto;
+            }
+            
+            .service-price {
+                font-size: 1.1rem;
+            }
+            
             .hero {
                 padding: 30px 15px;
             }
@@ -1829,32 +1919,76 @@
     <!-- 프리미엄 서비스 -->
     <section class="services-section">
         <div class="container">
-            <h2 class="section-title">프리미엄 서비스</h2>
+            <h2 class="section-title" style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #1a1a1a 0%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">프리미엄 서비스</h2>
+            <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 3rem;">당신의 운명을 밝혀줄 최고의 사주 분석 서비스</p>
+            
+            <!-- 무료 서비스 카테고리 -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <span style="display: inline-block; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 12px rgba(39,174,96,0.3);">🎉 무료 체험</span>
+            </div>
+            
             <div class="services-grid">
-                <div class="service-card" onclick="location.href='compatibility.html'">
+                <!-- 🎉 무료 서비스 (4개) -->
+                <div class="service-card" onclick="location.href='compatibility.html'" style="border: 2px solid #27ae60;">
                     <div class="service-icon">💕</div>
                     <div class="service-title">궁합 분석</div>
                     <div class="service-description">두 사람의 사주를 비교하여 궁합을 상세히 분석해드립니다</div>
-                    <div class="service-price">무료</div>
+                    <div class="service-price" style="color: #27ae60;">무료</div>
                 </div>
-                <div class="service-card" onclick="location.href='tojeong.html'">
+                <div class="service-card" onclick="location.href='tojeong.html'" style="border: 2px solid #27ae60;">
                     <div class="service-icon">🎴</div>
                     <div class="service-title">토정비결 2026</div>
                     <div class="service-description">2026년 병오년 신년운세를 토정비결로 확인하세요</div>
-                    <div class="service-price">무료</div>
+                    <div class="service-price" style="color: #27ae60;">무료</div>
                 </div>
-                <div class="service-card" onclick="location.href='dream.html'">
+                <div class="service-card" onclick="location.href='dream.html'" style="border: 2px solid #27ae60;">
                     <div class="service-icon">🌙</div>
                     <div class="service-title">AI 꿈해몽</div>
                     <div class="service-description">AI가 당신의 꿈을 분석하고 의미를 해석해드립니다</div>
-                    <div class="service-price">무료</div>
+                    <div class="service-price" style="color: #27ae60;">무료</div>
                 </div>
-                <div class="service-card" onclick="location.href='naming.html'">
-                    <div class="service-icon">✍️</div>
-                    <div class="service-title">작명/개명</div>
-                    <div class="service-description">사주에 맞는 최적의 이름을 추천해드립니다</div>
-                    <div class="service-price">₩19,000</div>
+                <div class="service-card" onclick="location.href='ai-chat.html'" style="border: 2px solid #27ae60;">
+                    <div class="service-icon">🤖</div>
+                    <div class="service-title">24시간 AI 상담</div>
+                    <div class="service-description">언제든지 AI와 실시간으로 운세 상담</div>
+                    <div class="service-price" style="color: #27ae60;">무료</div>
                 </div>
+            </div>
+            
+            <!-- 저가 서비스 카테고리 -->
+            <div style="text-align: center; margin: 3rem 0 2rem;">
+                <span style="display: inline-block; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 12px rgba(52,152,219,0.3);">💰 가성비 서비스</span>
+            </div>
+            
+            <div class="services-grid">
+                <!-- 💰 저가 서비스 (₩3,900 ~ ₩4,900) -->
+                <div class="service-card" onclick="location.href='love-fortune.html'">
+                    <div class="service-icon">💘</div>
+                    <div class="service-title">맞춤 연애운</div>
+                    <div class="service-description">사주 기반 연애운 분석 및 조언</div>
+                    <div class="service-price">₩3,900</div>
+                </div>
+                <div class="service-card" onclick="location.href='tojeong.html'">
+                    <div class="service-icon">🔮</div>
+                    <div class="service-title">토정비결 상세</div>
+                    <div class="service-description">이성토정 비결로 운세를 상세히 분석</div>
+                    <div class="service-price">₩3,900</div>
+                </div>
+                <div class="service-card" onclick="location.href='year-fortune-2026.html'">
+                    <div class="service-icon">🎊</div>
+                    <div class="service-title">2026 신년운세</div>
+                    <div class="service-description">병오년 맞이 특별 신년운세 패키지</div>
+                    <div class="service-price">₩4,900</div>
+                </div>
+            </div>
+            
+            <!-- 중가 서비스 카테고리 -->
+            <div style="text-align: center; margin: 3rem 0 2rem;">
+                <span style="display: inline-block; background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); color: white; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 12px rgba(155,89,182,0.3);">💎 인기 서비스</span>
+            </div>
+            
+            <div class="services-grid">
+                <!-- 💎 중가 서비스 (₩9,900 ~ ₩19,000) -->
                 <div class="service-card" onclick="location.href='wealth-forecast.html'">
                     <div class="service-icon">💰</div>
                     <div class="service-title">재물운 그래프</div>
@@ -1873,64 +2007,68 @@
                     <div class="service-description">중요한 날을 위한 최적의 날짜를 찾아드립니다</div>
                     <div class="service-price">₩14,900</div>
                 </div>
-                <div class="service-card" onclick="location.href='premium-features.html'">
-                    <div class="service-icon">👑</div>
-                    <div class="service-title">프리미엄 분석</div>
-                    <div class="service-description">9가지 분석 포함 · 100p PDF 리포트</div>
-                    <div class="service-price" style="text-align: center;">
-                        <div style="margin-bottom: 5px;">
-                            <span style="text-decoration: line-through; color: #999; font-size: 0.85rem;">₩99,000</span>
-                            <span style="color: #e74c3c; font-weight: 700; font-size: 1.2rem; margin-left: 5px;">₩49,000</span>
-                        </div>
-                        <span style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">50% OFF</span>
-                    </div>
+                <div class="service-card" onclick="location.href='naming.html'">
+                    <div class="service-icon">✍️</div>
+                    <div class="service-title">작명/개명</div>
+                    <div class="service-description">사주에 맞는 최적의 이름을 추천해드립니다</div>
+                    <div class="service-price">₩19,000</div>
                 </div>
-                <div class="service-card" onclick="location.href='ai-chat.html'">
-                    <div class="service-icon">🤖</div>
-                    <div class="service-title">24시간 AI 상담</div>
-                    <div class="service-description">언제든지 AI와 실시간으로 운세 상담</div>
-                    <div class="service-price">무료</div>
+            </div>
+            
+            <!-- 월간 구독 카테고리 -->
+            <div style="text-align: center; margin: 3rem 0 2rem;">
+                <span style="display: inline-block; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 12px rgba(231,76,60,0.3);">🔥 월간 구독</span>
+            </div>
+            
+            <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <!-- 🔥 월간 구독 서비스 -->
+                <div class="service-card" onclick="location.href='community.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                    <div class="service-icon">💬</div>
+                    <div class="service-title" style="color: white;">커뮤니티 프리미엄</div>
+                    <div class="service-description" style="color: rgba(255,255,255,0.95);">운세 고민 나누고 인기글로 수익까지</div>
+                    <div class="service-price" style="color: white; font-weight: 800; font-size: 1.4rem;">₩4,900/월</div>
                 </div>
-                <div class="service-card" onclick="location.href='love-fortune.html'">
-                    <div class="service-icon">💘</div>
-                    <div class="service-title">맞춤 연애운</div>
-                    <div class="service-description">사주 기반 연애운 분석 및 조언</div>
-                    <div class="service-price">₩3,900</div>
-                </div>
-                <div class="service-card" onclick="location.href='year-fortune-2026.html'">
-                    <div class="service-icon">🎊</div>
-                    <div class="service-title">2026 신년운세</div>
-                    <div class="service-description">병오년 맞이 특별 신년운세 패키지</div>
-                    <div class="service-price">₩4,900</div>
-                </div>
-                <div class="service-card" onclick="location.href='tojeong.html'">
-                    <div class="service-icon">🔮</div>
-                    <div class="service-title">토정비결 상세</div>
-                    <div class="service-description">이성토정 비결로 운세를 상세히 분석</div>
-                    <div class="service-price">₩3,900</div>
-                </div>
-                <div class="service-card" onclick="location.href='saju-matching.html'" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                <div class="service-card" onclick="location.href='saju-matching.html'" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none;">
                     <div class="service-icon">💑</div>
                     <div class="service-title" style="color: white;">궁합 매칭</div>
                     <div class="service-description" style="color: rgba(255,255,255,0.95);">AI가 찾아주는 운명의 짝 - 사주 기반 소셜 매칭</div>
                     <div class="service-price" style="color: white;">
                         <div style="margin-bottom: 5px;">
-                            <span style="font-weight: 700; font-size: 1.2rem;">₩9,900/월</span>
+                            <span style="font-weight: 800; font-size: 1.4rem;">₩9,900/월</span>
                         </div>
-                        <span style="display: inline-block; background: rgba(255,255,255,0.3); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">🔥 NEW</span>
+                        <span style="display: inline-block; background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700;">🔥 NEW</span>
                     </div>
                 </div>
-                <div class="service-card" onclick="location.href='community.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                    <div class="service-icon">💬</div>
-                    <div class="service-title" style="color: white;">커뮤니티 프리미엄</div>
-                    <div class="service-description" style="color: rgba(255,255,255,0.95);">운세 고민 나누고 인기글로 수익까지</div>
-                    <div class="service-price" style="color: white; font-weight: 700; font-size: 1.2rem;">₩4,900/월</div>
+            </div>
+            
+            <!-- 프리미엄 & 기업 솔루션 카테고리 -->
+            <div style="text-align: center; margin: 3rem 0 2rem;">
+                <span style="display: inline-block; background: linear-gradient(135deg, #d4af37 0%, #f5d876 100%); color: #1a1a1a; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 16px rgba(212,175,55,0.4); margin-right: 1rem;">👑 베스트셀러</span>
+                <span style="display: inline-block; background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%); color: white; padding: 8px 24px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 12px rgba(86,204,242,0.3);">🏢 기업 솔루션</span>
+            </div>
+            
+            <div class="services-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <!-- 👑 프리미엄 분석 (₩49,000) - 가장 인기! -->
+                <div class="service-card" onclick="location.href='premium-features.html'" style="border: 3px solid #d4af37; box-shadow: 0 12px 32px rgba(212,175,55,0.4); background: linear-gradient(180deg, #fffef7 0%, #ffffff 100%);">
+                    <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 6px 20px; border-radius: 25px; font-size: 0.85rem; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,0.25); letter-spacing: 0.5px;">⭐ BEST SELLER</div>
+                    <div class="service-icon" style="font-size: 4rem;">👑</div>
+                    <div class="service-title" style="color: #d4af37; font-weight: 800; font-size: 1.5rem; margin-top: 0.5rem;">프리미엄 분석</div>
+                    <div class="service-description" style="font-size: 1rem; color: #333;">9가지 분석 포함 · 100p PDF 리포트 · 평생 보관</div>
+                    <div class="service-price" style="text-align: center; margin-top: 1.5rem;">
+                        <div style="margin-bottom: 8px;">
+                            <span style="text-decoration: line-through; color: #999; font-size: 1rem;">₩99,000</span>
+                            <span style="color: #e74c3c; font-weight: 900; font-size: 1.8rem; margin-left: 10px;">₩49,000</span>
+                        </div>
+                        <span style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 5px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; box-shadow: 0 3px 10px rgba(245,87,108,0.4);">🔥 50% 특별 할인</span>
+                    </div>
                 </div>
-                <div class="service-card" onclick="location.href='hr-solution.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                    <div class="service-icon">💼</div>
-                    <div class="service-title" style="color: white;">HR 솔루션</div>
-                    <div class="service-description" style="color: rgba(255,255,255,0.95);">사주 기반 팀 배치·채용·조직 문화 진단</div>
-                    <div class="service-price" style="color: white; font-weight: 700; font-size: 1.2rem;">₩500,000~/월</div>
+                
+                <!-- 🏢 기업용 솔루션 -->
+                <div class="service-card" onclick="location.href='hr-solution.html'" style="background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%); color: white; border: none;">
+                    <div class="service-icon" style="font-size: 4rem;">💼</div>
+                    <div class="service-title" style="color: white; font-size: 1.5rem; font-weight: 800; margin-top: 0.5rem;">HR 솔루션</div>
+                    <div class="service-description" style="color: rgba(255,255,255,0.95); font-size: 1rem;">사주 기반 팀 배치·채용·조직 문화 진단</div>
+                    <div class="service-price" style="color: white; font-weight: 800; font-size: 1.4rem; margin-top: 1.5rem;">₩500,000~/월</div>
                 </div>
             </div>
         </div>
@@ -2093,6 +2231,9 @@
         </div>
     </footer>
 
+    <!-- 사주 계산 엔진 -->
+    <script src="js/saju-engine.js"></script>
+    
     <script>
         // ===== iOS Safari 에러 방지 및 최적화 =====
         (function() {
@@ -2307,21 +2448,91 @@
         // 폼 제출
         const sajuForm = document.getElementById('sajuForm');
         if (sajuForm) {
-            sajuForm.addEventListener('submit', function(e) {
+            sajuForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const formData = new FormData(this);
-                const data = {};
-                formData.forEach(function(value, key) {
-                    data[key] = value;
-                });
                 
-                if (data.hour !== undefined) {
-                    delete data.hour;
+                // 로딩 표시
+                const submitBtn = this.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 계산 중...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // 폼 데이터 수집
+                    const formData = new FormData(this);
+                    const data = {
+                        birthdate: formData.get('birthdate'),
+                        birthtime: formData.get('birthtime'),
+                        calendar: formData.get('calendar'),
+                        gender: formData.get('gender')
+                    };
+                    
+                    console.log('📝 입력 데이터:', data);
+                    
+                    // 사주 계산 엔진 실행
+                    const sajuEngine = new SajuEngine();
+                    const result = sajuEngine.calculate(data);
+                    
+                    console.log('✅ 계산 결과:', result);
+                    
+                    if (result.success) {
+                        // 로컬스토리지에 저장
+                        localStorage.setItem('sajuData', JSON.stringify(data));
+                        localStorage.setItem('sajuResult', JSON.stringify(result));
+                        
+                        // RESTful API로 저장
+                        try {
+                            const saveResponse = await fetch('tables/saju_records', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    user_id: 'guest_' + Date.now(),
+                                    name: '손님',
+                                    birthdate: data.birthdate,
+                                    birth_time: data.birthtime || '모름',
+                                    calendar_type: data.calendar,
+                                    gender: data.gender,
+                                    saju_result: JSON.stringify(result.pillars),
+                                    fortune_analysis: JSON.stringify(result.fortune),
+                                    analysis_type: 'basic',
+                                    is_paid: false
+                                })
+                            });
+                            
+                            if (saveResponse.ok) {
+                                const saved = await saveResponse.json();
+                                console.log('💾 데이터베이스 저장 완료:', saved.id);
+                                localStorage.setItem('sajuRecordId', saved.id);
+                            }
+                        } catch (saveError) {
+                            console.warn('⚠️ 데이터베이스 저장 실패 (로컬만 저장됨):', saveError);
+                        }
+                        
+                        // Google Analytics 이벤트
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'saju_calculation', {
+                                'event_category': 'engagement',
+                                'event_label': data.gender
+                            });
+                        }
+                        
+                        // 결과 페이지로 이동
+                        window.location.href = 'result.html';
+                        
+                    } else {
+                        throw new Error(result.error || '계산 중 오류가 발생했습니다.');
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ 오류:', error);
+                    alert('사주 계산 중 오류가 발생했습니다.\n다시 시도해주세요.\n\n오류: ' + error.message);
+                    
+                    // 버튼 복구
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                 }
-                
-                console.log('💾 저장할 데이터:', data);
-                localStorage.setItem('sajuData', JSON.stringify(data));
-                window.location.href = 'result.html';
             });
         }
         
@@ -2429,12 +2640,13 @@
         });
 
         // 폼 제출 처리
-        function handleSubscription(event) {
+        async function handleSubscription(event) {
             event.preventDefault();
             
             const userName = document.getElementById('userName').value.trim();
             const userPhone = document.getElementById('userPhone').value.trim();
             const birthYear = document.getElementById('birthYear').value;
+            const consent = document.getElementById('consent').checked;
             
             if (!userName) {
                 alert('이름을 입력해주세요.');
@@ -2451,40 +2663,80 @@
                 return;
             }
             
+            if (!consent) {
+                alert('개인정보 수집 및 알림 수신에 동의해주세요.');
+                return;
+            }
+            
+            // 로딩 표시
+            const submitBtn = document.querySelector('#kakaoSubscriptionForm .submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
+            submitBtn.disabled = true;
+            
             const formData = {
-                userName: userName,
-                userPhone: userPhone,
-                birthYear: birthYear,
+                name: userName,
+                phone: userPhone,
+                birth_year: birthYear,
                 zodiac: getZodiac(parseInt(birthYear)),
-                subscribedAt: new Date().toISOString()
+                status: 'active',
+                subscription_start: new Date().toISOString(),
+                last_sent: null,
+                free_until: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30일 후
+                consent: true
             };
             
             console.log('📝 구독 신청:', formData);
             
             try {
-                const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
-                subscribers.push(formData);
-                localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
+                // RESTful API로 저장
+                const response = await fetch('tables/kakao_subscribers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
                 
-                console.log('✅ 구독 신청 완료');
-                
-                document.getElementById('kakaoSubscriptionForm').style.display = 'none';
-                document.getElementById('subscriptionSuccess').style.display = 'block';
-                
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'subscription', {
-                        'event_category': 'kakao',
-                        'event_label': formData.zodiac
-                    });
+                if (response.ok) {
+                    const saved = await response.json();
+                    console.log('✅ 구독 신청 완료:', saved.id);
+                    
+                    // 로컬스토리지에도 저장
+                    const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
+                    subscribers.push({...formData, id: saved.id, subscribedAt: new Date().toISOString()});
+                    localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
+                    
+                    // Google Analytics 이벤트
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'subscription', {
+                            'event_category': 'kakao',
+                            'event_label': formData.zodiac
+                        });
+                    }
+                    
+                    // 성공 메시지 표시
+                    document.getElementById('kakaoSubscriptionForm').style.display = 'none';
+                    document.getElementById('subscriptionSuccess').style.display = 'block';
+                    
+                } else {
+                    throw new Error('서버 응답 오류');
                 }
                 
             } catch (error) {
                 console.error('❌ 구독 신청 실패:', error);
-                alert('구독 신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                alert('구독 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                
+                // 버튼 복구
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
         }
 
         console.log('✅ 카카오톡 구독 배너 로드 완료');
     </script>
+    
+    <!-- 사주 계산 엔진 -->
+    <script src="js/saju-engine.js"></script>
 </body>
 </html>
