@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직업 추천 테스트</title>
+    <script src="/js/saju-enhanced-engine.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-result {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .job-card {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #d4af37;
+        }
+        .job-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        h3 {
+            color: #1a1a1a;
+            margin: 10px 0;
+        }
+        .job-match {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #f2d06b);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .job-traits {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .job-traits li {
+            padding: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-result">
+        <h1>🧪 직업 추천 엔진 테스트</h1>
+        <p>일간: <strong id="day-master">甲</strong> (갑목)</p>
+        <hr style="margin: 20px 0;">
+        <h2>💼 추천 직업 TOP 6</h2>
+        <div id="career-list"></div>
+    </div>
+
+    <script>
+        // 테스트 실행
+        if (typeof SajuEnhancedEngine !== 'undefined') {
+            const engine = new SajuEnhancedEngine();
+            const dayMaster = '甲'; // 테스트용
+            
+            const careerData = engine.getCareerRecommendations(dayMaster);
+            
+            console.log('✅ 직업 추천 데이터:', careerData);
+            
+            if (careerData && careerData.best && careerData.best.length > 0) {
+                const top6 = careerData.best.slice(0, 6);
+                const icons = ['🚀', '📊', '💼', '💻', '🎨', '📈'];
+                
+                const html = top6.map((job, index) => `
+                    <div class="job-card">
+                        <div class="job-icon">${icons[index]}</div>
+                        <h3>${index + 1}. ${job.career}</h3>
+                        <div class="job-match">${job.score}점</div>
+                        <p>${job.reason}</p>
+                        <ul class="job-traits">
+                            <li>✓ 목(木) 기운 적합</li>
+                            <li>✓ 일간 甲 특성</li>
+                            <li>✓ 성공 가능성 높음</li>
+                        </ul>
+                    </div>
+                `).join('');
+                
+                document.getElementById('career-list').innerHTML = html;
+                document.getElementById('day-master').textContent = dayMaster;
+            } else {
+                document.getElementById('career-list').innerHTML = '<p style="color: red;">❌ 직업 추천 데이터가 없습니다.</p>';
+            }
+        } else {
+            document.getElementById('career-list').innerHTML = '<p style="color: red;">❌ SajuEnhancedEngine이 로드되지 않았습니다.</p>';
+        }
+    </script>
+</body>
+</html>
