@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토정비결 상세 프리미엄 분석 - AI 사주 천년지기</title>
+    <meta name="description" content="2026년 토정비결 12개월 상세 운세, 사업운, 재물운, 건강운, 대인관계운 종합 분석">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #ffa07a 0%, #ff6347 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .user-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .user-info h2 {
+            color: #ff6347;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #ff6347;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #ff6347;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            font-size: 2rem;
+        }
+
+        /* 12개월 운세 그래프 */
+        .chart-container {
+            margin: 2rem 0;
+            height: 400px;
+        }
+
+        /* 월별 카드 */
+        .monthly-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .month-card {
+            background: linear-gradient(135deg, #ffe4e1 0%, #ffd1c1 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .month-card .month-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff4500;
+            margin-bottom: 0.5rem;
+        }
+
+        .month-card .score {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ff6347;
+            margin: 0.5rem 0;
+        }
+
+        .month-card .fortune {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            background: white;
+            color: #ff6347;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .month-card .advice {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 사업운/재물운/건강운 카드 */
+        .fortune-card {
+            background: linear-gradient(135deg, #ffebcd 0%, #ffe4b5 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .fortune-card h3 {
+            font-size: 1.5rem;
+            color: #ff6347;
+            margin-bottom: 1rem;
+        }
+
+        .fortune-card .score-big {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff6347;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .period-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .period-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .period-item .title {
+            font-weight: 700;
+            color: #ff6347;
+            margin-bottom: 0.5rem;
+        }
+
+        .period-item .score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff4500;
+        }
+
+        /* 대인관계운 */
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .rel-card {
+            background: linear-gradient(135deg, #f0e68c 0%, #fafad2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .rel-card h4 {
+            font-size: 1.3rem;
+            color: #ff6347;
+            margin-bottom: 0.5rem;
+        }
+
+        .rel-card .score {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ff4500;
+            margin: 0.5rem 0;
+        }
+
+        /* 길일/흉일 */
+        .lucky-days {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .lucky-month {
+            background: linear-gradient(135deg, #fff8dc 0%, #fffacd 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+
+        .lucky-month .month-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6347;
+            margin-bottom: 1rem;
+        }
+
+        .lucky-month .days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lucky-month .day {
+            background: white;
+            color: #ff6347;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .lucky-month .unlucky-day {
+            background: #ffcccb;
+            color: #d32f2f;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #ff6347 0%, #ff4500 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background: white;
+            color: #ff6347;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* 로딩 */
+        .loading {
+            text-align: center;
+            color: white;
+            padding: 4rem 2rem;
+        }
+
+        .loading .spinner {
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .monthly-grid,
+            .relationship-grid,
+            .lucky-days {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <h2>토정비결 프리미엄 분석 중...</h2>
+        <p>2026년 12개월 상세 운세를 생성하고 있습니다.</p>
+    </div>
+
+    <div id="content" class="container" style="display: none;">
+        <div class="header">
+            <h1>🎴 토정비결 상세 프리미엄 분석</h1>
+            <p class="subtitle">2026년 12개월 종합 운세 · 사업 · 재물 · 건강 · 대인관계</p>
+            <span class="premium-badge">⭐ PREMIUM ⭐</span>
+        </div>
+
+        <div class="user-info">
+            <h2 id="userName"></h2>
+            <p style="font-size: 1.2rem; color: #666; margin-top: 0.5rem;">
+                생년: <strong id="userBirthYear"></strong> | 
+                운세그룹: <strong id="fortuneGroup"></strong>
+            </p>
+        </div>
+
+        <!-- 12개월 운세 그래프 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                2026년 12개월 운세 그래프
+            </h3>
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 12개월 상세 운세 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                12개월 상세 운세
+            </h3>
+            <div id="monthlyContent" class="monthly-grid"></div>
+        </div>
+
+        <!-- 사업운 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-briefcase"></i>
+                2026년 사업운
+            </h3>
+            <div id="businessContent"></div>
+        </div>
+
+        <!-- 재물운 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-coins"></i>
+                2026년 재물운
+            </h3>
+            <div id="wealthContent"></div>
+        </div>
+
+        <!-- 건강운 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-heart-pulse"></i>
+                2026년 건강운
+            </h3>
+            <div id="healthContent"></div>
+        </div>
+
+        <!-- 대인관계운 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-users"></i>
+                2026년 대인관계운
+            </h3>
+            <div id="relationshipContent"></div>
+        </div>
+
+        <!-- 길일/흉일 -->
+        <div class="section">
+            <h3 class="section-title">
+                <i class="fas fa-star"></i>
+                2026년 월별 길일/흉일
+            </h3>
+            <div id="luckyDaysContent" class="lucky-days"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h3>🎁 더 많은 프리미엄 서비스</h3>
+            <p>사주 분석, 연애운, 직업 적성, 택일까지!</p>
+            <a href="/result.html" class="btn-cta">무료 사주 분석하기</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/tojeong-premium-engine.js"></script>
+    <script>
+        // URL 파라미터 추출
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get('name') || '고객',
+                birthYear: parseInt(params.get('birthYear')) || 1990
+            };
+        }
+
+        // 로딩 완료 후 실행
+        window.addEventListener('DOMContentLoaded', async () => {
+            // 엔진 로드 확인
+            if (typeof TojeongPremiumEngine === 'undefined') {
+                alert('시스템 오류가 발생했습니다. 페이지를 새로고침해주세요.');
+                return;
+            }
+
+            const params = getQueryParams();
+            const engine = new TojeongPremiumEngine();
+
+            // 전체 분석 생성
+            const analysis = engine.generateFullAnalysis(params.name, params.birthYear);
+
+            // 1.5초 후 로딩 종료
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+
+                // 사용자 정보 표시
+                document.getElementById('userName').textContent = `${analysis.name}님의 2026년 토정비결`;
+                document.getElementById('userBirthYear').textContent = `${analysis.birthYear}년생`;
+                document.getElementById('fortuneGroup').textContent = `${analysis.fortuneGroup}번 그룹`;
+
+                // 12개월 그래프 렌더링
+                renderMonthlyChart(analysis.monthlyFortune);
+
+                // 12개월 상세 렌더링
+                renderMonthlyCards(analysis.monthlyFortune);
+
+                // 사업운 렌더링
+                renderBusiness(analysis.business);
+
+                // 재물운 렌더링
+                renderWealth(analysis.wealth);
+
+                // 건강운 렌더링
+                renderHealth(analysis.health);
+
+                // 대인관계운 렌더링
+                renderRelationship(analysis.relationship);
+
+                // 길일/흉일 렌더링
+                renderLuckyDays(analysis.luckyDays);
+
+                // 부드러운 스크롤
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1500);
+        });
+
+        // 12개월 그래프 렌더링
+        function renderMonthlyChart(monthlyData) {
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            const labels = monthlyData.map(m => `${m.month}월`);
+            const scores = monthlyData.map(m => m.score);
+            const colors = monthlyData.map(m => m.color);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '월별 운세 점수',
+                        data: scores,
+                        borderColor: '#ff6347',
+                        backgroundColor: 'rgba(255, 99, 71, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: colors,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 60,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // 12개월 상세 카드
+        function renderMonthlyCards(monthlyData) {
+            const container = document.getElementById('monthlyContent');
+            container.innerHTML = monthlyData.map(m => `
+                <div class="month-card">
+                    <div class="month-title">${m.month}월</div>
+                    <div class="score">${m.score}점</div>
+                    <div class="fortune">${m.fortune}</div>
+                    <div class="advice">${m.advice}</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                        💡 ${m.recommendation}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 사업운 렌더링
+        function renderBusiness(business) {
+            const container = document.getElementById('businessContent');
+            container.innerHTML = `
+                <div class="fortune-card">
+                    <h3>종합 사업운</h3>
+                    <div class="score-big">${business.score}점</div>
+                    <div class="period-grid">
+                        <div class="period-item">
+                            <div class="title">${business.period1.title}</div>
+                            <div class="score">${business.period1.score}점</div>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">${business.period1.advice}</p>
+                        </div>
+                        <div class="period-item">
+                            <div class="title">${business.period2.title}</div>
+                            <div class="score">${business.period2.score}점</div>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">${business.period2.advice}</p>
+                        </div>
+                        <div class="period-item">
+                            <div class="title">${business.period3.title}</div>
+                            <div class="score">${business.period3.score}점</div>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">${business.period3.advice}</p>
+                        </div>
+                        <div class="period-item">
+                            <div class="title">${business.period4.title}</div>
+                            <div class="score">${business.period4.score}점</div>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">${business.period4.advice}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 재물운 렌더링
+        function renderWealth(wealth) {
+            const container = document.getElementById('wealthContent');
+            container.innerHTML = `
+                <div class="fortune-card">
+                    <h3>종합 재물운</h3>
+                    <div class="score-big">${wealth.score.toFixed(1)}점</div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">💰 수입</h4>
+                        <p>• 급여: <strong>${wealth.income.salary}</strong></p>
+                        <p>• 부수입: <strong>${wealth.income.sideIncome}</strong></p>
+                        <p>• 투자: <strong>${wealth.income.investment}</strong></p>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">💸 지출</h4>
+                        <p>• 고정 지출: <strong>${wealth.expenses.fixed}</strong></p>
+                        <p>• 변동 지출: <strong>${wealth.expenses.variable}</strong></p>
+                        <p>• 비상 지출: <strong>${wealth.expenses.emergency}</strong></p>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">💡 조언</h4>
+                        <p>• ${wealth.advice.saving}</p>
+                        <p>• ${wealth.advice.investment}</p>
+                        <p>• ${wealth.advice.spending}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 건강운 렌더링
+        function renderHealth(health) {
+            const container = document.getElementById('healthContent');
+            container.innerHTML = `
+                <div class="fortune-card">
+                    <h3>종합 건강운</h3>
+                    <div class="score-big">${health.score}점</div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">⚠️ 주의 부위</h4>
+                        ${health.concerns.map(c => `<p>• ${c.area}: <strong>${c.level}</strong></p>`).join('')}
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">🌸 계절별 조언</h4>
+                        <p>• 봄: ${health.monthly.spring}</p>
+                        <p>• 여름: ${health.monthly.summer}</p>
+                        <p>• 가을: ${health.monthly.fall}</p>
+                        <p>• 겨울: ${health.monthly.winter}</p>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #ff6347; margin-bottom: 1rem;">💪 건강 관리 팁</h4>
+                        ${health.advice.map(a => `<p>• ${a}</p>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 대인관계운 렌더링
+        function renderRelationship(relationship) {
+            const container = document.getElementById('relationshipContent');
+            container.innerHTML = `
+                <div class="relationship-grid">
+                    <div class="rel-card">
+                        <h4>👨‍👩‍👧‍👦 가족</h4>
+                        <div class="score">${relationship.family.score}점</div>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">${relationship.family.advice}</p>
+                    </div>
+                    <div class="rel-card">
+                        <h4>👥 친구</h4>
+                        <div class="score">${relationship.friends.score}점</div>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">${relationship.friends.advice}</p>
+                    </div>
+                    <div class="rel-card">
+                        <h4>💼 직장</h4>
+                        <div class="score">${relationship.work.score.toFixed(1)}점</div>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">${relationship.work.advice}</p>
+                    </div>
+                    <div class="rel-card">
+                        <h4>💕 연애</h4>
+                        <div class="score">${relationship.love.score}점</div>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">${relationship.love.advice}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; background: #fff8dc; padding: 1.5rem; border-radius: 15px;">
+                    <h4 style="color: #ff6347; margin-bottom: 1rem;">💡 대인관계 조언</h4>
+                    ${relationship.advice.map(a => `<p>• ${a}</p>`).join('')}
+                </div>
+            `;
+        }
+
+        // 길일/흉일 렌더링
+        function renderLuckyDays(luckyDays) {
+            const container = document.getElementById('luckyDaysContent');
+            container.innerHTML = luckyDays.map(m => `
+                <div class="lucky-month">
+                    <div class="month-name">${m.month}월</div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #10b981;">🍀 길일</strong>
+                        <div class="days">
+                            ${m.luckyDays.map(d => `<span class="day">${d}일</span>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <strong style="color: #ef4444;">⚠️ 흉일</strong>
+                        <div class="days">
+                            ${m.unluckyDays.map(d => `<span class="day unlucky-day">${d}일</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
