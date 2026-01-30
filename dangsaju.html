@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당사주 평생운 - AI 사주 천년지기</title>
+    <meta name="description" content="초년운, 중년운, 만년운 평생 종합 운세를 확인하세요. 사주 기반 평생 운세 분석 (₩9,900)">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🎯';
+            font-size: 20rem;
+            position: absolute;
+            right: -5%;
+            top: -10%;
+            opacity: 0.1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            font-weight: 900;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+        }
+
+        .hero .price-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -20px auto 60px;
+            padding: 0 2rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            text-align: center;
+            border: 2px solid #2196F3;
+        }
+
+        .info-banner h3 {
+            color: #1976d2;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .info-banner p {
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        .date-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .gender-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .gender-option {
+            position: relative;
+        }
+
+        .gender-option input[type="radio"] {
+            display: none;
+        }
+
+        .gender-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .gender-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .calendar-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .calendar-option {
+            position: relative;
+        }
+
+        .calendar-option input[type="radio"] {
+            display: none;
+        }
+
+        .calendar-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .calendar-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn-analyze {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 22px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(102,126,234,0.3);
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102,126,234,0.5);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(-1px);
+        }
+
+        .result-card {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .result-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .result-header p {
+            font-size: 1.6rem;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .phase-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .phase-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .phase-age {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .phase-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .phase-content strong {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .premium-cta {
+            text-align: center;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+
+        .premium-cta h3 {
+            color: #1a1a1a;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .premium-cta p {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            font-weight: 600;
+        }
+
+        .btn-premium {
+            background: #1a1a1a;
+            color: #FFD700;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero .price-badge {
+                font-size: 1.2rem;
+                padding: 10px 24px;
+            }
+
+            .form-card {
+                padding: 30px 20px;
+            }
+
+            .date-group {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-section {
+                padding: 25px 20px;
+            }
+
+            .premium-cta {
+                padding: 35px 20px;
+            }
+
+            .premium-cta h3 {
+                font-size: 1.6rem;
+            }
+
+            .btn-premium {
+                padding: 16px 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                🔮 AI 사주 천년지기
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>🎯 당사주 평생운</h1>
+        <p>초년운, 중년운, 만년운 평생 종합 운세</p>
+        <div class="price-badge">₩9,900</div>
+    </section>
+
+    <div class="container">
+        <div class="form-card">
+            <h2 class="form-title">당사주 평생운 분석</h2>
+            
+            <div class="info-banner">
+                <h3>🎯 당사주 평생운이란?</h3>
+                <p>
+                    <strong>초년운(0-30세)</strong>, <strong>중년운(30-60세)</strong>, <strong>만년운(60세 이후)</strong>의 3단계로<br>
+                    평생의 운세 흐름을 종합적으로 분석합니다.
+                </p>
+            </div>
+            
+            <form id="dangsajuForm" onsubmit="analyzeDangsaju(event)">
+                <div class="form-group">
+                    <label>이름 *</label>
+                    <input type="text" id="userName" placeholder="홍길동" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>성별 *</label>
+                    <div class="gender-options">
+                        <div class="gender-option">
+                            <input type="radio" id="male" name="gender" value="male" required>
+                            <label for="male">👨 남성</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">👩 여성</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>생년월일 *</label>
+                    <div class="date-group">
+                        <input type="number" id="birthYear" placeholder="1990년" min="1900" max="2024" required>
+                        <input type="number" id="birthMonth" placeholder="5월" min="1" max="12" required>
+                        <input type="number" id="birthDay" placeholder="15일" min="1" max="31" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>생시 (선택)</label>
+                    <input type="number" id="birthHour" placeholder="14시 (모르면 비워두세요)" min="0" max="23">
+                </div>
+                
+                <div class="form-group">
+                    <label>양력/음력 *</label>
+                    <div class="calendar-options">
+                        <div class="calendar-option">
+                            <input type="radio" id="solar" name="calendar" value="solar" checked required>
+                            <label for="solar">☀️ 양력</label>
+                        </div>
+                        <div class="calendar-option">
+                            <input type="radio" id="lunar" name="calendar" value="lunar">
+                            <label for="lunar">🌙 음력</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-analyze">
+                    🎯 평생운 분석하기 (₩9,900)
+                </button>
+            </form>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-header">
+                <h2>🎯 당사주 평생운 분석 결과</h2>
+                <p id="resultName">홍길동님의 평생운</p>
+            </div>
+
+            <div class="phase-section" style="border-left-color: #4CAF50;">
+                <h3>🌱 초년운 <span class="phase-age">0-30세</span></h3>
+                <div class="phase-content">
+                    <p><strong>성장기와 학창 시절:</strong> 가정환경이 비교적 안정적이며, 학업 운이 좋습니다. 꾸준한 노력으로 좋은 결과를 얻을 수 있습니다.</p>
+                    <p style="margin-top: 12px;"><strong>사회 초년 시기:</strong> 대인관계가 원만하고 직장 생활에 잘 적응합니다. 20대 후반에 좋은 기회를 만날 수 있습니다.</p>
+                    <p style="margin-top: 12px;"><strong>조언:</strong> 이 시기에 다양한 경험을 쌓고 인맥을 넓히는 것이 중요합니다.</p>
+                </div>
+            </div>
+
+            <div class="phase-section" style="border-left-color: #FF9800;">
+                <h3>🔥 중년운 <span class="phase-age">30-60세</span></h3>
+                <div class="phase-content">
+                    <p><strong>경력 발전기:</strong> 30대 중반부터 재물운이 상승하며, 사업이나 직장에서 승진 운이 좋습니다.</p>
+                    <p style="margin-top: 12px;"><strong>가정 운:</strong> 가정이 안정되고 자녀 운이 좋습니다. 배우자와의 관계도 원만합니다.</p>
+                    <p style="margin-top: 12px;"><strong>주의사항:</strong> 40대 후반에 건강 관리가 필요하며, 과욕은 삼가야 합니다.</p>
+                    <p style="margin-top: 12px;"><strong>조언:</strong> 이 시기가 평생의 재물을 축적하는 황금기이므로 신중한 재테크가 필요합니다.</p>
+                </div>
+            </div>
+
+            <div class="phase-section" style="border-left-color: #9C27B0;">
+                <h3>🌸 만년운 <span class="phase-age">60세 이후</span></h3>
+                <div class="phase-content">
+                    <p><strong>노년의 안정:</strong> 자녀 덕이 있고 편안한 노후를 보낼 수 있습니다. 건강도 비교적 양호합니다.</p>
+                    <p style="margin-top: 12px;"><strong>정신적 풍요:</strong> 취미 생활이나 봉사 활동을 통해 보람찬 시간을 보낼 수 있습니다.</p>
+                    <p style="margin-top: 12px;"><strong>재물 운:</strong> 큰 재물의 변동은 없으나 안정적으로 유지됩니다.</p>
+                    <p style="margin-top: 12px;"><strong>조언:</strong> 건강 관리를 꾸준히 하고, 가족과의 시간을 소중히 하세요.</p>
+                </div>
+            </div>
+
+            <div class="premium-cta">
+                <h3>✨ 더 상세한 분석이 필요하신가요?</h3>
+                <p>
+                    <strong>프리미엄 맞춤 상담</strong>에서는 <strong>연도별 세부 운세</strong>, <strong>재물운·건강운 그래프</strong>, <strong>전문가 맞춤 조언</strong> 등<br>
+                    더 깊이 있는 평생운 분석을 제공합니다.
+                </p>
+                <button class="btn-premium" onclick="upgradeToPremium()">
+                    💎 프리미엄으로 업그레이드 (₩49,000)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function analyzeDangsaju(event) {
+            event.preventDefault();
+
+            const userName = document.getElementById('userName').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const birthMonth = parseInt(document.getElementById('birthMonth').value);
+            const birthDay = parseInt(document.getElementById('birthDay').value);
+            const birthHour = parseInt(document.getElementById('birthHour').value) || 12;
+            const calendar = document.querySelector('input[name="calendar"]:checked').value;
+
+            // 결과 업데이트
+            document.getElementById('resultName').textContent = userName + '님의 평생운';
+
+            // localStorage에 데이터 저장
+            const dangsajuData = {
+                mode: 'dangsaju',
+                name: userName,
+                gender: gender,
+                birthdate: `${birthYear}-${String(birthMonth).padStart(2, '0')}-${String(birthDay).padStart(2, '0')}`,
+                birth_time: String(birthHour).padStart(2, '0') + ':00',
+                calendar_type: calendar,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('dangsajuData', JSON.stringify(dangsajuData));
+            console.log('✅ 당사주 데이터 저장:', dangsajuData);
+
+            // 결과 카드 표시
+            document.getElementById('resultCard').style.display = 'block';
+            
+            // 부드럽게 스크롤
+            setTimeout(function() {
+                document.getElementById('resultCard').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+
+            // Google Analytics 이벤트
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'dangsaju_analysis', {
+                    event_category: 'engagement',
+                    event_label: 'dangsaju_lifetime',
+                    value: 9900
+                });
+            }
+        }
+
+        function upgradeToPremium() {
+            const dangsajuData = localStorage.getItem('dangsajuData');
+            if (dangsajuData) {
+                localStorage.setItem('premiumUpgrade', JSON.stringify({
+                    from: 'dangsaju',
+                    type: 'lifetime',
+                    price: 49000
+                }));
+            }
+            window.location.href = 'pricing.html?service=dangsaju-premium';
+        }
+
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        console.log('✅ 당사주 평생운 페이지 로드 완료');
+    </script>
+</body>
+</html>
