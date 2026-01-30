@@ -756,43 +756,50 @@
             </div>
         </div>
 
+        <!-- 잔여 질문 표시 -->
+        <div style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px; text-align: center; border: 2px solid #667eea;">
+            <div style="font-size: 1.1rem; color: #333; margin-bottom: 10px;">💬 잔여 질문</div>
+            <div style="font-size: 2.5rem; font-weight: 700; color: #667eea;" id="remainingQuestions">5</div>
+            <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">질문 1회당 ₩300 차감</div>
+        </div>
+
         <!-- 요금제 카드 -->
         <div class="pricing-cards">
             <div class="price-card">
                 <div class="price-icon">🆓</div>
                 <h3>무료</h3>
-                <div class="price">무료</div>
+                <div class="price" style="color: #27ae60;">무료</div>
                 <ul>
                     <li>✅ 매일 질문 가능</li>
                     <li>✅ 기본 사주 해석</li>
                     <li>✅ 간단한 조언</li>
                 </ul>
-                <button class="btn-primary" onclick="alert('무료로 바로 사용 가능합니다!')">무료 시작</button>
+                <button class="btn-primary" onclick="alert('무료 5질문이 제공됩니다!')">무료 시작</button>
             </div>
 
             <div class="price-card featured">
                 <div class="badge">인기</div>
                 <div class="price-icon">💬</div>
-                <h3>추가 질문</h3>
-                <div class="price">추가 질문권</div>
+                <h3>추가 질문권</h3>
+                <div class="price" style="color: #c41e3a;">충전식</div>
                 <ul>
                     <li>✅ 즉시 질문 추가</li>
                     <li>✅ 상세한 해석</li>
                     <li>✅ 채팅 히스토리 저장</li>
                 </ul>
-                <button class="btn-primary" onclick="alert('결제 기능 준비 중입니다!')">구매하기</button>
+                <button class="btn-primary" onclick="location.href='payment.html?type=ai-chat'">구매하기</button>
             </div>
 
             <div class="price-card">
                 <div class="price-icon">♾️</div>
                 <h3>무제한 구독</h3>
-                <div class="price">월 구독</div>
+                <div class="price">₩9,900<span style="font-size: 1rem; color: #666;">/월</span></div>
                 <ul>
                     <li>✅ 무제한 질문</li>
                     <li>✅ 우선 응답</li>
                     <li>✅ 고급 AI 모델</li>
                 </ul>
-                <button class="btn-primary" onclick="alert('결제 기능 준비 중입니다!')">구독하기</button>
+                <button class="btn-primary" onclick="location.href='payment.html?type=ai-subscription'">구독하기</button>
             </div>
         </div>
     </div>
@@ -805,6 +812,7 @@
     <script>
         // 사주 정보 로드
         function loadSajuInfo() {
+            // 🔥 궁합 데이터 먼저 확인
             const compatibilityDataStr = localStorage.getItem('compatibilityData');
             const sajuDataStr = localStorage.getItem('sajuData');
             const card = document.getElementById('sajuInfoCard');
@@ -813,6 +821,7 @@
             console.log('📦 궁합 데이터:', compatibilityDataStr);
             console.log('📦 사주 데이터:', sajuDataStr);
             
+            // 💕 궁합 모드 확인
             if (compatibilityDataStr) {
                 try {
                     const compatibilityData = JSON.parse(compatibilityDataStr);
@@ -845,6 +854,7 @@
                         </div>
                     `;
                     
+                    // 자동 AI 메시지 추가
                     setTimeout(() => {
                         addMessage('ai', `안녕하세요! ${compatibilityData.person1.name}님과 ${compatibilityData.person2.name}님의 ${typeLabels[compatibilityData.type]}을 분석해드릴게요.\n\n궁합 점수는 ${compatibilityData.score}점입니다. 구체적으로 어떤 부분이 궁금하신가요?`);
                     }, 500);
@@ -855,6 +865,7 @@
                 }
             }
             
+            // 일반 사주 모드
             if (!sajuDataStr) {
                 document.getElementById('sajuInfoContent').innerHTML = `
                     <p>⚠️ 사주 정보 없음</p>
@@ -867,6 +878,7 @@
                 const sajuData = JSON.parse(sajuDataStr);
                 console.log('📋 사주 데이터:', sajuData);
                 
+                // 🔥 사주팔자가 없으면 result.html로 안내
                 if (!sajuData.yearPillar) {
                     document.getElementById('sajuInfoContent').innerHTML = `
                         <p><strong>생년월일:</strong> ${sajuData.birthdate || '미상'} (${sajuData.calendar === 'lunar' ? '음력' : '양력'})</p>
@@ -904,14 +916,17 @@
             }
         }
         
+        // 🔥 새로고침 함수 추가
         function refreshSajuInfo() {
             console.log('🔄 사주 정보 새로고침...');
             loadSajuInfo();
         }
         
+        // 🔥 Gemini API 연동
         const GEMINI_API_KEY = 'AIzaSyBqVH1yCQYQqNjrBcgNzMzQoYz1M_NZvBQ';
         const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
         
+        // 메시지 전송
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const sendBtn = document.getElementById('sendBtn');
@@ -919,31 +934,82 @@
             
             if (!message) return;
             
+            // ✅ 잔여 질문 확인
+            let remainingQuestions = parseInt(localStorage.getItem('remainingQuestions') || '5');
+            
+            if (remainingQuestions <= 0) {
+                if (confirm('질문권이 부족합니다.\n₩300/질문으로 충전하시겠습니까?\n\n충전 옵션:\n• 10질문 - ₩3,000\n• 20질문 - ₩5,000\n• 무제한 월간 - ₩9,900')) {
+                    location.href = 'payment.html?type=ai-chat';
+                }
+                return;
+            }
+            
+            // 버튼 비활성화
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 전송 중...';
             
+            // 사용자 메시지 추가
             addMessage('user', message);
             input.value = '';
             
             try {
+                // 🔥 실제 Gemini API 호출
                 const aiResponse = await callGeminiAPI(message);
                 addMessage('ai', aiResponse);
+                
+                // 대화 히스토리 저장
                 saveToHistory(message, aiResponse);
+                
+                // ✅ 질문 차감
+                remainingQuestions--;
+                localStorage.setItem('remainingQuestions', remainingQuestions.toString());
+                updateRemainingQuestions();
+                
+                // 경고 메시지
+                if (remainingQuestions === 0) {
+                    setTimeout(() => {
+                        if (confirm('질문권이 모두 소진되었습니다.\n₩300/질문으로 충전하시겠습니까?')) {
+                            location.href = 'payment.html?type=ai-chat';
+                        }
+                    }, 1000);
+                } else if (remainingQuestions === 1) {
+                    addMessage('system', '⚠️ 질문권이 1개 남았습니다. 충전을 고려해주세요!');
+                }
             } catch (error) {
                 console.error('❌ API 호출 실패:', error);
                 addMessage('ai', '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요. 🙏');
             } finally {
+                // 버튼 활성화
                 sendBtn.disabled = false;
                 sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> 전송';
             }
         }
         
+        // ✅ 잔여 질문 업데이트
+        function updateRemainingQuestions() {
+            const remaining = parseInt(localStorage.getItem('remainingQuestions') || '5');
+            document.getElementById('remainingQuestions').textContent = remaining;
+            
+            // 색상 변경
+            const elem = document.getElementById('remainingQuestions');
+            if (remaining === 0) {
+                elem.style.color = '#e74c3c';
+            } else if (remaining <= 2) {
+                elem.style.color = '#f39c12';
+            } else {
+                elem.style.color = '#667eea';
+            }
+        }
+        
+        // 🔥 Gemini API 호출 함수
         async function callGeminiAPI(userMessage) {
+            // 사주 데이터 가져오기
             const sajuDataStr = localStorage.getItem('sajuData');
             const compatibilityDataStr = localStorage.getItem('compatibilityData');
             
             let systemContext = '당신은 사주팔자 전문가입니다. 한국 전통 명리학에 대해 깊은 지식을 가지고 있으며, 친절하고 따뜻한 어조로 상담합니다.';
             
+            // 궁합 모드
             if (compatibilityDataStr) {
                 try {
                     const compatibilityData = JSON.parse(compatibilityDataStr);
@@ -952,6 +1018,7 @@
                     console.error('궁합 데이터 파싱 실패:', e);
                 }
             }
+            // 일반 사주 모드
             else if (sajuDataStr) {
                 try {
                     const sajuData = JSON.parse(sajuDataStr);
@@ -967,6 +1034,7 @@
                 }
             }
             
+            // API 요청
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
                 headers: {
@@ -992,9 +1060,11 @@
             const data = await response.json();
             console.log('✅ Gemini API 응답:', data);
             
+            // 응답 텍스트 추출
             return data.candidates[0].content.parts[0].text;
         }
         
+        // 🔥 대화 히스토리 저장
         function saveToHistory(userMessage, aiResponse) {
             try {
                 const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
@@ -1004,6 +1074,7 @@
                     ai: aiResponse
                 });
                 
+                // 최근 개만 저장
                 if (history.length > 50) {
                     history.shift();
                 }
@@ -1015,6 +1086,7 @@
             }
         }
         
+        // 메시지 추가
         function addMessage(sender, text) {
             const messagesDiv = document.getElementById('chatMessages');
             const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -1037,6 +1109,7 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
+        // Enter 키로 전송
         document.getElementById('chatInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -1044,13 +1117,20 @@
             }
         });
         
+        // 페이지 로드 시 사주 정보 로드
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadSajuInfo);
+            document.addEventListener('DOMContentLoaded', function() {
+    loadSajuInfo();
+    updateRemainingQuestions(); // ✅ 잔여 질문 표시
+});
         } else {
+            // DOMContentLoaded 이미 발생했으면 즉시 실행
             loadSajuInfo();
         }
 
+        // ===== Global Error Handler =====
         window.addEventListener('error', function(e) {
+            // aisaju1000.com 외의 스크립트 에러 무시
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
                 return false;
@@ -1059,6 +1139,7 @@
 
         console.log('✅ AI 사주 상담 페이지 로드 완료');
         
+        // 🔥 햄버거 메뉴 토글
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         
@@ -1070,6 +1151,7 @@
                 console.log('🍔 햄버거 메뉴 토글');
             });
             
+            // 모바일 메뉴 링크 클릭 시 메뉴 닫기
             const mobileLinks = document.querySelectorAll('.mobile-menu a');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -1078,6 +1160,7 @@
                 });
             });
             
+            // 외부 클릭 시 메뉴 닫기
             document.addEventListener('click', (e) => {
                 if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
                     hamburger.classList.remove('active');
@@ -1086,6 +1169,7 @@
             });
         }
         
+        // 🔥 언어 선택기
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
         
@@ -1095,6 +1179,7 @@
                 langDropdown.classList.toggle('active');
             });
             
+            // 언어 선택
             const langOptions = document.querySelectorAll('.lang-option');
             langOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -1114,6 +1199,7 @@
                 });
             });
             
+            // 외부 클릭 시 드롭다운 닫기
             document.addEventListener('click', () => {
                 langDropdown.classList.remove('active');
             });
