@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본 궁합 분석 (무료) - AI 사주 천년지기</title>
+    <meta name="description" content="두 사람의 기본 궁합 점수를 무료로 확인하세요. 간단한 사주 기반 궁합 분석">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f8f9fa; line-height: 1.6; }
+        
+        /* 네비게이션 */
+        .navbar { background: #1a1a1a; padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { font-size: 1.5rem; font-weight: 700; color: #d4af37; text-decoration: none; }
+        .nav-menu { list-style: none; display: flex; gap: 2rem; }
+        .nav-menu a { color: white; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-menu a:hover { color: #d4af37; }
+        
+        /* 히어로 섹션 */
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 4rem 2rem; text-align: center; color: white; position: relative; overflow: hidden; }
+        .hero::before { content: '💕'; position: absolute; font-size: 20rem; opacity: 0.1; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; position: relative; z-index: 1; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; position: relative; z-index: 1; }
+        .free-badge { display: inline-block; background: #27ae60; color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; margin-top: 1rem; }
+        
+        /* 컨테이너 */
+        .container { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
+        
+        /* 입력 폼 */
+        .input-card { background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .input-title { font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 2rem; color: #333; }
+        
+        .people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .person-section h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: #667eea; text-align: center; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #333; font-size: 0.9rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.9rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: border 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; }
+        
+        .date-group { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.5rem; }
+        
+        .btn-analyze { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn-analyze:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+        
+        /* 결과 카드 */
+        .result-card { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center; display: none; }
+        .result-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #333; }
+        
+        .score-circle { width: 200px; height: 200px; margin: 0 auto 2rem; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(102,126,234,0.3); }
+        .score-number { font-size: 4rem; font-weight: 700; color: white; line-height: 1; }
+        .score-label { font-size: 1rem; color: white; opacity: 0.9; margin-top: 0.5rem; }
+        
+        .score-message { font-size: 1.3rem; font-weight: 600; color: #667eea; margin-bottom: 2rem; }
+        
+        .info-box { background: #f8f9fa; border-radius: 15px; padding: 2rem; margin-bottom: 2rem; text-align: left; }
+        .info-box h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: #333; }
+        .info-box p { color: #666; line-height: 1.8; }
+        
+        .premium-cta { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; }
+        .premium-cta h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+        .premium-cta p { margin-bottom: 1.5rem; opacity: 0.95; }
+        .premium-cta ul { text-align: left; margin-bottom: 1.5rem; }
+        .premium-cta li { margin-bottom: 0.5rem; list-style: none; }
+        .premium-cta li::before { content: '✨ '; }
+        
+        .btn-premium { display: inline-block; background: white; color: #f5576c; padding: 1rem 2.5rem; border-radius: 50px; font-size: 1.1rem; font-weight: 700; text-decoration: none; transition: transform 0.3s; }
+        .btn-premium:hover { transform: scale(1.05); }
+        
+        /* 푸터 */
+        .footer { background: #1a1a1a; color: white; padding: 3rem 2rem; text-align: center; margin-top: 4rem; }
+        .footer-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .people-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero h1 { font-size: 2rem; }
+            .score-circle { width: 160px; height: 160px; }
+            .score-number { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="pricing.html">프리미엄</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>💕 기본 궁합 분석</h1>
+            <p>두 사람의 기본 궁합 점수를 확인하세요</p>
+            <div class="free-badge">🎉 완전 무료</div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 입력 폼 -->
+        <div class="input-card">
+            <h2 class="input-title">두 사람의 정보를 입력해주세요</h2>
+            
+            <form id="compatibilityForm">
+                <div class="people-grid">
+                    <!-- 첫 번째 사람 -->
+                    <div class="person-section">
+                        <h3>👤 첫 번째 사람</h3>
+                        <div class="form-group">
+                            <label>이름</label>
+                            <input type="text" id="name1" placeholder="이름 입력" required>
+                        </div>
+                        <div class="form-group">
+                            <label>성별</label>
+                            <select id="gender1" required>
+                                <option value="">선택</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>생년월일</label>
+                            <div class="date-group">
+                                <input type="number" id="year1" placeholder="년도" min="1900" max="2024" required>
+                                <input type="number" id="month1" placeholder="월" min="1" max="12" required>
+                                <input type="number" id="day1" placeholder="일" min="1" max="31" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 두 번째 사람 -->
+                    <div class="person-section">
+                        <h3>👤 두 번째 사람</h3>
+                        <div class="form-group">
+                            <label>이름</label>
+                            <input type="text" id="name2" placeholder="이름 입력" required>
+                        </div>
+                        <div class="form-group">
+                            <label>성별</label>
+                            <select id="gender2" required>
+                                <option value="">선택</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>생년월일</label>
+                            <div class="date-group">
+                                <input type="number" id="year2" placeholder="년도" min="1900" max="2024" required>
+                                <input type="number" id="month2" placeholder="월" min="1" max="12" required>
+                                <input type="number" id="day2" placeholder="일" min="1" max="31" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-analyze">
+                    <i class="fas fa-heart"></i> 무료 궁합 분석하기
+                </button>
+            </form>
+        </div>
+
+        <!-- 결과 카드 -->
+        <div class="result-card" id="resultCard">
+            <h2 class="result-title">💕 궁합 분석 결과</h2>
+            
+            <div class="score-circle">
+                <div class="score-number" id="scoreNumber">85</div>
+                <div class="score-label">점</div>
+            </div>
+            
+            <div class="score-message" id="scoreMessage">매우 좋은 궁합입니다!</div>
+            
+            <div class="info-box">
+                <h3>📊 기본 분석</h3>
+                <p id="basicAnalysis">두 사람의 사주 오행이 조화롭게 어우러져 있습니다. 서로를 이해하고 배려하는 마음이 있다면 좋은 관계를 유지할 수 있습니다.</p>
+            </div>
+
+            <!-- 프리미엄 CTA -->
+            <div class="premium-cta">
+                <h3>🌟 더 자세한 분석이 궁금하신가요?</h3>
+                <p>프리미엄 궁합 분석에서는 이런 내용을 확인할 수 있어요!</p>
+                <ul>
+                    <li>연애 스타일 & 갈등 포인트 상세 분석</li>
+                    <li>결혼 생활 & 자녀 궁합 분석</li>
+                    <li>사업 파트너십 & 역할 분담 분석</li>
+                    <li>월별 궁합 운세 & 조언</li>
+                </ul>
+                <a href="pricing.html#compatibility" class="btn-premium">
+                    프리미엄 분석 보기 (₩3,900)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('compatibilityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            analyzeCompatibility();
+        });
+
+        function analyzeCompatibility() {
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            
+            // 간단한 점수 계산 (랜덤 60~95점)
+            const score = Math.floor(Math.random() * 36) + 60;
+            
+            // 점수에 따른 메시지
+            let message = '';
+            let analysis = '';
+            
+            if (score >= 90) {
+                message = '천생연분! 완벽한 궁합입니다! 🎉';
+                analysis = `${name1}님과 ${name2}님은 서로를 완벽하게 보완하는 환상적인 궁합입니다. 사주 오행이 매우 조화롭게 어우러져 있으며, 서로의 장단점을 완벽하게 보완해줄 수 있습니다.`;
+            } else if (score >= 80) {
+                message = '매우 좋은 궁합입니다! 💕';
+                analysis = `${name1}님과 ${name2}님은 매우 좋은 궁합을 가지고 계십니다. 사주 오행이 조화롭게 어우러져 있으며, 서로를 이해하고 배려한다면 행복한 관계를 유지할 수 있습니다.`;
+            } else if (score >= 70) {
+                message = '좋은 궁합입니다! 😊';
+                analysis = `${name1}님과 ${name2}님은 좋은 궁합을 가지고 계십니다. 약간의 차이는 있지만, 서로를 존중하고 이해한다면 충분히 극복할 수 있습니다.`;
+            } else {
+                message = '보통 궁합입니다 🤝';
+                analysis = `${name1}님과 ${name2}님은 보통 수준의 궁합입니다. 서로의 차이를 인정하고 노력한다면 좋은 관계를 만들어갈 수 있습니다.`;
+            }
+            
+            // 결과 표시
+            document.getElementById('scoreNumber').textContent = score;
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('basicAnalysis').textContent = analysis;
+            
+            // 결과 카드 표시
+            document.getElementById('resultCard').style.display = 'block';
+            document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
