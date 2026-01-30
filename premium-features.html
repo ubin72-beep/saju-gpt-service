@@ -3,699 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프리미엄 상세 분석 - AI 사주 천년지기</title>
-    <meta name="description" content="AI 사주 천년지기 프리미엄 기능! 대운 타임라인, 신살 분석, 용신 분석, 궁합, 토정비결, 꿈해몽, 작명, 재물운 그래프 등 10가지 전문 분석">
+    <title>프리미엄 종합 분석 - AI 사주 천년지기</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: #f9fafb;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* 네비게이션 */
-        .navbar {
-            background: #1a1a1a;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            color: #d4af37;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-            transition: 0.3s;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            transition: color 0.3s;
-            padding: 0.5rem 0;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: #d4af37;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 220px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            padding: 1rem 0;
-            margin-top: 0.5rem;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.8rem 1.5rem;
-            color: #333;
-        }
-
-        .dropdown-menu a:hover {
-            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
-            color: white;
-        }
-
-        .language-switcher {
-            position: relative;
-        }
-
-        .lang-btn {
-            background: transparent;
-            color: rgba(255,255,255,0.9);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* 프리미엄 섹션 */
-        .premium-section {
-            padding: 3rem 0;
-            background: #f9fafb;
-        }
-
-        .section-title-box {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title-box h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-
-        .section-title-box p {
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(196,30,58,0.2);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-
-        .feature-desc {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .feature-list li:before {
-            content: "✓";
-            color: #4caf50;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
-        .btn-unlock {
-            background: linear-gradient(135deg, #c41e3a, #8b0000);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-            transition: transform 0.3s;
-        }
-
-        .btn-unlock:hover {
-            transform: translateY(-2px);
-        }
-
-        .cta-section {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #fff5f8 0%, #ffe0e9 100%);
-            border-radius: 20px;
-        }
-
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #c41e3a;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .cta-section strong {
-            color: #c41e3a;
-        }
-
-        .cta-section a {
-            display: inline-block;
-            text-decoration: none;
-            font-size: 1.2rem;
-            padding: 1.5rem 3rem;
-        }
-
-        /* 푸터 */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        /* 모바일 메뉴 */
-        .mobile-menu-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 999;
-        }
-
-        .mobile-menu-overlay.active {
-            display: block;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            max-width: 400px;
-            height: 100%;
-            background: #1a1a1a;
-            z-index: 1000;
-            transition: right 0.3s;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .mobile-menu-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .mobile-menu-items {
-            list-style: none;
-        }
-
-        .mobile-menu-items li {
-            margin-bottom: 1rem;
-        }
-
-        .mobile-menu-items a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 1rem;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        .mobile-menu-items a:hover {
-            background: rgba(212,175,55,0.2);
-        }
-
-        .mobile-submenu {
-            list-style: none;
-            padding-left: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .mobile-submenu a {
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-        }
-
-        /* 반응형 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f8f9fa; }
+        
+        .navbar { background: #1a1a1a; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { color: #d4af37; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+        .nav-menu { list-style: none; display: flex; gap: 2rem; }
+        .nav-menu a { color: white; text-decoration: none; transition: color 0.3s; }
+        .nav-menu a:hover { color: #d4af37; }
+        
+        .hero { background: linear-gradient(135deg, #d4af37 0%, #f5d876 100%); padding: 5rem 2rem; text-align: center; color: #1a1a1a; }
+        .hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 1rem; }
+        .hero p { font-size: 1.3rem; opacity: 0.9; }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; }
+        .section-title { text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem; color: #333; }
+        
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        
+        .feature-card { background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); transition: transform 0.3s; border: 1px solid #e0e0e0; }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        
+        .card-icon { font-size: 4rem; text-align: center; margin-bottom: 1.5rem; }
+        .card-title { font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #333; }
+        .card-subtitle { font-size: 1rem; color: #666; text-align: center; margin-bottom: 2rem; }
+        
+        .card-features { list-style: none; margin-bottom: 2rem; }
+        .card-features li { padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; color: #333; font-size: 0.95rem; }
+        .card-features li:last-child { border-bottom: none; }
+        .card-features li::before { content: "✓ "; color: #4CAF50; font-weight: bold; margin-right: 0.5rem; }
+        
+        .card-button { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.3s; }
+        .card-button:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(196,30,58,0.4); }
+        
+        .price-tag { text-align: center; font-size: 1.5rem; font-weight: 700; color: #c41e3a; margin-bottom: 1.5rem; }
+        
+        .included-section { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 3rem; }
+        .included-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 2rem; color: #d4af37; }
+        .included-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .included-item { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #d4af37; }
+        .included-item h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #333; }
+        .included-item p { color: #666; font-size: 0.9rem; }
+        
+        .footer { background: #1a1a1a; color: white; padding: 3rem 2rem; text-align: center; }
+        
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .language-switcher {
-                display: none;
-            }
-
-            .section-title-box h1 {
-                font-size: 2rem;
-            }
-
-            .section-title-box p {
-                font-size: 1rem;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .cta-section {
-                padding: 2rem 1rem;
-            }
-
-            .cta-section a {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-            }
+            .hero h1 { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-            </a>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <a href="index.html" class="nav-brand"><i class="fas fa-yin-yang"></i> AI 사주 천년지기</a>
             <ul class="nav-menu">
                 <li><a href="index.html">홈</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">
-                        서비스 <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="compatibility.html">💑 궁합 보기</a>
-                        <a href="saju-matching.html">💕 궁합 매칭</a>
-                        <a href="community.html">💬 커뮤니티</a>
-                        <a href="hr-solution.html">💼 HR 솔루션</a>
-                    </div>
-                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-guide.html">명리학 가이드</a></li>
-                <li><a href="blog.html">블로그</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-                <li class="language-switcher">
-                    <button class="lang-btn">
-                        🇰🇷 한국어 <i class="fas fa-chevron-down"></i>
-                    </button>
-                </li>
+                <li><a href="pricing.html">서비스 목록</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- 모바일 메뉴 오버레이 -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-    <!-- 모바일 메뉴 -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-            </a>
-            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
-        </div>
-        <ul class="mobile-menu-items">
-            <li><a href="index.html">🏠 홈</a></li>
-            <li>
-                <a href="#" onclick="return false;">📋 서비스</a>
-                <ul class="mobile-submenu">
-                    <li><a href="compatibility.html">💑 궁합 보기</a></li>
-                    <li><a href="saju-matching.html">💕 궁합 매칭</a></li>
-                    <li><a href="community.html">💬 커뮤니티</a></li>
-                    <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
-                </ul>
-            </li>
-            <li><a href="ai-chat.html">💬 AI 상담</a></li>
-            <li><a href="saju-guide.html">📚 명리학 가이드</a></li>
-            <li><a href="blog.html">✍️ 블로그</a></li>
-            <li><a href="pricing.html">💰 가격표</a></li>
-            <li><a href="mypage.html">👤 마이페이지</a></li>
-        </ul>
-    </div>
-
-    <!-- 프리미엄 섹션 -->
-    <section class="premium-section">
-        <div class="container">
-            <div class="section-title-box">
-                <h1>🌟 프리미엄 상세 분석</h1>
-                <p>경쟁사를 뛰어넘는 차별화된 전문 분석</p>
-            </div>
-
-            <div class="feature-grid">
-                <!-- 1. 대운 타임라인 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3 class="feature-title">대운(大運) 타임라인</h3>
-                    <p class="feature-desc">10년 단위로 인생의 흐름을 한눈에!</p>
-                    <ul class="feature-list">
-                        <li>10개 대운 (0~100세)</li>
-                        <li>각 대운별 길흉 판단</li>
-                        <li>시기별 추천 사항</li>
-                        <li>인생 전환점 예측</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='pricing.html#premium-saju'">
-                        <i class="fas fa-lock-open"></i> 잠금 해제 (₩49,000)
-                    </button>
-                </div>
-
-                <!-- 2. 신살 분석 -->
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">신살(神殺) 분석</h3>
-                    <p class="feature-desc">30+ 길신·흉신 자동 판별!</p>
-                    <ul class="feature-list">
-                        <li>천을귀인, 천덕귀인</li>
-                        <li>문창귀인, 학당귀인</li>
-                        <li>역마살, 도화살</li>
-                        <li>양인살, 백호살</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='pricing.html#premium-saju'">
-                        <i class="fas fa-lock-open"></i> 잠금 해제 (₩49,000)
-                    </button>
-                </div>
-
-                <!-- 3. 용신 분석 -->
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">용신(用神) 분석</h3>
-                    <p class="feature-desc">맞춤형 생활 가이드 제공!</p>
-                    <ul class="feature-list">
-                        <li>필요한 오행 분석</li>
-                        <li>행운의 색상·방향</li>
-                        <li>적합한 직업 추천</li>
-                        <li>생활 습관 조언</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='pricing.html#premium-saju'">
-                        <i class="fas fa-lock-open"></i> 잠금 해제 (₩49,000)
-                    </button>
-                </div>
-
-                <!-- 4. 궁합 분석 -->
-                <div class="feature-card">
-                    <div class="feature-icon">💕</div>
-                    <h3 class="feature-title">궁합 상세 분석</h3>
-                    <p class="feature-desc">연애·결혼·사업 3가지 궁합!</p>
-                    <ul class="feature-list">
-                        <li>연인 궁합 분석</li>
-                        <li>결혼 궁합 분석</li>
-                        <li>사업 파트너 궁합</li>
-                        <li>극복 방법 제시</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='compatibility.html'">
-                        <i class="fas fa-lock-open"></i> 무료 체험하기
-                    </button>
-                </div>
-
-                <!-- 5. 토정비결 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📖</div>
-                    <h3 class="feature-title">토정비결 2026</h3>
-                    <p class="feature-desc">2026년 월별 상세 운세!</p>
-                    <ul class="feature-list">
-                        <li>12개월 운세</li>
-                        <li>월별 길흉 판단</li>
-                        <li>주의사항 안내</li>
-                        <li>실천 방법 제시</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='tojeong.html'">
-                        <i class="fas fa-lock-open"></i> 무료 체험하기
-                    </button>
-                </div>
-
-                <!-- 6. 꿈해몽 AI -->
-                <div class="feature-card">
-                    <div class="feature-icon">💭</div>
-                    <h3 class="feature-title">꿈해몽 AI</h3>
-                    <p class="feature-desc">AI 기반 꿈 해석!</p>
-                    <ul class="feature-list">
-                        <li>키워드 자동 분석</li>
-                        <li>길몽·흉몽 판별</li>
-                        <li>심리 해석 제공</li>
-                        <li>무제한 이용</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='dream.html'">
-                        <i class="fas fa-lock-open"></i> 무료 체험하기
-                    </button>
-                </div>
-
-                <!-- 7. 작명·개명 -->
-                <div class="feature-card">
-                    <div class="feature-icon">✍️</div>
-                    <h3 class="feature-title">작명·개명</h3>
-                    <p class="feature-desc">성명학 기반 이름 추천!</p>
-                    <ul class="feature-list">
-                        <li>성명학 자동 분석</li>
-                        <li>획수 계산</li>
-                        <li>10개 이름 추천</li>
-                        <li>한자 의미 제공</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='naming.html'">
-                        <i class="fas fa-lock-open"></i> 이름 짓기 (₩19,000)
-                    </button>
-                </div>
-
-                <!-- 8. 재물운 그래프 -->
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3 class="feature-title">재물운 그래프</h3>
-                    <p class="feature-desc">생애 주기별 재물운!</p>
-                    <ul class="feature-list">
-                        <li>20~80세 재물운</li>
-                        <li>투자 적기 예측</li>
-                        <li>재테크 조언</li>
-                        <li>시각화 차트</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='wealth-forecast.html'">
-                        <i class="fas fa-lock-open"></i> 재물운 보기 (₩9,900)
-                    </button>
-                </div>
-
-                <!-- 9. 직업 매칭 -->
-                <div class="feature-card">
-                    <div class="feature-icon">💼</div>
-                    <h3 class="feature-title">직업 적성 매칭</h3>
-                    <p class="feature-desc">200+ 직업 DB 매칭!</p>
-                    <ul class="feature-list">
-                        <li>구체적 직업 추천</li>
-                        <li>적성 점수 제공</li>
-                        <li>성공 확률 예측</li>
-                        <li>진로 상담</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='career-match.html'">
-                        <i class="fas fa-lock-open"></i> 직업 찾기 (₩14,900)
-                    </button>
-                </div>
-
-                <!-- 10. 오늘의 운세 -->
-                <div class="feature-card">
-                    <div class="feature-icon">📆</div>
-                    <h3 class="feature-title">24시간 AI 상담</h3>
-                    <p class="feature-desc">실시간 사주 상담!</p>
-                    <ul class="feature-list">
-                        <li>24시간 AI 상담</li>
-                        <li>즉시 답변</li>
-                        <li>맞춤형 조언</li>
-                        <li>무제한 질문</li>
-                    </ul>
-                    <button class="btn-unlock" onclick="location.href='ai-chat.html'">
-                        <i class="fas fa-comments"></i> 무료 상담하기
-                    </button>
-                </div>
-            </div>
-
-            <!-- CTA -->
-            <div class="cta-section">
-                <h2>🎁 지금 프리미엄에 가입하면?</h2>
-                <p>
-                    모든 프리미엄 기능을 <strong>무제한</strong>으로 이용하세요!<br>
-                    9가지 분석 + 100페이지 PDF 리포트 포함
-                </p>
-                <a href="pricing.html" class="btn-unlock">
-                    <i class="fas fa-crown"></i> 프리미엄 둘러보기
-                </a>
-            </div>
-        </div>
+    <section class="hero">
+        <h1>👑 프리미엄 종합 분석</h1>
+        <p>경쟁사를 뛰어넘는 차별화된 전문 분석</p>
     </section>
 
-    <!-- 푸터 -->
-    <footer>
+    <div class="container">
+        <h2 class="section-title">💎 프리미엄 전문 분석 8종</h2>
+        
+        <div class="cards-grid">
+            <!-- 오행 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">🌿</div>
+                <h3 class="card-title">오행(五行) 분석</h3>
+                <p class="card-subtitle">목·화·토·금·수 균형 분석!</p>
+                
+                <ul class="card-features">
+                    <li>오행 균형 분석</li>
+                    <li>강약 오행 판단</li>
+                    <li>보완 방법 제시</li>
+                    <li>길흉 색상·방향 추천</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 대운 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">📅</div>
+                <h3 class="card-title">대운(大運) 분석</h3>
+                <p class="card-subtitle">10년 단위로 인생의 흐름을 한눈에!</p>
+                
+                <ul class="card-features">
+                    <li>10개 대운 (0~100세)</li>
+                    <li>각 대운별 길흉 판단</li>
+                    <li>시기별 추천 사항</li>
+                    <li>인생 전환점 예측</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 신살 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">⚡</div>
+                <h3 class="card-title">신살(神殺) 분석</h3>
+                <p class="card-subtitle">30+ 길신·흉신 자동 판별!</p>
+                
+                <ul class="card-features">
+                    <li>천을귀인, 천덕귀인</li>
+                    <li>문창귀인, 학당귀인</li>
+                    <li>역마살, 도화살</li>
+                    <li>양인살, 백호살</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 지장간 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">🏛️</div>
+                <h3 class="card-title">지장간(地藏干) 분석</h3>
+                <p class="card-subtitle">숨겨진 천간의 비밀을 밝힙니다!</p>
+                
+                <ul class="card-features">
+                    <li>각 지지별 지장간 분석</li>
+                    <li>본기·중기·여기 구분</li>
+                    <li>숨은 재능 발견</li>
+                    <li>잠재력 활용 방안</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 십이운성 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">♻️</div>
+                <h3 class="card-title">십이운성(十二運星) 분석</h3>
+                <p class="card-subtitle">생로병사의 12단계 운세!</p>
+                
+                <ul class="card-features">
+                    <li>장생·목욕·관대·건록</li>
+                    <li>제왕·쇠·병·사</li>
+                    <li>묘·절·태·양</li>
+                    <li>각 운성별 특징 해석</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 용신 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">용신(用神) 분석</h3>
+                <p class="card-subtitle">맞춤형 생활 가이드 제공!</p>
+                
+                <ul class="card-features">
+                    <li>필요한 오행 분석</li>
+                    <li>행운의 색상·방향</li>
+                    <li>적합한 직업 추천</li>
+                    <li>생활 습관 조언</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 십신 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">🔮</div>
+                <h3 class="card-title">십신(十神) 분석</h3>
+                <p class="card-subtitle">성격과 재능을 정밀 분석!</p>
+                
+                <ul class="card-features">
+                    <li>비견·겁재·식신·상관</li>
+                    <li>편재·정재·편관·정관</li>
+                    <li>편인·정인</li>
+                    <li>성격·재능·운명 해석</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+
+            <!-- 궁합 분석 -->
+            <div class="feature-card">
+                <div class="card-icon">💕</div>
+                <h3 class="card-title">궁합 상세 분석</h3>
+                <p class="card-subtitle">연애·결혼·사업 3가지 궁합!</p>
+                
+                <ul class="card-features">
+                    <li>연인 궁합 분석</li>
+                    <li>결혼 궁합 분석</li>
+                    <li>사업 파트너 궁합</li>
+                    <li>극복 방법 제시</li>
+                </ul>
+                
+                <div class="price-tag">포함됨</div>
+                <button class="card-button" disabled style="background: #ccc; cursor: not-allowed;">
+                    프리미엄에 포함
+                </button>
+            </div>
+        </div>
+
+        <!-- 포함된 분석 -->
+        <div class="included-section">
+            <h2 class="included-title">📦 프리미엄 종합 분석 (₩49,000)</h2>
+            
+            <div class="included-grid">
+                <div class="included-item">
+                    <h4>🌿 오행 분석</h4>
+                    <p>목화토금수 균형 분석</p>
+                </div>
+                <div class="included-item">
+                    <h4>📅 대운 분석</h4>
+                    <p>10년 단위 인생 흐름</p>
+                </div>
+                <div class="included-item">
+                    <h4>⚡ 신살 분석</h4>
+                    <p>30+ 길흉신 판별</p>
+                </div>
+                <div class="included-item">
+                    <h4>🏛️ 지장간 분석</h4>
+                    <p>숨겨진 천간 해석</p>
+                </div>
+                <div class="included-item">
+                    <h4>♻️ 십이운성 분석</h4>
+                    <p>생로병사 12단계</p>
+                </div>
+                <div class="included-item">
+                    <h4>🎯 용신 분석</h4>
+                    <p>맞춤형 생활 가이드</p>
+                </div>
+                <div class="included-item">
+                    <h4>🔮 십신 분석</h4>
+                    <p>성격·재능·운명 해석</p>
+                </div>
+                <div class="included-item">
+                    <h4>💕 궁합 분석</h4>
+                    <p>연애·결혼·사업 궁합</p>
+                </div>
+                <div class="included-item">
+                    <h4>💰 재물운 그래프</h4>
+                    <p>평생 재물 흐름 분석</p>
+                </div>
+                <div class="included-item">
+                    <h4>💼 직업 적성</h4>
+                    <p>최적의 직업 추천</p>
+                </div>
+                <div class="included-item">
+                    <h4>🏥 건강 운세</h4>
+                    <p>건강 주의사항 분석</p>
+                </div>
+                <div class="included-item">
+                    <h4>📅 2026년 운세</h4>
+                    <p>병오년 12개월 분석</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.8rem; font-weight: 700; color: #666; margin-bottom: 1rem;">
+                    <span style="text-decoration: line-through;">₩99,000</span>
+                </p>
+                <p style="font-size: 3rem; font-weight: 700; color: #c41e3a; margin-bottom: 1rem;">
+                    ₩49,000
+                </p>
+                <p style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 0.5rem 1.5rem; border-radius: 25px; font-size: 0.9rem; font-weight: 700; margin-bottom: 2rem;">
+                    🔥 50% 특별 할인
+                </p>
+                <br><br>
+                <button class="card-button" style="max-width: 500px; margin: 0 auto; display: block;" onclick="location.href='payment.html?type=premium&amount=49000'">
+                    <i class="fas fa-crown"></i> 프리미엄 종합 분석 구매하기 (₩49,000)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
         <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
     </footer>
-
-    <script>
-        // 햄버거 메뉴
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-
-        hamburger?.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-        });
-
-        mobileMenuClose?.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-        });
-
-        mobileMenuOverlay?.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-        });
-
-        // 전역 에러 핸들러
-        window.addEventListener('error', function(e) {
-            if (e.filename && !e.filename.includes('aisaju1000.com')) {
-                e.preventDefault();
-                return true;
-            }
-        }, true);
-
-        console.log('✅ 프리미엄 상세 분석 페이지 로드 완료');
-    </script>
 </body>
 </html>
