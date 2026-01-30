@@ -37,11 +37,11 @@ class TojeongPremiumEngine {
         };
 
         // 나머지 번호들 초기화
-        for (let i = 1; i <= 9; i++) {
+         for (let i = 1; i <= 9; i++) {
             this.monthlyFortuneData[i] = this.monthlyFortuneData[0].map((item, index) => {
                 return {
                     ...item,
-                    score: Math.max(60, Math.min(95, item.score + (Math.random() * 10 - 5)))
+                    score: Math.round(Math.max(60, Math.min(95, item.score + (Math.random() * 10 - 5))))
                 };
             });
         }
