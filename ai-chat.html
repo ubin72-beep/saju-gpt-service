@@ -690,6 +690,17 @@
         </ul>
     </div>
 
+    <!-- 경고 배너 -->
+    <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; padding: 15px 20px; text-align: center; border-bottom: 3px solid #d68910; box-shadow: 0 4px 15px rgba(243,156,18,0.3);">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem;"></i>
+            <span style="font-size: 1rem; font-weight: 600;">
+                ⚠️ 테스트 모드 운영 중: 현재 API 키가 클라이언트에 노출되어 있습니다. 실서비스 전환 시 백엔드 API 구축이 필요합니다.
+            </span>
+            <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem;"></i>
+        </div>
+    </div>
+
     <!-- 히어로 -->
     <section class="hero">
         <h1>
@@ -710,7 +721,14 @@
                 </button>
             </div>
             <div id="sajuInfoContent">
-                <p>로딩 중...</p>
+                <div style="text-align: center; padding: 20px;">
+                    <i class="fas fa-user-clock" style="font-size: 3rem; color: rgba(255,255,255,0.5); margin-bottom: 15px;"></i>
+                    <p style="margin-bottom: 15px; font-size: 1.1rem;">사주 정보가 없습니다</p>
+                    <p style="margin-bottom: 20px; color: rgba(255,255,255,0.7); font-size: 0.95rem;">메인 페이지에서 생년월일을 입력하고 사주를 확인해주세요</p>
+                    <button onclick="location.href='index.html'" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(102,126,234,0.3);">
+                        <i class="fas fa-arrow-right"></i> 사주 입력하러 가기
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -722,6 +740,30 @@
                     <i class="fas fa-circle"></i>
                     온라인
                 </span>
+            </div>
+
+            <!-- 빠른 질문 버튼 -->
+            <div style="padding: 20px; background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); border-radius: 15px; margin-bottom: 20px;">
+                <div style="font-size: 1.1rem; font-weight: 600; color: #333; margin-bottom: 15px; text-align: center;">
+                    <i class="fas fa-bolt" style="color: #f39c12;"></i> 빠른 질문
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                    <button onclick="quickQuestion(this.innerText)" style="background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-weight: 500;" onmouseover="this.style.background='#667eea'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#667eea';">
+                        💕 올해 나의 연애운은?
+                    </button>
+                    <button onclick="quickQuestion(this.innerText)" style="background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-weight: 500;" onmouseover="this.style.background='#667eea'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#667eea';">
+                        💰 내 재물운은 언제 좋아질까요?
+                    </button>
+                    <button onclick="quickQuestion(this.innerText)" style="background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-weight: 500;" onmouseover="this.style.background='#667eea'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#667eea';">
+                        💼 이직하기 좋은 시기는?
+                    </button>
+                    <button onclick="quickQuestion(this.innerText)" style="background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-weight: 500;" onmouseover="this.style.background='#667eea'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#667eea';">
+                        🏠 집 구하기 좋은 날은?
+                    </button>
+                    <button onclick="quickQuestion(this.innerText)" style="background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 20px; border-radius: 25px; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; font-weight: 500;" onmouseover="this.style.background='#667eea'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#667eea';">
+                        🎯 내 적성에 맞는 직업은?
+                    </button>
+                </div>
             </div>
 
             <!-- 메시지 영역 -->
@@ -1118,15 +1160,68 @@
             }
         });
         
-        // 페이지 로드 시 사주 정보 로드
+        // 🔥 빠른 질문 기능
+        function quickQuestion(question) {
+            const input = document.getElementById('chatInput');
+            input.value = question;
+            input.focus();
+            
+            // 자동으로 스크롤
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 살짝 진동 효과 (모바일)
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+        }
+        
+        // 🔥 채팅 히스토리 복원
+        function loadChatHistory() {
+            try {
+                const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                
+                if (history.length > 0) {
+                    console.log(`📜 채팅 히스토리 ${history.length}개 복원 중...`);
+                    
+                    // 최근 5개만 복원
+                    const recentHistory = history.slice(-5);
+                    
+                    // 히스토리가 있다면 구분선 추가
+                    const messagesDiv = document.getElementById('chatMessages');
+                    messagesDiv.insertAdjacentHTML('beforeend', `
+                        <div style="text-align: center; padding: 20px 0; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+                            <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
+                                <span><i class="fas fa-history"></i> 이전 대화 기록</span>
+                                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
+                            </div>
+                        </div>
+                    `);
+                    
+                    recentHistory.forEach(item => {
+                        addMessage('user', item.user);
+                        addMessage('ai', item.ai);
+                    });
+                    
+                    console.log('✅ 채팅 히스토리 복원 완료');
+                }
+            } catch (e) {
+                console.error('채팅 히스토리 복원 실패:', e);
+            }
+        }
+        
+        // 페이지 로드 시 사주 정보 로드 & 채팅 히스토리 복원
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
-    loadSajuInfo();
-    updateRemainingQuestions(); // ✅ 잔여 질문 표시
-});
+                loadSajuInfo();
+                updateRemainingQuestions(); // ✅ 잔여 질문 표시
+                loadChatHistory(); // 🔥 채팅 히스토리 복원
+            });
         } else {
             // DOMContentLoaded 이미 발생했으면 즉시 실행
             loadSajuInfo();
+            updateRemainingQuestions();
+            loadChatHistory(); // 🔥 채팅 히스토리 복원
         }
 
         // ===== Global Error Handler =====
