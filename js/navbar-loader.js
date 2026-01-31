@@ -105,6 +105,55 @@ function initNavbarEvents() {
     
     // 현재 페이지 활성화 표시
     highlightCurrentPage();
+    
+    // 로그인 상태 체크
+    checkLoginStatus();
+}
+
+// 로그인 상태 체크 및 UI 업데이트
+function checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+    // 로그인 상태에 따라 메뉴 표시/숨김
+    const guestMenus = document.querySelectorAll('.auth-menu.guest-only');
+    const userMenus = document.querySelectorAll('.auth-menu.user-only');
+    
+    if (isLoggedIn && currentUser.name) {
+        // 로그인 상태: 사용자 메뉴 표시
+        guestMenus.forEach(menu => menu.style.display = 'none');
+        userMenus.forEach(menu => menu.style.display = 'block');
+        
+        // 사용자 이름 표시
+        const navUserName = document.getElementById('navUserName');
+        const mobileUserName = document.getElementById('mobileUserName');
+        
+        if (navUserName) navUserName.textContent = currentUser.name;
+        if (mobileUserName) mobileUserName.textContent = currentUser.name;
+        
+        console.log('✅ 로그인 상태:', currentUser.name);
+    } else {
+        // 로그아웃 상태: 게스트 메뉴 표시
+        guestMenus.forEach(menu => menu.style.display = 'block');
+        userMenus.forEach(menu => menu.style.display = 'none');
+        
+        console.log('👤 비로그인 상태');
+    }
+}
+
+// 로그아웃 함수 (전역으로 사용)
+window.logout = function() {
+    if (confirm('로그아웃 하시겠습니까?')) {
+        // LocalStorage에서 로그인 정보 제거
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('rememberMe');
+        
+        console.log('✅ 로그아웃 완료');
+        
+        // 로그인 페이지로 이동
+        window.location.href = 'login.html';
+    }
 }
 
 // 현재 페이지 활성화 표시
