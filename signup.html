@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - AI 사주 천년지기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 네비게이션 로더 -->
+    <script src="js/navbar-loader.js" defer></script>
+    
     <style>
         * {
             margin: 0;
@@ -12,13 +20,14 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding-top: 80px;
+            padding-bottom: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .signup-container {
@@ -65,7 +74,7 @@
             position: relative;
         }
 
-        .input-icon {
+        .input-wrapper i {
             position: absolute;
             left: 15px;
             top: 50%;
@@ -78,7 +87,7 @@
             padding: 12px 15px 12px 45px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            font-family: inherit;
+            font-family: 'Noto Sans KR', sans-serif;
             font-size: 1rem;
             transition: border-color 0.3s;
         }
@@ -303,6 +312,9 @@
     </style>
 </head>
 <body>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+    
     <div class="signup-container">
         <div class="logo">
             <h1>🔮 AI 사주 천년지기</h1>
@@ -314,7 +326,7 @@
             <div class="form-group">
                 <label>이메일 <span class="required">*</span></label>
                 <div class="input-wrapper">
-                    <span class="input-icon">✉️</span>
+                    <i class="fas fa-envelope"></i>
                     <input type="email" id="email" placeholder="example@email.com" required>
                 </div>
                 <div class="error-message" id="emailError">유효한 이메일을 입력해주세요.</div>
@@ -325,9 +337,9 @@
             <div class="form-group">
                 <label>비밀번호 <span class="required">*</span></label>
                 <div class="input-wrapper">
-                    <span class="input-icon">🔒</span>
+                    <i class="fas fa-lock"></i>
                     <input type="password" id="password" placeholder="8자 이상, 영문+숫자+특수문자" required>
-                    <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
                 </div>
                 <div class="password-strength">
                     <div class="password-strength-bar" id="strengthBar"></div>
@@ -339,9 +351,9 @@
             <div class="form-group">
                 <label>비밀번호 확인 <span class="required">*</span></label>
                 <div class="input-wrapper">
-                    <span class="input-icon">🔒</span>
+                    <i class="fas fa-lock"></i>
                     <input type="password" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
-                    <span class="password-toggle" onclick="togglePassword('passwordConfirm')">👁️</span>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('passwordConfirm')"></i>
                 </div>
                 <div class="error-message" id="passwordConfirmError">비밀번호가 일치하지 않습니다.</div>
                 <div class="success-message" id="passwordConfirmSuccess">비밀번호가 일치합니다.</div>
@@ -351,7 +363,7 @@
             <div class="form-group">
                 <label>이름 <span class="required">*</span></label>
                 <div class="input-wrapper">
-                    <span class="input-icon">👤</span>
+                    <i class="fas fa-user"></i>
                     <input type="text" id="name" placeholder="실명을 입력해주세요" required>
                 </div>
                 <div class="error-message" id="nameError">이름을 입력해주세요.</div>
@@ -361,7 +373,7 @@
             <div class="form-group">
                 <label>생년월일 <span class="required">*</span></label>
                 <div class="input-wrapper">
-                    <span class="input-icon">📅</span>
+                    <i class="fas fa-calendar"></i>
                     <input type="date" id="birthDate" required>
                 </div>
                 <div class="error-message" id="birthDateError">생년월일을 선택해주세요.</div>
@@ -395,7 +407,7 @@
 
             <!-- 가입 버튼 -->
             <button type="submit" class="btn-signup">
-                ✨ 회원가입
+                <i class="fas fa-user-plus"></i> 회원가입
             </button>
         </form>
 
@@ -404,13 +416,13 @@
             <div class="social-title">또는 소셜 계정으로 가입</div>
             <div class="social-buttons">
                 <button class="social-btn kakao" onclick="socialSignup('kakao')">
-                    💬 카카오
+                    <i class="fas fa-comment"></i> 카카오
                 </button>
                 <button class="social-btn naver" onclick="socialSignup('naver')">
                     <strong>N</strong> 네이버
                 </button>
                 <button class="social-btn google" onclick="socialSignup('google')">
-                    🌐 구글
+                    <i class="fab fa-google"></i> 구글
                 </button>
             </div>
         </div>
@@ -422,13 +434,13 @@
     </div>
 
     <script>
-        // 이메일 검증
+        // 이메일 중복 체크 (실제로는 API 호출)
         document.getElementById('email').addEventListener('blur', function() {
-            var email = this.value;
-            var emailError = document.getElementById('emailError');
-            var emailSuccess = document.getElementById('emailSuccess');
+            const email = this.value;
+            const emailError = document.getElementById('emailError');
+            const emailSuccess = document.getElementById('emailSuccess');
             
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
             if (!emailRegex.test(email)) {
                 this.classList.add('error');
@@ -436,6 +448,7 @@
                 emailError.classList.add('show');
                 emailSuccess.classList.remove('show');
             } else {
+                // 실제로는 API로 중복 체크
                 this.classList.remove('error');
                 this.classList.add('success');
                 emailError.classList.remove('show');
@@ -445,11 +458,11 @@
 
         // 비밀번호 강도 체크
         document.getElementById('password').addEventListener('input', function() {
-            var password = this.value;
-            var strengthBar = document.getElementById('strengthBar');
-            var passwordError = document.getElementById('passwordError');
+            const password = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+            const passwordError = document.getElementById('passwordError');
             
-            var strength = 0;
+            let strength = 0;
             if (password.length >= 8) strength++;
             if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
             if (/\d/.test(password)) strength++;
@@ -464,7 +477,7 @@
                 strengthBar.classList.add('strong');
             }
             
-            var isValid = password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
+            const isValid = password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
             if (!isValid && password.length > 0) {
                 this.classList.add('error');
                 passwordError.classList.add('show');
@@ -476,9 +489,9 @@
 
         // 비밀번호 확인
         document.getElementById('passwordConfirm').addEventListener('input', function() {
-            var password = document.getElementById('password').value;
-            var confirmError = document.getElementById('passwordConfirmError');
-            var confirmSuccess = document.getElementById('passwordConfirmSuccess');
+            const password = document.getElementById('password').value;
+            const confirmError = document.getElementById('passwordConfirmError');
+            const confirmSuccess = document.getElementById('passwordConfirmSuccess');
             
             if (this.value !== password) {
                 this.classList.add('error');
@@ -495,87 +508,120 @@
 
         // 비밀번호 보기/숨기기
         function togglePassword(id) {
-            var input = document.getElementById(id);
-            var icon = input.nextElementSibling;
+            const input = document.getElementById(id);
+            const icon = input.nextElementSibling;
             
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.textContent = '🙈';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             } else {
                 input.type = 'password';
-                icon.textContent = '👁️';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         }
 
         // 전체 동의
         function toggleAllAgree() {
-            var agreeAll = document.getElementById('agreeAll');
-            var agreeItems = document.querySelectorAll('.agree-item');
+            const agreeAll = document.getElementById('agreeAll');
+            const agreeItems = document.querySelectorAll('.agree-item');
             
-            for (var i = 0; i < agreeItems.length; i++) {
-                agreeItems[i].checked = agreeAll.checked;
-            }
-        }
-
-        // 개별 체크박스 변경
-        var agreeItems = document.querySelectorAll('.agree-item');
-        for (var i = 0; i < agreeItems.length; i++) {
-            agreeItems[i].addEventListener('change', function() {
-                var agreeAll = document.getElementById('agreeAll');
-                var items = document.querySelectorAll('.agree-item');
-                var allChecked = true;
-                
-                for (var j = 0; j < items.length; j++) {
-                    if (!items[j].checked) {
-                        allChecked = false;
-                        break;
-                    }
-                }
-                
-                agreeAll.checked = allChecked;
+            agreeItems.forEach(item => {
+                item.checked = agreeAll.checked;
             });
         }
+
+        // 개별 체크박스 변경 시
+        document.querySelectorAll('.agree-item').forEach(item => {
+            item.addEventListener('change', function() {
+                const agreeAll = document.getElementById('agreeAll');
+                const agreeItems = document.querySelectorAll('.agree-item');
+                const allChecked = Array.from(agreeItems).every(item => item.checked);
+                agreeAll.checked = allChecked;
+            });
+        });
 
         // 폼 제출
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            var agreeTerms = document.getElementById('agreeTerms').checked;
-            var agreePrivacy = document.getElementById('agreePrivacy').checked;
-            var agreeAge = document.getElementById('agreeAge').checked;
+            // 필수 약관 체크
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            const agreePrivacy = document.getElementById('agreePrivacy').checked;
+            const agreeAge = document.getElementById('agreeAge').checked;
             
             if (!agreeTerms || !agreePrivacy || !agreeAge) {
                 alert('필수 약관에 동의해주세요.');
                 return;
             }
             
-            var password = document.getElementById('password').value;
-            var passwordConfirm = document.getElementById('passwordConfirm').value;
+            // 비밀번호 확인
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
             
             if (password !== passwordConfirm) {
                 alert('비밀번호가 일치하지 않습니다.');
                 return;
             }
             
-            var signupData = {
+            // 회원가입 데이터
+            const signupData = {
+                id: Date.now().toString(), // 고유 ID
                 email: document.getElementById('email').value,
-                password: password,
+                password: password, // 실제로는 해시화 필요
                 name: document.getElementById('name').value,
                 birthDate: document.getElementById('birthDate').value,
                 agreeMarketing: document.getElementById('agreeMarketing').checked,
-                signupDate: new Date().toISOString()
+                signupDate: new Date().toISOString(),
+                remainingQuestions: 5 // 무료 질문 5개
             };
             
-            console.log('회원가입 데이터:', signupData);
+            console.log('✅ 회원가입 데이터:', signupData);
             
-            alert('회원가입이 완료되었습니다! 🎉\\n로그인 페이지로 이동합니다.');
-            window.location.href = 'login.html';
+            // LocalStorage에 저장
+            try {
+                // 기존 사용자 목록 가져오기
+                let users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // 이메일 중복 체크
+                const existingUser = users.find(u => u.email === signupData.email);
+                if (existingUser) {
+                    alert('⚠️ 이미 가입된 이메일입니다.');
+                    return;
+                }
+                
+                // 새 사용자 추가
+                users.push(signupData);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // 성공 메시지
+                alert('🎉 회원가입이 완료되었습니다!\n로그인 페이지로 이동합니다.');
+                
+                // 로그인 페이지로 이동
+                setTimeout(() => {
+                    window.location.href = 'login.html?email=' + encodeURIComponent(signupData.email);
+                }, 500);
+            } catch (error) {
+                console.error('❌ 회원가입 에러:', error);
+                alert('회원가입 중 오류가 발생했습니다.');
+            }
         });
 
         // 소셜 가입
         function socialSignup(provider) {
-            alert(provider + ' 소셜 가입 기능입니다.\\n(실제로는 OAuth 연동 필요)');
+            alert(`${provider} 소셜 가입 기능입니다.\n(실제로는 OAuth 연동 필요)`);
+            // 실제로는 OAuth 인증 처리
         }
+
+        // ===== Global Error Handler =====
+        window.addEventListener('error', function(e) {
+            // aisaju1000.com 외의 스크립트 에러 무시
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
         console.log('✅ 회원가입 페이지 로드 완료');
     </script>
