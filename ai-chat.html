@@ -788,7 +788,7 @@
                     <li>✅ 상세한 해석</li>
                     <li>✅ 채팅 히스토리 저장</li>
                 </ul>
-                <button class="btn-primary" onclick="location.href='payment.html?type=ai-chat'">구매하기</button>
+                <button class="btn-primary" onclick="location.href='payment.html?type=ai-chat&name=AI 상담 충전권&price=5000&desc=10질문 ₩3,000 · 20질문 ₩5,000 · 상세한 AI 해석 · 채팅 히스토리 저장'">구매하기</button>
             </div>
 
             <div class="price-card">
@@ -800,7 +800,7 @@
                     <li>✅ 우선 응답</li>
                     <li>✅ 고급 AI 모델</li>
                 </ul>
-                <button class="btn-primary" onclick="location.href='payment.html?type=ai-subscription'">구독하기</button>
+                <button class="btn-primary" onclick="location.href='payment.html?type=ai-subscription&name=AI 상담 무제한 구독&price=9900&desc=무제한 질문 · 우선 응답 · 고급 AI 모델 · 월간 구독'">구독하기</button>
             </div>
         </div>
     </div>
@@ -940,7 +940,7 @@
             
             if (remainingQuestions <= 0) {
                 if (confirm('질문권이 부족합니다.\n₩300/질문으로 충전하시겠습니까?\n\n충전 옵션:\n• 10질문 - ₩3,000\n• 20질문 - ₩5,000\n• 무제한 월간 - ₩9,900')) {
-                    location.href = 'payment.html?type=ai-chat';
+                    location.href = 'payment.html?type=ai-chat&name=AI 상담 충전권&price=5000&desc=10질문 ₩3,000 · 20질문 ₩5,000';
                 }
                 return;
             }
@@ -970,7 +970,7 @@
                 if (remainingQuestions === 0) {
                     setTimeout(() => {
                         if (confirm('질문권이 모두 소진되었습니다.\n₩300/질문으로 충전하시겠습니까?')) {
-                            location.href = 'payment.html?type=ai-chat';
+                            location.href = 'payment.html?type=ai-chat&name=AI 상담 충전권&price=5000&desc=10질문 ₩3,000 · 20질문 ₩5,000';
                         }
                     }, 1000);
                 } else if (remainingQuestions === 1) {
