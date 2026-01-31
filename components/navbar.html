@@ -32,7 +32,21 @@
             <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
             <li><a href="blog.html"><i class="fas fa-newspaper"></i> 블로그</a></li>
             <li><a href="pricing.html">가격표</a></li>
-            <li><a href="mypage.html">마이페이지</a></li>
+            <!-- 로그인 전 -->
+            <li class="auth-menu guest-only"><a href="signup.html">회원가입</a></li>
+            <li class="auth-menu guest-only"><a href="login.html">로그인</a></li>
+            <!-- 로그인 후 -->
+            <li class="auth-menu user-only" style="display: none;">
+                <a href="javascript:void(0)" class="user-info" id="navUserInfo">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="navUserName">사용자</span>
+                </a>
+            </li>
+            <li class="auth-menu user-only" style="display: none;">
+                <a href="javascript:void(0)" onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </a>
+            </li>
         </ul>
         
         <div class="language-switcher">
@@ -84,6 +98,19 @@
         <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
         <li><a href="blog.html">📰 블로그</a></li>
         <li><a href="pricing.html">💰 가격표</a></li>
-        <li><a href="mypage.html">👤 마이페이지</a></li>
+        <!-- 로그인 전 -->
+        <li class="auth-menu guest-only"><a href="signup.html">✏️ 회원가입</a></li>
+        <li class="auth-menu guest-only"><a href="login.html">🔐 로그인</a></li>
+        <!-- 로그인 후 -->
+        <li class="auth-menu user-only" style="display: none;">
+            <a href="javascript:void(0)" id="mobileUserInfo">
+                <i class="fas fa-user-circle"></i> <span id="mobileUserName">사용자</span>
+            </a>
+        </li>
+        <li class="auth-menu user-only" style="display: none;">
+            <a href="javascript:void(0)" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> 로그아웃
+            </a>
+        </li>
     </ul>
 </div>
