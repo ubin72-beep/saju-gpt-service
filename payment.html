@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제하기 - AI 사주 천년지기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .service-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .service-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        
+        .service-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .price-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #e74c3c;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .payment-methods {
+            margin: 30px 0;
+        }
+        
+        .payment-methods h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .payment-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .payment-option.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+        
+        .payment-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 20px;
+        }
+        
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .payment-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .security-notice {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💳 결제하기</h1>
+            <p>안전하고 간편한 결제 시스템</p>
+        </div>
+        
+        <div class="content">
+            <div class="service-info">
+                <div class="service-name" id="serviceName">프리미엄 분석</div>
+                <div class="service-description" id="serviceDescription">9가지 분석 포함 · 100p PDF 리포트 · 평생 보관</div>
+                
+                <div class="price-box">
+                    <span class="price-label">결제 금액</span>
+                    <span class="price-amount" id="priceAmount">₩49,000</span>
+                </div>
+            </div>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> 이름</label>
+                    <input type="text" id="customerName" placeholder="홍길동" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> 이메일 (결제 영수증 발송)</label>
+                    <input type="email" id="customerEmail" placeholder="example@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> 휴대폰 번호</label>
+                    <input type="tel" id="customerPhone" placeholder="010-1234-5678" required>
+                </div>
+                
+                <div class="payment-methods">
+                    <h3>결제 수단 선택</h3>
+                    <div class="payment-options">
+                        <label class="payment-option active">
+                            <input type="radio" name="paymentMethod" value="CARD" checked>
+                            <div>💳 신용/체크카드</div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="TRANSFER">
+                            <div>🏦 계좌이체</div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="VIRTUAL_ACCOUNT">
+                            <div>🧾 가상계좌</div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="EASY_PAY">
+                            <div>📱 간편결제</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="payment-btn" id="paymentBtn">
+                    <i class="fas fa-lock"></i> 안전하게 결제하기
+                </button>
+            </form>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <strong>안전한 결제</strong><br>
+                모든 결제 정보는 SSL 암호화로 안전하게 보호됩니다.
+            </div>
+            
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 메인으로 돌아가기
+            </a>
+        </div>
+    </div>
+    
+    <!-- 토스페이먼츠 SDK -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    
+    <script>
+        // URL 파라미터에서 서비스 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceType = urlParams.get('type') || 'premium';
+        const serviceName = urlParams.get('name') || '프리미엄 분석';
+        const servicePrice = parseInt(urlParams.get('price')) || 49000;
+        const serviceDescription = urlParams.get('desc') || '9가지 분석 포함 · 100p PDF 리포트 · 평생 보관';
+        
+        // 서비스 정보 표시
+        document.getElementById('serviceName').textContent = serviceName;
+        document.getElementById('serviceDescription').textContent = serviceDescription;
+        document.getElementById('priceAmount').textContent = `₩${servicePrice.toLocaleString()}`;
+        
+        // 결제 수단 선택
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+        
+        // 토스페이먼츠 클라이언트 키 (테스트 키)
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+        const tossPayments = TossPayments(clientKey);
+        
+        // 결제 요청
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerEmail = document.getElementById('customerEmail').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            
+            if (!customerName || !customerEmail || !customerPhone) {
+                alert('모든 정보를 입력해주세요.');
+                return;
+            }
+            
+            // 주문 ID 생성 (고유값)
+            const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            
+            // 로딩 상태
+            const paymentBtn = document.getElementById('paymentBtn');
+            const originalText = paymentBtn.innerHTML;
+            paymentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 결제 창 열기 중...';
+            paymentBtn.disabled = true;
+            
+            try {
+                // 토스페이먼츠 결제 창 호출
+                await tossPayments.requestPayment(paymentMethod, {
+                    amount: servicePrice,
+                    orderId: orderId,
+                    orderName: serviceName,
+                    customerName: customerName,
+                    customerEmail: customerEmail,
+                    customerMobilePhone: customerPhone.replace(/-/g, ''),
+                    successUrl: `${window.location.origin}/payment-success.html`,
+                    failUrl: `${window.location.origin}/payment-fail.html`,
+                });
+            } catch (error) {
+                console.error('결제 오류:', error);
+                alert('결제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                paymentBtn.innerHTML = originalText;
+                paymentBtn.disabled = false;
+            }
+        });
+        
+        console.log('✅ 결제 페이지 로드 완료');
+    </script>
+</body>
+</html>
