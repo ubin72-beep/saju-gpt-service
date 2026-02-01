@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - AI 사주 천년지기</title>
+    <meta name="description" content="내 사주 정보, 서비스 이용 내역, 결제 내역을 확인하세요.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding-top: 70px;
+        }
+        
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .service-list {
+            list-style: none;
+        }
+        
+        .service-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .service-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .service-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .service-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">🔮 AI 사주 천년지기</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="mypage.html" style="color: #d4af37;">마이페이지</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-circle"></i> <span id="userName">사용자</span>님의 마이페이지</h1>
+            <p>서비스 이용 내역과 정보를 확인하세요</p>
+        </div>
+        
+        <div class="grid">
+            <!-- 사용자 정보 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 class="card-title">내 정보</h2>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">이름</span>
+                    <span class="info-value" id="userNameInfo">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">이메일</span>
+                    <span class="info-value" id="userEmail">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">가입일</span>
+                    <span class="info-value" id="userSignupDate">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">회원등급</span>
+                    <span class="badge badge-success">일반회원</span>
+                </div>
+            </div>
+            
+            <!-- AI 상담 이용 현황 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <h2 class="card-title">AI 상담</h2>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">남은 무료 질문</span>
+                    <span class="service-count" id="remainingQuestions">5</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">사용한 질문</span>
+                    <span class="info-value" id="usedQuestions">0</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="ai-chat.html" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">
+                        <i class="fas fa-comments"></i> AI 상담 시작하기
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 프리미엄 서비스 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h2 class="card-title">프리미엄 분석</h2>
+                </div>
+                <div id="premiumServices">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>구매한 프리미엄 분석이 없습니다</p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="premium-features.html" class="btn btn-outline" style="width: 100%; text-align: center; display: block;">
+                        <i class="fas fa-shopping-cart"></i> 프리미엄 분석 보기
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 최근 사주 결과 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h2 class="card-title">최근 사주 결과</h2>
+            </div>
+            <div id="recentResults">
+                <div class="empty-state">
+                    <i class="fas fa-file-alt"></i>
+                    <p>아직 사주를 확인하지 않았습니다</p>
+                    <div style="margin-top: 20px;">
+                        <a href="index.html#saju-form" class="btn btn-primary">
+                            <i class="fas fa-calculator"></i> 무료 사주 보기
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 로그아웃 -->
+        <div style="text-align: center; margin-top: 40px;">
+            <button onclick="logout()" class="btn btn-outline" style="padding: 15px 50px;">
+                <i class="fas fa-sign-out-alt"></i> 로그아웃
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        'use strict';
+        
+        // ===== 로그인 상태 체크 =====
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            if (!isLoggedIn || !currentUser.name) {
+                alert('로그인이 필요한 페이지입니다.');
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            return currentUser;
+        }
+        
+        // ===== 사용자 정보 표시 =====
+        function displayUserInfo(user) {
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userNameInfo').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            
+            // 가입일 포맷
+            if (user.signupDate) {
+                const date = new Date(user.signupDate);
+                document.getElementById('userSignupDate').textContent = 
+                    date.getFullYear() + '년 ' + 
+                    (date.getMonth() + 1) + '월 ' + 
+                    date.getDate() + '일';
+            }
+        }
+        
+        // ===== AI 상담 정보 표시 =====
+        function displayAIChatInfo() {
+            const remainingQuestions = parseInt(localStorage.getItem('remainingQuestions') || '5');
+            const usedQuestions = 5 - remainingQuestions;
+            
+            document.getElementById('remainingQuestions').textContent = remainingQuestions;
+            document.getElementById('usedQuestions').textContent = usedQuestions;
+        }
+        
+        // ===== 프리미엄 서비스 정보 표시 =====
+        function displayPremiumServices() {
+            const purchases = JSON.parse(localStorage.getItem('premiumPurchases') || '[]');
+            const container = document.getElementById('premiumServices');
+            
+            if (purchases.length === 0) {
+                return; // 비어있는 상태 유지
+            }
+            
+            container.innerHTML = '<ul class="service-list"></ul>';
+            const list = container.querySelector('.service-list');
+            
+            purchases.forEach(purchase => {
+                const li = document.createElement('li');
+                li.className = 'service-item';
+                li.innerHTML = `
+                    <div>
+                        <div class="service-name">${purchase.serviceName}</div>
+                        <div class="service-date">${new Date(purchase.purchaseDate).toLocaleDateString()}</div>
+                    </div>
+                    <span class="badge badge-success">결제완료</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+        
+        // ===== 최근 사주 결과 표시 =====
+        function displayRecentResults() {
+            const results = JSON.parse(localStorage.getItem('sajuResults') || '[]');
+            const container = document.getElementById('recentResults');
+            
+            if (results.length === 0) {
+                return; // 비어있는 상태 유지
+            }
+            
+            container.innerHTML = '<ul class="service-list"></ul>';
+            const list = container.querySelector('.service-list');
+            
+            // 최근 5개만 표시
+            results.slice(0, 5).forEach(result => {
+                const li = document.createElement('li');
+                li.className = 'service-item';
+                li.innerHTML = `
+                    <div>
+                        <div class="service-name">${result.name || '사주 결과'}</div>
+                        <div class="service-date">${new Date(result.date).toLocaleDateString()}</div>
+                    </div>
+                    <a href="result.html?id=${result.id}" class="btn btn-outline" style="padding: 8px 20px;">
+                        <i class="fas fa-eye"></i> 보기
+                    </a>
+                `;
+                list.appendChild(li);
+            });
+        }
+        
+        // ===== 로그아웃 =====
+        function logout() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('rememberMe');
+                
+                alert('로그아웃되었습니다.');
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // ===== 페이지 로드 =====
+        window.addEventListener('DOMContentLoaded', function() {
+            const user = checkLogin();
+            
+            if (user) {
+                displayUserInfo(user);
+                displayAIChatInfo();
+                displayPremiumServices();
+                displayRecentResults();
+                
+                console.log('✅ 마이페이지 로드 완료:', user.name);
+            }
+        });
+        
+        // ===== Global Error Handler =====
+        window.addEventListener('error', function(e) {
+            if (e.filename && !e.filename.includes('aisaju1000.com')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
