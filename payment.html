@@ -225,7 +225,7 @@
                 <div class="service-name" id="serviceName">프리미엄 분석</div>
                 <div class="service-description" id="serviceDescription">9가지 분석 포함 · 100p PDF 리포트 · 평생 보관</div>
                 
-                  <div class="price-box">
+                <div class="price-box">
                     <span class="price-label">결제 금액</span>
                     <span class="price-amount" id="priceAmount">로딩 중...</span>
                 </div>
@@ -294,7 +294,8 @@
         const urlParams = new URLSearchParams(window.location.search);
         const serviceType = urlParams.get('type') || 'premium';
         const serviceName = urlParams.get('name') || '프리미엄 분석';
-        const servicePrice = parseInt(urlParams.get('price')) || 49000;
+        // price 또는 amount 파라미터 모두 지원 (기본값 제거)
+        const servicePrice = parseInt(urlParams.get('price') || urlParams.get('amount') || '0');
         const serviceDescription = urlParams.get('desc') || '9가지 분석 포함 · 100p PDF 리포트 · 평생 보관';
         
         // 서비스 정보 표시
