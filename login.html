@@ -172,6 +172,14 @@
             text-decoration: underline;
         }
         
+        /* ===== Form Footer Links ===== */
+        .form-footer-links {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
         /* ===== Buttons ===== */
         .btn-primary {
             width: 100%;
@@ -339,8 +347,8 @@
         
         <!-- Tabs -->
         <div class="login-tabs">
-            <button class="tab-btn active">로그인</button>
-            <a href="signup.html" class="tab-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">회원가입</a>
+            <button class="tab-btn active" data-tab="login">로그인</button>
+            <button class="tab-btn" data-tab="signup">회원가입</button>
         </div>
         
         <!-- Login Form -->
@@ -361,7 +369,6 @@
                         <input type="checkbox" id="rememberMe">
                         <span>로그인 상태 유지</span>
                     </label>
-                    <a href="#" class="forgot-password">비밀번호 찾기</a>
                 </div>
                 
                 <button type="submit" class="btn-primary">
@@ -369,17 +376,8 @@
                 </button>
             </form>
             
-            <div class="divider">
-                <span>또는</span>
-            </div>
-            
-            <div class="social-login">
-                <button class="btn-social btn-google">
-                    <i class="fab fa-google"></i> Google
-                </button>
-                <button class="btn-social btn-kakao">
-                    <i class="fas fa-comment"></i> Kakao
-                </button>
+            <div class="form-footer-links">
+                <a href="#" class="forgot-password" id="forgotPasswordLink">비밀번호 찾기</a>
             </div>
         </div>
         
@@ -410,6 +408,10 @@
                     <i class="fas fa-user-plus"></i> 회원가입
                 </button>
             </form>
+            
+            <div class="form-footer-links">
+                <a href="#" class="forgot-password" id="forgotPasswordLinkSignup">비밀번호 찾기</a>
+            </div>
         </div>
         
         <!-- Footer -->
@@ -429,6 +431,16 @@
         const emailFromUrl = urlParams.get('email');
         if (emailFromUrl) {
             document.getElementById('loginEmail').value = emailFromUrl;
+        }
+        
+        // ===== URL 파라미터로 탭 전환 =====
+        const tabParam = urlParams.get('tab');
+        if (tabParam === 'signup') {
+            // 회원가입 탭으로 전환
+            document.querySelector('[data-tab="login"]').classList.remove('active');
+            document.querySelector('[data-tab="signup"]').classList.add('active');
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('signupTab').classList.add('active');
         }
         
         // ===== Tab Switching =====
@@ -598,6 +610,32 @@
             button.addEventListener('click', () => {
                 const provider = button.classList.contains('btn-google') ? 'Google' : 'Kakao';
                 showAlert(`${provider} 소셜 로그인은 준비 중입니다.`, 'error');
+            });
+        });
+        
+        // ===== 비밀번호 찾기 =====
+        const forgotPasswordLinks = document.querySelectorAll('.forgot-password');
+        forgotPasswordLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = prompt('가입하신 이메일 주소를 입력해주세요:');
+                
+                if (!email) {
+                    return;
+                }
+                
+                try {
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const user = users.find(u => u.email === email);
+                    
+                    if (user) {
+                        showAlert(`✅ 비밀번호가 이메일로 전송되었습니다.\n임시 비밀번호: ${user.password.substring(0, 4)}****\n(실제로는 이메일로 전송됩니다)`, 'success');
+                    } else {
+                        showAlert('❌ 등록되지 않은 이메일입니다.', 'error');
+                    }
+                } catch (error) {
+                    showAlert('❌ 오류가 발생했습니다: ' + error.message, 'error');
+                }
             });
         });
         
