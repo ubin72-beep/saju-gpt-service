@@ -1509,8 +1509,23 @@
                 <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
                 <li><a href="blog.html"><i class="fas fa-newspaper"></i> 블로그</a></li>
                 <li><a href="pricing.html">가격표</a></li>
-                <li><a href="login.html?tab=signup">회원가입</a></li>
-                <li><a href="login.html">로그인</a></li>
+                
+                <!-- 로그인 전 메뉴 -->
+                <li id="navSignup"><a href="login.html?tab=signup">회원가입</a></li>
+                <li id="navLogin"><a href="login.html">로그인</a></li>
+                
+                <!-- 로그인 후 메뉴 (기본 숨김) -->
+                <li id="navMypage" style="display: none;"><a href="mypage.html"><i class="fas fa-user"></i> 마이페이지</a></li>
+                <li id="navUserName" style="display: none;">
+                    <span style="color: #d4af37; font-weight: 600;">
+                        <i class="fas fa-user-circle"></i> <span id="navUserNameText">사용자</span>님
+                    </span>
+                </li>
+                <li id="navLogout" style="display: none;">
+                    <a href="#" onclick="logout(); return false;" style="color: #ff6b6b;">
+                        <i class="fas fa-sign-out-alt"></i> 로그아웃
+                    </a>
+                </li>
             </ul>
             
             <div class="language-switcher">
@@ -1558,8 +1573,23 @@
             <li><a href="saju-guide.html">명리학 가이드</a></li>
             <li><a href="blog.html">블로그</a></li>
             <li><a href="pricing.html">가격표</a></li>
-            <li><a href="login.html?tab=signup">회원가입</a></li>
-            <li><a href="login.html">로그인</a></li>
+            
+            <!-- 로그인 전 메뉴 -->
+            <li id="mobileNavSignup"><a href="login.html?tab=signup">회원가입</a></li>
+            <li id="mobileNavLogin"><a href="login.html">로그인</a></li>
+            
+            <!-- 로그인 후 메뉴 (기본 숨김) -->
+            <li id="mobileNavMypage" style="display: none;"><a href="mypage.html"><i class="fas fa-user"></i> 마이페이지</a></li>
+            <li id="mobileNavUserName" style="display: none;">
+                <span style="color: #d4af37; font-weight: 600;">
+                    <i class="fas fa-user-circle"></i> <span id="mobileNavUserNameText">사용자</span>님
+                </span>
+            </li>
+            <li id="mobileNavLogout" style="display: none;">
+                <a href="#" onclick="logout(); return false;" style="color: #ff6b6b;">
+                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -2487,6 +2517,54 @@
         }
 
         console.log('✅ 카카오톡 구독 배너 로드 완료');
+        
+        // ===== 로그인 상태 체크 및 네비게이션 업데이트 =====
+        function updateNavigation() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            if (isLoggedIn && currentUser.name) {
+                // 로그인 전 메뉴 숨기기
+                document.getElementById('navSignup').style.display = 'none';
+                document.getElementById('navLogin').style.display = 'none';
+                document.getElementById('mobileNavSignup').style.display = 'none';
+                document.getElementById('mobileNavLogin').style.display = 'none';
+                
+                // 로그인 후 메뉴 표시
+                document.getElementById('navMypage').style.display = 'block';
+                document.getElementById('navUserName').style.display = 'block';
+                document.getElementById('navLogout').style.display = 'block';
+                document.getElementById('mobileNavMypage').style.display = 'block';
+                document.getElementById('mobileNavUserName').style.display = 'block';
+                document.getElementById('mobileNavLogout').style.display = 'block';
+                
+                // 사용자 이름 표시
+                document.getElementById('navUserNameText').textContent = currentUser.name;
+                document.getElementById('mobileNavUserNameText').textContent = currentUser.name;
+                
+                console.log('✅ 로그인 상태:', currentUser.name);
+            } else {
+                // 로그인 전 상태 (기본)
+                console.log('❌ 로그인되지 않음');
+            }
+        }
+        
+        // ===== 로그아웃 기능 =====
+        function logout() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('rememberMe');
+                
+                alert('로그아웃되었습니다.');
+                
+                // 네비게이션 업데이트
+                location.reload();
+            }
+        }
+        
+        // 페이지 로드 시 네비게이션 업데이트
+        document.addEventListener('DOMContentLoaded', updateNavigation);
     </script>
 </body>
 </html>
