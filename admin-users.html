@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link active">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알람</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>회원 관리</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>회원 관리</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 통계 요약 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">전체 회원</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="total-users-count">12,543</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +12.5%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">프리미엄 회원</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="premium-users-count">2,156</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +15.7%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">오늘 가입</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="today-signups">48</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +8.3%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">활성 회원</div>
+                            <div class="stat-icon info">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="active-users">11,892</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +5.2%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 회원 목록 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">회원 목록</h3>
+                        <div class="table-filters">
+                            <div class="search-box">
+                                <input type="text" id="userSearch" placeholder="이름, 이메일 검색...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select class="filter-btn" id="planFilter">
+                                <option value="all">전체 플랜</option>
+                                <option value="free">무료</option>
+                                <option value="monthly">월간</option>
+                                <option value="annual">연간</option>
+                                <option value="premium">프리미엄</option>
+                            </select>
+                            <select class="filter-btn" id="statusFilter">
+                                <option value="all">전체 상태</option>
+                                <option value="active">활성</option>
+                                <option value="inactive">비활성</option>
+                                <option value="suspended">정지</option>
+                            </select>
+                            <button class="btn-primary" onclick="exportUsers()">
+                                <i class="fas fa-download"></i>
+                                내보내기
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 로딩 표시 -->
+                    <div id="loadingIndicator" style="display: none; text-align: center; padding: 2rem;">
+                        <div class="loading-spinner"></div>
+                        <p>회원 목록을 불러오는 중...</p>
+                    </div>
+
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>회원명</th>
+                                <th>이메일</th>
+                                <th>플랜</th>
+                                <th>가입일</th>
+                                <th>최근 로그인</th>
+                                <th>상태</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox" data-id="1"></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #c41e3a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">홍</div>
+                                        <strong>홍길동</strong>
+                                    </div>
+                                </td>
+                                <td>hong@example.com</td>
+                                <td><span class="badge primary">프리미엄</span></td>
+                                <td>2026-01-15</td>
+                                <td>2026-02-02 14:30</td>
+                                <td><span class="badge success">활성</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewUser(1)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editUser(1)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteUser(1)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox" data-id="2"></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #28a745; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">김</div>
+                                        <strong>김철수</strong>
+                                    </div>
+                                </td>
+                                <td>kim@example.com</td>
+                                <td><span class="badge warning">월간</span></td>
+                                <td>2026-01-20</td>
+                                <td>2026-02-01 09:15</td>
+                                <td><span class="badge success">활성</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewUser(2)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editUser(2)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteUser(2)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox" data-id="3"></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #17a2b8; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">이</div>
+                                        <strong>이영희</strong>
+                                    </div>
+                                </td>
+                                <td>lee@example.com</td>
+                                <td><span class="badge">무료</span></td>
+                                <td>2026-01-25</td>
+                                <td>2026-01-30 16:45</td>
+                                <td><span class="badge success">활성</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewUser(3)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editUser(3)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteUser(3)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox" data-id="4"></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #ffc107; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">박</div>
+                                        <strong>박민수</strong>
+                                    </div>
+                                </td>
+                                <td>park@example.com</td>
+                                <td><span class="badge warning">연간</span></td>
+                                <td>2026-01-10</td>
+                                <td>2026-02-02 11:20</td>
+                                <td><span class="badge success">활성</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewUser(4)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editUser(4)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteUser(4)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox" data-id="5"></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #dc3545; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">정</div>
+                                        <strong>정수현</strong>
+                                    </div>
+                                </td>
+                                <td>jung@example.com</td>
+                                <td><span class="badge">무료</span></td>
+                                <td>2026-02-01</td>
+                                <td>-</td>
+                                <td><span class="badge danger">비활성</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewUser(5)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editUser(5)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteUser(5)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">4</button>
+                        <button class="pagination-btn">5</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 회원 상세 모달 -->
+    <div class="modal-overlay" id="userDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">회원 상세 정보</h3>
+                <button class="modal-close" onclick="closeUserDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="userDetailBody">
+                <!-- 회원 정보가 여기에 표시됩니다 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeUserDetailModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 회원 관리 스크립트 -->
+    <script>
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 전체 선택
+        document.getElementById('selectAll')?.addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.user-checkbox');
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+        });
+
+        // 검색
+        document.getElementById('userSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // 플랜 필터
+        document.getElementById('planFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badge = row.querySelector('.badge');
+                    const text = badge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'free' && text === '무료') ||
+                        (filter === 'monthly' && text === '월간') ||
+                        (filter === 'annual' && text === '연간') ||
+                        (filter === 'premium' && text === '프리미엄');
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 상태 필터
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const statusBadge = row.querySelectorAll('.badge')[1];
+                    const text = statusBadge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'active' && text === '활성') ||
+                        (filter === 'inactive' && text === '비활성') ||
+                        (filter === 'suspended' && text === '정지');
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 회원 상세보기
+        function viewUser(userId) {
+            const modal = document.getElementById('userDetailModal');
+            const body = document.getElementById('userDetailBody');
+            
+            // 샘플 데이터
+            body.innerHTML = `
+                <div style="padding: 1rem;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #c41e3a; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin-bottom: 1rem;">홍</div>
+                        <h3>홍길동</h3>
+                        <p style="color: #666;">hong@example.com</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">회원 ID</label>
+                        <input type="text" class="form-control" value="${userId}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">플랜</label>
+                        <input type="text" class="form-control" value="프리미엄" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">가입일</label>
+                        <input type="text" class="form-control" value="2026-01-15" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">최근 로그인</label>
+                        <input type="text" class="form-control" value="2026-02-02 14:30" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">상태</label>
+                        <span class="badge success">활성</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">총 사주 분석 횟수</label>
+                        <input type="text" class="form-control" value="24회" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">총 결제 금액</label>
+                        <input type="text" class="form-control" value="₩150,000" readonly>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // 회원 수정
+        function editUser(userId) {
+            alert(`회원 ${userId} 수정 기능은 준비 중입니다.`);
+        }
+
+        // 회원 삭제
+        function deleteUser(userId) {
+            if (confirm('정말 이 회원을 삭제하시겠습니까?')) {
+                alert(`회원 ${userId}가 삭제되었습니다.`);
+                // 실제로는 API 호출
+            }
+        }
+
+        // 내보내기
+        function exportUsers() {
+            alert('회원 목록을 CSV 파일로 내보냅니다.');
+            // 실제로는 CSV 다운로드 기능 구현
+        }
+
+        // 모달 닫기
+        function closeUserDetailModal() {
+            document.getElementById('userDetailModal').classList.remove('active');
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                if (typeof adminLogout === 'function') {
+                    adminLogout();
+                    window.location.href = 'admin-login.html';
+                } else {
+                    localStorage.clear();
+                    window.location.href = 'admin-login.html';
+                }
+            }
+        }
+
+        console.log('✅ 회원 관리 페이지 로드 완료');
+    </script>
+</body>
+</html>
