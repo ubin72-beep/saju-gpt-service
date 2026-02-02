@@ -21,48 +21,40 @@ document.addEventListener('DOMContentLoaded', async function() {
  * 관리자 인증 확인
  */
 function checkAdminAuth() {
-    // auth-api.js의 함수 사용
-    if (!isLoggedIn()) {
-        alert('로그인이 필요합니다');
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    if (!isAdmin()) {
-        alert('관리자 권한이 필요합니다');
-        window.location.href = 'index.html';
-        return;
+    // admin-auth.js의 인증 시스템 사용
+    if (typeof isAdminLoggedIn === 'function') {
+        if (!isAdminLoggedIn()) {
+            // admin.html의 인증 체크가 이미 처리함
+            return;
+        }
+        console.log('✅ admin-dashboard.js: 관리자 인증 확인 완료');
+    } else {
+        // admin-auth.js가 없으면 일반 인증 시스템 체크 (백업)
+        if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+            alert('로그인이 필요합니다');
+            window.location.href = 'admin-login.html';
+            return;
+        }
+        
+        if (typeof isAdmin === 'function' && !isAdmin()) {
+            alert('관리자 권한이 필요합니다');
+            window.location.href = 'index.html';
+            return;
+        }
     }
     
     // 관리자 정보 표시
-    const user = getCurrentUser();
-    const userInfoElement = document.querySelector('.user-info h4');
-    if (userInfoElement) {
-        userInfoElement.textContent = user.name || '관리자';
+    if (typeof getCurrentAdmin === 'function') {
+        const admin = getCurrentAdmin();
+        if (admin) {
+            const userInfoElement = document.querySelector('.user-info h4');
+            if (userInfoElement) {
+                userInfoElement.textContent = admin.name || '관리자';
+            }
+        }
     }
 }
 
-/**
- * 대시보드 통계 로드
- */
-async function loadDashboardStats() {
-    try {
-        // API 호출 (auth-api.js의 apiCall 함수 사용)
-        const data = await apiCall('/admin/stats', {
-            method: 'GET'
-        });
-        
-        if (!data) return;
-        
-        // 통계 데이터 업데이트
-        updateStatCards(data.stats);
-        updateRecentUsers(data.recentUsers);
-        
-    } catch (error) {
-        console.error('통계 로드 오류:', error);
-        alert('통계 데이터를 불러오는데 실패했습니다');
-    }
-}
 
 /**
  * 통계 카드 업데이트
