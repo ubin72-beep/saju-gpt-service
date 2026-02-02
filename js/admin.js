@@ -97,6 +97,12 @@ function updateAdminInfo(adminData) {
 
 async function loadAdminStats() {
   try {
+    // 백엔드가 배포되지 않았으므로 샘플 데이터 사용
+    console.log('⚠️ 백엔드 미배포: 샘플 데이터 사용');
+    loadSampleData();
+    
+    // 백엔드 배포 후 아래 코드 활성화
+    /*
     showLoading('통계 데이터 로딩 중...');
     
     const response = await AdminAPI.getStats();
@@ -117,21 +123,14 @@ async function loadAdminStats() {
       
       console.log('✅ 통계 데이터 로드 완료');
     }
+    */
     
   } catch (error) {
     console.error('❌ 통계 로드 실패:', error);
     hideLoading();
-    
-    // 에러 시 샘플 데이터 표시 (개발용)
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      console.log('⚠️ 개발 모드: 샘플 데이터 사용');
-      loadSampleData();
-    } else {
-      showError('통계 데이터를 불러오는데 실패했습니다.');
-    }
+    loadSampleData();
   }
 }
-
 // ==========================================
 // 메인 통계 카드 업데이트 (그래프 없음)
 // ==========================================
