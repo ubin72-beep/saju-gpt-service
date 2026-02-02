@@ -1,158 +1,151 @@
 /**
  * AI 사주 천년지기 - 관리자 대시보드 스크립트 (API 연동)
+ * 
+ * 이 스크립트는 관리자 대시보드의 통계 데이터를 로드하고 표시합니다.
+ * auth-api.js의 헬퍼 함수를 사용합니다.
  */
 
-// 페이지 로드 시 실행
-document.addEventListener('DOMContentLoaded', async function() {
-    // 관리자 인증 확인
+// DOMContentLoaded 이벤트
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Admin Dashboard 초기화 시작');
+    
     checkAdminAuth();
-    
-    // 대시보드 데이터 로드
-    await loadDashboardStats();
-    
-    // 내비게이션 이벤트 설정
+    loadDashboardStats();
     setupNavigation();
-    
-    // 로그아웃 버튼 이벤트
     setupLogout();
+    
+    console.log('✅ Admin Dashboard 로드 완료');
 });
 
 /**
  * 관리자 인증 확인
  */
 function checkAdminAuth() {
-    // admin-auth.js의 인증 시스템 사용
-    if (typeof isAdminLoggedIn === 'function') {
-        if (!isAdminLoggedIn()) {
-            // admin.html의 인증 체크가 이미 처리함
-            return;
-        }
-        console.log('✅ admin-dashboard.js: 관리자 인증 확인 완료');
-    } else {
-        // admin-auth.js가 없으면 일반 인증 시스템 체크 (백업)
-        if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
-            alert('로그인이 필요합니다');
-            window.location.href = 'admin-login.html';
-            return;
-        }
-        
-        if (typeof isAdmin === 'function' && !isAdmin()) {
-            alert('관리자 권한이 필요합니다');
-            window.location.href = 'index.html';
-            return;
-        }
+    // isLoggedIn과 isAdmin 함수는 auth-api.js에서 제공
+    if (!isLoggedIn()) {
+        alert('로그인이 필요합니다');
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    if (!isAdmin()) {
+        alert('관리자 권한이 필요합니다');
+        window.location.href = 'index.html';
+        return;
     }
     
     // 관리자 정보 표시
-    if (typeof getCurrentAdmin === 'function') {
-        const admin = getCurrentAdmin();
-        if (admin) {
-            const userInfoElement = document.querySelector('.user-info h4');
-            if (userInfoElement) {
-                userInfoElement.textContent = admin.name || '관리자';
-            }
-        }
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+        const adminNameElements = document.querySelectorAll('.admin-name');
+        adminNameElements.forEach(el => {
+            el.textContent = currentUser.name || '관리자';
+        });
     }
 }
 
+/**
+ * 대시보드 통계 로드
+ */
+function loadDashboardStats() {
+    console.log('📊 대시보드 통계 로딩 중...');
+    
+    // admin.js의 loadAdminStats()가 처리하므로 여기서는 로그만 남김
+    console.log('ℹ️ 통계 로드는 admin.js의 loadAdminStats()에서 처리됩니다');
+    
+    /* 백엔드 배포 시 활성화
+    apiCall('/admin/stats', 'GET')
+        .then(response => {
+            if (response.success) {
+                updateStatCards(response.data);
+                updateRecentUsers(response.data.recentUsers);
+            } else {
+                console.error('통계 로드 실패:', response.message);
+                alert('통계 데이터를 불러오는데 실패했습니다');
+            }
+        })
+        .catch(error => {
+            console.error('통계 로드 에러:', error);
+        });
+    */
+}
 
 /**
  * 통계 카드 업데이트
  */
-function updateStatCards(stats) {
-    // 총 사용자 수
-    const totalUsersCard = document.querySelector('.stat-card .stat-number');
-    if (totalUsersCard) {
-        totalUsersCard.textContent = formatNumber(stats.totalUsers);
+function updateStatCards(data) {
+    // 총 회원 수
+    const totalUsersEl = document.querySelector('[data-stat="totalUsers"]');
+    if (totalUsersEl && data.totalUsers !== undefined) {
+        totalUsersEl.textContent = formatNumber(data.totalUsers);
     }
     
-    // 오늘 가입자
-    const todayUsersCard = document.querySelectorAll('.stat-card .stat-number')[1];
-    if (todayUsersCard) {
-        todayUsersCard.textContent = '+' + formatNumber(stats.todayUsers);
+    // 오늘 방문자
+    const todayUsersEl = document.querySelector('[data-stat="todayUsers"]');
+    if (todayUsersEl && data.todayUsers !== undefined) {
+        todayUsersEl.textContent = formatNumber(data.todayUsers);
     }
     
     // 이번 달 매출
-    const monthlyRevenueCard = document.querySelectorAll('.stat-card .stat-number')[2];
-    if (monthlyRevenueCard) {
-        monthlyRevenueCard.textContent = '₩' + formatNumber(stats.monthlyRevenue);
+    const monthlyRevenueEl = document.querySelector('[data-stat="monthlyRevenue"]');
+    if (monthlyRevenueEl && data.monthlyRevenue !== undefined) {
+        monthlyRevenueEl.textContent = formatCurrency(data.monthlyRevenue);
     }
     
-    // 프리미엄 사용자
-    const premiumUsersCard = document.querySelectorAll('.stat-card .stat-number')[3];
-    if (premiumUsersCard) {
-        premiumUsersCard.textContent = formatNumber(stats.premiumUsers);
+    // 프리미엄 회원
+    const premiumMembersEl = document.querySelector('[data-stat="premiumMembers"]');
+    if (premiumMembersEl && data.premiumMembers !== undefined) {
+        premiumMembersEl.textContent = formatNumber(data.premiumMembers);
     }
 }
 
 /**
- * 최근 가입자 업데이트
+ * 최근 가입 회원 업데이트
  */
 function updateRecentUsers(users) {
-    const usersTable = document.getElementById('usersTable');
-    if (!usersTable) return;
+    const container = document.getElementById('recentUsersContainer');
+    if (!container || !users || users.length === 0) return;
     
-    usersTable.innerHTML = users.map((user, index) => `
+    container.innerHTML = users.map(user => `
+        <div class="recent-user-item">
+            <div class="user-avatar">${user.name.charAt(0)}</div>
+            <div class="user-info">
+                <div class="user-name">${user.name}</div>
+                <div class="user-email">${user.email}</div>
+            </div>
+            <div class="user-date">${formatDate(user.createdAt)}</div>
+        </div>
+    `).join('');
+}
+
+/**
+ * 최근 주문 업데이트
+ */
+function updateRecentOrders(orders) {
+    const tbody = document.getElementById('recentOrdersTable');
+    if (!tbody || !orders || orders.length === 0) return;
+    
+    tbody.innerHTML = orders.map(order => `
         <tr>
-            <td><input type="checkbox"></td>
-            <td>${index + 1}</td>
-            <td>${escapeHtml(user.name)}</td>
-            <td>${escapeHtml(user.email)}</td>
-            <td>
-                <span class="badge ${user.isPremium ? 'badge-success' : 'badge-secondary'}">
-                    ${user.isPremium ? '프리미엄' : '무료'}
-                </span>
-            </td>
-            <td>${formatDate(user.createdAt)}</td>
-            <td>₩0</td>
-            <td>
-                <span class="badge badge-success">활성</span>
-            </td>
-            <td>
-                <button class="btn-icon" title="상세보기">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="btn-icon" title="수정">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn-icon" title="삭제">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
+            <td>${order.orderNumber}</td>
+            <td>${order.userName}</td>
+            <td>${order.serviceName}</td>
+            <td>${formatCurrency(order.amount)}</td>
+            <td><span class="badge badge-${order.status}">${getStatusLabel(order.status)}</span></td>
+            <td>${formatDate(order.createdAt)}</td>
         </tr>
     `).join('');
 }
 
 /**
  * 내비게이션 설정
+ * 주석 처리: 별도 페이지 방식으로 변경됨 (admin.html, admin-users.html 등)
  */
 function setupNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.admin-section');
+    // SPA 방식 제거 - 각 페이지는 독립적인 HTML 파일
+    // 링크 클릭을 막지 않음 - 브라우저 기본 동작 허용
     
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // 모든 내비게이션 아이템에서 active 제거
-            navItems.forEach(nav => nav.classList.remove('active'));
-            
-            // 클릭한 아이템에 active 추가
-            this.classList.add('active');
-            
-            // 모든 섹션 숨기기
-            sections.forEach(section => section.style.display = 'none');
-            
-            // 해당 섹션 표시
-            const sectionId = this.getAttribute('data-section') + 'Section';
-            const targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.style.display = 'block';
-            }
-        });
-    });
-    
-    // 사이드바 토글
+    // 사이드바 토글만 유지
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('adminSidebar');
     
@@ -171,60 +164,89 @@ function setupLogout() {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            if (confirm('로그아웃 하시겠습니까?')) {
-                logout(); // auth-api.js의 logout 함수 사용
-            }
+            handleLogout();
         });
     }
 }
 
 /**
- * 유틸리티 함수
+ * 로그아웃 처리
+ */
+function handleLogout() {
+    if (confirm('로그아웃하시겠습니까?')) {
+        // auth-api.js의 logout 함수 사용 또는 localStorage 직접 삭제
+        if (typeof logout === 'function') {
+            logout();
+        } else {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+        }
+        window.location.href = 'login.html';
+    }
+}
+
+/**
+ * 유틸리티 함수들
  */
 
-// 숫자 포맷팅
 function formatNumber(num) {
+    if (num === undefined || num === null) return '0';
     return new Intl.NumberFormat('ko-KR').format(num);
 }
 
-// 날짜 포맷팅
+function formatCurrency(amount) {
+    if (amount === undefined || amount === null) return '₩0';
+    return new Intl.NumberFormat('ko-KR', {
+        style: 'currency',
+        currency: 'KRW'
+    }).format(amount);
+}
+
 function formatDate(dateString) {
+    if (!dateString) return '-';
     const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-    });
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
-// HTML 이스케이프
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+function getStatusLabel(status) {
+    const labels = {
+        'pending': '대기중',
+        'processing': '처리중',
+        'completed': '완료',
+        'cancelled': '취소'
+    };
+    return labels[status] || status;
 }
 
-// 차트 초기화 (Chart.js 사용)
-function initCharts() {
-    // 매출 차트
-    const revenueCtx = document.getElementById('revenueChart');
-    if (revenueCtx) {
-        new Chart(revenueCtx, {
-            type: 'line',
-            data: {
-                labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
-                datasets: [{
-                    label: '월별 매출',
-                    data: [500000, 750000, 1200000, 1800000, 2500000, 3000000],
-                    borderColor: '#c41e3a',
-                    backgroundColor: 'rgba(196, 30, 58, 0.1)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
+/**
+ * 현재 사용자 정보 가져오기
+ */
+function getCurrentUser() {
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr) return null;
+    
+    try {
+        return JSON.parse(userStr);
+    } catch (e) {
+        console.error('사용자 정보 파싱 실패:', e);
+        return null;
     }
+}
+
+/**
+ * 로그인 여부 확인
+ */
+function isLoggedIn() {
+    return !!localStorage.getItem('authToken');
+}
+
+/**
+ * 관리자 권한 확인
+ */
+function isAdmin() {
+    const user = getCurrentUser();
+    return user && (user.role === 'admin' || user.role === 'super_admin');
 }
