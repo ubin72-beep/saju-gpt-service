@@ -29,42 +29,65 @@ document.addEventListener('DOMContentLoaded', function() {
 // ==========================================
 
 function checkAdminAuth() {
-  const token = localStorage.getItem('authToken');
-  const user = localStorage.getItem('currentUser');
-  
-  if (!token || !user) {
-    alert('로그인이 필요합니다.');
-    window.location.href = '../login.html';
-    return;
-  }
-  
-  try {
-    const userData = JSON.parse(user);
-    
-    // 관리자 권한 확인
-    if (userData.role !== 'admin' && userData.role !== 'super_admin') {
-      alert('관리자 권한이 필요합니다.');
-      window.location.href = '../index.html';
+  // admin-auth.js의 인증 시스템 사용
+  if (typeof isAdminLoggedIn === 'function' && typeof getCurrentAdmin === 'function') {
+    if (!isAdminLoggedIn()) {
+      // admin-auth.js의 checkAdminAccess()가 이미 처리함
       return;
     }
     
-    console.log('✅ 관리자 인증 확인:', userData.name, `(${userData.role})`);
+    const admin = getCurrentAdmin();
+    if (admin) {
+      console.log('✅ 관리자 인증 확인:', admin.name, `(${admin.role})`);
+      updateAdminInfo(admin);
+    }
+  } else {
+    // admin-auth.js가 로드되지 않은 경우 (fallback)
+    console.warn('⚠️ admin-auth.js가 로드되지 않았습니다.');
     
-    // 관리자 이름 표시
-    updateAdminInfo(userData);
+    // 일반 인증 시스템 체크 (백업)
+    const token = localStorage.getItem('authToken');
+    const user = localStorage.getItem('currentUser');
     
-  } catch (error) {
-    console.error('사용자 정보 파싱 오류:', error);
-    localStorage.clear();
-    window.location.href = '../login.html';
+    if (!token || !user) {
+      alert('로그인이 필요합니다.');
+      window.location.href = 'admin-login.html';
+      return;
+    }
+    
+    try {
+      const userData = JSON.parse(user);
+      
+      // 관리자 권한 확인
+      if (userData.role !== 'admin' && userData.role !== 'super_admin') {
+        alert('관리자 권한이 필요합니다.');
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      console.log('✅ 관리자 인증 확인 (일반):', userData.name, `(${userData.role})`);
+      updateAdminInfo(userData);
+      
+    } catch (error) {
+      console.error('사용자 정보 파싱 오류:', error);
+      localStorage.clear();
+      window.location.href = 'admin-login.html';
+    }
   }
 }
 
-function updateAdminInfo(userData) {
+function updateAdminInfo(adminData) {
   // 관리자 이름 표시
   const adminNameElements = document.querySelectorAll('.admin-name');
   adminNameElements.forEach(el => {
-    el.textContent = userData.name || '관리자';
+    el.textContent = adminData.name || '관리자';
+  });
+  
+  // 프로필 아바타 업데이트 (있으면)
+  const profileAvatars = document.querySelectorAll('.profile-avatar');
+  profileAvatars.forEach(el => {
+    const initials = (adminData.name || '관리자').substring(0, 2);
+    el.textContent = initials;
   });
 }
 
