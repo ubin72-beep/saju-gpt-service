@@ -324,6 +324,22 @@
     <script src="js/config.js"></script>
     <script src="js/auth-api.js"></script>
     <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 (즉시 실행) -->
+    <script>
+        // 페이지 로드 시 관리자 인증 확인
+        if (typeof checkAdminAccess === 'function') {
+            if (!checkAdminAccess()) {
+                // checkAdminAccess()가 false를 반환하면 여기서 중단
+                // (이미 admin-login.html로 리다이렉트됨)
+            }
+        } else {
+            // admin-auth.js가 로드되지 않은 경우
+            console.error('❌ admin-auth.js가 로드되지 않았습니다.');
+            alert('⚠️ 시스템 오류가 발생했습니다. 페이지를 새로고침해주세요.');
+        }
+    </script>
+    
     <script src="js/admin-dashboard.js"></script>
     <script src="js/admin.js"></script>
 
