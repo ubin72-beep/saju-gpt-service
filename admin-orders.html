@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문/결제 관리 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알람</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>주문/결제 관리</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>주문/결제</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 통계 요약 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">오늘 주문</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="today-orders">42</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +18.2%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">오늘 매출</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-won-sign"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="today-revenue">₩1,240,000</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +25.3%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">이번 달 총 매출</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="monthly-revenue">₩8,542,000</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +23.1%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">환불 대기</div>
+                            <div class="stat-icon danger">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="pending-refunds">3</div>
+                        <div class="stat-change">
+                            <i class="fas fa-minus"></i> 0%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주문 목록 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">주문 목록</h3>
+                        <div class="table-filters">
+                            <div class="search-box">
+                                <input type="text" id="orderSearch" placeholder="주문번호, 회원명 검색...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select class="filter-btn" id="statusFilter">
+                                <option value="all">전체 상태</option>
+                                <option value="pending">결제 대기</option>
+                                <option value="paid">결제 완료</option>
+                                <option value="completed">배송 완료</option>
+                                <option value="cancelled">취소</option>
+                                <option value="refunded">환불</option>
+                            </select>
+                            <select class="filter-btn" id="dateFilter">
+                                <option value="today">오늘</option>
+                                <option value="week">최근 7일</option>
+                                <option value="month">이번 달</option>
+                                <option value="all">전체</option>
+                            </select>
+                            <button class="btn-primary" onclick="exportOrders()">
+                                <i class="fas fa-download"></i>
+                                내보내기
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 로딩 표시 -->
+                    <div id="loadingIndicator" style="display: none; text-align: center; padding: 2rem;">
+                        <div class="loading-spinner"></div>
+                        <p>주문 목록을 불러오는 중...</p>
+                    </div>
+
+                    <table class="data-table" id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th>주문번호</th>
+                                <th>회원명</th>
+                                <th>상품/서비스</th>
+                                <th>금액</th>
+                                <th>결제방법</th>
+                                <th>상태</th>
+                                <th>주문일시</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><strong>#ORD20260203001</strong></td>
+                                <td>홍길동</td>
+                                <td>프리미엄 사주 분석</td>
+                                <td><strong>₩50,000</strong></td>
+                                <td>카드</td>
+                                <td><span class="badge success">결제 완료</span></td>
+                                <td>2026-02-03 14:30</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260203001')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260203001')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260203001')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD20260203002</strong></td>
+                                <td>김철수</td>
+                                <td>월간 구독</td>
+                                <td><strong>₩29,900</strong></td>
+                                <td>카카오페이</td>
+                                <td><span class="badge success">결제 완료</span></td>
+                                <td>2026-02-03 13:15</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260203002')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260203002')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260203002')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD20260203003</strong></td>
+                                <td>이영희</td>
+                                <td>토정비결 2026</td>
+                                <td><strong>₩19,900</strong></td>
+                                <td>토스</td>
+                                <td><span class="badge warning">결제 대기</span></td>
+                                <td>2026-02-03 12:45</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260203003')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260203003')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260203003')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD20260203004</strong></td>
+                                <td>박민수</td>
+                                <td>연간 구독</td>
+                                <td><strong>₩299,000</strong></td>
+                                <td>카드</td>
+                                <td><span class="badge success">결제 완료</span></td>
+                                <td>2026-02-03 11:20</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260203004')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260203004')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260203004')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD20260203005</strong></td>
+                                <td>정수현</td>
+                                <td>궁합 분석</td>
+                                <td><strong>₩35,000</strong></td>
+                                <td>네이버페이</td>
+                                <td><span class="badge danger">취소</span></td>
+                                <td>2026-02-03 10:05</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260203005')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260203005')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260203005')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD20260202010</strong></td>
+                                <td>최영수</td>
+                                <td>타로 상담</td>
+                                <td><strong>₩25,000</strong></td>
+                                <td>카드</td>
+                                <td><span class="badge info">환불</span></td>
+                                <td>2026-02-02 18:30</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrder('ORD20260202010')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="updateOrderStatus('ORD20260202010')" title="상태변경">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="refundOrder('ORD20260202010')" title="환불처리">
+                                            <i class="fas fa-undo"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">4</button>
+                        <button class="pagination-btn">5</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 주문 상세 모달 -->
+    <div class="modal-overlay" id="orderDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">주문 상세 정보</h3>
+                <button class="modal-close" onclick="closeOrderDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="orderDetailBody">
+                <!-- 주문 정보가 여기에 표시됩니다 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeOrderDetailModal()">닫기</button>
+                <button class="btn-primary" onclick="printOrder()">
+                    <i class="fas fa-print"></i>
+                    인쇄
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상태 변경 모달 -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">주문 상태 변경</h3>
+                <button class="modal-close" onclick="closeStatusModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">현재 상태</label>
+                    <input type="text" class="form-control" id="currentStatus" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">변경할 상태</label>
+                    <select class="form-control" id="newStatus">
+                        <option value="pending">결제 대기</option>
+                        <option value="paid">결제 완료</option>
+                        <option value="completed">배송 완료</option>
+                        <option value="cancelled">취소</option>
+                        <option value="refunded">환불</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">변경 사유</label>
+                    <textarea class="form-control" id="statusReason" rows="3" placeholder="상태 변경 사유를 입력하세요"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeStatusModal()">취소</button>
+                <button class="btn-primary" onclick="confirmStatusChange()">변경</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 주문 관리 스크립트 -->
+    <script>
+        let currentOrderId = null;
+
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 검색
+        document.getElementById('orderSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // 상태 필터
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badge = row.querySelector('.badge');
+                    const text = badge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'pending' && text.includes('대기')) ||
+                        (filter === 'paid' && text.includes('완료') && !text.includes('배송')) ||
+                        (filter === 'completed' && text.includes('배송')) ||
+                        (filter === 'cancelled' && text.includes('취소')) ||
+                        (filter === 'refunded' && text.includes('환불'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 주문 상세보기
+        function viewOrder(orderId) {
+            const modal = document.getElementById('orderDetailModal');
+            const body = document.getElementById('orderDetailBody');
+            
+            // 샘플 데이터
+            body.innerHTML = `
+                <div style="padding: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">주문번호</label>
+                        <input type="text" class="form-control" value="#${orderId}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">주문자 정보</label>
+                        <input type="text" class="form-control" value="홍길동 (hong@example.com)" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">상품/서비스</label>
+                        <input type="text" class="form-control" value="프리미엄 사주 분석" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">주문 금액</label>
+                        <input type="text" class="form-control" value="₩50,000" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">할인 금액</label>
+                        <input type="text" class="form-control" value="₩0" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">최종 결제 금액</label>
+                        <input type="text" class="form-control" value="₩50,000" readonly style="font-weight: 600; font-size: 1.1em;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">결제 방법</label>
+                        <input type="text" class="form-control" value="신용카드 (****-****-****-1234)" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">결제 상태</label>
+                        <span class="badge success">결제 완료</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">주문 일시</label>
+                        <input type="text" class="form-control" value="2026-02-03 14:30:25" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">결제 승인 번호</label>
+                        <input type="text" class="form-control" value="1234567890" readonly>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // 주문 상태 변경
+        function updateOrderStatus(orderId) {
+            currentOrderId = orderId;
+            const modal = document.getElementById('statusModal');
+            
+            // 현재 상태 표시
+            document.getElementById('currentStatus').value = '결제 완료';
+            
+            modal.classList.add('active');
+        }
+
+        // 상태 변경 확인
+        function confirmStatusChange() {
+            const newStatus = document.getElementById('newStatus').value;
+            const reason = document.getElementById('statusReason').value;
+            
+            if (!reason.trim()) {
+                alert('변경 사유를 입력해주세요.');
+                return;
+            }
+            
+            alert(`주문 ${currentOrderId}의 상태가 변경되었습니다.`);
+            closeStatusModal();
+            // 실제로는 API 호출
+        }
+
+        // 환불 처리
+        function refundOrder(orderId) {
+            if (confirm('이 주문을 환불 처리하시겠습니까?')) {
+                alert(`주문 ${orderId}이 환불 처리되었습니다.`);
+                // 실제로는 API 호출
+            }
+        }
+
+        // 내보내기
+        function exportOrders() {
+            alert('주문 목록을 엑셀 파일로 내보냅니다.');
+            // 실제로는 엑셀 다운로드 기능 구현
+        }
+
+        // 인쇄
+        function printOrder() {
+            window.print();
+        }
+
+        // 모달 닫기
+        function closeOrderDetailModal() {
+            document.getElementById('orderDetailModal').classList.remove('active');
+        }
+
+        function closeStatusModal() {
+            document.getElementById('statusModal').classList.remove('active');
+            currentOrderId = null;
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                if (typeof adminLogout === 'function') {
+                    adminLogout();
+                    window.location.href = 'admin-login.html';
+                } else {
+                    localStorage.clear();
+                    window.location.href = 'admin-login.html';
+                }
+            }
+        }
+
+        console.log('✅ 주문/결제 관리 페이지 로드 완료');
+    </script>
+</body>
+</html>
