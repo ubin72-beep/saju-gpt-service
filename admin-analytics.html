@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통계 분석 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알림</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>통계 분석</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>통계</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <select class="filter-btn" id="periodFilter" style="margin-right: 1rem;">
+                    <option value="today">오늘</option>
+                    <option value="week">최근 7일</option>
+                    <option value="month" selected>이번 달</option>
+                    <option value="year">올해</option>
+                </select>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 핵심 지표 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">총 방문자</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">45,823</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +18.2% 전월 대비
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">신규 회원</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +12.5% 전월 대비
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">총 매출</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-won-sign"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">₩8,542,000</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +23.1% 전월 대비
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">전환율</div>
+                            <div class="stat-icon info">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">3.8%</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +0.5% 전월 대비
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 차트 영역 -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- 방문자 추이 차트 -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">방문자 추이</h3>
+                        </div>
+                        <div style="padding: 1.5rem; height: 350px;">
+                            <canvas id="visitorsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 매출 추이 차트 -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">매출 추이</h3>
+                        </div>
+                        <div style="padding: 1.5rem; height: 350px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 서비스 이용 통계 -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- 서비스별 이용 현황 -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">서비스별 이용 현황</h3>
+                        </div>
+                        <div style="padding: 1.5rem; height: 350px;">
+                            <canvas id="servicesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 회원 유형별 분포 -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3 class="table-title">회원 유형별 분포</h3>
+                        </div>
+                        <div style="padding: 1.5rem; height: 350px;">
+                            <canvas id="memberTypesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상세 통계 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">일별 상세 통계</h3>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>방문자</th>
+                                <th>신규 회원</th>
+                                <th>사주 분석</th>
+                                <th>타로 상담</th>
+                                <th>매출</th>
+                                <th>전환율</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>2026-02-03</strong></td>
+                                <td>1,847</td>
+                                <td>48</td>
+                                <td>127</td>
+                                <td>85</td>
+                                <td>₩324,000</td>
+                                <td><span class="badge success">4.2%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-02-02</strong></td>
+                                <td>1,623</td>
+                                <td>42</td>
+                                <td>115</td>
+                                <td>78</td>
+                                <td>₩298,000</td>
+                                <td><span class="badge success">3.9%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-02-01</strong></td>
+                                <td>1,952</td>
+                                <td>55</td>
+                                <td>142</td>
+                                <td>92</td>
+                                <td>₩387,000</td>
+                                <td><span class="badge success">4.5%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-01-31</strong></td>
+                                <td>1,534</td>
+                                <td>38</td>
+                                <td>98</td>
+                                <td>67</td>
+                                <td>₩256,000</td>
+                                <td><span class="badge warning">3.5%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-01-30</strong></td>
+                                <td>1,421</td>
+                                <td>35</td>
+                                <td>89</td>
+                                <td>61</td>
+                                <td>₩234,000</td>
+                                <td><span class="badge warning">3.3%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-01-29</strong></td>
+                                <td>1,678</td>
+                                <td>44</td>
+                                <td>108</td>
+                                <td>74</td>
+                                <td>₩289,000</td>
+                                <td><span class="badge success">3.8%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2026-01-28</strong></td>
+                                <td>1,789</td>
+                                <td>47</td>
+                                <td>124</td>
+                                <td>82</td>
+                                <td>₩312,000</td>
+                                <td><span class="badge success">4.0%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 통계 분석 스크립트 -->
+    <script>
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 방문자 추이 차트
+        const visitorsCtx = document.getElementById('visitorsChart');
+        if (visitorsCtx) {
+            new Chart(visitorsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['01/28', '01/29', '01/30', '01/31', '02/01', '02/02', '02/03'],
+                    datasets: [{
+                        label: '방문자',
+                        data: [1789, 1678, 1421, 1534, 1952, 1623, 1847],
+                        borderColor: '#c41e3a',
+                        backgroundColor: 'rgba(196, 30, 58, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 매출 추이 차트
+        const revenueCtx = document.getElementById('revenueChart');
+        if (revenueCtx) {
+            new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['01/28', '01/29', '01/30', '01/31', '02/01', '02/02', '02/03'],
+                    datasets: [{
+                        label: '매출 (천원)',
+                        data: [312, 289, 234, 256, 387, 298, 324],
+                        backgroundColor: '#28a745',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₩' + value + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 서비스별 이용 현황 차트
+        const servicesCtx = document.getElementById('servicesChart');
+        if (servicesCtx) {
+            new Chart(servicesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['사주 분석', '타로 상담', '꿈 해몽', '토정비결', '궁합 분석'],
+                    datasets: [{
+                        data: [35, 25, 15, 15, 10],
+                        backgroundColor: [
+                            '#c41e3a',
+                            '#28a745',
+                            '#17a2b8',
+                            '#ffc107',
+                            '#6c757d'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // 회원 유형별 분포 차트
+        const memberTypesCtx = document.getElementById('memberTypesChart');
+        if (memberTypesCtx) {
+            new Chart(memberTypesCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['무료 회원', '월간 구독', '연간 구독', '프리미엄'],
+                    datasets: [{
+                        data: [65, 15, 10, 10],
+                        backgroundColor: [
+                            '#6c757d',
+                            '#17a2b8',
+                            '#ffc107',
+                            '#c41e3a'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // 기간 필터 변경
+        document.getElementById('periodFilter')?.addEventListener('change', function(e) {
+            console.log('기간 변경:', e.target.value);
+            // 실제로는 데이터 다시 로드
+        });
+
+        console.log('✅ 통계 분석 페이지 로드 완료');
+    </script>
+</body>
+</html>
