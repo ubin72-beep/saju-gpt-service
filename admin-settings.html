@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알림</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link active">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>설정</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>설정</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 설정 섹션 -->
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+                    <!-- 설정 메뉴 -->
+                    <div class="table-card" style="height: fit-content;">
+                        <div style="padding: 1rem;">
+                            <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem;">설정 메뉴</h3>
+                            <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <a href="#general" class="settings-menu-item active" onclick="showSection('general', event)">
+                                    <i class="fas fa-cog"></i>
+                                    <span>일반 설정</span>
+                                </a>
+                                <a href="#profile" class="settings-menu-item" onclick="showSection('profile', event)">
+                                    <i class="fas fa-user"></i>
+                                    <span>프로필</span>
+                                </a>
+                                <a href="#security" class="settings-menu-item" onclick="showSection('security', event)">
+                                    <i class="fas fa-lock"></i>
+                                    <span>보안</span>
+                                </a>
+                                <a href="#payment" class="settings-menu-item" onclick="showSection('payment', event)">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>결제 설정</span>
+                                </a>
+                                <a href="#email" class="settings-menu-item" onclick="showSection('email', event)">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>이메일</span>
+                                </a>
+                                <a href="#api" class="settings-menu-item" onclick="showSection('api', event)">
+                                    <i class="fas fa-code"></i>
+                                    <span>API 설정</span>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- 설정 내용 -->
+                    <div>
+                        <!-- 일반 설정 -->
+                        <div id="general-section" class="settings-section">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">일반 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <div class="form-group">
+                                        <label class="form-label">사이트 이름</label>
+                                        <input type="text" class="form-control" value="AI 사주 천년지기">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">사이트 설명</label>
+                                        <textarea class="form-control" rows="3">AI 기반 정확한 사주 분석 서비스</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">관리자 이메일</label>
+                                        <input type="email" class="form-control" value="admin@aisaju1000.com">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">시간대</label>
+                                        <select class="form-control">
+                                            <option value="Asia/Seoul" selected>Asia/Seoul (GMT+9)</option>
+                                            <option value="UTC">UTC (GMT+0)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">언어</label>
+                                        <select class="form-control">
+                                            <option value="ko" selected>한국어</option>
+                                            <option value="en">English</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                            <input type="checkbox" checked>
+                                            <span>유지보수 모드</span>
+                                        </label>
+                                        <small style="color: #666; margin-top: 0.5rem; display: block;">
+                                            활성화 시 관리자를 제외한 모든 사용자에게 유지보수 페이지가 표시됩니다.
+                                        </small>
+                                    </div>
+                                    
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 프로필 -->
+                        <div id="profile-section" class="settings-section" style="display: none;">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">프로필 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <div style="text-align: center; margin-bottom: 2rem;">
+                                        <div style="width: 100px; height: 100px; border-radius: 50%; background: #c41e3a; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 600; margin-bottom: 1rem;">AD</div>
+                                        <div>
+                                            <button class="btn-secondary" style="margin-right: 0.5rem;">
+                                                <i class="fas fa-upload"></i>
+                                                사진 변경
+                                            </button>
+                                            <button class="btn-secondary">
+                                                <i class="fas fa-trash"></i>
+                                                제거
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">이름</label>
+                                        <input type="text" class="form-control" value="관리자">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">이메일</label>
+                                        <input type="email" class="form-control" value="admin@aisaju1000.com">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">전화번호</label>
+                                        <input type="tel" class="form-control" placeholder="010-1234-5678">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">소개</label>
+                                        <textarea class="form-control" rows="3" placeholder="간단한 소개를 입력하세요"></textarea>
+                                    </div>
+                                    
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 보안 설정 -->
+                        <div id="security-section" class="settings-section" style="display: none;">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">보안 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <h4 style="margin: 0 0 1rem 0; font-size: 1rem;">비밀번호 변경</h4>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">현재 비밀번호</label>
+                                        <input type="password" class="form-control" placeholder="현재 비밀번호를 입력하세요">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">새 비밀번호</label>
+                                        <input type="password" class="form-control" placeholder="새 비밀번호를 입력하세요">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">새 비밀번호 확인</label>
+                                        <input type="password" class="form-control" placeholder="새 비밀번호를 다시 입력하세요">
+                                    </div>
+                                    
+                                    <button class="btn-primary" style="margin-bottom: 2rem;">
+                                        <i class="fas fa-key"></i>
+                                        비밀번호 변경
+                                    </button>
+                                    
+                                    <hr style="margin: 2rem 0;">
+                                    
+                                    <h4 style="margin: 0 0 1rem 0; font-size: 1rem;">2단계 인증</h4>
+                                    
+                                    <div class="form-group">
+                                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                            <input type="checkbox">
+                                            <span>2단계 인증 활성화</span>
+                                        </label>
+                                        <small style="color: #666; margin-top: 0.5rem; display: block;">
+                                            로그인 시 SMS 또는 이메일로 인증 코드를 전송합니다.
+                                        </small>
+                                    </div>
+                                    
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 결제 설정 -->
+                        <div id="payment-section" class="settings-section" style="display: none;">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">결제 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <div class="form-group">
+                                        <label class="form-label">결제 게이트웨이</label>
+                                        <select class="form-control">
+                                            <option value="portone" selected>포트원 (PortOne)</option>
+                                            <option value="toss">토스페이먼츠</option>
+                                            <option value="kakaopay">카카오페이</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">가맹점 ID</label>
+                                        <input type="text" class="form-control" placeholder="가맹점 ID를 입력하세요">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">API 키</label>
+                                        <input type="password" class="form-control" placeholder="API 키를 입력하세요">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">API Secret</label>
+                                        <input type="password" class="form-control" placeholder="API Secret을 입력하세요">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                            <input type="checkbox" checked>
+                                            <span>테스트 모드</span>
+                                        </label>
+                                        <small style="color: #666; margin-top: 0.5rem; display: block;">
+                                            실제 결제가 이루어지지 않습니다.
+                                        </small>
+                                    </div>
+                                    
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 이메일 설정 -->
+                        <div id="email-section" class="settings-section" style="display: none;">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">이메일 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <div class="form-group">
+                                        <label class="form-label">SMTP 서버</label>
+                                        <input type="text" class="form-control" value="smtp.gmail.com">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">SMTP 포트</label>
+                                        <input type="number" class="form-control" value="587">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">발신자 이메일</label>
+                                        <input type="email" class="form-control" value="noreply@aisaju1000.com">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">발신자 이름</label>
+                                        <input type="text" class="form-control" value="AI 사주 천년지기">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">SMTP 사용자명</label>
+                                        <input type="text" class="form-control" placeholder="SMTP 사용자명">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">SMTP 비밀번호</label>
+                                        <input type="password" class="form-control" placeholder="SMTP 비밀번호">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                            <input type="checkbox" checked>
+                                            <span>TLS 사용</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <button class="btn-secondary" style="margin-right: 0.5rem;">
+                                        <i class="fas fa-paper-plane"></i>
+                                        테스트 이메일 발송
+                                    </button>
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- API 설정 -->
+                        <div id="api-section" class="settings-section" style="display: none;">
+                            <div class="table-card">
+                                <div class="table-header">
+                                    <h3 class="table-title">API 설정</h3>
+                                </div>
+                                <div style="padding: 2rem;">
+                                    <div class="form-group">
+                                        <label class="form-label">OpenAI API 키</label>
+                                        <input type="password" class="form-control" placeholder="sk-...">
+                                        <small style="color: #666; margin-top: 0.5rem; display: block;">
+                                            AI 사주 분석에 사용됩니다.
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Google Analytics ID</label>
+                                        <input type="text" class="form-control" placeholder="G-XXXXXXXXXX">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Naver Analytics ID</label>
+                                        <input type="text" class="form-control" placeholder="네이버 애널리틱스 ID">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">카카오 JavaScript 키</label>
+                                        <input type="text" class="form-control" placeholder="카카오 JavaScript 키">
+                                    </div>
+                                    
+                                    <button class="btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 설정 스크립트 -->
+    <script>
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 설정 섹션 전환
+        function showSection(sectionName, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.settings-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // 선택한 섹션 표시
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // 메뉴 활성화 상태 변경
+            document.querySelectorAll('.settings-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event?.target.closest('.settings-menu-item')?.classList.add('active');
+        }
+
+        // CSS 추가
+        const style = document.createElement('style');
+        style.textContent = `
+            .settings-menu-item {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                color: #333;
+                text-decoration: none;
+                transition: all 0.2s;
+            }
+            
+            .settings-menu-item:hover {
+                background: #f8f9fa;
+            }
+            
+            .settings-menu-item.active {
+                background: #c41e3a;
+                color: white;
+            }
+            
+            .settings-menu-item i {
+                width: 20px;
+                text-align: center;
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('✅ 설정 페이지 로드 완료');
+    </script>
+</body>
+</html>
