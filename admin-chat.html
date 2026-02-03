@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 상담 관리 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link active">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알람</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>AI 상담 관리</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>AI 상담</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 통계 요약 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">오늘 상담</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="today-chats">127</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +15.3%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">진행 중 상담</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="active-chats">23</div>
+                        <div class="stat-change">
+                            <i class="fas fa-circle"></i> 실시간
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">평균 응답 시간</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="avg-response">1.2초</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-down"></i> -0.3초
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">만족도</div>
+                            <div class="stat-icon info">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="satisfaction">4.8/5.0</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +0.2
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상담 목록 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">상담 내역</h3>
+                        <div class="table-filters">
+                            <div class="search-box">
+                                <input type="text" id="chatSearch" placeholder="회원명, 내용 검색...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select class="filter-btn" id="typeFilter">
+                                <option value="all">전체 유형</option>
+                                <option value="saju">사주 분석</option>
+                                <option value="tarot">타로</option>
+                                <option value="dream">꿈 해몽</option>
+                                <option value="tojeong">토정비결</option>
+                                <option value="compatibility">궁합</option>
+                            </select>
+                            <select class="filter-btn" id="statusFilter">
+                                <option value="all">전체 상태</option>
+                                <option value="active">진행중</option>
+                                <option value="completed">완료</option>
+                                <option value="pending">대기</option>
+                            </select>
+                            <button class="btn-primary" onclick="exportChats()">
+                                <i class="fas fa-download"></i>
+                                내보내기
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 로딩 표시 -->
+                    <div id="loadingIndicator" style="display: none; text-align: center; padding: 2rem;">
+                        <div class="loading-spinner"></div>
+                        <p>상담 내역을 불러오는 중...</p>
+                    </div>
+
+                    <table class="data-table" id="chatsTable">
+                        <thead>
+                            <tr>
+                                <th>상담 ID</th>
+                                <th>회원명</th>
+                                <th>상담 유형</th>
+                                <th>시작 시간</th>
+                                <th>소요 시간</th>
+                                <th>메시지 수</th>
+                                <th>만족도</th>
+                                <th>상태</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="chatsTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><strong>#CHAT001</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #c41e3a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">홍</div>
+                                        <strong>홍길동</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge primary">사주 분석</span></td>
+                                <td>2026-02-03 14:30</td>
+                                <td>8분 32초</td>
+                                <td>24</td>
+                                <td>
+                                    <div style="color: #ffc107;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span style="margin-left: 0.25rem;">5.0</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT001')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT001')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#CHAT002</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #28a745; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">김</div>
+                                        <strong>김철수</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge warning">타로</span></td>
+                                <td>2026-02-03 14:15</td>
+                                <td>진행중</td>
+                                <td>15</td>
+                                <td>-</td>
+                                <td><span class="badge info">진행중</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT002')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT002')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#CHAT003</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #17a2b8; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">이</div>
+                                        <strong>이영희</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">꿈 해몽</span></td>
+                                <td>2026-02-03 13:45</td>
+                                <td>5분 18초</td>
+                                <td>12</td>
+                                <td>
+                                    <div style="color: #ffc107;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span style="margin-left: 0.25rem;">4.0</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT003')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT003')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#CHAT004</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #ffc107; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">박</div>
+                                        <strong>박민수</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge info">토정비결</span></td>
+                                <td>2026-02-03 13:20</td>
+                                <td>6분 45초</td>
+                                <td>18</td>
+                                <td>
+                                    <div style="color: #ffc107;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span style="margin-left: 0.25rem;">4.5</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT004')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT004')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#CHAT005</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #dc3545; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">정</div>
+                                        <strong>정수현</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge danger">궁합</span></td>
+                                <td>2026-02-03 12:55</td>
+                                <td>7분 12초</td>
+                                <td>20</td>
+                                <td>
+                                    <div style="color: #ffc107;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span style="margin-left: 0.25rem;">5.0</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT005')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT005')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#CHAT006</strong></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 36px; height: 36px; border-radius: 50%; background: #6c757d; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">최</div>
+                                        <strong>최영수</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge primary">사주 분석</span></td>
+                                <td>2026-02-03 12:30</td>
+                                <td>-</td>
+                                <td>3</td>
+                                <td>-</td>
+                                <td><span class="badge">대기</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewChat('CHAT006')" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="downloadChat('CHAT006')" title="다운로드">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">4</button>
+                        <button class="pagination-btn">5</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 상담 상세 모달 -->
+    <div class="modal-overlay" id="chatDetailModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title">상담 내역 상세</h3>
+                <button class="modal-close" onclick="closeChatDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="chatDetailBody" style="max-height: 600px; overflow-y: auto;">
+                <!-- 상담 내역이 여기에 표시됩니다 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeChatDetailModal()">닫기</button>
+                <button class="btn-primary" onclick="downloadCurrentChat()">
+                    <i class="fas fa-download"></i>
+                    다운로드
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- AI 상담 관리 스크립트 -->
+    <script>
+        let currentChatId = null;
+
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 검색
+        document.getElementById('chatSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#chatsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // 유형 필터
+        document.getElementById('typeFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#chatsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badge = row.querySelectorAll('.badge')[0];
+                    const text = badge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'saju' && text.includes('사주')) ||
+                        (filter === 'tarot' && text.includes('타로')) ||
+                        (filter === 'dream' && text.includes('꿈')) ||
+                        (filter === 'tojeong' && text.includes('토정')) ||
+                        (filter === 'compatibility' && text.includes('궁합'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 상태 필터
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#chatsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badges = row.querySelectorAll('.badge');
+                    const statusBadge = badges[badges.length - 1];
+                    const text = statusBadge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'active' && text.includes('진행')) ||
+                        (filter === 'completed' && text.includes('완료')) ||
+                        (filter === 'pending' && text.includes('대기'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 상담 상세보기
+        function viewChat(chatId) {
+            currentChatId = chatId;
+            const modal = document.getElementById('chatDetailModal');
+            const body = document.getElementById('chatDetailBody');
+            
+            // 샘플 대화 내역
+            body.innerHTML = `
+                <div style="padding: 1rem;">
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #c41e3a;">상담 정보</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; font-size: 0.9rem;">
+                            <div><strong>상담 ID:</strong> #${chatId}</div>
+                            <div><strong>회원명:</strong> 홍길동</div>
+                            <div><strong>상담 유형:</strong> 사주 분석</div>
+                            <div><strong>시작 시간:</strong> 2026-02-03 14:30</div>
+                            <div><strong>소요 시간:</strong> 8분 32초</div>
+                            <div><strong>메시지 수:</strong> 24개</div>
+                            <div><strong>만족도:</strong> ⭐⭐⭐⭐⭐ 5.0</div>
+                            <div><strong>상태:</strong> <span class="badge success">완료</span></div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin: 1.5rem 0 1rem 0; color: #333;">대화 내역</h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- 사용자 메시지 -->
+                        <div style="display: flex; justify-content: flex-end;">
+                            <div style="background: #c41e3a; color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.25rem;">홍길동 · 14:30:15</div>
+                                <div>안녕하세요! 제 사주를 분석해주실 수 있나요?</div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI 응답 -->
+                        <div style="display: flex; justify-content: flex-start;">
+                            <div style="background: #f0f0f0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.25rem;">AI 천년지기 · 14:30:16</div>
+                                <div style="color: #333;">안녕하세요! 사주 분석을 도와드리겠습니다. 먼저 생년월일과 태어난 시간을 알려주시겠어요?</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 사용자 메시지 -->
+                        <div style="display: flex; justify-content: flex-end;">
+                            <div style="background: #c41e3a; color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.25rem;">홍길동 · 14:30:45</div>
+                                <div>1990년 5월 15일, 오전 10시 30분입니다.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI 응답 -->
+                        <div style="display: flex; justify-content: flex-start;">
+                            <div style="background: #f0f0f0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.25rem;">AI 천년지기 · 14:30:48</div>
+                                <div style="color: #333;">
+                                    <p style="margin: 0 0 0.5rem 0;">네, 분석해드리겠습니다.</p>
+                                    <p style="margin: 0 0 0.5rem 0;"><strong>【 사주팔자 】</strong><br>
+                                    년주: 庚午(경오) - 금말<br>
+                                    월주: 辛巳(신사) - 금뱀<br>
+                                    일주: 壬寅(임인) - 물호랑이<br>
+                                    시주: 乙巳(을사) - 목뱀</p>
+                                    <p style="margin: 0;">귀하는 물 일간으로 태어나셨으며, 금이 강한 사주입니다. 지혜롭고 창의적인 성향이 강하며, 리더십이 뛰어납니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 사용자 메시지 -->
+                        <div style="display: flex; justify-content: flex-end;">
+                            <div style="background: #c41e3a; color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.25rem;">홍길동 · 14:32:10</div>
+                                <div>와! 정말 자세하네요. 올해 운세는 어떤가요?</div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI 응답 -->
+                        <div style="display: flex; justify-content: flex-start;">
+                            <div style="background: #f0f0f0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.25rem;">AI 천년지기 · 14:32:15</div>
+                                <div style="color: #333;">
+                                    <p style="margin: 0 0 0.5rem 0;"><strong>【 2026년 병오년 운세 】</strong></p>
+                                    <p style="margin: 0 0 0.5rem 0;">✨ 재물운: ⭐⭐⭐⭐☆ (4/5)<br>
+                                    직장에서의 승진이나 사업의 확장 가능성이 높습니다.</p>
+                                    <p style="margin: 0 0 0.5rem 0;">💝 애정운: ⭐⭐⭐☆☆ (3/5)<br>
+                                    새로운 만남의 기회가 있으나 신중한 선택이 필요합니다.</p>
+                                    <p style="margin: 0;">🏥 건강운: ⭐⭐⭐⭐⭐ (5/5)<br>
+                                    전반적으로 건강한 한 해가 되겠습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 사용자 메시지 -->
+                        <div style="display: flex; justify-content: flex-end;">
+                            <div style="background: #c41e3a; color: white; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.25rem;">홍길동 · 14:35:20</div>
+                                <div>정말 감사합니다! 큰 도움이 되었어요.</div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI 응답 -->
+                        <div style="display: flex; justify-content: flex-start;">
+                            <div style="background: #f0f0f0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 70%;">
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.25rem;">AI 천년지기 · 14:35:22</div>
+                                <div style="color: #333;">도움이 되셨다니 기쁩니다! 언제든지 궁금한 점이 있으면 다시 찾아주세요. 행운이 가득하시길 바랍니다! 🍀</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding: 1rem; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+                        <strong>💬 만족도 평가</strong>
+                        <div style="margin-top: 0.5rem; color: #ffc107; font-size: 1.2rem;">
+                            ⭐⭐⭐⭐⭐ 5.0
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                            "정말 상세하고 친절하게 설명해주셔서 감사합니다!"
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // 상담 다운로드
+        function downloadChat(chatId) {
+            alert(`상담 내역 #${chatId}을 다운로드합니다.`);
+            // 실제로는 텍스트 파일 또는 PDF로 다운로드
+        }
+
+        // 현재 상담 다운로드
+        function downloadCurrentChat() {
+            if (currentChatId) {
+                downloadChat(currentChatId);
+            }
+        }
+
+        // 내보내기
+        function exportChats() {
+            alert('상담 내역을 엑셀 파일로 내보냅니다.');
+            // 실제로는 엑셀 다운로드 기능 구현
+        }
+
+        // 모달 닫기
+        function closeChatDetailModal() {
+            document.getElementById('chatDetailModal').classList.remove('active');
+            currentChatId = null;
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                if (typeof adminLogout === 'function') {
+                    adminLogout();
+                    window.location.href = 'admin-login.html';
+                } else {
+                    localStorage.clear();
+                    window.location.href = 'admin-login.html';
+                }
+            }
+        }
+
+        console.log('✅ AI 상담 관리 페이지 로드 완료');
+    </script>
+</body>
+</html>
