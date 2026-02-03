@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알림 관리 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link active">
+                    <i class="fas fa-bell"></i>
+                    <span>알림</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>알림 관리</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>알림</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-primary" onclick="openCreateNotificationModal()">
+                    <i class="fas fa-plus"></i>
+                    새 알림 생성
+                </button>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 통계 요약 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">전체 알림</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="total-notifications">248</div>
+                        <div class="stat-change">
+                            <i class="fas fa-chart-line"></i> 전체
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">발송 완료</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="sent-notifications">215</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 86.7%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">예약 대기</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="scheduled-notifications">25</div>
+                        <div class="stat-change">
+                            <i class="fas fa-calendar"></i> 대기중
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">발송 실패</div>
+                            <div class="stat-icon danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="failed-notifications">8</div>
+                        <div class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i> 3.2%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 알림 목록 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">알림 목록</h3>
+                        <div class="table-filters">
+                            <div class="search-box">
+                                <input type="text" id="notificationSearch" placeholder="제목, 내용 검색...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select class="filter-btn" id="typeFilter">
+                                <option value="all">전체 유형</option>
+                                <option value="system">시스템</option>
+                                <option value="marketing">마케팅</option>
+                                <option value="event">이벤트</option>
+                                <option value="update">업데이트</option>
+                            </select>
+                            <select class="filter-btn" id="statusFilter">
+                                <option value="all">전체 상태</option>
+                                <option value="sent">발송 완료</option>
+                                <option value="scheduled">예약 대기</option>
+                                <option value="draft">임시 저장</option>
+                                <option value="failed">발송 실패</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table" id="notificationsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>제목</th>
+                                <th>유형</th>
+                                <th>대상</th>
+                                <th>발송 시간</th>
+                                <th>수신자 수</th>
+                                <th>읽음률</th>
+                                <th>상태</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationsTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="notification-checkbox" data-id="1"></td>
+                                <td><strong>🎉 신규 프리미엄 기능 업데이트</strong></td>
+                                <td><span class="badge info">업데이트</span></td>
+                                <td>전체 회원</td>
+                                <td>2026-02-03 09:00</td>
+                                <td>12,543</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="flex: 1; background: #e0e0e0; height: 6px; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 78%; background: #28a745; height: 100%;"></div>
+                                        </div>
+                                        <span style="font-size: 0.85rem; color: #666;">78%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">발송 완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewNotification(1)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editNotification(1)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteNotification(1)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="notification-checkbox" data-id="2"></td>
+                                <td><strong>💝 발렌타인데이 특별 할인 이벤트</strong></td>
+                                <td><span class="badge warning">마케팅</span></td>
+                                <td>프리미엄 회원</td>
+                                <td>2026-02-14 10:00</td>
+                                <td>2,156</td>
+                                <td>-</td>
+                                <td><span class="badge info">예약 대기</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewNotification(2)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editNotification(2)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="cancelScheduled(2)" title="예약취소">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="notification-checkbox" data-id="3"></td>
+                                <td><strong>🔔 시스템 점검 안내</strong></td>
+                                <td><span class="badge primary">시스템</span></td>
+                                <td>전체 회원</td>
+                                <td>2026-02-02 20:00</td>
+                                <td>12,543</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="flex: 1; background: #e0e0e0; height: 6px; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 92%; background: #28a745; height: 100%;"></div>
+                                        </div>
+                                        <span style="font-size: 0.85rem; color: #666;">92%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">발송 완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewNotification(3)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editNotification(3)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteNotification(3)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="notification-checkbox" data-id="4"></td>
+                                <td><strong>🎊 설날 이벤트 - 사주 분석 50% 할인</strong></td>
+                                <td><span class="badge danger">이벤트</span></td>
+                                <td>전체 회원</td>
+                                <td>2026-02-01 08:00</td>
+                                <td>12,543</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="flex: 1; background: #e0e0e0; height: 6px; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 85%; background: #28a745; height: 100%;"></div>
+                                        </div>
+                                        <span style="font-size: 0.85rem; color: #666;">85%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">발송 완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewNotification(4)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editNotification(4)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteNotification(4)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="notification-checkbox" data-id="5"></td>
+                                <td><strong>📢 월간 구독 갱신 알림</strong></td>
+                                <td><span class="badge primary">시스템</span></td>
+                                <td>월간 구독자</td>
+                                <td>2026-02-01 06:00</td>
+                                <td>3,247</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div style="flex: 1; background: #e0e0e0; height: 6px; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 95%; background: #28a745; height: 100%;"></div>
+                                        </div>
+                                        <span style="font-size: 0.85rem; color: #666;">95%</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">발송 완료</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewNotification(5)" title="상세보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editNotification(5)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteNotification(5)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">4</button>
+                        <button class="pagination-btn">5</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 알림 생성/수정 모달 -->
+    <div class="modal-overlay" id="notificationModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">새 알림 생성</h3>
+                <button class="modal-close" onclick="closeNotificationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">제목 *</label>
+                    <input type="text" class="form-control" id="notificationTitle" placeholder="알림 제목을 입력하세요">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">내용 *</label>
+                    <textarea class="form-control" id="notificationContent" rows="4" placeholder="알림 내용을 입력하세요"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">유형 *</label>
+                    <select class="form-control" id="notificationType">
+                        <option value="system">시스템</option>
+                        <option value="marketing">마케팅</option>
+                        <option value="event">이벤트</option>
+                        <option value="update">업데이트</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">대상 선택 *</label>
+                    <select class="form-control" id="notificationTarget">
+                        <option value="all">전체 회원</option>
+                        <option value="premium">프리미엄 회원</option>
+                        <option value="monthly">월간 구독자</option>
+                        <option value="annual">연간 구독자</option>
+                        <option value="free">무료 회원</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">발송 방식</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="sendType" value="immediate" checked>
+                            <span>즉시 발송</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="sendType" value="scheduled">
+                            <span>예약 발송</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="scheduleTimeGroup" style="display: none;">
+                    <label class="form-label">예약 시간</label>
+                    <input type="datetime-local" class="form-control" id="scheduleTime">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">링크 URL (선택사항)</label>
+                    <input type="url" class="form-control" id="notificationLink" placeholder="https://example.com">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeNotificationModal()">취소</button>
+                <button class="btn-primary" onclick="saveNotification()">
+                    <i class="fas fa-paper-plane"></i>
+                    발송
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알림 상세 모달 -->
+    <div class="modal-overlay" id="notificationDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">알림 상세 정보</h3>
+                <button class="modal-close" onclick="closeNotificationDetailModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="notificationDetailBody">
+                <!-- 알림 상세 정보가 여기에 표시됩니다 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeNotificationDetailModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 알림 관리 스크립트 -->
+    <script>
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 전체 선택
+        document.getElementById('selectAll')?.addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.notification-checkbox');
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+        });
+
+        // 발송 방식 선택
+        document.querySelectorAll('input[name="sendType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const scheduleGroup = document.getElementById('scheduleTimeGroup');
+                if (this.value === 'scheduled') {
+                    scheduleGroup.style.display = 'block';
+                } else {
+                    scheduleGroup.style.display = 'none';
+                }
+            });
+        });
+
+        // 검색
+        document.getElementById('notificationSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#notificationsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // 유형 필터
+        document.getElementById('typeFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#notificationsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badge = row.querySelectorAll('.badge')[0];
+                    const text = badge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'system' && text.includes('시스템')) ||
+                        (filter === 'marketing' && text.includes('마케팅')) ||
+                        (filter === 'event' && text.includes('이벤트')) ||
+                        (filter === 'update' && text.includes('업데이트'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 상태 필터
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#notificationsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badges = row.querySelectorAll('.badge');
+                    const statusBadge = badges[badges.length - 1];
+                    const text = statusBadge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'sent' && text.includes('완료')) ||
+                        (filter === 'scheduled' && text.includes('대기')) ||
+                        (filter === 'draft' && text.includes('임시')) ||
+                        (filter === 'failed' && text.includes('실패'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 새 알림 생성 모달 열기
+        function openCreateNotificationModal() {
+            document.getElementById('modalTitle').textContent = '새 알림 생성';
+            document.getElementById('notificationTitle').value = '';
+            document.getElementById('notificationContent').value = '';
+            document.getElementById('notificationType').value = 'system';
+            document.getElementById('notificationTarget').value = 'all';
+            document.getElementById('notificationLink').value = '';
+            document.querySelectorAll('input[name="sendType"]')[0].checked = true;
+            document.getElementById('scheduleTimeGroup').style.display = 'none';
+            
+            document.getElementById('notificationModal').classList.add('active');
+        }
+
+        // 알림 저장
+        function saveNotification() {
+            const title = document.getElementById('notificationTitle').value;
+            const content = document.getElementById('notificationContent').value;
+            
+            if (!title || !content) {
+                alert('제목과 내용을 입력해주세요.');
+                return;
+            }
+            
+            alert('알림이 발송되었습니다!');
+            closeNotificationModal();
+            // 실제로는 API 호출
+        }
+
+        // 알림 상세보기
+        function viewNotification(id) {
+            const modal = document.getElementById('notificationDetailModal');
+            const body = document.getElementById('notificationDetailBody');
+            
+            body.innerHTML = `
+                <div style="padding: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">알림 ID</label>
+                        <input type="text" class="form-control" value="#NOTIF-${id}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">제목</label>
+                        <input type="text" class="form-control" value="🎉 신규 프리미엄 기능 업데이트" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">내용</label>
+                        <textarea class="form-control" rows="3" readonly>안녕하세요! AI 사주 천년지기입니다. 새로운 프리미엄 기능이 추가되었습니다. 지금 바로 확인해보세요!</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">유형</label>
+                        <span class="badge info">업데이트</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">대상</label>
+                        <input type="text" class="form-control" value="전체 회원 (12,543명)" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">발송 시간</label>
+                        <input type="text" class="form-control" value="2026-02-03 09:00:00" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">상태</label>
+                        <span class="badge success">발송 완료</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">수신자 수</label>
+                        <input type="text" class="form-control" value="12,543명" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">읽음률</label>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 10px; overflow: hidden;">
+                                <div style="width: 78%; background: #28a745; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.85rem; font-weight: 600;">78%</div>
+                            </div>
+                            <span style="font-weight: 600;">9,783명</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // 알림 수정
+        function editNotification(id) {
+            document.getElementById('modalTitle').textContent = '알림 수정';
+            // 기존 데이터 로드
+            document.getElementById('notificationTitle').value = '🎉 신규 프리미엄 기능 업데이트';
+            document.getElementById('notificationContent').value = '안녕하세요! AI 사주 천년지기입니다.';
+            
+            document.getElementById('notificationModal').classList.add('active');
+        }
+
+        // 알림 삭제
+        function deleteNotification(id) {
+            if (confirm('이 알림을 삭제하시겠습니까?')) {
+                alert(`알림 #${id}이 삭제되었습니다.`);
+                // 실제로는 API 호출
+            }
+        }
+
+        // 예약 취소
+        function cancelScheduled(id) {
+            if (confirm('예약된 알림을 취소하시겠습니까?')) {
+                alert(`알림 #${id}의 예약이 취소되었습니다.`);
+                // 실제로는 API 호출
+            }
+        }
+
+        // 모달 닫기
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').classList.remove('active');
+        }
+
+        function closeNotificationDetailModal() {
+            document.getElementById('notificationDetailModal').classList.remove('active');
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                if (typeof adminLogout === 'function') {
+                    adminLogout();
+                    window.location.href = 'admin-login.html';
+                } else {
+                    localStorage.clear();
+                    window.location.href = 'admin-login.html';
+                }
+            }
+        }
+
+        console.log('✅ 알림 관리 페이지 로드 완료');
+    </script>
+</body>
+</html>
