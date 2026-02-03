@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        // 512x512 파비콘 생성
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 512;
+        canvas.height = 512;
+        
+        // 배경 그라디언트
+        const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+        gradient.addColorStop(0, '#c41e3a');
+        gradient.addColorStop(1, '#8b0000');
+        
+        // 둥근 사각형 배경
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, 512, 512, 80);
+        ctx.fill();
+        
+        // 테두리
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 8;
+        ctx.stroke();
+        
+        // 텍스트: 사
+        ctx.fillStyle = '#d4af37';
+        ctx.font = 'bold 320px "Noto Serif KR", serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('사', 256, 240);
+        
+        // AI 서브텍스트
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.font = 'bold 60px Arial, sans-serif';
+        ctx.fillText('AI', 256, 380);
+        
+        // 다운로드 링크 생성
+        console.log('Favicon generated!');
+        console.log('Download: Right-click canvas → Save as image');
+    </script>
+</body>
+</html>
