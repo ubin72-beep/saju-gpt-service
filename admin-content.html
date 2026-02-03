@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콘텐츠 관리 - AI 사주 천년지기</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 사이드바 -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-yin-yang"></i>
+            </div>
+            <h2>관리자</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">메뉴</div>
+            <div class="nav-item">
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>대시보드</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-users.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>회원 관리</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-orders.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>주문/결제</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>AI 상담</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>알림</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-content.html" class="nav-link active">
+                    <i class="fas fa-file-alt"></i>
+                    <span>콘텐츠</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-analytics.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>통계</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="admin-settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>설정</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="admin-main">
+        <!-- 헤더 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h1>콘텐츠 관리</h1>
+                    <div class="breadcrumb">
+                        <a href="admin.html">홈</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>콘텐츠</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-primary" onclick="openCreateContentModal()">
+                    <i class="fas fa-plus"></i>
+                    새 콘텐츠 작성
+                </button>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="profile-avatar">AD</div>
+                    <div class="profile-info">
+                        <div class="profile-name admin-name">관리자</div>
+                        <div class="profile-role">super_admin</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="admin-content">
+            <div class="container-fluid">
+                <!-- 통계 요약 -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">전체 콘텐츠</div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="total-contents">156</div>
+                        <div class="stat-change">
+                            <i class="fas fa-chart-line"></i> 전체
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">게시됨</div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="published-contents">142</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 91.0%
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">임시 저장</div>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="draft-contents">12</div>
+                        <div class="stat-change">
+                            <i class="fas fa-pencil-alt"></i> 대기중
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">오늘 조회수</div>
+                            <div class="stat-icon info">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="today-views">4,852</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +12.5%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 콘텐츠 목록 테이블 -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 class="table-title">콘텐츠 목록</h3>
+                        <div class="table-filters">
+                            <div class="search-box">
+                                <input type="text" id="contentSearch" placeholder="제목, 내용 검색...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select class="filter-btn" id="categoryFilter">
+                                <option value="all">전체 카테고리</option>
+                                <option value="blog">블로그</option>
+                                <option value="news">뉴스</option>
+                                <option value="event">이벤트</option>
+                                <option value="guide">가이드</option>
+                                <option value="faq">FAQ</option>
+                            </select>
+                            <select class="filter-btn" id="statusFilter">
+                                <option value="all">전체 상태</option>
+                                <option value="published">게시됨</option>
+                                <option value="draft">임시 저장</option>
+                                <option value="scheduled">예약 게시</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table" id="contentsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>제목</th>
+                                <th>카테고리</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                                <th>좋아요</th>
+                                <th>상태</th>
+                                <th>액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentsTableBody">
+                            <!-- 샘플 데이터 -->
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="1"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>2026년 병오년 운세 총정리</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">2026년 각 띠별 운세와 주의사항을 자세히 알아봅니다...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge primary">블로그</span></td>
+                                <td>관리자</td>
+                                <td>2026-01-15</td>
+                                <td>2,847</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 342
+                                    </span>
+                                </td>
+                                <td><span class="badge success">게시됨</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(1)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(1)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(1)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="2"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>사주팔자 완벽 가이드</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">사주팔자의 기본 개념부터 실전 해석까지...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge info">가이드</span></td>
+                                <td>관리자</td>
+                                <td>2026-01-10</td>
+                                <td>5,124</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 587
+                                    </span>
+                                </td>
+                                <td><span class="badge success">게시됨</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(2)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(2)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(2)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="3"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>발렌타인데이 특별 이벤트 안내</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">2월 14일 발렌타인데이를 맞아 특별 할인...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge danger">이벤트</span></td>
+                                <td>관리자</td>
+                                <td>2026-02-01</td>
+                                <td>1,523</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 198
+                                    </span>
+                                </td>
+                                <td><span class="badge info">예약 게시</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(3)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(3)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(3)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="4"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>서비스 이용 방법 (FAQ)</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">자주 묻는 질문과 답변 모음...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge warning">FAQ</span></td>
+                                <td>관리자</td>
+                                <td>2026-01-05</td>
+                                <td>8,456</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 721
+                                    </span>
+                                </td>
+                                <td><span class="badge success">게시됨</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(4)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(4)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(4)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="5"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>AI 사주 분석 업데이트 소식</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">새로운 AI 엔진 적용으로 더욱 정확한...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge success">뉴스</span></td>
+                                <td>관리자</td>
+                                <td>2026-01-20</td>
+                                <td>3,241</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 425
+                                    </span>
+                                </td>
+                                <td><span class="badge success">게시됨</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(5)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(5)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(5)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="content-checkbox" data-id="6"></td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <strong>궁합 분석 완벽 가이드 (미완성)</strong>
+                                        <span style="font-size: 0.85rem; color: #666;">작성 중인 콘텐츠입니다...</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge info">가이드</span></td>
+                                <td>관리자</td>
+                                <td>2026-02-03</td>
+                                <td>0</td>
+                                <td>
+                                    <span style="color: #c41e3a;">
+                                        <i class="fas fa-heart"></i> 0
+                                    </span>
+                                </td>
+                                <td><span class="badge">임시 저장</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewContent(6)" title="미리보기">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" onclick="editContent(6)" title="수정">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" onclick="deleteContent(6)" title="삭제">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 페이지네이션 -->
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <button class="pagination-btn">4</button>
+                        <button class="pagination-btn">5</button>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 콘텐츠 작성/수정 모달 -->
+    <div class="modal-overlay" id="contentModal">
+        <div class="modal" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">새 콘텐츠 작성</h3>
+                <button class="modal-close" onclick="closeContentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <div class="form-group">
+                    <label class="form-label">제목 *</label>
+                    <input type="text" class="form-control" id="contentTitle" placeholder="콘텐츠 제목을 입력하세요">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">카테고리 *</label>
+                    <select class="form-control" id="contentCategory">
+                        <option value="blog">블로그</option>
+                        <option value="news">뉴스</option>
+                        <option value="event">이벤트</option>
+                        <option value="guide">가이드</option>
+                        <option value="faq">FAQ</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">썸네일 이미지 URL</label>
+                    <input type="url" class="form-control" id="contentThumbnail" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">요약 (SEO)</label>
+                    <textarea class="form-control" id="contentSummary" rows="2" placeholder="검색 엔진에 표시될 요약 내용 (150자 이내)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">내용 *</label>
+                    <textarea class="form-control" id="contentBody" rows="10" placeholder="콘텐츠 내용을 입력하세요 (HTML 지원)"></textarea>
+                    <small style="color: #666; margin-top: 0.5rem; display: block;">
+                        💡 HTML 태그를 사용하여 서식을 지정할 수 있습니다.
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">태그</label>
+                    <input type="text" class="form-control" id="contentTags" placeholder="태그1, 태그2, 태그3">
+                    <small style="color: #666; margin-top: 0.5rem; display: block;">
+                        쉼표(,)로 구분하여 입력하세요
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">게시 방식</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="publishType" value="immediate" checked>
+                            <span>즉시 게시</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="publishType" value="scheduled">
+                            <span>예약 게시</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="radio" name="publishType" value="draft">
+                            <span>임시 저장</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="scheduleTimeGroup" style="display: none;">
+                    <label class="form-label">게시 예약 시간</label>
+                    <input type="datetime-local" class="form-control" id="publishTime">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeContentModal()">취소</button>
+                <button class="btn-primary" onclick="saveContent()">
+                    <i class="fas fa-save"></i>
+                    저장
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 파일 로드 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <!-- 관리자 인증 체크 -->
+    <script>
+        if (typeof checkAdminAccess === 'function') {
+            checkAdminAccess();
+        }
+    </script>
+
+    <!-- 콘텐츠 관리 스크립트 -->
+    <script>
+        // 사이드바 토글
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        });
+
+        // 전체 선택
+        document.getElementById('selectAll')?.addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.content-checkbox');
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+        });
+
+        // 게시 방식 선택
+        document.querySelectorAll('input[name="publishType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const scheduleGroup = document.getElementById('scheduleTimeGroup');
+                if (this.value === 'scheduled') {
+                    scheduleGroup.style.display = 'block';
+                } else {
+                    scheduleGroup.style.display = 'none';
+                }
+            });
+        });
+
+        // 검색
+        document.getElementById('contentSearch')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#contentsTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // 카테고리 필터
+        document.getElementById('categoryFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#contentsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badge = row.querySelectorAll('.badge')[0];
+                    const text = badge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'blog' && text.includes('블로그')) ||
+                        (filter === 'news' && text.includes('뉴스')) ||
+                        (filter === 'event' && text.includes('이벤트')) ||
+                        (filter === 'guide' && text.includes('가이드')) ||
+                        (filter === 'faq' && text.includes('faq'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 상태 필터
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('#contentsTableBody tr');
+            
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else {
+                    const badges = row.querySelectorAll('.badge');
+                    const statusBadge = badges[badges.length - 1];
+                    const text = statusBadge?.textContent.toLowerCase();
+                    const match = 
+                        (filter === 'published' && text.includes('게시됨')) ||
+                        (filter === 'draft' && text.includes('임시')) ||
+                        (filter === 'scheduled' && text.includes('예약'));
+                    row.style.display = match ? '' : 'none';
+                }
+            });
+        });
+
+        // 새 콘텐츠 작성 모달 열기
+        function openCreateContentModal() {
+            document.getElementById('modalTitle').textContent = '새 콘텐츠 작성';
+            document.getElementById('contentTitle').value = '';
+            document.getElementById('contentCategory').value = 'blog';
+            document.getElementById('contentThumbnail').value = '';
+            document.getElementById('contentSummary').value = '';
+            document.getElementById('contentBody').value = '';
+            document.getElementById('contentTags').value = '';
+            document.querySelectorAll('input[name="publishType"]')[0].checked = true;
+            document.getElementById('scheduleTimeGroup').style.display = 'none';
+            
+            document.getElementById('contentModal').classList.add('active');
+        }
+
+        // 콘텐츠 저장
+        function saveContent() {
+            const title = document.getElementById('contentTitle').value;
+            const body = document.getElementById('contentBody').value;
+            
+            if (!title || !body) {
+                alert('제목과 내용을 입력해주세요.');
+                return;
+            }
+            
+            alert('콘텐츠가 저장되었습니다!');
+            closeContentModal();
+            // 실제로는 API 호출
+        }
+
+        // 콘텐츠 미리보기
+        function viewContent(id) {
+            alert(`콘텐츠 #${id}의 미리보기를 새 창에서 엽니다.`);
+            // 실제로는 새 창으로 미리보기
+        }
+
+        // 콘텐츠 수정
+        function editContent(id) {
+            document.getElementById('modalTitle').textContent = '콘텐츠 수정';
+            // 기존 데이터 로드
+            document.getElementById('contentTitle').value = '2026년 병오년 운세 총정리';
+            document.getElementById('contentBody').value = '콘텐츠 내용...';
+            
+            document.getElementById('contentModal').classList.add('active');
+        }
+
+        // 콘텐츠 삭제
+        function deleteContent(id) {
+            if (confirm('이 콘텐츠를 삭제하시겠습니까?')) {
+                alert(`콘텐츠 #${id}이 삭제되었습니다.`);
+                // 실제로는 API 호출
+            }
+        }
+
+        // 모달 닫기
+        function closeContentModal() {
+            document.getElementById('contentModal').classList.remove('active');
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            if (confirm('로그아웃하시겠습니까?')) {
+                if (typeof adminLogout === 'function') {
+                    adminLogout();
+                    window.location.href = 'admin-login.html';
+                } else {
+                    localStorage.clear();
+                    window.location.href = 'admin-login.html';
+                }
+            }
+        }
+
+        console.log('✅ 콘텐츠 관리 페이지 로드 완료');
+    </script>
+</body>
+</html>
