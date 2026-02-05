@@ -983,8 +983,150 @@
             font-size: 0.9rem;
             line-height: 1.8;
         }
-        
+        /* 블로그 섹션 */
+.blog-section {
+    background: #f5f5f5;
+    padding: 80px 20px;
+}
 
+.blog-container {
+    max-width: 900px;
+    margin: 3rem auto 0;
+}
+
+.blog-item {
+    background: white;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.blog-item:hover {
+    border-color: #d4af37;
+    background: #fffef7;
+}
+
+.blog-header {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.blog-header-left {
+    flex: 1;
+}
+
+.blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-badge {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.blog-date {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.blog-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+}
+
+.blog-icon {
+    font-size: 2rem;
+    transition: transform 0.3s;
+}
+
+.blog-item:hover .blog-icon {
+    transform: scale(1.1);
+}
+
+.blog-preview {
+    padding: 0 1.5rem 1.5rem;
+    color: #666;
+    line-height: 1.8;
+    display: none !important;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+}
+
+.blog-preview.active {
+    display: block !important;
+}
+
+.blog-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.blog-tag {
+    background: #f5f5f5;
+    color: #666;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.blog-more-btn {
+    display: inline-block;
+    margin: 3rem auto 0;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #d4af37, #f4e5b5);
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.blog-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .blog-section {
+        padding: 60px 15px;
+    }
+    
+    .blog-header {
+        padding: 1rem;
+    }
+    
+    .blog-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+    
+    .blog-title {
+        font-size: 1rem;
+    }
+    
+    .blog-icon {
+        font-size: 1.5rem;
+    }
+}
         /* FAQ 섹션 */
         .faq-section {
             background: #f5f5f5;
