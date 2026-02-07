@@ -36,7 +36,50 @@
             padding: 0 20px;
         }
         
-        /* 네비게이션은 navbar-loader.js가 자동으로 추가합니다 */
+        /* 네비게이션 */
+        .navbar {
+            background: #1a1a1a;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d4af37;
+        }
         
         /* 블로그 헤더 */
         .blog-header {
@@ -178,6 +221,10 @@
         
         /* 반응형 */
         @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
             .blog-header h1 {
                 font-size: 1.8rem;
             }
@@ -207,8 +254,20 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션은 navbar-loader.js가 자동으로 추가합니다 -->
-    <div id="navbar-placeholder"></div>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i>
+                AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="blog.html">블로그</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- 블로그 헤더 -->
     <section class="blog-header">
@@ -389,8 +448,5 @@
             </p>
         </div>
     </footer>
-    
-    <!-- 네비게이션 로더 -->
-    <script src="js/navbar-loader.js"></script>
 </body>
 </html>
