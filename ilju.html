@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60갑자 일주백과 | AI 사주 천년지기</title>
+    <meta name="description" content="60갑자 일주별 성격, 궁합, 연애 성향 완벽 분석 - ₩9,900">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XC6T1DH7BP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XC6T1DH7BP');
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .back-home:hover {
+            color: #d4af37;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .header .emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        /* 프리미엄 안내 박스 */
+        .premium-info {
+            background: linear-gradient(135deg, #d4af37 0%, #f5d876 100%);
+            color: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+        
+        .premium-info h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        
+        .premium-info p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .price-box {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+        
+        .original-price {
+            font-size: 1.5rem;
+            text-decoration: line-through;
+            opacity: 0.6;
+            margin-right: 15px;
+        }
+        
+        .buy-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #2d5f52;
+            color: #fff;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(45, 95, 82, 0.4);
+        }
+        
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(45, 95, 82, 0.5);
+        }
+        
+        /* 일주 그리드 */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #1a1a1a;
+        }
+        
+        .ilju-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .ilju-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .ilju-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .ilju-card .emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .ilju-card .name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+            color: #1a1a1a;
+        }
+        
+        .ilju-card .hanja {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .ilju-card .description {
+            font-size: 0.95rem;
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .ilju-card.premium {
+            border: 2px solid #d4af37;
+            background: linear-gradient(180deg, #fffef7 0%, #ffffff 100%);
+        }
+        
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37 0%, #f5d876 100%);
+            color: #1a1a1a;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .ilju-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .premium-info {
+                padding: 30px 20px;
+            }
+            
+            .premium-info h2 {
+                font-size: 1.5rem;
+            }
+            
+            .price-box {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-home">
+                <i class="fas fa-home"></i>
+                홈으로 돌아가기
+            </a>
+            
+            <div class="emoji">📚</div>
+            <h1>60갑자 일주백과</h1>
+            <p>당신의 일주로 성격, 궁합, 연애 성향을 깊이 있게 이해하세요</p>
+        </div>
+        
+        <!-- 프리미엄 안내 -->
+        <div class="premium-info">
+            <h2>🔓 60개 전체 일주 완벽 분석</h2>
+            <p>각 일주별 성격, 궁합, 연애, 직업, 재물운까지<br>전문가 검증 콘텐츠로 평생 열람 가능합니다</p>
+            
+            <div class="price-box">
+                <span class="original-price">₩19,800</span>
+                <span>₩9,900</span>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <span style="background: rgba(45,95,82,0.2); padding: 6px 15px; border-radius: 15px; font-size: 0.9rem; font-weight: 700;">
+                    🔥 50% 특별 할인 진행 중
+                </span>
+            </div>
+            
+            <a href="ilju-payment.html" class="buy-button">
+                <i class="fas fa-unlock"></i>
+                지금 바로 구매하기
+            </a>
+        </div>
+        
+        <!-- 일주 목록 -->
+        <h2 class="section-title">천간 '甲(갑)' 일주 (10개)</h2>
+        <div class="ilju-grid">
+            <a href="ilju/gapja.html" class="ilju-card premium">
+                <div class="premium-badge">💎 샘플 무료</div>
+                <div class="emoji">🌊</div>
+                <div class="name">갑자</div>
+                <div class="hanja">甲子</div>
+                <div class="description">창의적 예술가형 - 상상력이 풍부하고 독창적</div>
+            </a>
+            
+            <a href="ilju/gapin.html" class="ilju-card">
+                <div class="emoji">🐅</div>
+                <div class="name">갑인</div>
+                <div class="hanja">甲寅</div>
+                <div class="description">대범한 리더형 - 추진력과 결단력</div>
+            </a>
+            
+            <a href="ilju/gapchin.html" class="ilju-card">
+                <div class="emoji">🐉</div>
+                <div class="name">갑진</div>
+                <div class="hanja">甲辰</div>
+                <div class="description">안정적 계획가 - 체계적이고 신중</div>
+            </a>
+            
+            <a href="ilju/gapo.html" class="ilju-card">
+                <div class="emoji">🐴</div>
+                <div class="name">갑오</div>
+                <div class="hanja">甲午</div>
+                <div class="description">열정적 행동가 - 활동적이고 적극적</div>
+            </a>
+            
+            <a href="ilju/gapsin.html" class="ilju-card">
+                <div class="emoji">🐵</div>
+                <div class="name">갑신</div>
+                <div class="hanja">甲申</div>
+                <div class="description">지혜로운 전략가 - 분석력과 판단력</div>
+            </a>
+            
+            <a href="ilju/gapsul.html" class="ilju-card">
+                <div class="emoji">🐕</div>
+                <div class="name">갑술</div>
+                <div class="hanja">甲戌</div>
+                <div class="description">충성스러운 수호자 - 책임감과 의리</div>
+            </a>
+        </div>
+        
+        <h2 class="section-title">천간 '乙(을)' 일주 (10개)</h2>
+        <div class="ilju-grid">
+            <a href="ilju/eulchuk.html" class="ilju-card premium">
+                <div class="premium-badge">💎 샘플 무료</div>
+                <div class="emoji">🌱</div>
+                <div class="name">을축</div>
+                <div class="hanja">乙丑</div>
+                <div class="description">섬세한 실무자형 - 꼼꼼하고 완벽주의</div>
+            </a>
+            
+            <a href="ilju/eulmyo.html" class="ilju-card">
+                <div class="emoji">🐇</div>
+                <div class="name">을묘</div>
+                <div class="hanja">乙卯</div>
+                <div class="description">우아한 외교관 - 사교적이고 매력적</div>
+            </a>
+            
+            <a href="ilju/eulsa.html" class="ilju-card">
+                <div class="emoji">🐍</div>
+                <div class="name">을사</div>
+                <div class="hanja">乙巳</div>
+                <div class="description">지혜로운 현자 - 통찰력과 직관력</div>
+            </a>
+            
+            <a href="ilju/eulmee.html" class="ilju-card">
+                <div class="emoji">🐑</div>
+                <div class="name">을미</div>
+                <div class="hanja">乙未</div>
+                <div class="description">온화한 조력자 - 배려심과 포용력</div>
+            </a>
+            
+            <a href="ilju/eulyoo.html" class="ilju-card">
+                <div class="emoji">🐓</div>
+                <div class="name">을유</div>
+                <div class="hanja">乙酉</div>
+                <div class="description">완벽한 전문가 - 세밀함과 정확성</div>
+            </a>
+            
+            <a href="ilju/eulhae.html" class="ilju-card">
+                <div class="emoji">🐗</div>
+                <div class="name">을해</div>
+                <div class="hanja">乙亥</div>
+                <div class="description">순수한 꿈꾸는 자 - 상상력과 낭만</div>
+            </a>
+        </div>
+        
+        <h2 class="section-title">천간 '丙(병)' 일주 (10개)</h2>
+        <div class="ilju-grid">
+            <a href="ilju/byeongin.html" class="ilju-card premium">
+                <div class="premium-badge">💎 샘플 무료</div>
+                <div class="emoji">🔥</div>
+                <div class="name">병인</div>
+                <div class="hanja">丙寅</div>
+                <div class="description">열정적 리더형 - 타고난 카리스마</div>
+            </a>
+            
+            <a href="ilju/byeongchin.html" class="ilju-card">
+                <div class="emoji">🐉</div>
+                <div class="name">병진</div>
+                <div class="hanja">丙辰</div>
+                <div class="description">빛나는 개혁가 - 혁신과 변화</div>
+            </a>
+            
+            <a href="ilju/byeongo.html" class="ilju-card">
+                <div class="emoji">🐴</div>
+                <div class="name">병오</div>
+                <div class="hanja">丙午</div>
+                <div class="description">강한 전사 - 용기와 열정</div>
+            </a>
+            
+            <a href="ilju/byeongsin.html" class="ilju-card">
+                <div class="emoji">🐵</div>
+                <div class="name">병신</div>
+                <div class="hanja">丙申</div>
+                <div class="description">영리한 사업가 - 순발력과 적응력</div>
+            </a>
+            
+            <a href="ilju/byeongsul.html" class="ilju-card">
+                <div class="emoji">🐕</div>
+                <div class="name">병술</div>
+                <div class="hanja">丙戌</div>
+                <div class="description">든든한 보호자 - 신뢰와 안정</div>
+            </a>
+            
+            <a href="ilju/byeongja.html" class="ilju-card">
+                <div class="emoji">🐭</div>
+                <div class="name">병자</div>
+                <div class="hanja">丙子</div>
+                <div class="description">똑똑한 전략가 - 분석과 계획</div>
+            </a>
+        </div>
+        
+        <h2 class="section-title">천간 '丁(정)' 일주 (10개)</h2>
+        <div class="ilju-grid">
+            <a href="ilju/jeongmyo.html" class="ilju-card premium">
+                <div class="premium-badge">💎 샘플 무료</div>
+                <div class="emoji">🌸</div>
+                <div class="name">정묘</div>
+                <div class="hanja">丁卯</div>
+                <div class="description">온화한 중재자 - 따뜻하고 섬세</div>
+            </a>
+            
+            <a href="ilju/jeongsa.html" class="ilju-card">
+                <div class="emoji">🐍</div>
+                <div class="name">정사</div>
+                <div class="hanja">丁巳</div>
+                <div class="description">신비로운 예술가 - 감성과 창의력</div>
+            </a>
+            
+            <a href="ilju/jeongmee.html" class="ilju-card">
+                <div class="emoji">🐑</div>
+                <div class="name">정미</div>
+                <div class="hanja">丁未</div>
+                <div class="description">부드러운 리더 - 공감과 배려</div>
+            </a>
+            
+            <a href="ilju/jeongyoo.html" class="ilju-card">
+                <div class="emoji">🐓</div>
+                <div class="name">정유</div>
+                <div class="hanja">丁酉</div>
+                <div class="description">예리한 관찰자 - 통찰과 직관</div>
+            </a>
+            
+            <a href="ilju/jeonghae.html" class="ilju-card">
+                <div class="emoji">🐗</div>
+                <div class="name">정해</div>
+                <div class="hanja">丁亥</div>
+                <div class="description">순수한 이상주의자 - 열정과 꿈</div>
+            </a>
+            
+            <a href="ilju/jeongchuk.html" class="ilju-card">
+                <div class="emoji">🐂</div>
+                <div class="name">정축</div>
+                <div class="hanja">丁丑</div>
+                <div class="description">끈기 있는 실행가 - 인내와 성실</div>
+            </a>
+        </div>
+        
+        <!-- 나머지 일주는 구매 후 확인 안내 -->
+        <div class="premium-info" style="margin-top: 60px;">
+            <h2>🔒 나머지 36개 일주가 더 있습니다!</h2>
+            <p>무(戊), 기(己), 경(庚), 신(辛), 임(壬), 계(癸) 일주까지<br>총 60개 일주 완벽 분석을 확인하세요</p>
+            
+            <div style="margin: 30px 0;">
+                <div style="display: inline-block; background: rgba(45,95,82,0.2); padding: 20px 30px; border-radius: 15px; text-align: left;">
+                    <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>무진, 무오, 무신, 무술, 무자, 무인 (6개)</div>
+                    <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>기사, 기미, 기유, 기해, 기축, 기묘 (6개)</div>
+                    <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>경오, 경신, 경술, 경자, 경인, 경진 (6개)</div>
+                    <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>신미, 신유, 신해, 신축, 신묘, 신사 (6개)</div>
+                    <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>임신, 임술, 임자, 임인, 임진, 임오 (6개)</div>
+                    <div><i class="fas fa-check" style="color: #2d5f52; margin-right: 10px;"></i>계유, 계해, 계축, 계묘, 계사, 계미 (6개)</div>
+                </div>
+            </div>
+            
+            <a href="ilju-payment.html" class="buy-button">
+                <i class="fas fa-unlock"></i>
+                전체 60개 일주 구매하기
+            </a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer style="background: #1a1a1a; color: #fff; padding: 40px 20px; text-align: center; margin-top: 80px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <p style="margin-bottom: 15px;">AI 사주 천년지기 | 60갑자 일주백과</p>
+            <p style="font-size: 0.9rem; color: #999;">© 2026 AI Saju. All rights reserved.</p>
+            <div style="margin-top: 20px;">
+                <a href="index.html" style="color: #d4af37; text-decoration: none; margin: 0 15px;">홈</a>
+                <a href="faq.html" style="color: #d4af37; text-decoration: none; margin: 0 15px;">FAQ</a>
+                <a href="privacy.html" style="color: #d4af37; text-decoration: none; margin: 0 15px;">개인정보처리방침</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
