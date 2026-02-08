@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일주백과 프리미엄 구매 | AI 사주 천년지기</title>
+    <meta name="description" content="60갑자 일주백과 프리미엄 구매 - 평생 무제한 열람">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #2d5f52;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #f9c74f;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* 상품 정보 카드 */
+        .product-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(249, 199, 79, 0.3);
+        }
+        
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            background: #f9c74f;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+        
+        .product-info h2 {
+            font-size: 2rem;
+            color: #f9c74f;
+            margin-bottom: 10px;
+        }
+        
+        .product-info p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+        }
+        
+        /* 포함 내용 */
+        .includes-section {
+            margin: 30px 0;
+        }
+        
+        .includes-title {
+            font-size: 1.5rem;
+            color: #f9c74f;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .include-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .include-item i {
+            color: #f9c74f;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        /* 가격 섹션 */
+        .price-section {
+            background: linear-gradient(135deg, #f9c74f 0%, #f8961e 100%);
+            color: #2d5f52;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .price-section .label {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .price-display {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+        
+        .original-price {
+            font-size: 1.5rem;
+            text-decoration: line-through;
+            opacity: 0.6;
+            margin-right: 15px;
+        }
+        
+        .discount-badge {
+            display: inline-block;
+            background: #2d5f52;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        /* 결제 수단 */
+        .payment-methods {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-title {
+            font-size: 1.8rem;
+            color: #f9c74f;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .payment-option {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option:hover {
+            background: rgba(249, 199, 79, 0.1);
+            border-color: #f9c74f;
+        }
+        
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+        
+        .payment-option input[type="radio"]:checked + label {
+            color: #f9c74f;
+        }
+        
+        .payment-option label {
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-option i {
+            font-size: 2rem;
+        }
+        
+        /* 약관 동의 */
+        .terms-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item a {
+            color: #f9c74f;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+        
+        /* 결제 버튼 */
+        .payment-button {
+            width: 100%;
+            background: linear-gradient(135deg, #f9c74f 0%, #f8961e 100%);
+            color: #2d5f52;
+            padding: 22px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .payment-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(249, 199, 79, 0.4);
+        }
+        
+        .payment-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 보안 안내 */
+        .security-notice {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        .security-notice i {
+            color: #f9c74f;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .product-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .price-display {
+                font-size: 2.2rem;
+            }
+            
+            .payment-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <div id="navbar-placeholder"></div>
+    
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>💎 일주백과 프리미엄 구매</h1>
+            <p>60갑자 일주 완벽 분석 + 평생 무제한 열람</p>
+        </div>
+        
+        <!-- 상품 정보 -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-icon">📚</div>
+                <div class="product-info">
+                    <h2>60갑자 일주백과 프리미엄</h2>
+                    <p>전문가가 검증한 60개 일주 완벽 분석</p>
+                </div>
+            </div>
+            
+            <div class="includes-section">
+                <div class="includes-title">📋 포함 내용</div>
+                <div class="includes-grid">
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>60개 일주 완전 분석</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>성격 10가지 분석</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>궁합 TOP 10</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>연애 성향 분석</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>직업 적성 20개</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>재물운 분석</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>건강 주의사항</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>2026년 운세</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>PDF 다운로드</span>
+                    </div>
+                    <div class="include-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>평생 무제한 열람</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="price-section">
+                <div class="label">🎉 론칭 특가 60% 할인</div>
+                <div class="price-display">
+                    <span class="original-price">₩19,800</span>
+                    <span>₩9,900</span>
+                </div>
+                <div class="discount-badge">₩9,900 할인!</div>
+            </div>
+        </div>
+        
+        <!-- 결제 수단 -->
+        <div class="payment-methods">
+            <div class="payment-title">💳 결제 수단 선택</div>
+            <div class="payment-grid">
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="card" value="card" checked>
+                    <label for="card">
+                        <i class="fas fa-credit-card"></i>
+                        <span>신용카드</span>
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="kakaopay" value="kakaopay">
+                    <label for="kakaopay">
+                        <i class="fas fa-comment"></i>
+                        <span>카카오페이</span>
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="naverpay" value="naverpay">
+                    <label for="naverpay">
+                        <i class="fas fa-n"></i>
+                        <span>네이버페이</span>
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" name="payment" id="transfer" value="transfer">
+                    <label for="transfer">
+                        <i class="fas fa-university"></i>
+                        <span>계좌이체</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 약관 동의 -->
+        <div class="terms-section">
+            <div class="checkbox-item">
+                <input type="checkbox" id="agree1" required>
+                <label for="agree1">
+                    <a href="terms.html" target="_blank">이용약관</a>에 동의합니다 (필수)
+                </label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="agree2" required>
+                <label for="agree2">
+                    <a href="privacy.html" target="_blank">개인정보처리방침</a>에 동의합니다 (필수)
+                </label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="agree3" required>
+                <label for="agree3">
+                    <a href="refund.html" target="_blank">환불정책</a>을 확인했습니다 (필수)
+                </label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="agreeAll">
+                <label for="agreeAll">
+                    <strong style="color: #f9c74f;">전체 동의</strong>
+                </label>
+            </div>
+        </div>
+        
+        <!-- 결제 버튼 -->
+        <button class="payment-button" id="paymentBtn" disabled>
+            <i class="fas fa-lock"></i>
+            <span>₩9,900 결제하기</span>
+        </button>
+        
+        <!-- 보안 안내 -->
+        <div class="security-notice">
+            <i class="fas fa-shield-alt"></i>
+            안전한 결제 (SSL 암호화) | 환불 보장 정책
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="js/navbar-loader.js"></script>
+    <script>
+        // 약관 동의 체크
+        const agree1 = document.getElementById('agree1');
+        const agree2 = document.getElementById('agree2');
+        const agree3 = document.getElementById('agree3');
+        const agreeAll = document.getElementById('agreeAll');
+        const paymentBtn = document.getElementById('paymentBtn');
+        
+        function checkAllAgreed() {
+            if (agree1.checked && agree2.checked && agree3.checked) {
+                paymentBtn.disabled = false;
+                agreeAll.checked = true;
+            } else {
+                paymentBtn.disabled = true;
+                agreeAll.checked = false;
+            }
+        }
+        
+        agree1.addEventListener('change', checkAllAgreed);
+        agree2.addEventListener('change', checkAllAgreed);
+        agree3.addEventListener('change', checkAllAgreed);
+        
+        agreeAll.addEventListener('change', function() {
+            agree1.checked = this.checked;
+            agree2.checked = this.checked;
+            agree3.checked = this.checked;
+            checkAllAgreed();
+        });
+        
+        // 결제 버튼 클릭
+        paymentBtn.addEventListener('click', function() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            
+            // 여기에 실제 결제 로직 연동
+            alert(`선택한 결제 수단: ${selectedPayment}\n\n실제 서비스에서는 결제 API가 연동됩니다.`);
+            
+            // 예시: 결제 완료 후 성공 페이지로 이동
+            // window.location.href = 'ilju-payment-success.html';
+        });
+    </script>
+</body>
+</html>
