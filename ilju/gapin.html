@@ -102,5 +102,43 @@
         <div class="preview-blur"><h2 class="section-title"><i class="fas fa-heart"></i> 상세 궁합 분석</h2><div class="content-box"><h3>최고의 궁합 TOP 5</h3><p>병오, 무술, 경자, 임인, 갑진...</p></div></div>
         <div class="preview-blur"><h2 class="section-title"><i class="fas fa-briefcase"></i> 직업 & 재물운</h2><div class="content-box"><p>리더십으로 CEO, 사업가, 정치인 등...</p></div></div>
     </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // ===== 구매 여부 체크 =====
+        function checkPurchaseStatus() {
+            const isPurchased = localStorage.getItem('ilju_purchased') === 'true';
+            
+            if (isPurchased) {
+                const premiumSection = document.querySelector('.premium-notice');
+                const blurredSections = document.querySelectorAll('.preview-blur');
+                
+                if (premiumSection) {
+                    premiumSection.innerHTML = `
+                        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #f9c74f 0%, #f8961e 100%); border-radius: 20px; color: #2d5f52;">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                            <h3 style="font-size: 1.8rem; margin-bottom: 10px;">프리미엄 회원님 환영합니다! 🎉</h3>
+                            <p style="font-size: 1.1rem; opacity: 0.9;">60갑자 일주백과 전체를 마음껏 이용하세요</p>
+                            <div style="margin-top: 20px;">
+                                <a href="../ilju.html" class="unlock-button" style="background: #2d5f52; color: white;">
+                                    <i class="fas fa-book"></i>
+                                    일주백과 전체보기
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                blurredSections.forEach(section => {
+                    section.style.filter = 'none';
+                    section.style.opacity = '1';
+                });
+                
+                console.log('✅ 프리미엄 회원: 전체 콘텐츠 잠금 해제');
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', checkPurchaseStatus);
+    </script>
 </body>
 </html>
