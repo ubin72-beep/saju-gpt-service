@@ -492,5 +492,54 @@
     
     <!-- JavaScript -->
     <script src="../js/navbar-loader.js"></script>
+    <script>
+        // ===== 구매 여부 체크 =====
+        function checkPurchaseStatus() {
+            const isPurchased = localStorage.getItem('ilju_purchased') === 'true';
+            
+            if (isPurchased) {
+                // 구매한 사용자: 잠금 해제 및 전체 콘텐츠 표시
+                const premiumSection = document.querySelector('.premium-notice');
+                const blurredSections = document.querySelectorAll('.preview-blur');
+                const bottomCTA = document.querySelector('[style*="background: rgba(249,199,79,0.1)"]');
+                
+                if (premiumSection) {
+                    premiumSection.innerHTML = `
+                        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #f9c74f 0%, #f8961e 100%); border-radius: 20px; color: #2d5f52;">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                            <h3 style="font-size: 1.8rem; margin-bottom: 10px;">프리미엄 회원님 환영합니다! 🎉</h3>
+                            <p style="font-size: 1.1rem; opacity: 0.9;">60갑자 일주백과 전체를 마음껏 이용하세요</p>
+                            <div style="margin-top: 20px;">
+                                <a href="../ilju.html" class="unlock-button" style="background: #2d5f52; color: white;">
+                                    <i class="fas fa-book"></i>
+                                    일주백과 전체보기
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // 흐림 효과 제거 및 전체 콘텐츠 표시
+                blurredSections.forEach(section => {
+                    section.style.filter = 'none';
+                    section.style.opacity = '1';
+                    section.style.position = 'relative';
+                    section.innerHTML = section.innerHTML.replace('(프리미엄)', '<span class="badge badge-success" style="background: #f9c74f; color: #2d5f52; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-left: 10px;">프리미엄</span>');
+                });
+                
+                // 하단 구매 유도 제거
+                if (bottomCTA) {
+                    bottomCTA.remove();
+                }
+                
+                console.log('✅ 프리미엄 회원: 전체 콘텐츠 잠금 해제');
+            } else {
+                console.log('⚠️ 무료 회원: 일부 콘텐츠만 표시');
+            }
+        }
+        
+        // 페이지 로드 시 구매 여부 체크
+        window.addEventListener('DOMContentLoaded', checkPurchaseStatus);
+    </script>
 </body>
 </html>
