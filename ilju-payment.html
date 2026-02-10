@@ -466,6 +466,26 @@
     <!-- JavaScript -->
     <script src="js/navbar-loader.js"></script>
     <script>
+        // ===== 로그인 체크 =====
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            
+            if (!isLoggedIn || isLoggedIn !== 'true' || !currentUser) {
+                alert('⚠️ 로그인이 필요한 서비스입니다.\n로그인 페이지로 이동합니다.');
+                // 현재 페이지 URL을 저장 (로그인 후 돌아오기 위해)
+                localStorage.setItem('returnUrl', window.location.href);
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+        
+        // 페이지 로드 시 로그인 체크
+        if (!checkLogin()) {
+            // 로그인 안 되어 있으면 리다이렉트 (위에서 처리)
+        }
+        
         // 약관 동의 체크
         const agree1 = document.getElementById('agree1');
         const agree2 = document.getElementById('agree2');
@@ -496,13 +516,74 @@
         
         // 결제 버튼 클릭
         paymentBtn.addEventListener('click', function() {
-            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
             
-            // 여기에 실제 결제 로직 연동
-            alert(`선택한 결제 수단: ${selectedPayment}\n\n실제 서비스에서는 결제 API가 연동됩니다.`);
+            if (!selectedPayment) {
+                alert('결제 수단을 선택해주세요.');
+                return;
+            }
             
-            // 예시: 결제 완료 후 성공 페이지로 이동
-            // window.location.href = 'ilju-payment-success.html';
+            // ===== 결제 처리 시뮬레이션 =====
+            const paymentMethod = selectedPayment.value;
+            const paymentMethodName = selectedPayment.nextElementSibling.querySelector('label').textContent.trim();
+            
+            // 로딩 표시
+            paymentBtn.disabled = true;
+            paymentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>결제 처리 중...</span>';
+            
+            // 2초 후 결제 완료 (실제로는 결제 API 호출)
+            setTimeout(() => {
+                // ===== 현재 로그인한 사용자 정보 가져오기 =====
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const userName = currentUser ? currentUser.name : '고객님';
+                const userEmail = currentUser ? currentUser.email : '';
+                
+                // ===== localStorage에 구매 내역 저장 =====
+                const purchase = {
+                    serviceName: '60갑자 일주백과 프리미엄',
+                    serviceType: 'ilju-encyclopedia',
+                    price: 9900,
+                    originalPrice: 19800,
+                    discount: '50%',
+                    paymentMethod: paymentMethodName,
+                    purchaseDate: new Date().toISOString(),
+                    orderId: 'ILJU_' + Date.now(),
+                    status: '결제완료',
+                    userName: userName,
+                    userEmail: userEmail,
+                    serviceUrl: 'ilju.html'
+                };
+                
+                // 기존 구매 내역 가져오기
+                const purchases = JSON.parse(localStorage.getItem('premiumPurchases') || '[]');
+                purchases.push(purchase);
+                localStorage.setItem('premiumPurchases', JSON.stringify(purchases));
+                
+                // 일주백과 구매 상태 저장 (잠금 해제용)
+                localStorage.setItem('ilju_purchased', 'true');
+                localStorage.setItem('ilju_purchase_date', new Date().toISOString());
+                localStorage.setItem('ilju_order_id', purchase.orderId);
+                
+                // Google Analytics 이벤트 (있을 경우)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'purchase', {
+                        transaction_id: purchase.orderId,
+                        value: 9900,
+                        currency: 'KRW',
+                        items: [{
+                            item_name: '60갑자 일주백과 프리미엄',
+                            price: 9900,
+                            quantity: 1
+                        }]
+                    });
+                }
+                
+                // 성공 메시지 및 리다이렉트
+                alert(`✅ ${userName}님, 결제가 완료되었습니다!\n\n일주백과 60개 전체를 이용하실 수 있습니다.\n마이페이지에서 구매 내역을 확인하세요.`);
+                
+                // 마이페이지로 이동 (구매 내역 확인 가능)
+                window.location.href = 'mypage.html';
+            }, 2000);
         });
     </script>
 </body>
