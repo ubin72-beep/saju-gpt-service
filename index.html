@@ -700,6 +700,47 @@
             border-color: #d4af37;
         }
         
+        /* 생년월일 입력 개선 스타일 */
+        .birthdate-wrapper {
+            position: relative;
+        }
+        
+        .birthdate-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .birthdate-toggle:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .birthdate-input {
+            padding-right: 80px !important;
+        }
+        
+        .birthdate-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .birthdate-hint i {
+            color: #d4af37;
+        }
+        
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -2022,7 +2063,22 @@
             <form class="saju-form" id="sajuForm">
                 <div class="form-group">
                     <label><i class="fas fa-calendar"></i> 생년월일</label>
-                    <input type="date" name="birthdate" required>
+                    <div class="birthdate-wrapper">
+                        <input 
+                            type="date" 
+                            id="birthdateInput"
+                            name="birthdate" 
+                            class="birthdate-input"
+                            placeholder="예: 19900515"
+                            required>
+                        <button type="button" class="birthdate-toggle" id="birthdateToggle" title="입력 방식 전환">
+                            <i class="fas fa-keyboard"></i>
+                        </button>
+                    </div>
+                    <div class="birthdate-hint">
+                        <i class="fas fa-lightbulb"></i>
+                        <span id="birthdateHint">날짜를 선택하거나 8자리 숫자로 입력하세요 (예: 19900515)</span>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -2956,6 +3012,110 @@
                     }, 100);
                 }, { passive: true });
             }
+            
+            // 생년월일 입력 개선 (혼합형)
+            const birthdateInput = document.getElementById('birthdateInput');
+            const birthdateToggle = document.getElementById('birthdateToggle');
+            const birthdateHint = document.getElementById('birthdateHint');
+            
+            if (birthdateInput && birthdateToggle) {
+                let isTextMode = false;
+                
+                // 입력 방식 전환 버튼
+                birthdateToggle.addEventListener('click', function() {
+                    isTextMode = !isTextMode;
+                    
+                    if (isTextMode) {
+                        birthdateInput.type = 'text';
+                        birthdateInput.placeholder = '예: 19900515';
+                        birthdateInput.maxLength = 10;
+                        birthdateToggle.innerHTML = '<i class="fas fa-calendar-alt"></i>';
+                        birthdateToggle.title = '달력으로 선택';
+                        birthdateHint.innerHTML = '<i class="fas fa-lightbulb"></i><span>8자리 숫자를 입력하세요 (예: 19900515)</span>';
+                    } else {
+                        birthdateInput.type = 'date';
+                        birthdateInput.placeholder = '';
+                        birthdateInput.removeAttribute('maxLength');
+                        birthdateToggle.innerHTML = '<i class="fas fa-keyboard"></i>';
+                        birthdateToggle.title = '직접 입력';
+                        birthdateHint.innerHTML = '<i class="fas fa-lightbulb"></i><span>날짜를 선택하거나 8자리 숫자로 입력하세요 (예: 19900515)</span>';
+                    }
+                });
+                
+                // 자동 하이픈 추가 및 날짜 형식 변환
+                birthdateInput.addEventListener('input', function(e) {
+                    if (isTextMode) {
+                        let value = e.target.value.replace(/[^0-9]/g, '');
+                        
+                        // 8자리 숫자 입력 시 자동으로 하이픈 추가
+                        if (value.length === 8) {
+                            const year = value.substring(0, 4);
+                            const month = value.substring(4, 6);
+                            const day = value.substring(6, 8);
+                            
+                            // 유효성 검사
+                            const yearNum = parseInt(year);
+                            const monthNum = parseInt(month);
+                            const dayNum = parseInt(day);
+                            
+                            if (yearNum >= 1900 && yearNum <= 2025 && 
+                                monthNum >= 1 && monthNum <= 12 && 
+                                dayNum >= 1 && dayNum <= 31) {
+                                
+                                // date 타입으로 변환하여 값 설정
+                                const formattedDate = `${year}-${month}-${day}`;
+                                
+                                // 타입 전환 없이 value만 업데이트 (깜빡임 방지)
+                                setTimeout(() => {
+                                    birthdateInput.type = 'date';
+                                    birthdateInput.value = formattedDate;
+                                    isTextMode = false;
+                                    birthdateToggle.innerHTML = '<i class="fas fa-keyboard"></i>';
+                                    birthdateToggle.title = '직접 입력';
+                                    birthdateHint.innerHTML = '<i class="fas fa-check-circle" style="color: #27ae60;"></i><span style="color: #27ae60;">날짜가 설정되었습니다!</span>';
+                                    
+                                    // 3초 후 힌트 복원
+                                    setTimeout(() => {
+                                        birthdateHint.innerHTML = '<i class="fas fa-lightbulb"></i><span>날짜를 선택하거나 8자리 숫자로 입력하세요 (예: 19900515)</span>';
+                                    }, 3000);
+                                }, 300);
+                            }
+                        } else if (value.length > 8) {
+                            e.target.value = value.substring(0, 8);
+                        } else {
+                            e.target.value = value;
+                        }
+                    }
+                });
+                
+                // date 타입에서도 숫자만 입력 시 자동 변환 (추가 기능)
+                birthdateInput.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+                    
+                    if (pasteData.length === 8) {
+                        const year = pasteData.substring(0, 4);
+                        const month = pasteData.substring(4, 6);
+                        const day = pasteData.substring(6, 8);
+                        
+                        const yearNum = parseInt(year);
+                        const monthNum = parseInt(month);
+                        const dayNum = parseInt(day);
+                        
+                        if (yearNum >= 1900 && yearNum <= 2025 && 
+                            monthNum >= 1 && monthNum <= 12 && 
+                            dayNum >= 1 && dayNum <= 31) {
+                            
+                            birthdateInput.value = `${year}-${month}-${day}`;
+                            birthdateHint.innerHTML = '<i class="fas fa-check-circle" style="color: #27ae60;"></i><span style="color: #27ae60;">날짜가 설정되었습니다!</span>';
+                            
+                            setTimeout(() => {
+                                birthdateHint.innerHTML = '<i class="fas fa-lightbulb"></i><span>날짜를 선택하거나 8자리 숫자로 입력하세요 (예: 19900515)</span>';
+                            }, 3000);
+                        }
+                    }
+                });
+            }
         });
 
         // 폼 제출 처리
@@ -2967,6 +3127,7 @@
             const birthYear = document.getElementById('birthYear').value;
             const consent = document.getElementById('consent').checked;
             
+            // 유효성 검사
             if (!userName) {
                 alert('이름을 입력해주세요.');
                 return;
@@ -2974,6 +3135,14 @@
             
             if (!userPhone) {
                 alert('휴대폰 번호를 입력해주세요.');
+                return;
+            }
+            
+            // 휴대폰 번호 형식 검사 (숫자만)
+            const phoneRegex = /^01[0-9]{8,9}$/;
+            const cleanPhone = userPhone.replace(/[^0-9]/g, '');
+            if (!phoneRegex.test(cleanPhone)) {
+                alert('올바른 휴대폰 번호를 입력해주세요.\n예: 01012345678');
                 return;
             }
             
@@ -2993,11 +3162,14 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리 중...';
             submitBtn.disabled = true;
             
+            // 띠 계산
+            const zodiac = getZodiac(parseInt(birthYear));
+            
             const formData = {
                 name: userName,
-                phone: userPhone,
+                phone: cleanPhone,
                 birth_year: birthYear,
-                zodiac: getZodiac(parseInt(birthYear)),
+                zodiac: zodiac,
                 status: 'active',
                 subscription_start: new Date().toISOString(),
                 last_sent: null,
@@ -3005,11 +3177,11 @@
                 consent: true
             };
             
-            console.log('📝 구독 신청:', formData);
+            console.log('📝 구독 신청 데이터:', formData);
             
             try {
-                // RESTful API로 저장
-                const response = await fetch('tables/kakao_subscribers', {
+                // RESTful API로 저장 (상대 경로 사용)
+                const response = await fetch('/tables/kakao_subscribers', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3019,18 +3191,27 @@
                 
                 if (response.ok) {
                     const saved = await response.json();
-                    console.log('✅ 구독 신청 완료:', saved.id);
+                    console.log('✅ 구독 신청 완료! ID:', saved.id);
                     
-                    // 로컬스토리지에도 저장
+                    // 로컬스토리지에도 백업 저장
                     const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
-                    subscribers.push({...formData, id: saved.id, subscribedAt: new Date().toISOString()});
+                    subscribers.push({
+                        ...formData, 
+                        id: saved.id, 
+                        subscribedAt: new Date().toISOString()
+                    });
                     localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
+                    
+                    // 사용자에게 알림 (개인정보 보호를 위해 전화번호는 숨김)
+                    const maskedPhone = cleanPhone.substring(0, 3) + '****' + cleanPhone.substring(7);
+                    console.log(`✅ ${userName}님 (${maskedPhone}) 구독 완료!`);
                     
                     // Google Analytics 이벤트
                     if (typeof gtag !== 'undefined') {
-                        gtag('event', 'subscription', {
-                            'event_category': 'kakao',
-                            'event_label': formData.zodiac
+                        gtag('event', 'subscription_success', {
+                            'event_category': 'Kakao Daily Fortune',
+                            'event_label': zodiac,
+                            'value': 1
                         });
                     }
                     
@@ -3038,13 +3219,30 @@
                     document.getElementById('kakaoSubscriptionForm').style.display = 'none';
                     document.getElementById('subscriptionSuccess').style.display = 'block';
                     
+                    // 페이지 최상단으로 스크롤
+                    document.getElementById('subscriptionSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
                 } else {
-                    throw new Error('서버 응답 오류');
+                    const errorText = await response.text();
+                    console.error('❌ 서버 응답 오류:', response.status, errorText);
+                    throw new Error(`서버 오류 (${response.status})`);
                 }
                 
             } catch (error) {
                 console.error('❌ 구독 신청 실패:', error);
-                alert('구독 신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+                
+                // 사용자에게 친절한 오류 메시지
+                let errorMessage = '구독 신청 중 오류가 발생했습니다.\n';
+                
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMessage += '인터넷 연결을 확인해주세요.';
+                } else if (error.message.includes('500')) {
+                    errorMessage += '서버 오류입니다. 잠시 후 다시 시도해주세요.';
+                } else {
+                    errorMessage += '다시 시도해주세요.';
+                }
+                
+                alert(errorMessage);
                 
                 // 버튼 복구
                 submitBtn.innerHTML = originalText;
