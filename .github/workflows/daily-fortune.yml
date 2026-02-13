@@ -1,0 +1,56 @@
+name: 매일 아침 운세 발송
+
+on:
+  # 매일 아침 7시 (한국 시간 = UTC 22시 전날)
+  schedule:
+    - cron: '0 22 * * *'  # UTC 22:00 = KST 07:00 (다음날)
+  
+  # 수동 실행 가능 (테스트용)
+  workflow_dispatch:
+
+jobs:
+  send-fortune:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v3
+      
+      - name: Vercel Function 호출
+        env:
+          VERCEL_URL: ${{ secrets.VERCEL_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          echo "🚀 매일 아침 운세 발송 시작..."
+          echo "📅 실행 시각: $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S KST')"
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://${VERCEL_URL}/api/send-daily-fortune" \
+            -H "Content-Type: application/json" \
+            -H "X-Auth-Token: ${CRON_SECRET}" \
+            -d '{"auth_token": "'"${CRON_SECRET}"'"}')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "📊 응답 코드: $HTTP_CODE"
+          echo "📄 응답 내용: $BODY"
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ 운세 발송 성공!"
+            
+            # JSON 파싱하여 결과 출력
+            SENT=$(echo "$BODY" | grep -o '"sent":[0-9]*' | grep -o '[0-9]*')
+            FAILED=$(echo "$BODY" | grep -o '"failed":[0-9]*' | grep -o '[0-9]*')
+            
+            echo "📨 발송 성공: ${SENT}명"
+            echo "❌ 발송 실패: ${FAILED}명"
+          else
+            echo "❌ 운세 발송 실패"
+            exit 1
+          fi
+      
+      - name: 결과 알림
+        if: always()
+        run: |
+          echo "🏁 작업 완료: $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S KST')"
