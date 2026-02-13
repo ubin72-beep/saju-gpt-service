@@ -219,8 +219,8 @@ class SajuEngine {
         }
         
         const dayStemIndex = this.heavenlyStems.indexOf(dayStem);
-        const stemIndex = (dayStemIndex * 2 + branchIndex) % 10;
-        
+        const stemIndex = ((dayStemIndex % 5) * 2 + branchIndex) % 10;
+       
         return {
             stem: this.heavenlyStems[stemIndex],
             stemHanja: this.heavenlyStemsHanja[stemIndex],
