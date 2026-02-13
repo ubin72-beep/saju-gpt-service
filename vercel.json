@@ -1,14 +1,25 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/**/*.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ],
   "functions": {
     "api/send-daily-fortune.js": {
       "memory": 1024,
       "maxDuration": 60
     }
-  },
-  "env": {
-    "KAKAO_API_KEY": "@kakao_api_key",
-    "KAKAO_SENDER_KEY": "@kakao_sender_key",
-    "KAKAO_TEMPLATE_CODE": "@kakao_template_code",
-    "CRON_SECRET": "@cron_secret"
   }
 }
