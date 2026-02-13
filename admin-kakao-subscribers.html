@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오톡 구독자 관리 | 관리자</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .header { background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 2rem; margin-bottom: 10px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .stat-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
+        .stat-label { color: #666; font-size: 1rem; }
+        .controls { background: white; padding: 25px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .btn-primary { background: #FEE500; color: #3C1E1E; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(254,229,0,0.3); }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .table-container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 15px; text-align: left; font-weight: 600; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px; border-bottom: 1px solid #dee2e6; }
+        tr:hover { background: #f8f9fa; }
+        .status-badge { padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-inactive { background: #f8d7da; color: #721c24; }
+        .btn-action { padding: 8px 15px; font-size: 0.9rem; margin: 0 5px; }
+        .loading { text-align: center; padding: 50px; }
+        .empty-state { text-align: center; padding: 80px 20px; color: #999; }
+        .empty-icon { font-size: 4rem; margin-bottom: 20px; }
+        @media (max-width: 768px) {
+            .stats { grid-template-columns: 1fr; }
+            table { font-size: 0.9rem; }
+            td, th { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 카카오톡 매일 운세 구독자 관리</h1>
+            <p>매일 아침 7시 자동 발송되는 운세 구독자를 관리합니다</p>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalSubscribers">0</div>
+                <div class="stat-label">전체 구독자</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number" id="activeSubscribers">0</div>
+                <div class="stat-label">활성 구독자</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎁</div>
+                <div class="stat-number" id="freeSubscribers">0</div>
+                <div class="stat-label">무료 이용 중</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📤</div>
+                <div class="stat-number" id="todaySent">0</div>
+                <div class="stat-label">오늘 발송</div>
+            </div>
+        </div>
+
+        <!-- 컨트롤 -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="loadSubscribers()">
+                <i class="fas fa-sync"></i> 새로고침
+            </button>
+            <button class="btn btn-primary" onclick="exportToCSV()">
+                <i class="fas fa-download"></i> CSV 다운로드
+            </button>
+            <button class="btn btn-danger" onclick="sendTestMessage()">
+                <i class="fas fa-paper-plane"></i> 테스트 발송
+            </button>
+        </div>
+
+        <!-- 구독자 목록 -->
+        <div class="table-container">
+            <h3 style="margin-bottom: 20px;">구독자 목록</h3>
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+                <p>구독자 정보를 불러오는 중...</p>
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">📭</div>
+                <h3>구독자가 없습니다</h3>
+                <p>메인 페이지에서 구독 신청을 받아보세요!</p>
+            </div>
+            <table id="subscribersTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>전화번호</th>
+                        <th>생년</th>
+                        <th>띠</th>
+                        <th>구독일</th>
+                        <th>무료 종료일</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody id="subscribersBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let subscribers = [];
+
+        // 페이지 로드 시 구독자 불러오기
+        window.addEventListener('DOMContentLoaded', loadSubscribers);
+
+        // 구독자 불러오기
+        async function loadSubscribers() {
+            const loading = document.getElementById('loading');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.getElementById('subscribersTable');
+            
+            loading.style.display = 'block';
+            emptyState.style.display = 'none';
+            table.style.display = 'none';
+
+            try {
+                const response = await fetch('/tables/kakao_subscribers?limit=1000&sort=created_at');
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    subscribers = result.data || [];
+                    
+                    console.log(`✅ ${subscribers.length}명의 구독자 로드 완료`);
+                    
+                    if (subscribers.length === 0) {
+                        loading.style.display = 'none';
+                        emptyState.style.display = 'block';
+                    } else {
+                        renderSubscribers();
+                        updateStats();
+                        loading.style.display = 'none';
+                        table.style.display = 'table';
+                    }
+                } else {
+                    throw new Error('구독자 불러오기 실패');
+                }
+            } catch (error) {
+                console.error('❌ 오류:', error);
+                loading.style.display = 'none';
+                alert('구독자 정보를 불러오지 못했습니다.');
+            }
+        }
+
+        // 통계 업데이트
+        function updateStats() {
+            const total = subscribers.length;
+            const active = subscribers.filter(s => s.status === 'active').length;
+            const free = subscribers.filter(s => new Date(s.free_until) > new Date()).length;
+            const today = subscribers.filter(s => {
+                if (!s.last_sent) return false;
+                const lastSent = new Date(s.last_sent);
+                const today = new Date();
+                return lastSent.toDateString() === today.toDateString();
+            }).length;
+
+            document.getElementById('totalSubscribers').textContent = total;
+            document.getElementById('activeSubscribers').textContent = active;
+            document.getElementById('freeSubscribers').textContent = free;
+            document.getElementById('todaySent').textContent = today;
+        }
+
+        // 구독자 목록 렌더링
+        function renderSubscribers() {
+            const tbody = document.getElementById('subscribersBody');
+            tbody.innerHTML = '';
+
+            subscribers.forEach((sub, index) => {
+                const row = document.createElement('tr');
+                
+                const subDate = new Date(sub.subscription_start);
+                const freeUntil = new Date(sub.free_until);
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${sub.name}</td>
+                    <td>${formatPhone(sub.phone)}</td>
+                    <td>${sub.birth_year}년</td>
+                    <td>${sub.zodiac}</td>
+                    <td>${formatDate(subDate)}</td>
+                    <td>${formatDate(freeUntil)}</td>
+                    <td>
+                        <span class="status-badge ${sub.status === 'active' ? 'status-active' : 'status-inactive'}">
+                            ${sub.status === 'active' ? '활성' : '비활성'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-action" onclick="sendToUser('${sub.id}')">
+                            <i class="fas fa-paper-plane"></i> 발송
+                        </button>
+                        <button class="btn btn-danger btn-action" onclick="deleteSubscriber('${sub.id}')">
+                            <i class="fas fa-trash"></i> 삭제
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // 전화번호 포맷
+        function formatPhone(phone) {
+            if (!phone) return '';
+            const cleaned = phone.replace(/[^0-9]/g, '');
+            if (cleaned.length === 11) {
+                return cleaned.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            }
+            return phone;
+        }
+
+        // 날짜 포맷
+        function formatDate(date) {
+            if (!date) return '-';
+            const d = new Date(date);
+            return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+        }
+
+        // 특정 사용자에게 발송
+        async function sendToUser(id) {
+            const sub = subscribers.find(s => s.id === id);
+            if (!sub) return;
+
+            if (confirm(`${sub.name}님에게 운세를 발송하시겠습니까?`)) {
+                alert('실제 카카오톡 API 연동 후 발송 가능합니다.\n\n현재는 테스트 모드입니다.');
+                console.log(`📤 ${sub.name}님(${formatPhone(sub.phone)})에게 운세 발송`);
+            }
+        }
+
+        // 구독자 삭제
+        async function deleteSubscriber(id) {
+            const sub = subscribers.find(s => s.id === id);
+            if (!sub) return;
+
+            if (confirm(`${sub.name}님의 구독을 삭제하시겠습니까?`)) {
+                try {
+                    const response = await fetch(`/tables/kakao_subscribers/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('삭제되었습니다.');
+                        loadSubscribers();
+                    } else {
+                        throw new Error('삭제 실패');
+                    }
+                } catch (error) {
+                    console.error('❌ 삭제 오류:', error);
+                    alert('삭제 중 오류가 발생했습니다.');
+                }
+            }
+        }
+
+        // CSV 다운로드
+        function exportToCSV() {
+            if (subscribers.length === 0) {
+                alert('다운로드할 구독자가 없습니다.');
+                return;
+            }
+
+            const headers = ['번호', '이름', '전화번호', '생년', '띠', '구독일', '무료종료일', '상태'];
+            const rows = subscribers.map((sub, index) => [
+                index + 1,
+                sub.name,
+                formatPhone(sub.phone),
+                sub.birth_year + '년',
+                sub.zodiac,
+                formatDate(new Date(sub.subscription_start)),
+                formatDate(new Date(sub.free_until)),
+                sub.status === 'active' ? '활성' : '비활성'
+            ]);
+
+            const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `kakao_subscribers_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            console.log('✅ CSV 다운로드 완료');
+        }
+
+        // 테스트 메시지 발송
+        function sendTestMessage() {
+            alert('실제 카카오톡 API 연동 후 사용 가능합니다.\n\n현재는 테스트 모드입니다.');
+            console.log('📤 테스트 메시지 발송 (시뮬레이션)');
+        }
+    </script>
+</body>
+</html>
