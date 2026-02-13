@@ -205,33 +205,45 @@ class SajuEngine {
     }
     
     /**
-     * 시주 (時柱) 계산
-     */
-    getTimePillar(birthtime, dayStem) {
-        const timeKeys = Object.keys(this.timeMapping);
-        let branchIndex = 0;
-        
-        for (let i = 0; i < timeKeys.length; i++) {
-            if (birthtime === timeKeys[i]) {
-                branchIndex = i;
-                break;
-            }
-        }
-        
-        const dayStemIndex = this.heavenlyStems.indexOf(dayStem);
-        const stemIndex = ((dayStemIndex % 5) * 2 + branchIndex) % 10;
-       
-        return {
-            stem: this.heavenlyStems[stemIndex],
-            stemHanja: this.heavenlyStemsHanja[stemIndex],
-            branch: this.earthlyBranches[branchIndex],
-            branchHanja: this.earthlyBranchesHanja[branchIndex],
-            element: this.elements[this.heavenlyStems[stemIndex]],
-            time: this.timeMapping[birthtime],
-            full: `${this.heavenlyStems[stemIndex]}${this.earthlyBranches[branchIndex]}`,
-            fullHanja: `${this.heavenlyStemsHanja[stemIndex]}${this.earthlyBranchesHanja[branchIndex]}`
-        };
-    }
+    /**
+ * 시주 (時柱) 계산
+ */
+getTimePillar(birthtime, dayStem) {
+    // 시간 → 지지 매핑
+    const timeToBranch = {
+        '23-01': 0,  // 자시 → 子
+        '01-03': 1,  // 축시 → 丑
+        '03-05': 2,  // 인시 → 寅
+        '05-07': 3,  // 묘시 → 卯
+        '07-09': 4,  // 진시 → 辰
+        '09-11': 5,  // 사시 → 巳
+        '11-13': 6,  // 오시 → 午
+        '13-15': 7,  // 미시 → 未
+        '15-17': 8,  // 신시 → 申
+        '17-19': 9,  // 유시 → 酉
+        '19-21': 10, // 술시 → 戌
+        '21-23': 11  // 해시 → 亥
+    };
+    
+    const branchIndex = timeToBranch[birthtime] !== undefined ? timeToBranch[birthtime] : 0;
+    
+    // 일간으로 시간 천간 계산
+    const dayStemIndex = this.heavenlyStems.indexOf(dayStem);
+    
+    // 시주 천간 계산 공식: (일간 인덱스 % 5) * 2 + 지지 인덱스
+    const stemIndex = ((dayStemIndex % 5) * 2 + branchIndex) % 10;
+    
+    return {
+        stem: this.heavenlyStems[stemIndex],
+        stemHanja: this.heavenlyStemsHanja[stemIndex],
+        branch: this.earthlyBranches[branchIndex],
+        branchHanja: this.earthlyBranchesHanja[branchIndex],
+        element: this.elements[this.heavenlyStems[stemIndex]],
+        time: this.timeMapping[birthtime],
+        full: `${this.heavenlyStems[stemIndex]}${this.earthlyBranches[branchIndex]}`,
+        fullHanja: `${this.heavenlyStemsHanja[stemIndex]}${this.earthlyBranchesHanja[branchIndex]}`
+    };
+}
     
     /**
      * 십성 계산
