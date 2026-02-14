@@ -521,8 +521,251 @@ smoothScrollLinks.forEach(function(link) {
   - `SAJU_ENGINE_INTEGRATION_COMPLETE.md` - 상세 연동 보고서
   - `BACKEND_PROGRESS_REPORT.md` - 백엔드 진행 상황
 - **테스트**:
+- # 🔍 현재 상황 완전 진단
+
+## 📊 GitHub 파일 상태 (로컬 프로젝트)
+
+### ✅ index.html
+- **바이오리듬 카드**: ✅ **있음** (2175-2180번 라인)
+- **saju-engine.js 로딩**: ✅ **1개만** (2616번 라인)
+- **소셜 미디어 링크**: `DOWNLOAD_index_FIXED.html`에만 추가됨
+
+### ✅ 파일 존재 여부
+```
+✅ UPLOAD_result.html.txt (35KB)
+✅ DOWNLOAD_saju-engine_SAFE.js (29KB)
+✅ DOWNLOAD_index_FIXED.html (140KB) - 소셜 링크 포함
+✅ biorhythm.html (18KB)
+```
+
+---
+
+## 🚨 문제 원인 분석
+
+### 스크린샷에서 본 것:
+1. ❌ **바이오리듬 카드가 화면에 안 보임** (무료 서비스 4개만 보임)
+2. ❌ **"SajuEngine has already been declared"** 오류
+3. ❌ **"Cannot read properties of null (reading 'trim')"** 오류
+
+### 가능한 원인 3가지:
+
+#### 원인 1: GitHub 업로드가 안 됨 ❌
+→ **로컬 프로젝트에만** 수정사항이 있고, GitHub(https://github.com/ubin72-beep/saju-gpt-service)에는 업로드 안 됨
+
+#### 원인 2: Vercel 배포가 안 됨 ❌
+→ GitHub에는 업로드했지만, Vercel 배포가 실패하거나 지연됨
+
+#### 원인 3: 브라우저 캐시 문제 ❌
+→ 배포는 되었지만, 브라우저가 옛날 버전을 캐시에서 불러옴
+
+---
+
+## 🎯 정확한 진단 방법
+
+### Step 1: GitHub 실제 파일 확인
+
+**다음 링크를 열어서 직접 확인하세요:**
+
+```
+https://github.com/ubin72-beep/saju-gpt-service/blob/main/index.html
+```
+
+**확인할 것:**
+1. 페이지 내에서 **Ctrl+F** → `biorhythm.html` 검색
+   - ✅ 있으면: GitHub 업로드 완료
+   - ❌ 없으면: GitHub 업로드 **안 됨**
+
+2. 페이지 내에서 **Ctrl+F** → `saju-engine.js` 검색
+   - "1 result" 나오면: ✅ 정상
+   - "2 results" 나오면: ❌ 중복
+
+---
+
+### Step 2: Vercel 배포 상태 확인
+
+```
+https://vercel.com/dashboard
+```
+
+**확인할 것:**
+1. `saju-gpt-service` 프로젝트 클릭
+2. 최신 Deployment 상태 확인:
+   - ✅ **Ready** (초록색): 배포 완료
+   - ⏳ **Building**: 배포 중
+   - ❌ **Failed**: 배포 실패
+
+3. 배포 시간 확인:
+   - 최근 **5분 이내**: ✅ 최신
+   - **10분 이상**: ❌ 구버전
+
+---
+
+### Step 3: 실제 사이트 파일 확인
+
+**www.aisaju1000.com 접속 → F12 → Console**
+
+아래 코드 복사 → 붙여넣기 → Enter:
+
+```javascript
+// 완전 진단 스크립트
+(async function() {
+    console.clear();
+    console.log('🔍 사이트 진단 시작...\n');
+    
+    // 1. 현재 index.html 내용 가져오기
+    const indexHtml = await fetch('/index.html?t=' + Date.now()).then(r => r.text());
+    
+    // 2. 바이오리듬 확인
+    const hasBiorhythm = indexHtml.includes('biorhythm.html');
+    console.log('1️⃣ 바이오리듬:', hasBiorhythm ? '✅ 있음' : '❌ 없음');
+    
+    // 3. saju-engine.js 중복 확인
+    const sajuCount = (indexHtml.match(/saju-engine\.js/g) || []).length;
+    console.log('2️⃣ saju-engine.js:', sajuCount + '개', sajuCount === 1 ? '✅ 정상' : '❌ 중복!');
+    
+    // 4. 소셜 링크 확인
+    const hasSocial = indexHtml.includes('fa-instagram') || indexHtml.includes('fa-facebook');
+    console.log('3️⃣ 소셜 링크:', hasSocial ? '✅ 있음' : '❌ 없음');
+    
+    // 5. DOM에서 바이오리듬 카드 확인
+    const bioCard = document.querySelector('[onclick*="biorhythm"]');
+    console.log('4️⃣ 화면에 표시:', bioCard ? '✅ 보임' : '❌ 안 보임');
+    
+    // 6. 무료 서비스 카드 개수
+    const freeCards = document.querySelectorAll('.service-card[style*="27ae60"]');
+    console.log('5️⃣ 무료 서비스 개수:', freeCards.length + '개');
+    
+    console.log('\n📊 진단 완료!');
+    console.log('='.repeat(50));
+    
+    // 결과 판정
+    if (!hasBiorhythm) {
+        console.log('❌ 문제: index.html이 구버전입니다!');
+        console.log('해결: GitHub에 index.html 다시 업로드하세요.');
+    } else if (sajuCount > 1) {
+        console.log('❌ 문제: saju-engine.js가 중복 로딩됩니다!');
+        console.log('해결: index.html에서 중복 제거하세요.');
+    } else if (!bioCard) {
+        console.log('❌ 문제: 파일은 최신인데 화면에 안 보입니다!');
+        console.log('해결: 캐시를 삭제하세요.');
+    } else {
+        console.log('✅ 모든 것이 정상입니다!');
+    }
+})();
+```
+
+---
+
+## 💊 해결 방법 (상황별)
+
+### 상황 A: GitHub에 없음 (1️⃣이 ❌)
+
+```
+1. https://github.com/ubin72-beep/saju-gpt-service 접속
+2. index.html 클릭
+3. ✏️ 연필 아이콘 클릭
+4. Ctrl+A → Delete (전체 삭제)
+5. DOWNLOAD_index_FIXED.html 파일 열기
+6. Ctrl+A → Ctrl+C (전체 복사)
+7. GitHub에서 Ctrl+V (붙여넣기)
+8. "Commit changes" 클릭
+9. 커밋 메시지: "fix: 바이오리듬 추가 및 소셜 링크 추가"
+10. "Commit changes" 확인
+```
+
+---
+
+### 상황 B: Vercel 배포 안 됨 (2️⃣이 ❌)
+
+```
+1. https://vercel.com/dashboard 접속
+2. saju-gpt-service 클릭
+3. 최신 Deployment 클릭
+4. "Redeploy" 버튼 클릭
+5. 1-2분 대기
+6. 상태가 "Ready" ✅ 될 때까지 대기
+```
+
+---
+
+### 상황 C: 브라우저 캐시 (3️⃣이 ❌)
+
+**F12 → Console에서 실행:**
+
+```javascript
+// 모든 캐시 완전 삭제
+localStorage.clear();
+sessionStorage.clear();
+indexedDB.databases().then(dbs => {
+    dbs.forEach(db => indexedDB.deleteDatabase(db.name));
+});
+caches.keys().then(keys => {
+    keys.forEach(key => caches.delete(key));
+});
+navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(reg => reg.unregister());
+});
+
+console.log('✅ 캐시 삭제 완료!');
+console.log('🔄 3초 후 새로고침...');
+
+setTimeout(() => {
+    location.reload(true);
+}, 3000);
+```
+
+**그 다음:**
+- Windows: `Ctrl + Shift + R`
+- Mac: `Cmd + Shift + R`
+
+---
+
+## 📋 체크리스트 (순서대로 하세요)
+
+- [ ] Step 1 완료: GitHub 파일 확인 (링크 열어서 biorhythm 검색)
+- [ ] Step 2 완료: Vercel 배포 상태 확인 (Ready 상태인지)
+- [ ] Step 3 완료: 사이트 진단 스크립트 실행 (결과 복사)
+- [ ] 상황 A/B/C 중 하나 실행
+- [ ] 캐시 삭제 완료
+- [ ] 강제 새로고침 완료
+- [ ] 바이오리듬 카드 확인 (화면에 보이는지)
+
+---
+
+## 🎯 최종 결과 보고 양식
+
+위 단계들을 실행하신 후, 아래 양식으로 알려주세요:
+
+```
+### GitHub 파일 확인
+- biorhythm.html: [ ] ✅ 있음 / [ ] ❌ 없음
+
+### Vercel 배포 상태
+- 상태: [ ] Ready / [ ] Building / [ ] Failed
+- 배포 시간: ____시 ____분
+
+### 진단 스크립트 결과
+1️⃣ 바이오리듬: [ ] ✅ / [ ] ❌
+2️⃣ saju-engine.js: ___개
+3️⃣ 소셜 링크: [ ] ✅ / [ ] ❌
+4️⃣ 화면에 표시: [ ] ✅ / [ ] ❌
+5️⃣ 무료 서비스 개수: ___개
+
+### 실행한 해결 방법
+- [ ] 상황 A (GitHub 재업로드)
+- [ ] 상황 B (Vercel 재배포)
+- [ ] 상황 C (캐시 삭제)
+
+### 최종 결과
+- 바이오리듬 보이나요? [ ] 예 / [ ] 아니오
+```
+
+---
+
+**이 진단을 통해 정확한 원인을 찾아서 해결해드리겠습니다!** 🔧
   - 테스트 페이지: `test-saju-integration.html`
   - 로컬 서버 실행: `npx http-server . -p 8080`
 - **상태**: ✅ 완료 (GitHub 업로드 필요!)
 
 ### 🎉 아이폰 "출렁출렁" 현상 완전 해결! (2026-01-27 17:00)
+
