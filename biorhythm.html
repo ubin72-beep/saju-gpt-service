@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이오리듬 - AI 사주 천년지기</title>
+    <meta name="description" content="생년월일 기반 신체·감성·지성 리듬 분석으로 당신의 최적의 날을 찾아드립니다.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+        }
+
+        .rhythm-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .rhythm-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .rhythm-card.physical {
+            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 90%);
+            color: white;
+        }
+
+        .rhythm-card.emotional {
+            background: linear-gradient(135deg, #FEE140 0%, #FA709A 100%);
+            color: white;
+        }
+
+        .rhythm-card.intellectual {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .rhythm-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .rhythm-value {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+
+        .rhythm-status {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-section li:last-child {
+            border-bottom: none;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .rhythm-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 바이오리듬 분석</h1>
+            <p>신체·감성·지성 리듬으로 당신의 최적의 날을 찾아드립니다</p>
+        </div>
+
+        <!-- 입력 폼 -->
+        <div class="card" id="inputForm">
+            <h2 style="margin-bottom: 20px; color: #333;">생년월일을 입력하세요</h2>
+            <form onsubmit="calculateBiorhythm(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> 생년월일</label>
+                    <input type="date" id="birthdate" required max="2024-12-31">
+                </div>
+                <button type="submit" class="btn">
+                    <i class="fas fa-chart-line"></i> 바이오리듬 분석하기
+                </button>
+            </form>
+        </div>
+
+        <!-- 결과 섹션 -->
+        <div class="result-section" id="resultSection">
+            <div class="card">
+                <h2 style="margin-bottom: 20px; color: #333;">
+                    <i class="fas fa-chart-area"></i> 현재 바이오리듬
+                </h2>
+                <p style="color: #666; margin-bottom: 20px;" id="currentDate"></p>
+                
+                <!-- 리듬 카드 -->
+                <div class="rhythm-cards">
+                    <div class="rhythm-card physical">
+                        <h3>🏃‍♂️ 신체 리듬</h3>
+                        <div class="rhythm-value" id="physicalValue">0%</div>
+                        <div class="rhythm-status" id="physicalStatus">분석 중...</div>
+                    </div>
+                    <div class="rhythm-card emotional">
+                        <h3>❤️ 감성 리듬</h3>
+                        <div class="rhythm-value" id="emotionalValue">0%</div>
+                        <div class="rhythm-status" id="emotionalStatus">분석 중...</div>
+                    </div>
+                    <div class="rhythm-card intellectual">
+                        <h3>🧠 지성 리듬</h3>
+                        <div class="rhythm-value" id="intellectualValue">0%</div>
+                        <div class="rhythm-status" id="intellectualStatus">분석 중...</div>
+                    </div>
+                </div>
+
+                <!-- 차트 -->
+                <div class="chart-container">
+                    <canvas id="biorhythmChart"></canvas>
+                </div>
+
+                <!-- 정보 섹션 -->
+                <div class="info-section">
+                    <h3>📌 오늘의 추천</h3>
+                    <ul id="recommendationList">
+                        <li>분석 중...</li>
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3>💡 바이오리듬이란?</h3>
+                    <ul>
+                        <li><strong>신체 리듬 (23일 주기)</strong>: 체력, 건강, 운동 능력</li>
+                        <li><strong>감성 리듬 (28일 주기)</strong>: 감정, 창의력, 대인관계</li>
+                        <li><strong>지성 리듬 (33일 주기)</strong>: 사고력, 판단력, 학습 능력</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="index.html" class="back-btn">
+                        <i class="fas fa-home"></i> 홈으로 돌아가기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let biorhythmChart = null;
+
+        function calculateBiorhythm(event) {
+            event.preventDefault();
+            
+            const birthdate = new Date(document.getElementById('birthdate').value);
+            const today = new Date();
+            
+            // 생일부터 오늘까지의 일수 계산
+            const daysSinceBirth = Math.floor((today - birthdate) / (1000 * 60 * 60 * 24));
+            
+            // 현재 바이오리듬 계산
+            const physical = Math.sin(2 * Math.PI * daysSinceBirth / 23) * 100;
+            const emotional = Math.sin(2 * Math.PI * daysSinceBirth / 28) * 100;
+            const intellectual = Math.sin(2 * Math.PI * daysSinceBirth / 33) * 100;
+            
+            // 결과 표시
+            displayResults(physical, emotional, intellectual, birthdate, today);
+            
+            // 차트 생성
+            createChart(birthdate, today);
+            
+            // 결과 섹션 표시
+            document.getElementById('inputForm').style.display = 'none';
+            document.getElementById('resultSection').classList.add('active');
+            
+            // 스크롤
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function displayResults(physical, emotional, intellectual, birthdate, today) {
+            // 날짜 표시
+            const dateStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일 기준`;
+            document.getElementById('currentDate').textContent = dateStr;
+            
+            // 신체 리듬
+            document.getElementById('physicalValue').textContent = Math.round(physical) + '%';
+            document.getElementById('physicalStatus').textContent = getStatus(physical);
+            
+            // 감성 리듬
+            document.getElementById('emotionalValue').textContent = Math.round(emotional) + '%';
+            document.getElementById('emotionalStatus').textContent = getStatus(emotional);
+            
+            // 지성 리듬
+            document.getElementById('intellectualValue').textContent = Math.round(intellectual) + '%';
+            document.getElementById('intellectualStatus').textContent = getStatus(intellectual);
+            
+            // 추천사항 생성
+            generateRecommendations(physical, emotional, intellectual);
+        }
+
+        function getStatus(value) {
+            if (value > 75) return '매우 좋음 ⭐⭐⭐⭐⭐';
+            if (value > 50) return '좋음 ⭐⭐⭐⭐';
+            if (value > 25) return '보통 ⭐⭐⭐';
+            if (value > 0) return '약간 낮음 ⭐⭐';
+            if (value > -25) return '낮음 ⭐';
+            if (value > -50) return '주의 필요 ⚠️';
+            return '휴식 필요 🛌';
+        }
+
+        function generateRecommendations(physical, emotional, intellectual) {
+            const recommendations = [];
+            
+            if (physical > 50) {
+                recommendations.push('💪 운동하기 좋은 날입니다! 새로운 운동에 도전해보세요.');
+            } else if (physical < -25) {
+                recommendations.push('🛌 체력이 낮은 시기입니다. 충분한 휴식을 취하세요.');
+            }
+            
+            if (emotional > 50) {
+                recommendations.push('❤️ 감성이 풍부한 날입니다. 중요한 대화나 고백하기 좋아요.');
+            } else if (emotional < -25) {
+                recommendations.push('🌙 감정 기복이 있을 수 있어요. 혼자만의 시간을 가져보세요.');
+            }
+            
+            if (intellectual > 50) {
+                recommendations.push('📚 집중력이 높은 날입니다. 중요한 결정이나 학습에 좋아요.');
+            } else if (intellectual < -25) {
+                recommendations.push('💭 판단력이 흐려질 수 있어요. 중요한 결정은 미루는 게 좋겠어요.');
+            }
+            
+            if (physical > 50 && emotional > 50 && intellectual > 50) {
+                recommendations.push('🌟 모든 리듬이 최상! 오늘은 무엇을 해도 좋은 날입니다!');
+            }
+            
+            if (recommendations.length === 0) {
+                recommendations.push('⚖️ 평온한 하루입니다. 일상적인 활동에 집중하세요.');
+            }
+            
+            const list = document.getElementById('recommendationList');
+            list.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
+        }
+
+        function createChart(birthdate, today) {
+            const ctx = document.getElementById('biorhythmChart').getContext('2d');
+            
+            // 기존 차트 제거
+            if (biorhythmChart) {
+                biorhythmChart.destroy();
+            }
+            
+            // 30일 데이터 생성
+            const labels = [];
+            const physicalData = [];
+            const emotionalData = [];
+            const intellectualData = [];
+            
+            for (let i = -15; i <= 15; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() + i);
+                
+                const daysSinceBirth = Math.floor((date - birthdate) / (1000 * 60 * 60 * 24));
+                
+                labels.push(i === 0 ? '오늘' : `${date.getMonth() + 1}/${date.getDate()}`);
+                physicalData.push(Math.sin(2 * Math.PI * daysSinceBirth / 23) * 100);
+                emotionalData.push(Math.sin(2 * Math.PI * daysSinceBirth / 28) * 100);
+                intellectualData.push(Math.sin(2 * Math.PI * daysSinceBirth / 33) * 100);
+            }
+            
+            biorhythmChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '신체 리듬 (23일 주기)',
+                            data: physicalData,
+                            borderColor: '#FA8BFF',
+                            backgroundColor: 'rgba(250, 139, 255, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+                        {
+                            label: '감성 리듬 (28일 주기)',
+                            data: emotionalData,
+                            borderColor: '#FEE140',
+                            backgroundColor: 'rgba(254, 225, 64, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4
+                        },
+                        {
+                            label: '지성 리듬 (33일 주기)',
+                            data: intellectualData,
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    family: "'Noto Sans KR', sans-serif"
+                                },
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + Math.round(context.parsed.y) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: -100,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 오늘 날짜를 max로 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthdate').setAttribute('max', today);
+        });
+    </script>
+</body>
+</html>
