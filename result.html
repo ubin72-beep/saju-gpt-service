@@ -769,6 +769,11 @@
                     gender
                 });
 
+                // 오행 계산 추가 (engine이 제공하지 않는 경우)
+                if (!result.elements) {
+                    result.elements = calculateElements(result);
+                }
+                
                 // 캐시 제거: localStorage에 결과를 저장하지 않음
                 
                 return result;
@@ -778,6 +783,43 @@
                 document.getElementById('loading').classList.remove('active');
                 return null;
             }
+        }
+
+        // 오행 계산 함수
+        function calculateElements(sajuData) {
+            const elementMap = {
+                '甲': '목', '乙': '목',
+                '丙': '화', '丁': '화',
+                '戊': '토', '己': '토',
+                '庚': '금', '辛': '금',
+                '壬': '수', '癸': '수',
+                '子': '수', '丑': '토', '寅': '목', '卯': '목',
+                '辰': '토', '巳': '화', '午': '화', '未': '토',
+                '申': '금', '酉': '금', '戌': '토', '亥': '수'
+            };
+
+            const elements = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
+
+            // 사주 8자에서 오행 카운트
+            if (sajuData.pillars) {
+                ['year', 'month', 'day', 'time'].forEach(pillarKey => {
+                    const pillar = sajuData.pillars[pillarKey];
+                    if (pillar) {
+                        // 천간
+                        if (pillar.stem) {
+                            const stemElement = elementMap[pillar.stem];
+                            if (stemElement) elements[stemElement]++;
+                        }
+                        // 지지
+                        if (pillar.branch) {
+                            const branchElement = elementMap[pillar.branch];
+                            if (branchElement) elements[branchElement]++;
+                        }
+                    }
+                });
+            }
+
+            return elements;
         }
 
         // 결과 표시 함수
