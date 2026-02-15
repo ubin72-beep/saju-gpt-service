@@ -620,18 +620,18 @@
                     </label>
                     <select id="birthtime" name="birthtime">
                         <option value="">모름</option>
-                        <option value="23-01">자시 (23:00-01:00)</option>
-                        <option value="01-03">축시 (01:00-03:00)</option>
-                        <option value="03-05">인시 (03:00-05:00)</option>
-                        <option value="05-07">묘시 (05:00-07:00)</option>
-                        <option value="07-09">진시 (07:00-09:00)</option>
-                        <option value="09-11">사시 (09:00-11:00)</option>
-                        <option value="11-13">오시 (11:00-13:00)</option>
-                        <option value="13-15">미시 (13:00-15:00)</option>
-                        <option value="15-17">신시 (15:00-17:00)</option>
-                        <option value="17-19">유시 (17:01-19:00)</option>
-                        <option value="19-21">술시 (19:00-21:00)</option>
-                        <option value="21-23">해시 (21:00-23:00)</option>
+                        <option value="23:30-01:30">자시 (23:30-01:30)</option>
+                        <option value="01:30-03:30">축시 (01:30-03:30)</option>
+                        <option value="03:30-05:30">인시 (03:30-05:30)</option>
+                        <option value="05:30-07:30">묘시 (05:30-07:30)</option>
+                        <option value="07:30-09:30">진시 (07:30-09:30)</option>
+                        <option value="09:30-11:30">사시 (09:30-11:30)</option>
+                        <option value="11:30-13:30">오시 (11:30-13:30)</option>
+                        <option value="13:30-15:30">미시 (13:30-15:30)</option>
+                        <option value="15:30-17:30">신시 (15:30-17:30)</option>
+                        <option value="17:30-19:30">유시 (17:30-19:30)</option>
+                        <option value="19:30-21:30">술시 (19:30-21:30)</option>
+                        <option value="21:30-23:30">해시 (21:30-23:30)</option>
                     </select>
                 </div>
 
@@ -847,8 +847,13 @@
             displayElementChart(elementData);
 
             // 기본 분석 표시
+            console.log('🔍 사주 데이터 확인:', {
+                personality: data.personality,
+                balance: data.elements?.balance,
+                careerRecommend: data.fortune?.career?.recommend
+            });
             document.getElementById('personality').textContent = data.personality;
-            document.getElementById('balance').textContent = data.balance;
+            document.getElementById('balance').textContent = data.elements?.balance || '분석 중';
 
             // 직업 추천 표시
             displayJobRecommendations(data);
@@ -997,27 +1002,37 @@
             `).join('');
         }
 
-        // 간단한 직업 추천 생성
+        // 직업 추천 생성 (실제 계산 결과 기반)
         function generateJobRecommendations(data) {
-            // 실제로는 saju-enhanced-engine.js의 로직 사용
+            // 오행에 따른 아이콘 매핑
+            const icons = {
+                '기획/관리직': 'briefcase', 'IT/개발': 'laptop-code', '교육': 'chalkboard-teacher', 
+                '컨설팅': 'lightbulb', '마케팅': 'bullhorn', '디자인': 'paint-brush', 
+                '예술': 'palette', '방송/미디어': 'broadcast-tower', '관리/행정': 'tasks',
+                '부동산': 'building', '금융': 'coins', '건설': 'hard-hat', 
+                '경영/관리': 'user-tie', '법률': 'gavel', '의료': 'heartbeat', 
+                '서비스업': 'handshake', '무역/유통': 'shipping-fast', '통역/번역': 'language',
+                '상담': 'comments'
+            };
+            
+            // fortune.career에서 추천 직업 가져오기
+            if (data.fortune && data.fortune.career && data.fortune.career.recommend) {
+                const career = data.fortune.career;
+                return career.recommend.map((job, index) => ({
+                    icon: icons[job] || 'briefcase',
+                    title: job,
+                    score: career.score - (index * 3),  // 첫 번째가 가장 높은 점수
+                    description: career.summary
+                }));
+            }
+            
+            // 기본값 (fortune 데이터 없을 때)
             return [
                 {
                     icon: 'briefcase',
                     title: '기획/전략',
                     score: 85,
                     description: '큰 그림을 보는 능력이 뛰어납니다'
-                },
-                {
-                    icon: 'paint-brush',
-                    title: '창작/예술',
-                    score: 78,
-                    description: '창의적인 재능이 돋보입니다'
-                },
-                {
-                    icon: 'handshake',
-                    title: '영업/마케팅',
-                    score: 72,
-                    description: '사람들과의 소통 능력이 우수합니다'
                 }
             ];
         }
