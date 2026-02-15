@@ -232,13 +232,19 @@
             margin-bottom: 0.5rem;
         }
 
+        .pillar-elements {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
         .pillar-element {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             display: inline-block;
-            margin-top: 0.5rem;
         }
 
         .element-wood { background: rgba(76, 175, 80, 0.3); }
@@ -858,7 +864,7 @@
             });
         }
 
-        // 사주팔자 표시
+        // 사주팔자 표시 (천간+지지 분리)
         function displayPillars(pillars) {
             const grid = document.getElementById('pillarsGrid');
             grid.innerHTML = '';
@@ -870,16 +876,37 @@
                 time: '시주 (時柱)'
             };
 
+            // 오행 매핑 (천간/지지 → 오행)
+            const elementMap = {
+                '갑': '목', '을': '목', '甲': '목', '乙': '목',
+                '병': '화', '정': '화', '丙': '화', '丁': '화',
+                '무': '토', '기': '토', '戊': '토', '己': '토',
+                '경': '금', '신': '금', '庚': '금', '辛': '금',
+                '임': '수', '계': '수', '壬': '수', '癸': '수',
+                '자': '수', '축': '토', '인': '목', '묘': '목',
+                '진': '토', '사': '화', '오': '화', '미': '토',
+                '신': '금', '유': '금', '술': '토', '해': '수',
+                '子': '수', '丑': '토', '寅': '목', '卯': '목',
+                '辰': '토', '巳': '화', '午': '화', '未': '토',
+                '申': '금', '酉': '금', '戌': '토', '亥': '수'
+            };
+
             ['time', 'day', 'month', 'year'].forEach(key => {
                 if (pillars[key]) {
                     const pillar = pillars[key];
+                    
+                    // 천간과 지지의 오행 구하기
+                    const stemElement = elementMap[pillar.stemHanja] || elementMap[pillar.stem] || '목';
+                    const branchElement = elementMap[pillar.branchHanja] || elementMap[pillar.branch] || '목';
+                    
                     const div = document.createElement('div');
                     div.className = 'pillar-item';
                     div.innerHTML = `
                         <div class="pillar-label">${pillarNames[key]}</div>
                         <div class="pillar-value">${pillar.fullHanja || pillar.full}</div>
-                        <div class="pillar-element element-${getElementClass(pillar.element)}">
-                            ${pillar.element}
+                        <div class="pillar-elements">
+                            <span class="pillar-element element-${getElementClass(stemElement)}">${stemElement}</span>
+                            <span class="pillar-element element-${getElementClass(branchElement)}">${branchElement}</span>
                         </div>
                     `;
                     grid.appendChild(div);
