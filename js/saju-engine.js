@@ -80,10 +80,31 @@ class SajuEngine {
         
         try {
             // 1. 날짜 파싱
-            const date = new Date(birthdate);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
+            let date = new Date(birthdate);
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            
+            // 음력 → 양력 변환
+            if (calendar === 'lunar') {
+                try {
+                    // lunar-javascript 라이브러리 사용
+                    const lunar = window.Lunar || window.lunar;
+                    if (lunar && lunar.fromYmd) {
+                        const lunarDate = lunar.fromYmd(year, month, day);
+                        const solarDate = lunarDate.getSolar();
+                        year = solarDate.getYear();
+                        month = solarDate.getMonth();
+                        day = solarDate.getDay();
+                        console.log(`음력 변환: ${data.birthdate} (음력) → ${year}-${month}-${day} (양력)`);
+                    } else {
+                        console.warn('⚠️ 음력 라이브러리 없음, 양력으로 처리');
+                    }
+                } catch (lunarError) {
+                    console.error('음력 변환 오류:', lunarError);
+                    console.warn('⚠️ 음력 변환 실패, 양력으로 처리');
+                }
+            }
             
             // 2. 사주 계산
             const yearPillar = this.getYearPillar(year);
