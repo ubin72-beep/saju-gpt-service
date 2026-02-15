@@ -174,24 +174,24 @@ class SajuEngine {
         //         입추(8월), 백로(9월), 한로(10월), 입동(11월), 대설(12월), 소한(1월)
         
         // 각 달의 절기 날짜 (대략적, 매년 ±1일 변동)
-        // 이 날짜부터 다음 월지로 변경
+        // 절기 순서대로 정렬 (1월부터 12월까지)
         const solarTerms = [
-            { month: 2, day: 4 },   // 입춘 → 인월 시작
-            { month: 3, day: 6 },   // 경칩 → 묘월 시작
-            { month: 4, day: 5 },   // 청명 → 진월 시작
-            { month: 5, day: 6 },   // 입하 → 사월 시작
-            { month: 6, day: 6 },   // 망종 → 오월 시작
-            { month: 7, day: 7 },   // 소서 → 미월 시작
-            { month: 8, day: 8 },   // 입추 → 신월 시작
-            { month: 9, day: 8 },   // 백로 → 유월 시작
-            { month: 10, day: 8 },  // 한로 → 술월 시작
-            { month: 11, day: 7 },  // 입동 → 해월 시작
-            { month: 12, day: 7 },  // 대설 → 자월 시작
-            { month: 1, day: 6 }    // 소한 → 축월 시작
+            { month: 1, day: 6, branchIndex: 1 },   // 소한 → 축월
+            { month: 2, day: 4, branchIndex: 2 },   // 입춘 → 인월
+            { month: 3, day: 6, branchIndex: 3 },   // 경칩 → 묘월
+            { month: 4, day: 5, branchIndex: 4 },   // 청명 → 진월
+            { month: 5, day: 6, branchIndex: 5 },   // 입하 → 사월
+            { month: 6, day: 6, branchIndex: 6 },   // 망종 → 오월
+            { month: 7, day: 7, branchIndex: 7 },   // 소서 → 미월
+            { month: 8, day: 8, branchIndex: 8 },   // 입추 → 신월
+            { month: 9, day: 8, branchIndex: 9 },   // 백로 → 유월
+            { month: 10, day: 8, branchIndex: 10 }, // 한로 → 술월
+            { month: 11, day: 7, branchIndex: 11 }, // 입동 → 해월
+            { month: 12, day: 7, branchIndex: 0 }   // 대설 → 자월
         ];
         
         // 현재 날짜가 어느 월지에 속하는지 판단
-        let monthBranchIndex = 2;  // 기본값: 인월 (1월 입춘 전)
+        let monthBranchIndex = 1;  // 기본값: 축월 (1월 소한 전)
         
         for (let i = 0; i < solarTerms.length; i++) {
             const term = solarTerms[i];
@@ -199,7 +199,10 @@ class SajuEngine {
             // 현재 날짜가 이 절기 이후인지 확인
             if (month > term.month || (month === term.month && day >= term.day)) {
                 // 이 절기를 지났음 → 해당 월지 적용
-                monthBranchIndex = (i + 2) % 12;  // 인월=2부터 시작
+                monthBranchIndex = term.branchIndex;
+            } else {
+                // 이후 절기는 아직 안 지났으므로 중단
+                break;
             }
         }
         
