@@ -319,14 +319,22 @@ class SajuEngine {
     }
     
     /**
-     * 오행 분석
+     * 오행 분석 (천간 + 지지 = 8글자 분석)
      */
     analyzeElements(pillars) {
         const elements = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
         
+        // 각 pillar에서 천간(stem)과 지지(branch)를 따로 카운트
         Object.values(pillars).forEach(pillar => {
-            if (pillar && pillar.element) {
-                elements[pillar.element]++;
+            if (pillar) {
+                // 천간 (天干) 오행 추가
+                if (pillar.stem && this.elements[pillar.stem]) {
+                    elements[this.elements[pillar.stem]]++;
+                }
+                // 지지 (地支) 오행 추가
+                if (pillar.branch && this.elements[pillar.branch]) {
+                    elements[this.elements[pillar.branch]]++;
+                }
             }
         });
         
