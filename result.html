@@ -836,7 +836,8 @@
             displayPillars(data.pillars);
 
             // 오행 차트 표시
-            displayElementChart(data.elements);
+            const elementData = data.elements?.distribution || data.elements || calculateElements(data);
+            displayElementChart(elementData);
 
             // 기본 분석 표시
             document.getElementById('personality').textContent = data.personality;
