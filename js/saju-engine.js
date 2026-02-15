@@ -87,7 +87,7 @@ class SajuEngine {
             
             // 2. 사주 계산
             const yearPillar = this.getYearPillar(year);
-            const monthPillar = this.getMonthPillar(year, month);
+            const monthPillar = this.getMonthPillar(year, month, day);
             const dayPillar = this.getDayPillar(year, month, day);
             const timePillar = birthtime ? this.getTimePillar(birthtime, dayPillar.stem) : null;
             
@@ -163,12 +163,45 @@ class SajuEngine {
     }
     
     /**
-     * 월주 (月柱) 계산
+     * 월주 (月柱) 계산 (절기 기준)
      */
-    getMonthPillar(year, month) {
+    getMonthPillar(year, month, day) {
         const yearStemIndex = (year - 4) % 10;
         const monthStemIndex = (yearStemIndex * 2 + month) % 10;
-        const monthBranchIndex = (month + 1) % 12;
+        
+        // 월지(月支) - 절기 기준 계산
+        // 12절기: 입춘(2월), 경칩(3월), 청명(4월), 입하(5월), 망종(6월), 소서(7월),
+        //         입추(8월), 백로(9월), 한로(10월), 입동(11월), 대설(12월), 소한(1월)
+        
+        // 각 달의 절기 날짜 (대략적, 매년 ±1일 변동)
+        // 이 날짜부터 다음 월지로 변경
+        const solarTerms = [
+            { month: 2, day: 4 },   // 입춘 → 인월 시작
+            { month: 3, day: 6 },   // 경칩 → 묘월 시작
+            { month: 4, day: 5 },   // 청명 → 진월 시작
+            { month: 5, day: 6 },   // 입하 → 사월 시작
+            { month: 6, day: 6 },   // 망종 → 오월 시작
+            { month: 7, day: 7 },   // 소서 → 미월 시작
+            { month: 8, day: 8 },   // 입추 → 신월 시작
+            { month: 9, day: 8 },   // 백로 → 유월 시작
+            { month: 10, day: 8 },  // 한로 → 술월 시작
+            { month: 11, day: 7 },  // 입동 → 해월 시작
+            { month: 12, day: 7 },  // 대설 → 자월 시작
+            { month: 1, day: 6 }    // 소한 → 축월 시작
+        ];
+        
+        // 현재 날짜가 어느 월지에 속하는지 판단
+        let monthBranchIndex = 2;  // 기본값: 인월 (1월 입춘 전)
+        
+        for (let i = 0; i < solarTerms.length; i++) {
+            const term = solarTerms[i];
+            
+            // 현재 날짜가 이 절기 이후인지 확인
+            if (month > term.month || (month === term.month && day >= term.day)) {
+                // 이 절기를 지났음 → 해당 월지 적용
+                monthBranchIndex = (i + 2) % 12;  // 인월=2부터 시작
+            }
+        }
         
         return {
             stem: this.heavenlyStems[monthStemIndex],
