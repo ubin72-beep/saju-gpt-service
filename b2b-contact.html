@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B 파트너십 문의 - AI 사주 천년지기</title>
+    <meta name="description" content="AI 사주 솔루션 B2B 파트너십 문의 및 무료 체험 신청">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        
+        /* 섹션 */
+        .section {
+            padding: 80px 20px;
+        }
+        
+        /* 폼 컨테이너 */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            position: relative;
+        }
+        
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .radio-option label {
+            display: block;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .radio-option input[type="radio"]:checked + label {
+            border-color: #667eea;
+            background: #f0f4ff;
+            color: #667eea;
+        }
+        
+        .checkbox-group {
+            margin-top: 10px;
+        }
+        
+        .checkbox-option {
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .checkbox-option label {
+            display: inline;
+            cursor: pointer;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102,126,234,0.4);
+        }
+        
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        
+        /* 성공 메시지 */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+        }
+        
+        .success-message h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #27ae60;
+        }
+        
+        .success-message p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+        }
+        
+        /* 연락처 정보 */
+        .contact-info {
+            margin-top: 60px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .contact-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            text-align: center;
+        }
+        
+        .contact-item i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .contact-item p {
+            color: #666;
+        }
+        
+        .contact-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .form-container {
+                padding: 40px 30px;
+            }
+            
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="container">
+            <h1>🤝 B2B 파트너십 문의</h1>
+            <p>AI 사주 솔루션으로 비즈니스를 성장시키세요</p>
+            <p style="font-size: 1.1rem; margin-top: 20px;">✨ 첫 1개월 무료 체험</p>
+        </div>
+    </div>
+
+    <!-- 폼 섹션 -->
+    <div class="section">
+        <div class="container">
+            <div class="form-container">
+                <div id="formContent">
+                    <h2 class="form-title">무료 체험 신청</h2>
+                    <p class="form-subtitle">
+                        간단한 정보만 입력하시면 24시간 내 연락드립니다<br>
+                        카드 등록 불필요 · 언제든 해지 가능
+                    </p>
+                    
+                    <form id="b2bContactForm">
+                        <!-- 업종 선택 -->
+                        <div class="form-group">
+                            <label>업종 선택<span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="wedding" name="industry" value="결혼정보회사" required>
+                                    <label for="wedding">💍 결혼정보회사</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="moving" name="industry" value="이사·용달업체">
+                                    <label for="moving">🚚 이사·용달업체</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="realestate" name="industry" value="부동산 중개업소">
+                                    <label for="realestate">🏠 부동산 중개업소</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="other" name="industry" value="기타">
+                                    <label for="other">📋 기타</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 회사명 -->
+                        <div class="form-group">
+                            <label for="companyName">회사명<span class="required">*</span></label>
+                            <input type="text" id="companyName" name="companyName" placeholder="예: ㈜행복결혼정보" required>
+                        </div>
+                        
+                        <!-- 대표자명 -->
+                        <div class="form-group">
+                            <label for="ceoName">대표자명<span class="required">*</span></label>
+                            <input type="text" id="ceoName" name="ceoName" placeholder="예: 홍길동" required>
+                        </div>
+                        
+                        <!-- 연락처 -->
+                        <div class="form-group">
+                            <label for="phone">연락처<span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required>
+                        </div>
+                        
+                        <!-- 이메일 -->
+                        <div class="form-group">
+                            <label for="email">이메일<span class="required">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="example@company.com" required>
+                        </div>
+                        
+                        <!-- 업체 규모 -->
+                        <div class="form-group">
+                            <label for="scale">월 평균 거래 건수</label>
+                            <select id="scale" name="scale">
+                                <option value="">선택하세요</option>
+                                <option value="10건 이하">10건 이하</option>
+                                <option value="10-30건">10-30건</option>
+                                <option value="30-50건">30-50건</option>
+                                <option value="50-100건">50-100건</option>
+                                <option value="100건 이상">100건 이상</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 관심 서비스 -->
+                        <div class="form-group">
+                            <label>관심 있는 서비스 (중복 선택 가능)</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="service1" name="services" value="궁합 분석">
+                                    <label for="service1">궁합 분석</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="service2" name="services" value="택일 서비스">
+                                    <label for="service2">택일 서비스</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="service3" name="services" value="사주 상담">
+                                    <label for="service3">사주 상담</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input type="checkbox" id="service4" name="services" value="API 연동">
+                                    <label for="service4">API 연동</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 문의 내용 -->
+                        <div class="form-group">
+                            <label for="message">문의 내용</label>
+                            <textarea id="message" name="message" placeholder="궁금하신 사항을 자유롭게 작성해주세요"></textarea>
+                        </div>
+                        
+                        <!-- 개인정보 동의 -->
+                        <div class="form-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <label for="privacy">개인정보 수집 및 이용에 동의합니다<span class="required">*</span></label>
+                            </div>
+                        </div>
+                        
+                        <!-- 제출 버튼 -->
+                        <button type="submit" class="submit-button">
+                            <i class="fas fa-paper-plane"></i> 무료 체험 신청하기
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- 성공 메시지 -->
+                <div id="successMessage" class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h2>신청이 완료되었습니다!</h2>
+                    <p>
+                        24시간 내 담당자가 연락드리겠습니다.<br>
+                        빠른 상담을 원하시면 <strong>0502-1909-7788</strong>로 연락주세요.
+                    </p>
+                    <a href="b2b.html" class="back-button">B2B 홈으로 돌아가기</a>
+                </div>
+            </div>
+            
+            <!-- 연락처 정보 -->
+            <div class="contact-info">
+                <h3>빠른 상담을 원하시나요?</h3>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h4>전화 문의</h4>
+                        <p><a href="tel:0502-1909-7788">0502-1909-7788</a></p>
+                        <p style="font-size: 0.9rem; color: #999; margin-top: 5px;">평일 9:00 - 18:00</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>이메일 문의</h4>
+                        <p><a href="mailto:aisaju1000@gmail.com">aisaju1000@gmail.com</a></p>
+                        <p style="font-size: 0.9rem; color: #999; margin-top: 5px;">24시간 접수</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-comment-dots"></i>
+                        <h4>카카오톡 상담</h4>
+                        <p><a href="http://pf.kakao.com/_xgGxlUn" target="_blank">1:1 채팅 시작</a></p>
+                        <p style="font-size: 0.9rem; color: #999; margin-top: 5px;">실시간 상담</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL 파라미터에서 plan, service 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        const service = urlParams.get('service');
+        
+        // service 파라미터가 있으면 자동으로 업종 선택
+        if (service) {
+            if (service === 'wedding') {
+                document.getElementById('wedding').checked = true;
+            } else if (service === 'moving') {
+                document.getElementById('moving').checked = true;
+            }
+        }
+        
+        // 폼 제출 처리
+        document.getElementById('b2bContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 폼 데이터 수집
+            const formData = {
+                업종: document.querySelector('input[name="industry"]:checked')?.value,
+                회사명: document.getElementById('companyName').value,
+                대표자명: document.getElementById('ceoName').value,
+                연락처: document.getElementById('phone').value,
+                이메일: document.getElementById('email').value,
+                월_거래건수: document.getElementById('scale').value,
+                관심서비스: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value).join(', '),
+                문의내용: document.getElementById('message').value,
+                신청일시: new Date().toLocaleString('ko-KR'),
+                플랜: plan || '미지정',
+                서비스: service || '미지정'
+            };
+            
+            // 실제 구현 시 서버로 데이터 전송
+            console.log('B2B 신청 데이터:', formData);
+            
+            // TODO: 실제 API 엔드포인트로 데이터 전송
+            // fetch('/api/b2b-contact', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify(formData)
+            // });
+            
+            // 이메일로 알림 (실제 구현 필요)
+            // sendEmailNotification(formData);
+            
+            // 성공 메시지 표시
+            document.getElementById('formContent').style.display = 'none';
+            document.getElementById('successMessage').classList.add('active');
+            
+            // 페이지 상단으로 스크롤
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+        
+        // 전화번호 자동 포맷팅
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            
+            if (value.length <= 3) {
+                e.target.value = value;
+            } else if (value.length <= 7) {
+                e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+            } else {
+                e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+            }
+        });
+    </script>
+</body>
+</html>
