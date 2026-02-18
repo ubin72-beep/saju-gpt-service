@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작명 추천 결과 | AI 사주 천년지기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 사주 오행 분석 */
+        .element-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .element-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .element-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .element-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .element-percent {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .recommendation-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .recommendation-box p {
+            color: #856404;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* 추천 이름 목록 */
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .name-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .name-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .name-rank {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .name-korean {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .name-hanja {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .name-meaning {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .name-elements {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .element-tag {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .element-tag.wood {
+            background: #4caf50;
+        }
+
+        .element-tag.fire {
+            background: #f44336;
+        }
+
+        .element-tag.earth {
+            background: #ff9800;
+        }
+
+        .element-tag.metal {
+            background: #9e9e9e;
+        }
+
+        .element-tag.water {
+            background: #2196f3;
+        }
+
+        .name-details {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 프리미엄 CTA */
+        .premium-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        .premium-cta h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .premium-cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .premium-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .btn-premium {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .guarantee {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .guarantee i {
+            margin-right: 0.5rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .names-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .premium-cta h3 {
+                font-size: 1.5rem;
+            }
+
+            .premium-price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ 작명 추천 결과</h1>
+            <p>사주 오행 분석 기반 맞춤 이름 10개</p>
+        </div>
+
+        <div class="user-info">
+            <div class="user-info-grid">
+                <div class="info-item">
+                    <div class="info-label">성(姓)</div>
+                    <div class="info-value" id="displaySurname">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">성별</div>
+                    <div class="info-value" id="displayGender">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">생년월일</div>
+                    <div class="info-value" id="displayBirth">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">양력/음력</div>
+                    <div class="info-value" id="displayCalendar">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 사주 오행 분석 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-yin-yang"></i>
+                    사주 오행 분석
+                </h2>
+                <div class="element-grid" id="elementGrid"></div>
+                <div class="recommendation-box">
+                    <p id="recommendationText"></p>
+                </div>
+            </div>
+
+            <!-- 추천 이름 10개 -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    추천 이름 (10개)
+                </h2>
+                <div class="names-grid" id="namesGrid"></div>
+            </div>
+
+            <!-- 프리미엄 CTA -->
+            <div class="premium-cta">
+                <h3>🌟 더 많은 이름을 원하시나요?</h3>
+                <p>프리미엄 서비스로 업그레이드하시면<br>30개의 상세한 이름 분석을 받아보실 수 있습니다!</p>
+                
+                <div class="premium-features">
+                    <div class="feature-item">
+                        <i class="fas fa-list-ul"></i>
+                        <h4>30개 추천</h4>
+                        <p>다양한 이름 선택지</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>상세 분석</h4>
+                        <p>성명학 종합 분석</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-book"></i>
+                        <h4>작명 가이드</h4>
+                        <p>성명학 해설서</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-download"></i>
+                        <h4>PDF 다운로드</h4>
+                        <p>결과 저장 가능</p>
+                    </div>
+                </div>
+
+                <div class="premium-price">
+                    <span class="original-price">₩29,000</span>
+                    <span>₩19,000</span>
+                </div>
+
+                <a href="#" class="btn-premium" id="btnPremium">
+                    <i class="fas fa-crown"></i> 프리미엄으로 전체 결과 보기
+                </a>
+
+                <div class="guarantee">
+                    <i class="fas fa-shield-alt"></i>
+                    결과가 만족스럽지 않으면 100% 환불 보장
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL 파라미터에서 데이터 읽기
+        const urlParams = new URLSearchParams(window.location.search);
+        const lastName = urlParams.get('lastName') || '홍';
+        const gender = urlParams.get('gender') || 'male';
+        const birth = urlParams.get('birth') || '2020-01-01';
+        const calendar = urlParams.get('calendar') || 'solar';
+
+        console.log('Naming result free page loaded:', { lastName, gender, birth, calendar });
+
+        // 사용자 정보 표시
+        document.getElementById('displaySurname').textContent = lastName;
+        document.getElementById('displayGender').textContent = gender === 'male' ? '남자' : '여자';
+        document.getElementById('displayBirth').textContent = birth;
+        document.getElementById('displayCalendar').textContent = calendar === 'solar' ? '양력' : '음력';
+
+        // 오행 한자 및 데이터
+        const ELEMENTS = {
+            wood: { name: '木 (목)', icon: '🌳', color: '#4caf50' },
+            fire: { name: '火 (화)', icon: '🔥', color: '#f44336' },
+            earth: { name: '土 (토)', icon: '🏔️', color: '#ff9800' },
+            metal: { name: '金 (금)', icon: '⚙️', color: '#9e9e9e' },
+            water: { name: '水 (수)', icon: '💧', color: '#2196f3' }
+        };
+
+        // 이름 한자 데이터베이스 (남자/여자)
+        const NAME_CHARACTERS = {
+            male: {
+                wood: [
+                    { char: '준', hanja: '俊', meaning: '준수함' },
+                    { char: '민', hanja: '敏', meaning: '민첩함' },
+                    { char: '건', hanja: '健', meaning: '건강함' },
+                    { char: '경', hanja: '京', meaning: '서울' },
+                    { char: '규', hanja: '圭', meaning: '법도' }
+                ],
+                fire: [
+                    { char: '현', hanja: '賢', meaning: '어질다' },
+                    { char: '영', hanja: '榮', meaning: '영화롭다' },
+                    { char: '태', hanja: '泰', meaning: '크고 넓다' },
+                    { char: '진', hanja: '振', meaning: '떨치다' },
+                    { char: '혁', hanja: '赫', meaning: '빛나다' }
+                ],
+                earth: [
+                    { char: '우', hanja: '宇', meaning: '집, 세상' },
+                    { char: '성', hanja: '誠', meaning: '정성스럽다' },
+                    { char: '용', hanja: '勇', meaning: '용감하다' },
+                    { char: '원', hanja: '元', meaning: '으뜸' },
+                    { char: '승', hanja: '承', meaning: '받들다' }
+                ],
+                metal: [
+                    { char: '철', hanja: '哲', meaning: '밝고 지혜롭다' },
+                    { char: '석', hanja: '碩', meaning: '크다' },
+                    { char: '종', hanja: '鍾', meaning: '모이다' },
+                    { char: '수', hanja: '秀', meaning: '뛰어나다' },
+                    { char: '창', hanja: '昌', meaning: '창성하다' }
+                ],
+                water: [
+                    { char: '호', hanja: '浩', meaning: '넓고 크다' },
+                    { char: '한', hanja: '瀚', meaning: '넓은 바다' },
+                    { char: '학', hanja: '學', meaning: '배우다' },
+                    { char: '희', hanja: '熙', meaning: '밝다' },
+                    { char: '혁', hanja: '赫', meaning: '빛나다' }
+                ]
+            },
+            female: {
+                wood: [
+                    { char: '민', hanja: '敏', meaning: '민첩함' },
+                    { char: '경', hanja: '慶', meaning: '경사' },
+                    { char: '희', hanja: '姬', meaning: '아름답다' },
+                    { char: '서', hanja: '瑞', meaning: '상서롭다' },
+                    { char: '지', hanja: '芝', meaning: '지초' }
+                ],
+                fire: [
+                    { char: '은', hanja: '恩', meaning: '은혜' },
+                    { char: '영', hanja: '英', meaning: '꽃부리' },
+                    { char: '정', hanja: '貞', meaning: '바르다' },
+                    { char: '아', hanja: '雅', meaning: '우아하다' },
+                    { char: '연', hanja: '姸', meaning: '고울 연' }
+                ],
+                earth: [
+                    { char: '유', hanja: '柔', meaning: '부드럽다' },
+                    { char: '안', hanja: '安', meaning: '편안하다' },
+                    { char: '정', hanja: '靜', meaning: '고요하다' },
+                    { char: '우', hanja: '優', meaning: '넉넉하다' },
+                    { char: '윤', hanja: '允', meaning: '진실하다' }
+                ],
+                metal: [
+                    { char: '수', hanja: '秀', meaning: '뛰어나다' },
+                    { char: '선', hanja: '善', meaning: '착하다' },
+                    { char: '숙', hanja: '淑', meaning: '맑다' },
+                    { char: '설', hanja: '雪', meaning: '눈' },
+                    { char: '슬', hanja: '瑟', meaning: '비파' }
+                ],
+                water: [
+                    { char: '희', hanja: '熙', meaning: '밝다' },
+                    { char: '혜', hanja: '惠', meaning: '은혜' },
+                    { char: '현', hanja: '賢', meaning: '어질다' },
+                    { char: '해', hanja: '海', meaning: '바다' },
+                    { char: '화', hanja: '和', meaning: '화목하다' }
+                ]
+            }
+        };
+
+        // 오행 계산
+        function calculateElements(birthdate) {
+            const date = new Date(birthdate);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            const base = (year + month * 10 + day) % 100;
+            
+            return {
+                wood: Math.max(5, (base * 2) % 30),
+                fire: Math.max(5, (base * 3) % 25),
+                earth: Math.max(5, (base * 4) % 20),
+                metal: Math.max(5, (base * 5) % 28),
+                water: Math.max(5, (base * 6) % 22)
+            };
+        }
+
+        // 오행 분석 표시
+        function displaySajuAnalysis(elements) {
+            const elementGrid = document.getElementById('elementGrid');
+            elementGrid.innerHTML = '';
+
+            const elementData = [
+                { key: 'wood', name: ELEMENTS.wood.name, icon: ELEMENTS.wood.icon, value: elements.wood },
+                { key: 'fire', name: ELEMENTS.fire.name, icon: ELEMENTS.fire.icon, value: elements.fire },
+                { key: 'earth', name: ELEMENTS.earth.name, icon: ELEMENTS.earth.icon, value: elements.earth },
+                { key: 'metal', name: ELEMENTS.metal.name, icon: ELEMENTS.metal.icon, value: elements.metal },
+                { key: 'water', name: ELEMENTS.water.name, icon: ELEMENTS.water.icon, value: elements.water }
+            ];
+
+            elementData.forEach(elem => {
+                const div = document.createElement('div');
+                div.className = 'element-item';
+                div.innerHTML = `
+                    <div class="element-icon">${elem.icon}</div>
+                    <div class="element-name">${elem.name}</div>
+                    <div class="element-percent">${elem.value}%</div>
+                `;
+                elementGrid.appendChild(div);
+            });
+
+            // 부족한 오행 찾기
+            const weakElements = Object.entries(elements)
+                .sort((a, b) => a[1] - b[1])
+                .slice(0, 2)
+                .map(e => e[0]);
+
+            const elementNames = {
+                wood: '목(木)',
+                fire: '화(火)',
+                earth: '토(土)',
+                metal: '금(金)',
+                water: '수(水)'
+            };
+
+            const recommendationText = `
+                현재 사주에서 ${elementNames[weakElements[0]]}과 ${elementNames[weakElements[1]]} 기운이 부족합니다.
+                이름에 이 오행을 보완하는 한자를 사용하면 오행 균형을 맞출 수 있습니다.
+                아래 추천 이름들은 부족한 오행을 보완하도록 구성되었습니다.
+            `;
+
+            document.getElementById('recommendationText').textContent = recommendationText;
+
+            return weakElements;
+        }
+
+        // 이름 생성
+        function createNames(surname, gender, elements) {
+            const weakElements = Object.entries(elements)
+                .sort((a, b) => a[1] - b[1])
+                .slice(0, 2)
+                .map(e => e[0]);
+
+            const names = [];
+            const pool = NAME_CHARACTERS[gender];
+
+            // 10개 이름 생성
+            for (let i = 0; i < 10; i++) {
+                const element1 = weakElements[i % 2];
+                const element2 = weakElements[(i + 1) % 2];
+                
+                const chars1 = pool[element1];
+                const chars2 = pool[element2];
+                
+                const char1 = chars1[Math.floor(Math.random() * chars1.length)];
+                const char2 = chars2[Math.floor(Math.random() * chars2.length)];
+                
+                const fullName = surname + char1.char + char2.char;
+                const fullHanja = char1.hanja + char2.hanja;
+                const meaning = `${char1.meaning}, ${char2.meaning}`;
+                
+                const score = 85 + Math.floor(Math.random() * 15);
+                
+                names.push({
+                    korean: fullName,
+                    hanja: fullHanja,
+                    meaning: meaning,
+                    score: score,
+                    elements: [element1, element2],
+                    strokes: 15 + Math.floor(Math.random() * 10),
+                    lucky: ['재물운', '건강운', '학업운', '사랑운', '인기운'][Math.floor(Math.random() * 5)]
+                });
+            }
+
+            return names.sort((a, b) => b.score - a.score);
+        }
+
+        // 이름 표시
+        function displayNames(names) {
+            const namesGrid = document.getElementById('namesGrid');
+            namesGrid.innerHTML = '';
+
+            names.forEach((name, index) => {
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                
+                const elementTags = name.elements.map(e => {
+                    const elementNames = {
+                        wood: '목',
+                        fire: '화',
+                        earth: '토',
+                        metal: '금',
+                        water: '수'
+                    };
+                    const hanjaNames = {
+                        wood: '木',
+                        fire: '火',
+                        earth: '土',
+                        metal: '金',
+                        water: '水'
+                    };
+                    return `<span class="element-tag ${e}">${elementNames[e]}(${hanjaNames[e]})</span>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="name-rank">${index + 1}위</div>
+                    <div class="name-korean">${name.korean}</div>
+                    <div class="name-hanja">${name.hanja}</div>
+                    <div class="score-badge">⭐ ${name.score}점</div>
+                    <div class="name-meaning">${name.meaning}</div>
+                    <div class="name-elements">${elementTags}</div>
+                    <div class="name-details">
+                        <div class="detail-row">
+                            <span class="detail-label">총획수</span>
+                            <span class="detail-value">${name.strokes}획</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">길운</span>
+                            <span class="detail-value">${name.lucky}</span>
+                        </div>
+                    </div>
+                `;
+                
+                namesGrid.appendChild(card);
+            });
+        }
+
+        // 페이지 로드 시 실행
+        window.addEventListener('DOMContentLoaded', function() {
+            // 오행 분석
+            const elements = calculateElements(birth);
+            displaySajuAnalysis(elements);
+
+            // 이름 생성 및 표시
+            const names = createNames(lastName, gender, elements);
+            displayNames(names);
+
+            // 프리미엄 버튼 이벤트
+            document.getElementById('btnPremium').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 데이터 저장
+                localStorage.setItem('namingData', JSON.stringify({
+                    lastName: lastName,
+                    gender: gender,
+                    birth: birth,
+                    calendar: calendar,
+                    timestamp: Date.now()
+                }));
+
+                // 결제 페이지로 이동
+                window.location.href = `payment.html?service=naming&price=19000&name=${lastName}씨 작명`;
+            });
+        });
+
+        // GA 이벤트
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                'page_title': 'Naming Result Free',
+                'page_location': window.location.href
+            });
+        }
+    </script>
+</body>
+</html>
