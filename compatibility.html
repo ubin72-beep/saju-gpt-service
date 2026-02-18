@@ -839,12 +839,6 @@
                 calendar: document.querySelector('input[name="person2Calendar"]:checked').value
             };
 
-            // 궁합 점수 계산 (간단한 알고리즘)
-            const score = calculateCompatibilityScore(person1, person2);
-
-            // 결과 업데이트
-            updateResult(person1, person2, score, selectedType);
-
             // localStorage에 데이터 저장
             const compatibilityData = {
                 mode: 'compatibility',
@@ -863,32 +857,29 @@
                     calendar: person2.calendar,
                     hour: String(person2.hour).padStart(2, '0') + ':00'
                 },
-                score: score,
                 timestamp: new Date().toISOString()
             };
 
             localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
             console.log('✅ 궁합 데이터 저장:', compatibilityData);
 
-            // 결과 카드 표시
-            document.getElementById('resultCard').style.display = 'block';
-            
-            // 부드럽게 스크롤
-            setTimeout(function() {
-                document.getElementById('resultCard').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
-
             // Google Analytics 이벤트
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'compatibility_analysis', {
+                gtag('event', 'compatibility_payment_start', {
                     event_category: 'engagement',
                     event_label: selectedType,
-                    value: score
+                    value: 3900
                 });
             }
+
+            // 결제 페이지로 이동
+            const typeNames = {
+                'love': '연애',
+                'marriage': '결혼',
+                'business': '사업'
+            };
+            const serviceName = typeNames[selectedType] + ' 궁합';
+            window.location.href = `payment.html?service=compatibility-${selectedType}&price=3900&name=${encodeURIComponent(person1.name + ' & ' + person2.name)}`;
         }
 
         function calculateCompatibilityScore(person1, person2) {
