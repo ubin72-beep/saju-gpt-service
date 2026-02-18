@@ -754,8 +754,63 @@
         }
 
         function generateNames() {
-            // 무료 결과 페이지로 이동
-            goToFreeResult();
+            // 입력값 검증
+            const surname = document.getElementById('surname').value.trim();
+            const gender = document.getElementById('gender').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!surname) {
+                alert('성(姓)을 입력해주세요.');
+                return;
+            }
+            
+            if (!gender) {
+                alert('성별을 선택해주세요.');
+                return;
+            }
+            
+            if (!birthDate) {
+                alert('생년월일을 입력해주세요.');
+                return;
+            }
+
+            // 로딩 표시
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('namesResult').style.display = 'none';
+            
+            // 잠시 후 결과 생성 (로딩 효과)
+            setTimeout(() => {
+                // 사주 오행 분석
+                const elements = calculateElements(birthDate);
+                
+                // 오행 분석 표시
+                document.getElementById('sajuAnalysis').style.display = 'block';
+                const weakElements = displaySajuAnalysis(elements);
+                
+                // 이름 10개 생성
+                const names = createNames(surname, gender, elements);
+                
+                // 이름 표시
+                displayNames(names);
+                
+                // 로딩 숨기고 결과 표시
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('namesResult').style.display = 'block';
+                
+                // 결과로 스크롤
+                document.getElementById('namesResult').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+                
+                // GA 이벤트
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'naming_free_analysis', {
+                        'event_category': 'Free Service',
+                        'event_label': 'Naming 10'
+                    });
+                }
+            }, 1500);
         }
 
         function calculateElements(birthdate) {
