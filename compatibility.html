@@ -7,9 +7,9 @@
     <meta name="description" content="연애, 결혼, 사업 궁합을 정확하게 분석합니다. 프리미엄 사주 기반 상성 분석">
     
     <!-- Open Graph Tags -->
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="website" />
     <meta property="og:title" content="사주 궁합 - 우리 궁합은 몇 점일까?" />
-    <meta property="og:description" content="연애, 결혼, 사업 궁합을 AI가 정확하게 분석해드립니다. 두 사람의 사주팔자 궁합을 확인하세요!" />
+    <meta property="og:description" content="연애/결혼/사업 궁합을 정확하게! 사주팔자 기반 프리미엄 상성 분석. 무료 간단 궁합부터!" />
     <meta property="og:image" content="https://www.aisaju1000.com/og-image.jpg" />
     <meta property="og:image:width" content="1365" />
     <meta property="og:image:height" content="768" />
@@ -20,13 +20,13 @@
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="사주 궁합 - 우리 궁합은?" />
-    <meta name="twitter:description" content="AI가 정확하게 분석하는 사주 궁합" />
+    <meta name="twitter:title" content="사주 궁합 분석" />
+    <meta name="twitter:description" content="우리 궁합은 몇 점?" />
     <meta name="twitter:image" content="https://www.aisaju1000.com/og-image.jpg" />
     
     <!-- Kakao -->
     <meta property="kakao:title" content="사주 궁합 - 우리는 몇 점?" />
-    <meta property="kakao:description" content="AI가 두 사람의 궁합을 분석합니다" />
+    <meta property="kakao:description" content="연애/결혼 궁합 무료 확인" />
     <meta property="kakao:image" content="https://www.aisaju1000.com/og-image.jpg" />
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
@@ -38,20 +38,18 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f8f9fa;
             color: #333;
             line-height: 1.6;
         }
 
-        /* 네비게이션 - index.html과 동일 */
+        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -63,7 +61,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
         }
 
         .nav-brand {
@@ -74,200 +71,21 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            z-index: 1001;
         }
 
-        /* 햄버거 메뉴 */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-            background: none;
-            border: none;
-            padding: 5px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #d4af37;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 3px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* 데스크톱 메뉴 */
-        .nav-menu {
+        .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
-            align-items: center;
         }
 
-        .nav-menu a {
+        .nav-links a {
             color: white;
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 1rem;
         }
 
-        .nav-menu a:hover {
-            color: #d4af37;
-        }
-
-        /* 드롭다운 메뉴 */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #2a2a2a;
-            min-width: 200px;
-            border-radius: 8px;
-            padding: 0.5rem 0;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.75rem 1.5rem;
-            color: white;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .dropdown-menu a:hover {
-            background: #3a3a3a;
-            color: #d4af37;
-        }
-
-        /* 다국어 선택기 */
-        .language-switcher {
-            position: relative;
-        }
-
-        .lang-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .lang-btn:hover {
-            background: rgba(255,255,255,0.15);
-            border-color: #d4af37;
-        }
-
-        .lang-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: #2a2a2a;
-            min-width: 150px;
-            border-radius: 8px;
-            padding: 0.5rem 0;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .lang-dropdown.active {
-            display: block;
-        }
-
-        .lang-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .lang-option:hover {
-            background: #3a3a3a;
-        }
-
-        .lang-option.active {
-            color: #d4af37;
-        }
-
-        .lang-option .fa-check {
-            opacity: 0;
-        }
-
-        .lang-option.active .fa-check {
-            opacity: 1;
-        }
-
-        /* 모바일 메뉴 */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 999;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        .mobile-menu.active {
-            display: block;
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-        }
-
-        .mobile-menu li {
-            margin: 1.5rem 0;
-        }
-
-        .mobile-menu a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.3rem;
-            display: block;
-            padding: 0.5rem 0;
-            transition: color 0.3s;
-        }
-
-        .mobile-menu a:hover {
+        .nav-links a:hover {
             color: #d4af37;
         }
 
@@ -275,10 +93,22 @@
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 0 30px;
+            padding: 60px 0 40px;
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .hero.love {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+        }
+
+        .hero.marriage {
+            background: linear-gradient(135deg, #FF1493 0%, #c2185b 100%);
+        }
+
+        .hero.business {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
         }
 
         .hero::before {
@@ -290,15 +120,37 @@
             opacity: 0.1;
         }
 
+        .hero.marriage::before {
+            content: '💍';
+        }
+
+        .hero.business::before {
+            content: '💼';
+        }
+
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             position: relative;
+            font-weight: 900;
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             opacity: 0.95;
+            position: relative;
+        }
+
+        .hero .price-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         /* 컨테이너 */
@@ -312,7 +164,7 @@
         .form-card {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 50px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             margin-bottom: 30px;
             margin-top: 20px;
@@ -320,94 +172,56 @@
 
         .form-title {
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
+            font-size: 2rem;
+            margin-bottom: 40px;
             color: #333;
-        }
-
-        /* 분석 유형 선택 */
-        .type-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .type-btn {
-            background: #f8f9fa;
-            border: 3px solid transparent;
-            border-radius: 15px;
-            padding: 25px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .type-btn:hover {
-            background: #e9ecef;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .type-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
-        }
-
-        .type-btn .icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .type-btn h4 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .type-btn p {
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-weight: 700;
         }
 
         /* 두 사람 정보 입력 */
         .people-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .person-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
         }
 
         .person-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
             color: #333;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: #555;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            font-size: 1rem;
+            font-size: 1.05rem;
             transition: all 0.3s;
             font-family: inherit;
         }
@@ -425,15 +239,77 @@
             gap: 10px;
         }
 
+        .gender-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .gender-option {
+            position: relative;
+        }
+
+        .gender-option input[type="radio"] {
+            display: none;
+        }
+
+        .gender-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .gender-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .calendar-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .calendar-option {
+            position: relative;
+        }
+
+        .calendar-option input[type="radio"] {
+            display: none;
+        }
+
+        .calendar-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .calendar-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
         /* 분석 버튼 */
         .btn-analyze {
             width: 100%;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 18px;
-            font-size: 1.3rem;
-            font-weight: bold;
+            padding: 22px;
+            font-size: 1.5rem;
+            font-weight: 900;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
@@ -454,26 +330,27 @@
             display: none;
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 50px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
 
         .result-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .result-header h2 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: 900;
         }
 
         .result-header p {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #667eea;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         /* 점수 박스 */
@@ -481,49 +358,49 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-radius: 20px;
-            padding: 50px;
+            padding: 60px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             position: relative;
             overflow: hidden;
         }
 
         .score-box::before {
             content: '✨';
-            font-size: 15rem;
+            font-size: 18rem;
             position: absolute;
             right: -5%;
-            top: -20%;
+            top: -25%;
             opacity: 0.1;
         }
 
         .score-circle {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 3.5rem;
-            font-weight: 700;
+            margin: 0 auto 35px;
+            font-size: 4rem;
+            font-weight: 900;
             border: 5px solid rgba(255,255,255,0.3);
             position: relative;
         }
 
         .score-label {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
             position: relative;
         }
 
         .score-desc {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.95;
-            line-height: 1.8;
+            line-height: 1.9;
             position: relative;
         }
 
@@ -531,17 +408,18 @@
         .info-section {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 35px;
+            margin-bottom: 30px;
         }
 
         .info-section h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
             color: #333;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-weight: 700;
         }
 
         .info-list {
@@ -550,131 +428,129 @@
         }
 
         .info-list li {
-            padding: 15px 0;
+            padding: 18px 0;
             border-bottom: 1px solid #e0e0e0;
             display: flex;
             align-items: start;
-            gap: 12px;
-            font-size: 1.05rem;
-            line-height: 1.8;
+            gap: 15px;
+            font-size: 1.1rem;
+            line-height: 1.9;
         }
 
         .info-list li:last-child {
             border-bottom: none;
         }
 
-        /* AI 상담 */
-        .ai-consult {
-            text-align: center;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
-        }
-
-        .ai-consult h3 {
+        .info-list li strong {
             color: #667eea;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .ai-consult p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .btn-consult {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 18px 50px;
-            font-size: 1.2rem;
             font-weight: 700;
+        }
+
+        /* 프리미엄 CTA */
+        .premium-cta {
+            text-align: center;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+
+        .premium-cta h3 {
+            color: #1a1a1a;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .premium-cta p {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            font-weight: 600;
+        }
+
+        .btn-premium {
+            background: #1a1a1a;
+            color: #FFD700;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.4rem;
+            font-weight: 900;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(102,126,234,0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
-        .btn-consult:hover {
+        .btn-premium:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(102,126,234,0.5);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
         }
 
         /* 푸터 */
         footer {
             background: #1a1a1a;
             color: white;
-            padding: 3rem 2rem;
             text-align: center;
-            margin-top: 4rem;
-        }
-
-        footer p {
-            opacity: 0.8;
+            padding: 3rem 2rem;
+            margin-top: 80px;
         }
 
         /* 반응형 */
         @media (max-width: 768px) {
-            body {
-                padding-top: 60px;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .language-switcher {
-                display: none;
-            }
-
-            .hero {
-                padding: 30px 0 25px;
-            }
-
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .hero p {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
 
-            .container {
-                padding: 0 1rem;
-                margin: -15px auto 40px;
+            .hero .price-badge {
+                font-size: 1.2rem;
+                padding: 10px 24px;
             }
 
             .form-card {
-                padding: 25px;
+                padding: 30px 20px;
             }
 
             .people-grid {
                 grid-template-columns: 1fr;
+                gap: 25px;
             }
 
-            .type-selector {
-                grid-template-columns: 1fr;
+            .person-section {
+                padding: 20px;
             }
 
             .score-circle {
-                width: 140px;
-                height: 140px;
-                font-size: 2.8rem;
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
             }
 
             .score-box {
-                padding: 35px 20px;
+                padding: 40px 20px;
             }
 
             .info-section {
-                padding: 20px;
+                padding: 25px 20px;
+            }
+
+            .premium-cta {
+                padding: 35px 20px;
+            }
+
+            .premium-cta h3 {
+                font-size: 1.6rem;
+            }
+
+            .btn-premium {
+                padding: 16px 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -684,83 +560,23 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i>
-                AI 사주 천년지기
+                🔮 AI 사주 천년지기
             </a>
-            
-            <!-- 햄버거 메뉴 (모바일) -->
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="nav-menu">
+            <ul class="nav-links">
                 <li><a href="index.html">홈</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
-                    <div class="dropdown-menu">
-                        <a href="compatibility.html">💕 궁합 보기</a>
-                        <a href="saju-matching.html">💑 궁합 매칭</a>
-                        <a href="community.html">💬 커뮤니티</a>
-                        <a href="hr-solution.html">💼 HR 솔루션</a>
-                    </div>
-                </li>
                 <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="saju-guide.html">명리학 가이드</a></li>
-                <li><a href="blog.html">블로그</a></li>
+                <li><a href="compatibility.html">궁합 보기</a></li>
                 <li><a href="pricing.html">가격표</a></li>
                 <li><a href="mypage.html">마이페이지</a></li>
             </ul>
-            
-            <div class="language-switcher">
-                <button class="lang-btn" id="langBtn">
-                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
-                    <span id="currentLang">한국어</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option active" data-lang="ko">
-                        <span class="lang-flag">🇰🇷</span> 한국어
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="en">
-                        <span class="lang-flag">🇺🇸</span> English
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="zh">
-                        <span class="lang-flag">🇨🇳</span> 中文
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="ja">
-                        <span class="lang-flag">🇯🇵</span> 日本語
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            </div>
         </div>
     </nav>
 
-    <!-- 모바일 메뉴 -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="index.html">🏠 홈</a></li>
-            <li><a href="compatibility.html">💕 궁합 보기</a></li>
-            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
-            <li><a href="community.html">💬 커뮤니티</a></li>
-            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
-            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
-            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-            <li><a href="blog.html">📰 블로그</a></li>
-            <li><a href="pricing.html">💰 가격표</a></li>
-            <li><a href="mypage.html">👤 마이페이지</a></li>
-        </ul>
-    </div>
-
-    <!-- 히어로 섹션 -->
-    <section class="hero">
-        <h1>💕 궁합 분석</h1>
-        <p>사주 기반 정밀 상성 분석으로 두 사람의 관계를 확인하세요</p>
+    <!-- 히어로 섹션 (동적) -->
+    <section class="hero" id="heroSection">
+        <h1 id="heroTitle">💕 연애 궁합 분석</h1>
+        <p id="heroDesc">두 사람의 연애 상성을 정확하게 분석합니다</p>
+        <div class="price-badge">₩3,900</div>
     </section>
 
     <!-- 메인 컨텐츠 -->
@@ -769,25 +585,6 @@
         <div class="form-card">
             <h2 class="form-title">두 분의 정보를 입력해주세요</h2>
             
-            <!-- 분석 유형 선택 -->
-            <div class="type-selector">
-                <div class="type-btn active" onclick="selectType(this, 'love')">
-                    <div class="icon">💗</div>
-                    <h4>연애 궁합</h4>
-                    <p>연인 사이의 상성</p>
-                </div>
-                <div class="type-btn" onclick="selectType(this, 'marriage')">
-                    <div class="icon">💍</div>
-                    <h4>결혼 궁합</h4>
-                    <p>평생 동반자 상성</p>
-                </div>
-                <div class="type-btn" onclick="selectType(this, 'business')">
-                    <div class="icon">💼</div>
-                    <h4>사업 궁합</h4>
-                    <p>비즈니스 파트너 상성</p>
-                </div>
-            </div>
-
             <form id="compatibilityForm" onsubmit="analyzeCompatibility(event)">
                 <div class="people-grid">
                     <!-- 첫 번째 사람 -->
@@ -795,39 +592,50 @@
                         <h3>👤 첫 번째 분</h3>
                         
                         <div class="form-group">
-                            <label>이름</label>
+                            <label>이름 *</label>
                             <input type="text" id="person1Name" placeholder="홍길동" required>
                         </div>
                         
                         <div class="form-group">
-                            <label>성별</label>
-                            <select id="person1Gender" required>
-                                <option value="">선택하세요</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
-                            </select>
+                            <label>성별 *</label>
+                            <div class="gender-options">
+                                <div class="gender-option">
+                                    <input type="radio" id="person1Male" name="person1Gender" value="male" required>
+                                    <label for="person1Male">👨 남성</label>
+                                </div>
+                                <div class="gender-option">
+                                    <input type="radio" id="person1Female" name="person1Gender" value="female">
+                                    <label for="person1Female">👩 여성</label>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>생년월일</label>
+                            <label>생년월일 *</label>
                             <div class="date-group">
-                                <input type="number" id="person1Year" placeholder="1990" min="1900" max="2024" required>
+                                <input type="number" id="person1Year" placeholder="1990년" min="1900" max="2024" required>
                                 <input type="number" id="person1Month" placeholder="5월" min="1" max="12" required>
                                 <input type="number" id="person1Day" placeholder="15일" min="1" max="31" required>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>생시 (선택사항)</label>
-                            <input type="number" id="person1Hour" placeholder="14시 (선택)" min="0" max="23">
+                            <label>생시 (선택)</label>
+                            <input type="number" id="person1Hour" placeholder="14시 (모르면 비워두세요)" min="0" max="23">
                         </div>
                         
                         <div class="form-group">
-                            <label>양력/음력</label>
-                            <select id="person1Calendar" required>
-                                <option value="solar">양력</option>
-                                <option value="lunar">음력</option>
-                            </select>
+                            <label>양력/음력 *</label>
+                            <div class="calendar-options">
+                                <div class="calendar-option">
+                                    <input type="radio" id="person1Solar" name="person1Calendar" value="solar" checked required>
+                                    <label for="person1Solar">☀️ 양력</label>
+                                </div>
+                                <div class="calendar-option">
+                                    <input type="radio" id="person1Lunar" name="person1Calendar" value="lunar">
+                                    <label for="person1Lunar">🌙 음력</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -836,45 +644,56 @@
                         <h3>👤 두 번째 분</h3>
                         
                         <div class="form-group">
-                            <label>이름</label>
+                            <label>이름 *</label>
                             <input type="text" id="person2Name" placeholder="김영희" required>
                         </div>
                         
                         <div class="form-group">
-                            <label>성별</label>
-                            <select id="person2Gender" required>
-                                <option value="">선택하세요</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
-                            </select>
+                            <label>성별 *</label>
+                            <div class="gender-options">
+                                <div class="gender-option">
+                                    <input type="radio" id="person2Male" name="person2Gender" value="male" required>
+                                    <label for="person2Male">👨 남성</label>
+                                </div>
+                                <div class="gender-option">
+                                    <input type="radio" id="person2Female" name="person2Gender" value="female">
+                                    <label for="person2Female">👩 여성</label>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>생년월일</label>
+                            <label>생년월일 *</label>
                             <div class="date-group">
-                                <input type="number" id="person2Year" placeholder="1992" min="1900" max="2024" required>
+                                <input type="number" id="person2Year" placeholder="1992년" min="1900" max="2024" required>
                                 <input type="number" id="person2Month" placeholder="8월" min="1" max="12" required>
                                 <input type="number" id="person2Day" placeholder="20일" min="1" max="31" required>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>생시 (선택사항)</label>
-                            <input type="number" id="person2Hour" placeholder="10시 (선택)" min="0" max="23">
+                            <label>생시 (선택)</label>
+                            <input type="number" id="person2Hour" placeholder="10시 (모르면 비워두세요)" min="0" max="23">
                         </div>
                         
                         <div class="form-group">
-                            <label>양력/음력</label>
-                            <select id="person2Calendar" required>
-                                <option value="solar">양력</option>
-                                <option value="lunar">음력</option>
-                            </select>
+                            <label>양력/음력 *</label>
+                            <div class="calendar-options">
+                                <div class="calendar-option">
+                                    <input type="radio" id="person2Solar" name="person2Calendar" value="solar" checked required>
+                                    <label for="person2Solar">☀️ 양력</label>
+                                </div>
+                                <div class="calendar-option">
+                                    <input type="radio" id="person2Lunar" name="person2Calendar" value="lunar">
+                                    <label for="person2Lunar">🌙 음력</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-analyze">
-                    💕 궁합 분석하기
+                <button type="submit" class="btn-analyze" id="analyzeBtn">
+                    💕 궁합 분석하기 (₩3,900)
                 </button>
             </form>
         </div>
@@ -895,39 +714,42 @@
 
             <!-- 장점 -->
             <div class="info-section">
-                <h3>✅ 궁합의 장점</h3>
+                <h3 id="strengthTitle">✅ 궁합의 장점</h3>
                 <ul class="info-list" id="strengthList">
-                    <li>✓ 오행의 균형이 잘 맞아 서로를 보완해줍니다</li>
-                    <li>✓ 성격이 잘 맞아 갈등이 적을 것입니다</li>
-                    <li>✓ 금전적인 면에서 서로 도움이 됩니다</li>
+                    <li>✓ <strong>오행 균형:</strong> 오행의 균형이 잘 맞아 서로를 보완해줍니다</li>
+                    <li>✓ <strong>성격 조화:</strong> 성격이 잘 맞아 갈등이 적을 것입니다</li>
+                    <li>✓ <strong>재물운:</strong> 금전적인 면에서 서로 도움이 됩니다</li>
                 </ul>
             </div>
 
             <!-- 주의사항 -->
             <div class="info-section">
-                <h3>⚠️ 주의할 점</h3>
+                <h3 id="weaknessTitle">⚠️ 주의할 점</h3>
                 <ul class="info-list" id="weaknessList">
-                    <li>! 가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다</li>
-                    <li>! 서로의 차이를 존중하는 자세가 필요합니다</li>
+                    <li>! <strong>소통:</strong> 가끔 의견 충돌이 있을 수 있으니 대화가 중요합니다</li>
+                    <li>! <strong>존중:</strong> 서로의 차이를 존중하는 자세가 필요합니다</li>
                 </ul>
             </div>
 
             <!-- 조언 -->
             <div class="info-section">
-                <h3>💡 관계 개선 조언</h3>
-                <p id="adviceText" style="padding: 15px 0; line-height: 1.8; font-size: 1.05rem;">
+                <h3 id="adviceTitle">💡 관계 개선 조언</h3>
+                <p id="adviceText" style="padding: 15px 0; line-height: 1.9; font-size: 1.1rem;">
                     서로의 장점을 인정하고 단점은 보완해주는 자세가 중요합니다. 
                     정기적인 대화 시간을 가지고 서로의 생각을 공유하세요.
                     작은 배려와 관심이 큰 행복을 만듭니다.
                 </p>
             </div>
 
-            <!-- AI 상담 -->
-            <div class="ai-consult">
-                <h3>🤖 AI 전문가와 더 상세한 궁합 상담</h3>
-                <p>두 분의 궁합에 대해 더 궁금한 점이 있으신가요?<br>AI 명리학 전문가가 24시간 상세한 상담을 제공합니다.</p>
-                <button class="btn-consult" onclick="window.location.href='ai-chat.html'">
-                    💬 AI 상담 시작하기
+            <!-- 프리미엄 CTA -->
+            <div class="premium-cta">
+                <h3>✨ 더 상세한 분석이 필요하신가요?</h3>
+                <p>
+                    <strong>프리미엄 상세 분석</strong>에서는 <strong>월별 관계운</strong>, <strong>갈등 해결 전략</strong>, <strong>장기적 전망</strong> 등<br>
+                    더 깊이 있는 궁합 분석을 제공합니다.
+                </p>
+                <button class="btn-premium" onclick="upgradeToPremium()">
+                    💎 프리미엄으로 업그레이드 (₩9,900)
                 </button>
             </div>
         </div>
@@ -939,57 +761,56 @@
     </footer>
 
     <script>
-        // 햄버거 메뉴 토글
-        var hamburger = document.getElementById('hamburger');
-        var mobileMenu = document.getElementById('mobileMenu');
+        // URL 파라미터에서 분석 타입 가져오기
+        function getAnalysisType() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('type') || 'love';
+        }
 
-        hamburger.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+        var selectedType = getAnalysisType();
+
+        // 페이지 로드 시 히어로 섹션 업데이트
+        window.addEventListener('DOMContentLoaded', function() {
+            updateHeroSection(selectedType);
         });
 
-        // 다국어 선택기
-        var langBtn = document.getElementById('langBtn');
-        var langDropdown = document.getElementById('langDropdown');
+        function updateHeroSection(type) {
+            const heroSection = document.getElementById('heroSection');
+            const heroTitle = document.getElementById('heroTitle');
+            const heroDesc = document.getElementById('heroDesc');
+            const analyzeBtn = document.getElementById('analyzeBtn');
 
-        langBtn.addEventListener('click', function() {
-            langDropdown.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.lang-option').forEach(function(option) {
-            option.addEventListener('click', function() {
-                var lang = this.dataset.lang;
-                
-                if (lang !== 'ko') {
-                    alert('다국어 서비스는 준비 중입니다.');
-                    langDropdown.classList.remove('active');
-                    return;
+            const config = {
+                love: {
+                    class: 'love',
+                    icon: '💕',
+                    title: '연애 궁합 분석',
+                    desc: '두 사람의 연애 상성을 정확하게 분석합니다',
+                    btnText: '💕 연애 궁합 분석하기 (₩3,900)'
+                },
+                marriage: {
+                    class: 'marriage',
+                    icon: '💍',
+                    title: '결혼 궁합 분석',
+                    desc: '결혼 생활의 조화와 미래를 예측합니다',
+                    btnText: '💍 결혼 궁합 분석하기 (₩3,900)'
+                },
+                business: {
+                    class: 'business',
+                    icon: '💼',
+                    title: '사업 궁합 분석',
+                    desc: '비즈니스 파트너십의 성공 가능성을 분석합니다',
+                    btnText: '💼 사업 궁합 분석하기 (₩3,900)'
                 }
-                
-                document.querySelectorAll('.lang-option').forEach(function(opt) {
-                    opt.classList.remove('active');
-                });
-                this.classList.add('active');
-                langDropdown.classList.remove('active');
-            });
-        });
+            };
 
-        // 외부 클릭 시 드롭다운 닫기
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.language-switcher')) {
-                langDropdown.classList.remove('active');
-            }
-        });
+            const current = config[type] || config.love;
 
-        var selectedType = 'love';
+            heroSection.className = 'hero ' + current.class;
+            heroTitle.textContent = current.icon + ' ' + current.title;
+            heroDesc.textContent = current.desc;
+            analyzeBtn.textContent = current.btnText;
 
-        function selectType(element, type) {
-            // 모든 버튼 비활성화
-            document.querySelectorAll('.type-btn').forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            // 선택된 버튼 활성화
-            element.classList.add('active');
             selectedType = type;
         }
 
@@ -997,43 +818,120 @@
             event.preventDefault();
 
             // 첫 번째 사람 정보
-            var person1 = {
+            const person1 = {
                 name: document.getElementById('person1Name').value,
-                gender: document.getElementById('person1Gender').value,
+                gender: document.querySelector('input[name="person1Gender"]:checked').value,
                 year: parseInt(document.getElementById('person1Year').value),
                 month: parseInt(document.getElementById('person1Month').value),
                 day: parseInt(document.getElementById('person1Day').value),
                 hour: parseInt(document.getElementById('person1Hour').value) || 12,
-                calendar: document.getElementById('person1Calendar').value
+                calendar: document.querySelector('input[name="person1Calendar"]:checked').value
             };
 
             // 두 번째 사람 정보
-            var person2 = {
+            const person2 = {
                 name: document.getElementById('person2Name').value,
-                gender: document.getElementById('person2Gender').value,
+                gender: document.querySelector('input[name="person2Gender"]:checked').value,
                 year: parseInt(document.getElementById('person2Year').value),
                 month: parseInt(document.getElementById('person2Month').value),
                 day: parseInt(document.getElementById('person2Day').value),
                 hour: parseInt(document.getElementById('person2Hour').value) || 12,
-                calendar: document.getElementById('person2Calendar').value
+                calendar: document.querySelector('input[name="person2Calendar"]:checked').value
             };
 
-            // 랜덤 점수 생성 (60-90점)
-            var score = Math.floor(Math.random() * 31) + 60;
+            // 궁합 점수 계산 (간단한 알고리즘)
+            const score = calculateCompatibilityScore(person1, person2);
 
-            // 제목 업데이트
-            var titles = {
-                'love': '💗 연애 궁합 분석 결과',
-                'marriage': '💍 결혼 궁합 분석 결과',
-                'business': '💼 사업 궁합 분석 결과'
+            // 결과 업데이트
+            updateResult(person1, person2, score, selectedType);
+
+            // localStorage에 데이터 저장
+            const compatibilityData = {
+                mode: 'compatibility',
+                type: selectedType,
+                person1: {
+                    name: person1.name,
+                    gender: person1.gender,
+                    birthdate: `${person1.year}-${String(person1.month).padStart(2, '0')}-${String(person1.day).padStart(2, '0')}`,
+                    calendar: person1.calendar,
+                    hour: String(person1.hour).padStart(2, '0') + ':00'
+                },
+                person2: {
+                    name: person2.name,
+                    gender: person2.gender,
+                    birthdate: `${person2.year}-${String(person2.month).padStart(2, '0')}-${String(person2.day).padStart(2, '0')}`,
+                    calendar: person2.calendar,
+                    hour: String(person2.hour).padStart(2, '0') + ':00'
+                },
+                score: score,
+                timestamp: new Date().toISOString()
             };
 
-            document.getElementById('resultTitle').textContent = titles[selectedType];
-            document.getElementById('resultSubtitle').textContent = person1.name + ' ♥ ' + person2.name;
+            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
+            console.log('✅ 궁합 데이터 저장:', compatibilityData);
+
+            // 결과 카드 표시
+            document.getElementById('resultCard').style.display = 'block';
+            
+            // 부드럽게 스크롤
+            setTimeout(function() {
+                document.getElementById('resultCard').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+
+            // Google Analytics 이벤트
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'compatibility_analysis', {
+                    event_category: 'engagement',
+                    event_label: selectedType,
+                    value: score
+                });
+            }
+        }
+
+        function calculateCompatibilityScore(person1, person2) {
+            // 기본 점수
+            let score = 70;
+
+            // 나이 차이에 따른 점수
+            const ageDiff = Math.abs(person1.year - person2.year);
+            if (ageDiff <= 3) score += 5;
+            else if (ageDiff <= 5) score += 3;
+            else if (ageDiff > 10) score -= 5;
+
+            // 같은 띠 (12년 차이)
+            if (ageDiff % 12 === 0) score += 10;
+
+            // 상생하는 띠 (4년 차이)
+            if (ageDiff === 4 || ageDiff === 8) score += 8;
+
+            // 월 조화
+            const monthDiff = Math.abs(person1.month - person2.month);
+            if (monthDiff === 0) score += 3;
+            else if (monthDiff === 6) score += 5; // 반대편 계절
+
+            // 랜덤 요소 추가 (±5점)
+            score += Math.floor(Math.random() * 11) - 5;
+
+            // 점수 범위 제한 (60-95)
+            return Math.max(60, Math.min(95, score));
+        }
+
+        function updateResult(person1, person2, score, type) {
+            const titles = {
+                love: '💗 연애 궁합 분석 결과',
+                marriage: '💍 결혼 궁합 분석 결과',
+                business: '💼 사업 궁합 분석 결과'
+            };
+
+            document.getElementById('resultTitle').textContent = titles[type];
+            document.getElementById('resultSubtitle').textContent = `${person1.name} ♥ ${person2.name}`;
             document.getElementById('scoreCircle').textContent = score + '점';
 
             // 점수에 따른 평가
-            var label, desc;
+            let label, desc;
             if (score >= 85) {
                 label = '완벽한 궁합입니다!';
                 desc = '두 분은 천생연분입니다. 서로를 완벽하게 보완하는 최고의 상성입니다.';
@@ -1051,40 +949,85 @@
             document.getElementById('scoreLabel').textContent = label;
             document.getElementById('scoreDesc').textContent = desc;
 
-            // localStorage에 데이터 저장
-            var compatibilityData = {
-                mode: 'compatibility',
-                type: selectedType,
-                person1: {
-                    name: person1.name,
-                    gender: person1.gender,
-                    birthdate: person1.year + '-' + String(person1.month).padStart(2, '0') + '-' + String(person1.day).padStart(2, '0'),
-                    calendar: person1.calendar,
-                    hour: String(person1.hour).padStart(2, '0') + ':00'
+            // 타입별 차별화된 내용
+            updateTypeSpecificContent(type);
+        }
+
+        function updateTypeSpecificContent(type) {
+            const content = {
+                love: {
+                    strengthTitle: '✅ 연애 궁합의 장점',
+                    strengths: [
+                        '<strong>감정 교류:</strong> 서로의 감정을 잘 이해하고 공감할 수 있습니다',
+                        '<strong>연애 스타일:</strong> 두 분의 연애 스타일이 잘 맞아 편안한 관계를 유지할 수 있습니다',
+                        '<strong>애정 표현:</strong> 서로에게 애정을 표현하는 방식이 조화롭습니다'
+                    ],
+                    weaknessTitle: '⚠️ 연애 시 주의할 점',
+                    weaknesses: [
+                        '<strong>질투심:</strong> 서로에 대한 질투가 갈등의 원인이 될 수 있으니 신뢰가 중요합니다',
+                        '<strong>소통:</strong> 감정을 숨기지 말고 솔직하게 대화하는 습관을 기르세요'
+                    ],
+                    adviceTitle: '💡 연애 관계 개선 조언',
+                    advice: '데이트 시 서로의 취향을 존중하고, 정기적인 기념일을 챙기세요. 작은 선물과 깜짝 이벤트로 사랑을 표현하면 관계가 더욱 돈독해집니다. 갈등이 생기면 즉시 대화로 풀어가는 것이 중요합니다.'
                 },
-                person2: {
-                    name: person2.name,
-                    gender: person2.gender,
-                    birthdate: person2.year + '-' + String(person2.month).padStart(2, '0') + '-' + String(person2.day).padStart(2, '0'),
-                    calendar: person2.calendar,
-                    hour: String(person2.hour).padStart(2, '0') + ':00'
+                marriage: {
+                    strengthTitle: '✅ 결혼 궁합의 장점',
+                    strengths: [
+                        '<strong>가정 경영:</strong> 두 분 모두 가정을 소중히 여기는 마음이 강합니다',
+                        '<strong>경제 관념:</strong> 금전 관리와 경제 관념이 비슷하여 갈등이 적습니다',
+                        '<strong>자녀 양육:</strong> 자녀 교육관이 비슷하여 양육에 조화로울 것입니다'
+                    ],
+                    weaknessTitle: '⚠️ 결혼 생활 주의사항',
+                    weaknesses: [
+                        '<strong>고부 관계:</strong> 양가 부모님과의 관계에서 배려와 소통이 필요합니다',
+                        '<strong>역할 분담:</strong> 가사와 육아의 역할 분담을 명확히 해야 합니다'
+                    ],
+                    adviceTitle: '💡 행복한 결혼 생활 조언',
+                    advice: '결혼 후에도 서로를 연인처럼 대하는 자세가 중요합니다. 정기적인 데이트와 대화 시간을 가지세요. 양가 부모님을 공경하고, 자녀 계획과 경제 계획을 함께 세우며 미래를 준비하세요.'
                 },
-                score: score
+                business: {
+                    strengthTitle: '✅ 사업 궁합의 장점',
+                    strengths: [
+                        '<strong>역할 분담:</strong> 두 분의 강점이 다르기 때문에 역할 분담이 명확합니다',
+                        '<strong>의사결정:</strong> 중요한 결정에서 서로 보완적인 시각을 제공합니다',
+                        '<strong>위기 대응:</strong> 어려운 상황에서도 협력하여 극복할 수 있습니다'
+                    ],
+                    weaknessTitle: '⚠️ 사업 파트너십 주의사항',
+                    weaknesses: [
+                        '<strong>의견 충돌:</strong> 경영 방침에 대한 의견 차이가 있을 수 있으니 사전 합의가 필요합니다',
+                        '<strong>수익 배분:</strong> 수익과 손실 배분을 명확히 문서화해야 합니다'
+                    ],
+                    adviceTitle: '💡 성공적인 파트너십 조언',
+                    advice: '계약서를 명확히 작성하고, 정기적인 회의를 통해 사업 방향을 점검하세요. 서로의 전문성을 인정하고 존중하며, 감정과 비즈니스를 분리하는 것이 중요합니다. 투명한 회계 관리로 신뢰를 쌓으세요.'
+                }
             };
 
-            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
-            console.log('✅ 궁합 데이터 저장:', compatibilityData);
+            const current = content[type] || content.love;
 
-            // 결과 카드 표시
-            document.getElementById('resultCard').style.display = 'block';
-            
-            // 부드럽게 스크롤
-            setTimeout(function() {
-                document.getElementById('resultCard').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
+            document.getElementById('strengthTitle').textContent = current.strengthTitle;
+            document.getElementById('weaknessTitle').textContent = current.weaknessTitle;
+            document.getElementById('adviceTitle').textContent = current.adviceTitle;
+
+            const strengthList = document.getElementById('strengthList');
+            strengthList.innerHTML = current.strengths.map(s => `<li>✓ ${s}</li>`).join('');
+
+            const weaknessList = document.getElementById('weaknessList');
+            weaknessList.innerHTML = current.weaknesses.map(w => `<li>! ${w}</li>`).join('');
+
+            document.getElementById('adviceText').textContent = current.advice;
+        }
+
+        function upgradeToPremium() {
+            // 프리미엄 업그레이드 페이지로 이동
+            const compatibilityData = localStorage.getItem('compatibilityData');
+            if (compatibilityData) {
+                localStorage.setItem('premiumUpgrade', JSON.stringify({
+                    from: 'compatibility',
+                    type: selectedType,
+                    price: 9900
+                }));
+            }
+            window.location.href = 'pricing.html?service=compatibility-premium&type=' + selectedType;
         }
 
         // 전역 에러 핸들러
@@ -1095,7 +1038,7 @@
             }
         });
 
-        console.log('✅ 궁합 분석 페이지 로드 완료');
+        console.log('✅ 궁합 분석 페이지 로드 완료 (타입: ' + selectedType + ')');
     </script>
 </body>
 </html>
