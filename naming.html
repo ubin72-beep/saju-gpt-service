@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사주 기반 AI 작명/개명 - AI 사주 천년지기</title>
-    <meta name="description" content="사주팔자 오행 분석 기반으로 최적의 이름을 추천해드립니다. 성명학 + 오행 균형 고려">
-    
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    
+    <title>작명 무료 미리보기 | AI 사주 천년지기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -19,884 +15,589 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
         }
 
-        /* 네비게이션 */
-        .navbar {
-            background: #1a1a1a;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 700;
-            font-family: 'Noto Serif KR', serif;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: #d4af37;
-        }
-
-        /* 히어로 섹션 */
-        .naming-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 4rem 0;
-            color: white;
-            text-align: center;
-        }
-
-        .naming-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-family: 'Noto Serif KR', serif;
-        }
-
-        .naming-hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* 컨테이너 */
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* 입력 폼 */
-        .naming-form {
             background: white;
             border-radius: 20px;
             padding: 2.5rem;
-            margin: -2rem auto 3rem;
-            max-width: 800px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
-        .form-section-title {
-            font-size: 1.3rem;
-            color: #667eea;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #44a08d;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .user-info {
+            background: #f0fffe;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .user-info-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+        .user-info-item i {
+            color: #44a08d;
+            font-size: 1.2rem;
         }
 
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .user-info-item label {
+            font-weight: 500;
             color: #333;
         }
 
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+        .user-info-item span {
+            color: #44a08d;
+            font-weight: 600;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn-generate {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-generate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-premium-main {
-            width: 100%;
-            padding: 1.2rem;
-            margin-top: 1rem;
-            background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
-            color: #1a1a2e;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-premium-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
-        }
-
-        .btn-premium-main i {
-            font-size: 1.1rem;
-        }
-
-        /* 사주 분석 결과 */
-        .saju-analysis {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
+        .result-section {
             margin-bottom: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .saju-analysis h3 {
-            color: #667eea;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+        .result-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #44a08d;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .element-grid {
+        .result-title i {
+            color: #44a08d;
+        }
+
+        .result-content {
+            background: #f0fffe;
+            border-radius: 12px;
+            padding: 1.5rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .element-analysis {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
         }
 
-        .element-item {
+        .element-card {
             text-align: center;
             padding: 1rem;
             border-radius: 10px;
-            background: #f8f9fa;
+            border: 2px solid #ddd;
         }
 
-        .element-icon {
+        .element-card.strong {
+            background: #e8f8f5;
+            border-color: #44a08d;
+        }
+
+        .element-card.weak {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .element-card .icon {
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
-        .element-name {
+        .element-card .label {
             font-weight: 600;
             margin-bottom: 0.3rem;
         }
 
-        .element-percent {
+        .element-card .status {
             font-size: 0.9rem;
             color: #666;
         }
 
-        .recommendation-box {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin-top: 1rem;
-        }
-
-        .recommendation-box h4 {
-            color: #5a189a;
-            margin-bottom: 1rem;
-        }
-
-        .recommendation-box p {
-            color: #3c096c;
-            font-weight: 500;
-            line-height: 1.8;
-        }
-
-        /* 이름 카드 */
-        .names-result {
-            margin-top: 3rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 2rem;
-            font-family: 'Noto Serif KR', serif;
-        }
-
-        .names-grid {
+        .name-suggestions {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         .name-card {
             background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            border: 2px solid #44a08d;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
         }
 
-        .name-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .name-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-
-        .name-rank {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #667eea;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        .name-korean {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .name-hanja {
+        .name-card .name-text {
             font-size: 1.5rem;
-            color: #764ba2;
-            margin-bottom: 1rem;
-            font-family: 'Noto Serif KR', serif;
-        }
-
-        .score-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 25px;
             font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .name-meaning {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .name-elements {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .element-tag {
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .element-tag.wood { background: #c8e6c9; color: #2e7d32; }
-        .element-tag.fire { background: #ffcdd2; color: #c62828; }
-        .element-tag.earth { background: #ffe0b2; color: #e65100; }
-        .element-tag.metal { background: #e1f5fe; color: #0277bd; }
-        .element-tag.water { background: #e8eaf6; color: #283593; }
-
-        .name-details {
-            border-top: 1px solid #e0e0e0;
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
+            color: #44a08d;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
         }
 
-        .detail-label {
+        .name-card .hanja {
+            font-size: 1rem;
             color: #666;
+            margin-bottom: 0.5rem;
         }
 
-        .detail-value {
-            font-weight: 600;
+        .name-card .meaning {
+            font-size: 0.9rem;
             color: #333;
         }
 
-        /* 프리미엄 CTA */
-        .premium-cta {
-            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            color: white;
-            margin: 3rem 0;
+        .blur-section {
+            position: relative;
+            margin-bottom: 2rem;
         }
 
-        .premium-cta h3 {
-            font-size: 2rem;
+        .blur-content {
+            filter: blur(8px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .unlock-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .unlock-overlay i {
+            font-size: 3rem;
+            color: #44a08d;
             margin-bottom: 1rem;
         }
 
-        .premium-cta p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .unlock-overlay h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
         }
 
-        .btn-premium {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: white;
-            color: #19547b;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: transform 0.3s;
+        .unlock-overlay p {
+            color: #666;
+            margin-bottom: 1.5rem;
         }
 
-        .btn-premium:hover {
-            transform: scale(1.05);
-        }
-
-        /* 푸터 */
-        .footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        /* 로딩 */
-        .loading {
-            display: none;
-            text-align: center;
+        .premium-features {
+            background: #f0fffe;
+            border-radius: 12px;
             padding: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .loading.active {
-            display: block;
+        .premium-features h3 {
+            font-size: 1.3rem;
+            color: #44a08d;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
         }
 
-        /* 반응형 */
+        .feature-item i {
+            color: #44a08d;
+            font-size: 1.2rem;
+        }
+
+        .feature-item span {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .price-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 0.3rem;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #44a08d;
+        }
+
+        .current-price .won {
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(68, 160, 141, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(68, 160, 141, 0.6);
+        }
+
+        .cta-button i {
+            margin-right: 0.5rem;
+        }
+
+        .guarantee-badge {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .guarantee-badge i {
+            color: #f59e0b;
+            margin-right: 0.3rem;
+        }
+
         @media (max-width: 768px) {
-            .naming-hero h1 {
-                font-size: 1.8rem;
+            body {
+                padding: 1rem 0.5rem;
             }
 
-            .naming-form {
+            .container {
                 padding: 1.5rem;
             }
 
-            .element-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .header h1 {
+                font-size: 1.5rem;
             }
 
-            .names-grid {
+            .user-info-grid {
                 grid-template-columns: 1fr;
             }
 
-            .premium-cta {
-                padding: 2rem 1rem;
+            .element-analysis {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .premium-cta h3 {
-                font-size: 1.5rem;
+            .name-suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .unlock-overlay {
+                width: 95%;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="naming.html">작명/개명</a></li>
-                <li><a href="pricing.html">프리미엄</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- 히어로 섹션 -->
-    <section class="naming-hero">
-        <div class="container">
-            <h1>✍️ 사주 기반 AI 작명/개명</h1>
-            <p>오행 균형을 고려한 성명학 기반 이름 추천</p>
-        </div>
-    </section>
-
-    <!-- 입력 폼 -->
     <div class="container">
-        <div class="naming-form">
-            <div class="form-section-title">
-                <i class="fas fa-user-circle"></i>
-                기본 정보 입력
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label>성(姓) *</label>
-                    <input type="text" id="surname" placeholder="예: 김" maxlength="2" required>
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>✍️ 작명 무료 미리보기</h1>
+            <p class="subtitle">AI가 분석한 기본 작명 결과를 확인하세요</p>
+        </div>
+
+        <!-- 사용자 정보 -->
+        <div class="user-info">
+            <div class="user-info-grid">
+                <div class="user-info-item">
+                    <i class="fas fa-user"></i>
+                    <label>성씨:</label>
+                    <span id="surname">-</span>
                 </div>
-                <div class="form-group">
-                    <label>성별 *</label>
-                    <select id="gender" required>
-                        <option value="">선택하세요</option>
-                        <option value="male">남자</option>
-                        <option value="female">여자</option>
-                    </select>
+                <div class="user-info-item">
+                    <i class="fas fa-venus-mars"></i>
+                    <label>성별:</label>
+                    <span id="gender">-</span>
+                </div>
+                <div class="user-info-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <label>생년월일:</label>
+                    <span id="birthdate">-</span>
+                </div>
+                <div class="user-info-item">
+                    <i class="fas fa-calendar"></i>
+                    <label>달력:</label>
+                    <span id="calendar">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 무료 결과: 오행 분석 -->
+        <div class="result-section">
+            <h2 class="result-title">
+                <i class="fas fa-yin-yang"></i>
+                오행(五行) 분석 결과
+            </h2>
+            <div class="result-content">
+                <p style="margin-bottom: 1rem;">
+                    사주팔자의 오행 균형을 분석하여 이름에 필요한 오행을 찾았습니다.
+                </p>
+                <div class="element-analysis">
+                    <div class="element-card strong">
+                        <div class="icon">🌳</div>
+                        <div class="label">목(木)</div>
+                        <div class="status">풍부</div>
+                    </div>
+                    <div class="element-card weak">
+                        <div class="icon">🔥</div>
+                        <div class="label">화(火)</div>
+                        <div class="status">부족</div>
+                    </div>
+                    <div class="element-card">
+                        <div class="icon">⛰️</div>
+                        <div class="label">토(土)</div>
+                        <div class="status">보통</div>
+                    </div>
+                    <div class="element-card">
+                        <div class="icon">⚙️</div>
+                        <div class="label">금(金)</div>
+                        <div class="status">보통</div>
+                    </div>
+                    <div class="element-card strong">
+                        <div class="icon">💧</div>
+                        <div class="label">수(水)</div>
+                        <div class="status">풍부</div>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; font-weight: 600; color: #44a08d;">
+                    💡 추천: 화(火) 오행을 가진 글자를 이름에 사용하시면 좋습니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 무료 결과: 추천 이름 3개 -->
+        <div class="result-section">
+            <h2 class="result-title">
+                <i class="fas fa-star"></i>
+                AI 추천 이름 TOP 3
+            </h2>
+            <div class="name-suggestions" id="nameSuggestions">
+                <!-- JavaScript로 채워질 예정 -->
+            </div>
+        </div>
+
+        <!-- 프리미엄 기능 블러 처리 -->
+        <div class="blur-section">
+            <div class="blur-content">
+                <div class="result-section">
+                    <h2 class="result-title">
+                        <i class="fas fa-list-ol"></i>
+                        추천 이름 TOP 20
+                    </h2>
+                    <div class="result-content">
+                        <p>더 많은 이름 후보들을 확인하실 수 있습니다...</p>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h2 class="result-title">
+                        <i class="fas fa-book"></i>
+                        성명학 상세 분석
+                    </h2>
+                    <div class="result-content">
+                        <p>각 이름의 획수, 음양오행, 사주와의 조화를 상세히...</p>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h2 class="result-title">
+                        <i class="fas fa-chart-bar"></i>
+                        이름별 점수 비교
+                    </h2>
+                    <div class="result-content">
+                        <p>각 이름의 종합 점수와 항목별 점수를...</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-section-title" style="margin-top: 2rem;">
-                <i class="fas fa-calendar-alt"></i>
-                생년월일 정보 (사주 분석용)
+            <!-- 잠금 오버레이 -->
+            <div class="unlock-overlay">
+                <i class="fas fa-lock"></i>
+                <h3>더 많은 이름이 필요하신가요?</h3>
+                <p>프리미엄으로 업그레이드하고<br>20개의 이름과 상세 분석을 확인하세요!</p>
             </div>
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>생년월일 *</label>
-                    <input type="date" id="birthdate" required>
+        <!-- 프리미엄 기능 안내 -->
+        <div class="premium-features">
+            <h3>💎 프리미엄 업그레이드 시 제공되는 기능</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-list"></i>
+                    <span>추천 이름 20개</span>
                 </div>
-                <div class="form-group">
-                    <label>양력/음력 *</label>
-                    <select id="calendar" required>
-                        <option value="solar">양력</option>
-                        <option value="lunar">음력</option>
-                    </select>
+                <div class="feature-item">
+                    <i class="fas fa-book"></i>
+                    <span>성명학 상세 분석</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-language"></i>
+                    <span>한자 뜻 및 획수</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-yin-yang"></i>
+                    <span>음양오행 조화 점수</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>이름별 종합 점수</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-star"></i>
+                    <span>사주와의 궁합 분석</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>작명서 PDF 다운로드</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset"></i>
+                    <span>전문가 1:1 상담</span>
                 </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label>태어난 시간 (선택)</label>
-                <input type="time" id="birthtime" placeholder="모르면 비워두세요">
+            <!-- 가격 정보 -->
+            <div class="price-section">
+                <div class="original-price">정가 29,900원</div>
+                <div class="current-price">
+                    <span class="won">₩</span>14,900
+                </div>
             </div>
 
-            <button class="btn-generate" onclick="generateNames()">
-                <i class="fas fa-wand-magic-sparkles"></i>
-                이름 10개 추천받기 (무료)
-            </button>
-            
-            <button class="btn-premium-main" onclick="goToPremiumNaming()">
+            <!-- CTA 버튼 -->
+            <button class="cta-button" onclick="goToPremium()">
                 <i class="fas fa-crown"></i>
-                프리미엄 30개 이름 분석 (₩19,000)
+                프리미엄으로 전체 결과 보기
             </button>
-        </div>
 
-        <!-- 로딩 -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>사주를 분석하고 최적의 이름을 생성 중입니다...</p>
-        </div>
-
-        <!-- 사주 분석 결과 -->
-        <div id="sajuAnalysis" style="display: none;">
-            <div class="saju-analysis">
-                <h3>📊 사주 오행 분석 결과</h3>
-                <div class="element-grid" id="elementGrid"></div>
-                <div class="recommendation-box">
-                    <h4>💡 작명 권장사항</h4>
-                    <p id="recommendationText"></p>
-                </div>
+            <!-- 보증 배지 -->
+            <div class="guarantee-badge">
+                <i class="fas fa-shield-alt"></i>
+                결과가 만족스럽지 않으면 100% 환불 보장
             </div>
-        </div>
-
-        <!-- 이름 추천 결과 -->
-        <div id="namesResult" class="names-result" style="display: none;">
-            <h2 class="section-title">✨ 추천 이름 (10개)</h2>
-            <div class="names-grid" id="namesList"></div>
-        </div>
-
-        <!-- 프리미엄 CTA -->
-        <div class="premium-cta" style="display: none;" id="premiumCTA">
-            <h3>🌟 더 많은 이름이 필요하신가요?</h3>
-            <p>프리미엄 서비스에서 30개의 이름과 상세한 성명학 분석을 제공합니다</p>
-            <a href="pricing.html" class="btn-premium">
-                프리미엄 업그레이드 →
-            </a>
         </div>
     </div>
 
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
-            <p>큐브박스 | 대표: 김미화 | 사업자등록번호: 537-08-03349</p>
-            <p>전화: 0502-1909-7788 | 이메일: aisaju1000@gmail.com</p>
-        </div>
-    </footer>
-
     <script>
-        // 오행 데이터
-        const ELEMENTS = {
-            '木': { name: '목', icon: '🌳', color: '#4CAF50' },
-            '火': { name: '화', icon: '🔥', color: '#F44336' },
-            '土': { name: '토', icon: '🏔️', color: '#FF9800' },
-            '金': { name: '금', icon: '⚙️', color: '#2196F3' },
-            '水': { name: '수', icon: '💧', color: '#3F51B5' }
-        };
+        // URL 파라미터에서 정보 읽기
+        const urlParams = new URLSearchParams(window.location.search);
+        const surname = urlParams.get('lastName') || urlParams.get('surname');
+        const gender = urlParams.get('gender');
+        const birthdate = urlParams.get('birth') || urlParams.get('birthdate');
+        const calendar = urlParams.get('calendar');
 
-        // 이름 생성 풀 (한글 + 한자 + 오행)
-        const NAME_CHARACTERS = {
-            male: {
-                wood: [
-                    { char: '준', hanja: '俊', meaning: '준수함' },
-                    { char: '민', hanja: '敏', meaning: '민첩함' },
-                    { char: '건', hanja: '健', meaning: '건강함' },
-                    { char: '현', hanja: '賢', meaning: '어질음' }
-                ],
-                fire: [
-                    { char: '혁', hanja: '赫', meaning: '빛남' },
-                    { char: '찬', hanja: '燦', meaning: '찬란함' },
-                    { char: '광', hanja: '光', meaning: '빛' },
-                    { char: '영', hanja: '榮', meaning: '영화로움' }
-                ],
-                earth: [
-                    { char: '우', hanja: '宇', meaning: '하늘' },
-                    { char: '성', hanja: '聖', meaning: '성스러움' },
-                    { char: '원', hanja: '元', meaning: '으뜸' },
-                    { char: '윤', hanja: '允', meaning: '허락함' }
-                ],
-                metal: [
-                    { char: '진', hanja: '眞', meaning: '참됨' },
-                    { char: '철', hanja: '哲', meaning: '철학' },
-                    { char: '석', hanja: '碩', meaning: '큼' },
-                    { char: '승', hanja: '承', meaning: '받들음' }
-                ],
-                water: [
-                    { char: '해', hanja: '海', meaning: '바다' },
-                    { char: '강', hanja: '江', meaning: '강' },
-                    { char: '호', hanja: '浩', meaning: '넓음' },
-                    { char: '수', hanja: '秀', meaning: '빼어남' }
-                ]
-            },
-            female: {
-                wood: [
-                    { char: '지', hanja: '智', meaning: '지혜' },
-                    { char: '민', hanja: '敏', meaning: '민첩함' },
-                    { char: '연', hanja: '姸', meaning: '아름다움' },
-                    { char: '경', hanja: '敬', meaning: '공경함' }
-                ],
-                fire: [
-                    { char: '빛', hanja: '光', meaning: '빛' },
-                    { char: '영', hanja: '榮', meaning: '영화로움' },
-                    { char: '란', hanja: '蘭', meaning: '난초' },
-                    { char: '희', hanja: '熙', meaning: '빛남' }
-                ],
-                earth: [
-                    { char: '윤', hanja: '允', meaning: '허락함' },
-                    { char: '서', hanja: '瑞', meaning: '상서로움' },
-                    { char: '은', hanja: '恩', meaning: '은혜' },
-                    { char: '주', hanja: '珠', meaning: '구슬' }
-                ],
-                metal: [
-                    { char: '진', hanja: '眞', meaning: '참됨' },
-                    { char: '소', hanja: '昭', meaning: '밝음' },
-                    { char: '설', hanja: '雪', meaning: '눈' },
-                    { char: '정', hanja: '淨', meaning: '깨끗함' }
-                ],
-                water: [
-                    { char: '하', hanja: '河', meaning: '강' },
-                    { char: '수', hanja: '秀', meaning: '빼어남' },
-                    { char: '혜', hanja: '惠', meaning: '은혜' },
-                    { char: '미', hanja: '美', meaning: '아름다움' }
-                ]
-            }
-        };
+        // 페이지에 정보 표시
+        if (surname) document.getElementById('surname').textContent = surname;
+        if (gender) document.getElementById('gender').textContent = gender === 'male' ? '남성' : '여성';
+        if (birthdate) document.getElementById('birthdate').textContent = birthdate;
+        if (calendar) document.getElementById('calendar').textContent = calendar === 'solar' ? '양력' : '음력';
+
+        // 추천 이름 3개 (샘플 데이터)
+        const sampleNames = gender === 'male' ? [
+            { name: '민준', hanja: '敏俊', meaning: '민첩하고 준수함' },
+            { name: '서준', hanja: '瑞俊', meaning: '상서롭고 준수함' },
+            { name: '지훈', hanja: '智勳', meaning: '지혜로운 공훈' }
+        ] : [
+            { name: '서연', hanja: '瑞姸', meaning: '상서롭고 아름다움' },
+            { name: '지우', hanja: '智佑', meaning: '지혜롭게 돕다' },
+            { name: '민서', hanja: '敏瑞', meaning: '민첩하고 상서로움' }
+        ];
+
+        // 이름 카드 생성
+        function generateNameSuggestions() {
+            const container = document.getElementById('nameSuggestions');
+            sampleNames.forEach(nameData => {
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                card.innerHTML = `
+                    <div class="name-text">${surname}${nameData.name}</div>
+                    <div class="hanja">${nameData.hanja}</div>
+                    <div class="meaning">${nameData.meaning}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
         // 프리미엄 페이지로 이동
-        function goToPremiumNaming() {
-            const surname = document.getElementById('surname').value.trim();
-            const gender = document.getElementById('gender').value;
-            const birthdate = document.getElementById('birthdate').value;
-            const calendar = document.getElementById('calendar').value;
-
-            // 유효성 검사
-            if (!surname || !gender || !birthdate) {
-                alert('모든 필수 항목을 입력해주세요.');
-                return;
-            }
-
-            // 간단한 일간 계산 (실제로는 lunar.js 사용)
-            const elements = calculateElements(birthdate);
-            const mainElement = getMainElement(elements);
-
-            // 프리미엄 페이지로 이동
+        function goToPremium() {
             const params = new URLSearchParams({
-                lastName: surname,
-                gender: gender,
-                birth: birthdate,
-                element: mainElement
+                lastName: surname || '',
+                gender: gender || '',
+                birth: birthdate || '',
+                calendar: calendar || ''
             });
-
             window.location.href = `/naming-result-premium.html?${params.toString()}`;
         }
 
-        // 주요 오행 계산
-        function getMainElement(elements) {
-            let maxElement = '목';
-            let maxValue = 0;
-
-            for (const [element, value] of Object.entries(elements)) {
-                if (value > maxValue) {
-                    maxValue = value;
-                    maxElement = element;
-                }
-            }
-
-            return maxElement;
-        }
-
-        function generateNames() {
-            const surname = document.getElementById('surname').value.trim();
-            const gender = document.getElementById('gender').value;
-            const birthdate = document.getElementById('birthdate').value;
-            const calendar = document.getElementById('calendar').value;
-
-            // 유효성 검사
-            if (!surname || !gender || !birthdate) {
-                alert('모든 필수 항목을 입력해주세요.');
-                return;
-            }
-
-            // 프리미엄 페이지로 바로 이동
-            goToPremiumNaming();
-        }
-
-        function calculateElements(birthdate) {
-            // 간단한 오행 계산 (실제로는 더 복잡한 알고리즘 필요)
-            const date = new Date(birthdate);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-
-            // 가상의 오행 비율 계산
-            const base = (year + month * 10 + day) % 100;
-            
-            return {
-                wood: Math.max(5, (base * 2) % 30),
-                fire: Math.max(5, (base * 3) % 25),
-                earth: Math.max(5, (base * 4) % 20),
-                metal: Math.max(5, (base * 5) % 28),
-                water: Math.max(5, (base * 6) % 22)
-            };
-        }
-
-        function displaySajuAnalysis(elements) {
-            const elementGrid = document.getElementById('elementGrid');
-            elementGrid.innerHTML = '';
-
-            const elementData = [
-                { key: 'wood', name: '木 (목)', icon: '🌳', value: elements.wood },
-                { key: 'fire', name: '火 (화)', icon: '🔥', value: elements.fire },
-                { key: 'earth', name: '土 (토)', icon: '🏔️', value: elements.earth },
-                { key: 'metal', name: '金 (금)', icon: '⚙️', value: elements.metal },
-                { key: 'water', name: '水 (수)', icon: '💧', value: elements.water }
-            ];
-
-            elementData.forEach(elem => {
-                const div = document.createElement('div');
-                div.className = 'element-item';
-                div.innerHTML = `
-                    <div class="element-icon">${elem.icon}</div>
-                    <div class="element-name">${elem.name}</div>
-                    <div class="element-percent">${elem.value}%</div>
-                `;
-                elementGrid.appendChild(div);
-            });
-
-            // 부족한 오행 찾기
-            const weakElements = Object.entries(elements)
-                .sort((a, b) => a[1] - b[1])
-                .slice(0, 2)
-                .map(e => e[0]);
-
-            const elementNames = {
-                wood: '목(木)',
-                fire: '화(火)',
-                earth: '토(土)',
-                metal: '금(金)',
-                water: '수(水)'
-            };
-
-            const recommendationText = `
-                현재 사주에서 ${elementNames[weakElements[0]]}과 ${elementNames[weakElements[1]]} 기운이 부족합니다.
-                이름에 이 오행을 보완하는 한자를 사용하면 오행 균형을 맞출 수 있습니다.
-                아래 추천 이름들은 부족한 오행을 보완하도록 구성되었습니다.
-            `;
-
-            document.getElementById('recommendationText').textContent = recommendationText;
-
-            return weakElements;
-        }
-
-        function createNames(surname, gender, elements) {
-            // 부족한 오행 2개 찾기
-            const weakElements = Object.entries(elements)
-                .sort((a, b) => a[1] - b[1])
-                .slice(0, 2)
-                .map(e => e[0]);
-
-            const names = [];
-            const pool = NAME_CHARACTERS[gender];
-
-            // 10개 이름 생성
-            for (let i = 0; i < 10; i++) {
-                const element1 = weakElements[i % 2];
-                const element2 = weakElements[(i + 1) % 2];
-                
-                const chars1 = pool[element1];
-                const chars2 = pool[element2];
-                
-                const char1 = chars1[Math.floor(Math.random() * chars1.length)];
-                const char2 = chars2[Math.floor(Math.random() * chars2.length)];
-                
-                const fullName = surname + char1.char + char2.char;
-                const fullHanja = char1.hanja + char2.hanja;
-                const meaning = `${char1.meaning}, ${char2.meaning}`;
-                
-                const score = 85 + Math.floor(Math.random() * 15);
-                
-                names.push({
-                    korean: fullName,
-                    hanja: fullHanja,
-                    meaning: meaning,
-                    score: score,
-                    elements: [element1, element2],
-                    strokes: 15 + Math.floor(Math.random() * 10),
-                    lucky: ['재물운', '건강운', '학업운'][Math.floor(Math.random() * 3)]
-                });
-            }
-
-            // 점수 순 정렬
-            return names.sort((a, b) => b.score - a.score);
-        }
-
-        function displayNames(names) {
-            const namesList = document.getElementById('namesList');
-            namesList.innerHTML = '';
-
-            names.forEach((name, index) => {
-                const card = document.createElement('div');
-                card.className = 'name-card';
-                
-                const elementTags = name.elements.map(e => {
-                    const elementNames = {
-                        wood: '목',
-                        fire: '화',
-                        earth: '토',
-                        metal: '금',
-                        water: '수'
-                    };
-                    return `<span class="element-tag ${e}">${elementNames[e]}(${e === 'wood' ? '木' : e === 'fire' ? '火' : e === 'earth' ? '土' : e === 'metal' ? '金' : '水'})</span>`;
-                }).join('');
-
-                card.innerHTML = `
-                    <div class="name-rank">${index + 1}위</div>
-                    <div class="name-korean">${name.korean}</div>
-                    <div class="name-hanja">${name.hanja}</div>
-                    <div class="score-badge">⭐ ${name.score}점</div>
-                    <div class="name-meaning">${name.meaning}</div>
-                    <div class="name-elements">${elementTags}</div>
-                    <div class="name-details">
-                        <div class="detail-row">
-                            <span class="detail-label">총획수</span>
-                            <span class="detail-value">${name.strokes}획</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">길운</span>
-                            <span class="detail-value">${name.lucky}</span>
-                        </div>
-                    </div>
-                `;
-                
-                namesList.appendChild(card);
-            });
-        }
+        // 페이지 로드 시 실행
+        generateNameSuggestions();
+        
+        console.log('작명 무료 결과 페이지 로드 완료');
     </script>
 </body>
 </html>
