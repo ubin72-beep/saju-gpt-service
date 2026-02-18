@@ -582,9 +582,6 @@
             const birthHour = parseInt(document.getElementById('birthHour').value) || 12;
             const calendar = document.querySelector('input[name="calendar"]:checked').value;
 
-            // 결과 업데이트
-            document.getElementById('resultName').textContent = userName + '님의 평생운';
-
             // localStorage에 데이터 저장
             const dangsajuData = {
                 mode: 'dangsaju',
@@ -599,25 +596,17 @@
             localStorage.setItem('dangsajuData', JSON.stringify(dangsajuData));
             console.log('✅ 당사주 데이터 저장:', dangsajuData);
 
-            // 결과 카드 표시
-            document.getElementById('resultCard').style.display = 'block';
-            
-            // 부드럽게 스크롤
-            setTimeout(function() {
-                document.getElementById('resultCard').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
-
             // Google Analytics 이벤트
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'dangsaju_analysis', {
+                gtag('event', 'dangsaju_payment_start', {
                     event_category: 'engagement',
                     event_label: 'dangsaju_lifetime',
                     value: 9900
                 });
             }
+
+            // 결제 페이지로 이동
+            window.location.href = 'payment.html?service=dangsaju&price=9900&name=' + encodeURIComponent(userName);
         }
 
         function upgradeToPremium() {
