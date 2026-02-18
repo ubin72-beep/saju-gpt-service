@@ -31,9 +31,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -640,82 +637,8 @@
     </style>
 </head>
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                <i class="fas fa-yin-yang"></i>
-                AI 사주 천년지기
-            </a>
-            
-            <!-- 햄버거 메뉴 (모바일) -->
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="index.html">홈</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">서비스 <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i></a>
-                    <div class="dropdown-menu">
-                        <a href="compatibility.html">💕 궁합 보기</a>
-                        <a href="saju-matching.html">💑 궁합 매칭</a>
-                        <a href="community.html">💬 커뮤니티</a>
-                        <a href="hr-solution.html">💼 HR 솔루션</a>
-                    </div>
-                </li>
-                <li><a href="ai-chat.html" class="active">AI 상담</a></li>
-                <li><a href="saju-guide.html"><i class="fas fa-book"></i> 명리학 가이드</a></li>
-                <li><a href="blog.html"><i class="fas fa-newspaper"></i> 블로그</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-            </ul>
-            
-            <div class="language-switcher">
-                <button class="lang-btn" id="langBtn">
-                    <span class="lang-flag" id="currentFlag">🇰🇷</span>
-                    <span id="currentLang">한국어</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option active" data-lang="ko">
-                        <span class="lang-flag">🇰🇷</span> 한국어
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="en">
-                        <span class="lang-flag">🇺🇸</span> English
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="zh">
-                        <span class="lang-flag">🇨🇳</span> 中文
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="lang-option" data-lang="ja">
-                        <span class="lang-flag">🇯🇵</span> 日本語
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- 모바일 메뉴 -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="index.html">🏠 홈</a></li>
-            <li><a href="compatibility.html">💕 궁합 보기</a></li>
-            <li><a href="saju-matching.html">💑 궁합 매칭</a></li>
-            <li><a href="community.html">💬 커뮤니티</a></li>
-            <li><a href="hr-solution.html">💼 HR 솔루션</a></li>
-            <li><a href="ai-chat.html">🤖 AI 상담</a></li>
-            <li><a href="saju-guide.html">📖 명리학 가이드</a></li>
-            <li><a href="blog.html">📰 블로그</a></li>
-            <li><a href="pricing.html">💰 가격표</a></li>
-            <li><a href="mypage.html">👤 마이페이지</a></li>
-        </ul>
-    </div>
+    <!-- 네비게이션 플레이스홀더 -->
+    <div id="navbar-placeholder"></div>
 
     <!-- 경고 배너 -->
     <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; padding: 15px 20px; text-align: center; border-bottom: 3px solid #d68910; box-shadow: 0 4px 15px rgba(243,156,18,0.3);">
@@ -1105,33 +1028,56 @@
             }
             
             // API 요청
-            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `${systemContext}\n\n[사용자 질문]\n${userMessage}`
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        maxOutputTokens: 1000
-                    }
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`API 오류: ${response.status}`);
+            try {
+                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `${systemContext}\n\n[사용자 질문]\n${userMessage}`
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 1000
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('❌ API 오류 상세:', errorData);
+                    throw new Error(`API 오류: ${response.status} - ${errorData.error?.message || '알 수 없는 오류'}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Gemini API 응답:', data);
+                
+                // 응답 텍스트 추출
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    console.error('❌ 응답 구조 오류:', data);
+                    throw new Error('응답 형식이 올바르지 않습니다.');
+                }
+            } catch (error) {
+                console.error('❌ API 호출 중 오류:', error);
+                // Fallback 응답 반환
+                return getFallbackResponse(userMessage);
             }
-            
-            const data = await response.json();
-            console.log('✅ Gemini API 응답:', data);
-            
-            // 응답 텍스트 추출
-            return data.candidates[0].content.parts[0].text;
+        }
+        
+        // 🔥 Fallback 응답 (API 오류 시)
+        function getFallbackResponse(userMessage) {
+            const fallbackResponses = [
+                `안녕하세요! 😊 현재 서비스가 일시적으로 불안정합니다. 곧 정상화될 예정이니 잠시 후 다시 시도해주세요.\n\n"${userMessage}" 에 대한 답변은 다음과 같습니다:\n\n사주팔자는 당신의 생년월일을 기반으로 운명을 분석하는 전통 학문입니다. 더 정확한 상담을 위해서는 생년월일과 출생 시간을 입력해주세요!`,
+                `죄송합니다. 현재 AI 서버와 연결이 원활하지 않습니다. 🙏\n\n일반적으로 "${userMessage}" 와 관련된 사주 상담은 당신의 사주팔자를 분석한 후 맞춤형 조언을 드립니다.\n\n잠시 후 다시 시도하시거나, 메인 페이지에서 무료 사주 분석을 먼저 받아보세요!`,
+                `현재 서비스 점검 중입니다. 불편을 드려 죄송합니다. 😔\n\n"${userMessage}" 에 대한 상담을 원하신다면:\n1. 메인 페이지에서 사주 입력\n2. 무료 사주 분석 확인\n3. 다시 AI 상담 시도\n\n곧 정상화될 예정이니 조금만 기다려주세요!`
+            ];
+            return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
         }
         
         // 🔥 대화 히스토리 저장
@@ -1144,7 +1090,7 @@
                     ai: aiResponse
                 });
                 
-                // 최근 개만 저장
+                // 최근 50개만 저장
                 if (history.length > 50) {
                     history.shift();
                 }
@@ -1374,5 +1320,8 @@
             });
         }
     </script>
+    
+    <!-- 네비게이션 로더 -->
+    <script src="js/navbar-loader.js"></script>
 </body>
 </html>
