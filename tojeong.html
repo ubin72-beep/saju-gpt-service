@@ -6,13 +6,6 @@
     <title>오늘의 운세 - 매일 확인하는 나의 운세 | AI 사주 천년지기</title>
     <meta name="description" content="매일매일 하루 운세를 확인해보세요. 오늘 나의 운은 어떨까요?">
     
-    <!-- Open Graph Tags -->
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="오늘의 운세 - 매일 확인하는 나의 운세" />
-    <meta property="og:description" content="매일매일 하루 운세를 확인해보세요. 무료로 오늘의 운을 알아보세요!" />
-    <meta property="og:image" content="https://www.aisaju1000.com/og-image.jpg" />
-    <meta property="og:url" content="https://www.aisaju1000.com/tojeong.html" />
-    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -33,7 +26,6 @@
             padding: 1rem;
         }
 
-        /* 네비게이션 바 */
         .navbar {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -43,7 +35,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 2rem auto;
             background: white;
             border-radius: 20px;
@@ -67,7 +59,17 @@
             color: #666;
         }
 
-        /* 입력 폼 섹션 */
+        .today-date {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #fff9f0;
+            border-radius: 10px;
+        }
+
+        /* 입력 폼 */
         .input-section {
             background: #fff9f0;
             border-radius: 15px;
@@ -93,7 +95,6 @@
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
         }
 
         .form-group input:focus,
@@ -118,7 +119,6 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
         .btn-submit:hover {
@@ -133,6 +133,12 @@
 
         .result-section.show {
             display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .user-info {
@@ -145,87 +151,94 @@
 
         .user-info h3 {
             color: #e58e26;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
         }
 
-        .user-info p {
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-        .fortune-score {
-            text-align: center;
-            padding: 2rem;
+        /* 오늘의 운세 카드 */
+        .today-fortune {
             background: linear-gradient(135deg, #fbc531 0%, #e58e26 100%);
             border-radius: 15px;
+            padding: 2rem;
             color: white;
             margin-bottom: 2rem;
-        }
-
-        .fortune-score .icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .fortune-score .score {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .fortune-score .label {
-            font-size: 1.2rem;
-        }
-
-        .month-summary {
-            margin-bottom: 2rem;
-        }
-
-        .month-summary h2 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e58e26;
             text-align: center;
         }
 
-        .month-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+        .today-fortune .score {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
         }
 
-        .month-card {
+        .today-fortune .message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-top: 1rem;
+        }
+
+        /* 상세 운세 */
+        .fortune-details {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .fortune-card {
             background: #f8f9fa;
             border-radius: 12px;
             padding: 1.5rem;
             border-left: 4px solid #e58e26;
-            transition: transform 0.2s;
         }
 
-        .month-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .fortune-card h3 {
+            color: #e58e26;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
 
-        .month-card .month-title {
-            font-size: 1.1rem;
+        .fortune-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .fortune-card .highlight {
+            background: #fff9f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* 행운 아이템 */
+        .lucky-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .lucky-item {
+            background: #fff9f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .lucky-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lucky-item .label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 0.3rem;
+        }
+
+        .lucky-item .value {
+            font-size: 1.2rem;
             font-weight: 600;
             color: #e58e26;
-            margin-bottom: 0.8rem;
-        }
-
-        .month-card .month-summary {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .month-card .stars {
-            color: #fbc531;
-            margin-top: 0.5rem;
         }
 
         /* 프리미엄 CTA */
@@ -243,20 +256,6 @@
             margin-bottom: 1rem;
         }
 
-        .premium-cta .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-
-        .premium-cta .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         .premium-cta .price {
             font-size: 2rem;
             font-weight: 700;
@@ -272,48 +271,34 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .premium-cta .btn-upgrade:hover {
-            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
             .birth-input {
                 grid-template-columns: 1fr;
             }
 
-            .fortune-score .score {
-                font-size: 2.5rem;
-            }
-
-            .month-grid {
+            .lucky-items {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 네비게이션 바 -->
     <div id="navbar-placeholder"></div>
 
     <div class="container">
-        <!-- 헤더 -->
         <div class="header">
             <h1>📖 오늘의 운세</h1>
             <p class="subtitle">매일매일 하루 운세를 확인해보세요 ☀️</p>
         </div>
 
-        <!-- 입력 섹션 -->
+        <div class="today-date">
+            <i class="fas fa-calendar-day"></i> 
+            <span id="todayDate"></span>
+        </div>
+
+        <!-- 입력 폼 -->
         <div class="input-section">
             <form id="fortuneForm">
                 <div class="form-group">
@@ -339,81 +324,130 @@
                 </div>
 
                 <button type="submit" class="btn-submit">
-                    <i class="fas fa-calendar-day"></i> 오늘의 운세 무료로 보기
+                    <i class="fas fa-star"></i> 오늘의 운세 무료로 보기
                 </button>
             </form>
         </div>
 
-        <!-- 결과 섹션 (숨김 상태) -->
+        <!-- 결과 섹션 -->
         <div class="result-section" id="resultSection">
-            <!-- 사용자 정보 -->
             <div class="user-info">
-                <h3>👤 고객님의 정보</h3>
-                <p id="userInfoText"></p>
+                <h3>👤 <span id="userName"></span>님의 오늘 운세</h3>
+                <p id="userBirth"></p>
             </div>
 
-            <!-- 운세 점수 -->
-            <div class="fortune-score">
+            <!-- 오늘의 총운 -->
+            <div class="today-fortune">
                 <div class="icon">⭐</div>
-                <div class="score">85점</div>
-                <div class="label">2026년 총합 운세</div>
+                <div class="score" id="fortuneScore">85점</div>
+                <div class="label">오늘의 총운</div>
+                <div class="message" id="fortuneMessage"></div>
             </div>
 
-            <!-- 월별 운세 요약 -->
-            <div class="month-summary">
-                <h2>📅 2026년 월별 운세 요약</h2>
-                <div class="month-grid" id="monthGrid">
-                    <!-- JavaScript로 생성 -->
+            <!-- 상세 운세 -->
+            <div class="fortune-details">
+                <div class="fortune-card">
+                    <h3>💰 재물운</h3>
+                    <p id="wealthFortune"></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3>❤️ 애정운</h3>
+                    <p id="loveFortune"></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3>💼 직장·학업운</h3>
+                    <p id="workFortune"></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3>🏥 건강운</h3>
+                    <p id="healthFortune"></p>
+                </div>
+            </div>
+
+            <!-- 행운 아이템 -->
+            <h3 style="text-align: center; margin-bottom: 1rem; color: #333;">🍀 오늘의 행운 아이템</h3>
+            <div class="lucky-items">
+                <div class="lucky-item">
+                    <div class="icon">🎨</div>
+                    <div class="label">행운의 색</div>
+                    <div class="value" id="luckyColor"></div>
+                </div>
+                <div class="lucky-item">
+                    <div class="icon">🧭</div>
+                    <div class="label">행운의 방향</div>
+                    <div class="value" id="luckyDirection"></div>
+                </div>
+                <div class="lucky-item">
+                    <div class="icon">🔢</div>
+                    <div class="label">행운의 숫자</div>
+                    <div class="value" id="luckyNumber"></div>
                 </div>
             </div>
 
             <!-- 프리미엄 CTA -->
             <div class="premium-cta">
-                <h3>💎 프리미엄 업그레이드 시 제공되는 기능</h3>
-                <div class="features">
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>12개월 상세 운세 분석</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>길일·흉일 달력</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>월별 주의사항</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>행운의 방향·색상·숫자</span>
-                    </div>
-                </div>
+                <h3>💎 12개월 전체 운세가 궁금하다면?</h3>
+                <p>토정비결 2026년 프리미엄으로 1년 운세를 모두 확인하세요!</p>
                 <div class="price">₩9,900</div>
                 <button class="btn-upgrade" onclick="upgradeToPremium()">
-                    <i class="fas fa-crown"></i> 프리미엄으로 전체 결과 보기
+                    <i class="fas fa-crown"></i> 프리미엄으로 업그레이드
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // 월별 운세 데이터
-        const MONTH_DATA = [
-            { month: 1, title: '1월', summary: '새해의 시작, 긍정적인 변화가 찾아옵니다', stars: '★★★★☆' },
-            { month: 2, title: '2월', summary: '인간관계에서 좋은 소식이 있을 것입니다', stars: '★★★★★' },
-            { month: 3, title: '3월', summary: '새로운 도전을 시작하기 좋은 시기입니다', stars: '★★★★☆' },
-            { month: 4, title: '4월', summary: '재물운이 상승하는 한 달입니다', stars: '★★★★★' },
-            { month: 5, title: '5월', summary: '가족과의 시간을 소중히 하세요', stars: '★★★☆☆' },
-            { month: 6, title: '6월', summary: '건강에 유의하며 안정을 추구하세요', stars: '★★★☆☆' },
-            { month: 7, title: '7월', summary: '여행이나 외출이 행운을 가져옵니다', stars: '★★★★☆' },
-            { month: 8, title: '8월', summary: '업무에서 성과를 거둘 수 있습니다', stars: '★★★★★' },
-            { month: 9, title: '9월', summary: '새로운 인연을 만날 수 있는 시기입니다', stars: '★★★★☆' },
-            { month: 10, title: '10월', summary: '계획한 일들이 순조롭게 진행됩니다', stars: '★★★★★' },
-            { month: 11, title: '11월', summary: '여유를 가지고 쉬어가는 시간이 필요합니다', stars: '★★★☆☆' },
-            { month: 12, title: '12월', summary: '한 해를 마무리하며 감사한 마음을 가지세요', stars: '★★★★☆' }
-        ];
+        // 오늘 날짜 표시
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+        const weekday = ['일', '월', '화', '수', '목', '금', '토'][today.getDay()];
+        document.getElementById('todayDate').textContent = 
+            `${year}년 ${month}월 ${day}일 (${weekday}요일)`;
 
-        // 폼 제출 이벤트
+        // 운세 데이터
+        const FORTUNE_DATA = {
+            messages: [
+                "오늘은 긍정적인 에너지가 가득한 날입니다. 새로운 시작에 좋은 날이에요!",
+                "오늘 하루는 차분하게 계획을 세우며 보내세요. 준비한 만큼 결실을 맺을 것입니다.",
+                "주변 사람들과의 소통이 중요한 날입니다. 좋은 인연을 만날 수 있어요.",
+                "오늘은 휴식이 필요한 날입니다. 무리하지 말고 여유를 가지세요.",
+                "행운이 함께하는 날입니다. 하고 싶었던 일에 도전해보세요!"
+            ],
+            wealth: [
+                "예상치 못한 작은 행운이 찾아올 수 있습니다. 복권이나 경품 응모에 도전해보세요.",
+                "절약하는 습관이 미래의 큰 재산이 됩니다. 오늘은 지출을 자제하세요.",
+                "재물운이 상승하는 날입니다. 투자나 재테크 계획을 세워보세요.",
+                "큰 지출은 피하는 것이 좋습니다. 오늘은 현상 유지에 집중하세요."
+            ],
+            love: [
+                "연인과의 대화가 중요한 날입니다. 솔직한 마음을 전해보세요.",
+                "새로운 인연을 만날 수 있는 좋은 날입니다. 모임이나 만남에 적극적으로 참여하세요.",
+                "사소한 오해가 생길 수 있으니 신중하게 행동하세요.",
+                "애정운이 높은 날입니다. 고백이나 프러포즈를 계획하고 있다면 오늘이 좋습니다!"
+            ],
+            work: [
+                "업무 효율이 높은 날입니다. 밀린 일을 처리하기 좋은 시기예요.",
+                "동료나 상사와의 협력이 중요합니다. 팀워크를 발휘하세요.",
+                "새로운 프로젝트나 학습을 시작하기 좋은 날입니다.",
+                "오늘은 차분히 현재 진행 중인 일에 집중하세요."
+            ],
+            health: [
+                "건강 상태가 좋습니다. 가벼운 운동으로 활력을 더하세요.",
+                "피로가 쌓일 수 있으니 충분한 휴식을 취하세요.",
+                "물을 많이 마시고 건강한 식사를 하세요. 소화기 건강에 신경 쓰세요.",
+                "스트레스 관리가 중요한 날입니다. 명상이나 산책을 추천합니다."
+            ],
+            colors: ['빨강', '파랑', '노랑', '초록', '흰색', '검정', '보라', '분홍', '주황', '갈색'],
+            directions: ['동쪽', '서쪽', '남쪽', '북쪽', '동남쪽', '남서쪽', '북동쪽', '북서쪽'],
+            numbers: ['1', '3', '5', '7', '9', '11', '13', '17', '21', '33']
+        };
+
+        // 폼 제출
         document.getElementById('fortuneForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -429,65 +463,51 @@
             }
 
             // 사용자 정보 표시
+            document.getElementById('userName').textContent = name;
             const calendarText = calendar === 'solar' ? '양력' : '음력';
-            document.getElementById('userInfoText').textContent = 
-                `${name}님 (${birthYear}년 ${birthMonth}월 ${birthDay}일, ${calendarText})`;
+            document.getElementById('userBirth').textContent = 
+                `${birthYear}년 ${birthMonth}월 ${birthDay}일 (${calendarText})`;
 
-            // 월별 운세 카드 생성
-            const monthGrid = document.getElementById('monthGrid');
-            monthGrid.innerHTML = '';
+            // 랜덤 운세 생성 (생년월일 기반 시드)
+            const seed = parseInt(birthYear + birthMonth + birthDay + day);
+            
+            function getRandom(arr, seed) {
+                return arr[seed % arr.length];
+            }
 
-            MONTH_DATA.forEach(data => {
-                const card = document.createElement('div');
-                card.className = 'month-card';
-                card.innerHTML = `
-                    <div class="month-title">${data.title}</div>
-                    <div class="month-summary">${data.summary}</div>
-                    <div class="stars">${data.stars}</div>
-                `;
-                monthGrid.appendChild(card);
-            });
+            // 점수 (70~95)
+            const score = 70 + (seed % 26);
+            document.getElementById('fortuneScore').textContent = score + '점';
 
-            // 결과 섹션 표시
+            // 운세 내용 표시
+            document.getElementById('fortuneMessage').textContent = getRandom(FORTUNE_DATA.messages, seed);
+            document.getElementById('wealthFortune').textContent = getRandom(FORTUNE_DATA.wealth, seed);
+            document.getElementById('loveFortune').textContent = getRandom(FORTUNE_DATA.love, seed + 1);
+            document.getElementById('workFortune').textContent = getRandom(FORTUNE_DATA.work, seed + 2);
+            document.getElementById('healthFortune').textContent = getRandom(FORTUNE_DATA.health, seed + 3);
+
+            // 행운 아이템
+            document.getElementById('luckyColor').textContent = getRandom(FORTUNE_DATA.colors, seed);
+            document.getElementById('luckyDirection').textContent = getRandom(FORTUNE_DATA.directions, seed + 1);
+            document.getElementById('luckyNumber').textContent = getRandom(FORTUNE_DATA.numbers, seed + 2);
+
+            // 결과 표시
             document.getElementById('resultSection').classList.add('show');
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
 
-            // Google Analytics 이벤트
+            // Google Analytics
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'view_free_fortune', {
+                gtag('event', 'view_today_fortune', {
                     'event_category': 'Fortune',
-                    'event_label': 'Today Fortune Free'
+                    'event_label': 'Today Fortune'
                 });
             }
         });
 
         // 프리미엄 업그레이드
         function upgradeToPremium() {
-            const name = document.getElementById('name').value;
-            const birthYear = document.getElementById('birthYear').value;
-            const birthMonth = document.getElementById('birthMonth').value;
-            const birthDay = document.getElementById('birthDay').value;
-
-            const params = new URLSearchParams({
-                service: 'tojeong-premium',
-                price: '9900',
-                description: '토정비결 2026년 프리미엄',
-                name: name,
-                birthYear: birthYear,
-                birthMonth: birthMonth,
-                birthDay: birthDay
-            });
-
-            window.location.href = `/tojeong-premium.html?${params.toString()}`;
+            window.location.href = '/tojeong-premium.html';
         }
-
-        // 에러 핸들러
-        window.addEventListener('error', function(e) {
-            if (e.filename && !e.filename.includes('aisaju1000.com')) {
-                e.preventDefault();
-                return true;
-            }
-        }, true);
     </script>
 </body>
 </html>
