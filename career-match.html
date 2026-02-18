@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>직업 적성 매칭 - AI 사주 천년지기</title>
-    <meta name="description" content="TOP 5 추천 직업 + 성공 전략 + 커리어 로드맵 + 이직 적기 분석 (₩14,900)">
+    <title>직업 적성 분석 - AI 사주 천년지기</title>
+    <meta name="description" content="사주 기반 직업 적성 분석. 나에게 맞는 직업을 AI가 정확하게 찾아드립니다 (₩14,900)">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         * {
@@ -20,6 +20,7 @@
             line-height: 1.6;
         }
 
+        /* 네비게이션 */
         .navbar {
             background: #1a1a1a;
             padding: 1rem 0;
@@ -43,813 +44,268 @@
             font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #d4af37;
-        }
-
+        /* 히어로 섹션 */
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 60px 0 40px;
+            padding: 4rem 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '💼';
-            font-size: 20rem;
-            position: absolute;
-            right: -5%;
-            top: -10%;
-            opacity: 0.1;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            position: relative;
-            font-weight: 900;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             opacity: 0.95;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 800px;
+            margin: -60px auto 60px;
+            padding: 0 2rem;
             position: relative;
         }
 
-        .hero .price-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 15px;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: -20px auto 60px;
-            padding: 0 2rem;
-        }
-
-        .form-card {
+        /* 입력 폼 카드 */
+        .input-card {
             background: white;
             border-radius: 20px;
-            padding: 50px;
+            padding: 3rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            margin-top: 20px;
         }
 
-        .form-title {
+        .input-card h2 {
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: #333;
-            font-weight: 700;
-        }
-
-        .info-banner {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 35px;
-            text-align: center;
-            border: 2px solid #2196F3;
-        }
-
-        .info-banner h3 {
-            color: #1565c0;
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .info-banner ul {
-            list-style: none;
-            padding: 0;
-            color: #1565c0;
-            font-size: 1.05rem;
-        }
-
-        .info-banner li {
-            margin: 8px 0;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #667eea;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            font-size: 1rem;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: #555;
+            color: #333;
+        }
+
+        .birth-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1.05rem;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
             transition: all 0.3s;
-            font-family: inherit;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
         }
 
-        .date-group {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
+        .hour-input {
+            grid-column: span 3;
         }
 
-        .gender-options, .calendar-options {
+        /* 성별 선택 */
+        .gender-select {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 1rem;
         }
 
-        .gender-option, .calendar-option {
-            position: relative;
-        }
-
-        .gender-option input[type="radio"],
-        .calendar-option input[type="radio"] {
-            display: none;
-        }
-
-        .gender-option label,
-        .calendar-option label {
-            display: block;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+        .gender-option {
+            padding: 1.2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 600;
+            background: white;
         }
 
-        .gender-option input[type="radio"]:checked + label,
-        .calendar-option input[type="radio"]:checked + label {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .gender-option:hover {
             border-color: #667eea;
+            background: #f8f9ff;
         }
 
+        .gender-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .gender-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* 제출 버튼 */
         .btn-analyze {
             width: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 22px;
-            font-size: 1.5rem;
-            font-weight: 900;
             border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(102,126,234,0.3);
+            margin-top: 1rem;
         }
 
         .btn-analyze:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(102,126,234,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.3);
         }
 
-        .result-card {
-            display: none;
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-        .result-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .result-header h2 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 15px;
-            font-weight: 900;
-        }
-
-        .result-header p {
-            font-size: 1.6rem;
-            color: #667eea;
-            font-weight: 700;
-        }
-
-        .career-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 35px;
-            margin-bottom: 30px;
-        }
-
-        .career-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-        }
-
-        .career-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 5px solid #667eea;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .career-rank {
-            display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .career-title {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .career-score {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .score-bar {
-            flex: 1;
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .score-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            transition: width 1s ease;
-        }
-
-        .score-text {
-            font-weight: 700;
-            color: #667eea;
-            font-size: 1.1rem;
-        }
-
-        .career-desc {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .career-strategy {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        .career-strategy h5 {
-            color: #1565c0;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-
-        .career-strategy p {
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .roadmap-section {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
-            border-radius: 15px;
-            padding: 35px;
-            margin-bottom: 30px;
-            border-left: 5px solid #ffc107;
-        }
-
-        .roadmap-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #856404;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: #ffc107;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -38px;
-            top: 25px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #ffc107;
-            border: 3px solid white;
-        }
-
-        .timeline-year {
-            font-size: 1.2rem;
-            color: #856404;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .timeline-content {
-            color: #666;
-            line-height: 1.7;
-        }
-
-        .timing-section {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            border-radius: 15px;
-            padding: 35px;
-            margin-bottom: 30px;
-            border-left: 5px solid #4CAF50;
-        }
-
-        .timing-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #2e7d32;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-        }
-
-        .timing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .timing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            border: 2px solid #4CAF50;
-        }
-
-        .timing-card h4 {
-            font-size: 1.3rem;
-            color: #2e7d32;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .timing-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .timing-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 1.05rem;
-        }
-
-        .timing-list li:last-child {
-            border-bottom: none;
-        }
-
-        .premium-cta {
-            text-align: center;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border-radius: 20px;
-            padding: 50px;
-            margin-top: 50px;
-            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
-        }
-
-        .premium-cta h3 {
-            color: #1a1a1a;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-
-        .premium-cta p {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            line-height: 1.9;
-            font-weight: 600;
-        }
-
-        .btn-premium {
-            background: #1a1a1a;
-            color: #FFD700;
-            border: none;
-            padding: 20px 60px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-        }
-
+        /* 푸터 */
         footer {
             background: #1a1a1a;
             color: white;
+            padding: 2rem;
             text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 80px;
+            margin-top: 4rem;
         }
 
+        /* 반응형 */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
 
-            .form-card {
-                padding: 30px 20px;
+            .container {
+                padding: 0 1rem;
             }
 
-            .date-group {
+            .input-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .birth-grid {
                 grid-template-columns: 1fr;
             }
 
-            .timing-grid {
-                grid-template-columns: 1fr;
+            .hour-input {
+                grid-column: span 1;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">
-                🔮 AI 사주 천년지기
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">홈</a></li>
-                <li><a href="ai-chat.html">AI 상담</a></li>
-                <li><a href="pricing.html">가격표</a></li>
-                <li><a href="mypage.html">마이페이지</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
 
+    <!-- 히어로 섹션 -->
     <section class="hero">
-        <h1>💼 직업 적성 매칭</h1>
-        <p>TOP 5 추천 직업 + 성공 전략 + 커리어 로드맵 + 이직 적기</p>
-        <div class="price-badge">₩14,900</div>
+        <div>
+            <h1>💼 직업 적성 분석</h1>
+            <p>사주 기반 AI 분석으로 나에게 맞는 직업 찾기</p>
+        </div>
     </section>
 
+    <!-- 메인 컨테이너 -->
     <div class="container">
-        <div class="form-card">
-            <h2 class="form-title">직업 적성 매칭 분석</h2>
-            
-            <div class="info-banner">
-                <h3>💼 포함 내용 (4가지)</h3>
-                <ul>
-                    <li>✅ TOP 5 추천 직업 (적성 점수 포함)</li>
-                    <li>✅ 각 직업별 성공 전략</li>
-                    <li>✅ 10년 커리어 로드맵</li>
-                    <li>✅ 이직 적기 분석</li>
-                </ul>
-            </div>
-            
-            <form id="careerForm" onsubmit="analyzeCareer(event)">
-                <div class="form-group">
-                    <label>이름 *</label>
-                    <input type="text" id="userName" placeholder="홍길동" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>성별 *</label>
-                    <div class="gender-options">
-                        <div class="gender-option">
-                            <input type="radio" id="male" name="gender" value="male" required>
-                            <label for="male">👨 남성</label>
-                        </div>
-                        <div class="gender-option">
-                            <input type="radio" id="female" name="gender" value="female">
-                            <label for="female">👩 여성</label>
-                        </div>
-                    </div>
-                </div>
-                
+        <!-- 입력 폼 -->
+        <div class="input-card">
+            <h2>📊 직업 적성 분석 신청</h2>
+            <form id="careerForm">
                 <div class="form-group">
                     <label>생년월일 *</label>
-                    <div class="date-group">
+                    <div class="birth-grid">
                         <input type="number" id="birthYear" placeholder="1990년" min="1900" max="2024" required>
                         <input type="number" id="birthMonth" placeholder="5월" min="1" max="12" required>
                         <input type="number" id="birthDay" placeholder="15일" min="1" max="31" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>생시 (선택)</label>
-                    <input type="number" id="birthHour" placeholder="14시 (모르면 비워두세요)" min="0" max="23">
+                    <input type="text" id="birthHour" class="hour-input" placeholder="14시 (모르면 비워두세요)">
                 </div>
-                
+
                 <div class="form-group">
                     <label>양력/음력 *</label>
-                    <div class="calendar-options">
-                        <div class="calendar-option">
-                            <input type="radio" id="solar" name="calendar" value="solar" checked required>
-                            <label for="solar">☀️ 양력</label>
+                    <div class="gender-select">
+                        <div class="gender-option selected" data-calendar="solar" onclick="selectCalendar(this, 'solar')">
+                            <i class="fas fa-sun"></i>
+                            <div>양력</div>
                         </div>
-                        <div class="calendar-option">
-                            <input type="radio" id="lunar" name="calendar" value="lunar">
-                            <label for="lunar">🌙 음력</label>
+                        <div class="gender-option" data-calendar="lunar" onclick="selectCalendar(this, 'lunar')">
+                            <i class="fas fa-moon"></i>
+                            <div>음력</div>
                         </div>
                     </div>
+                    <input type="hidden" id="calendar" value="solar" required>
                 </div>
 
                 <button type="submit" class="btn-analyze">
-                    💼 직업 적성 분석하기 (₩14,900)
+                    <i class="fas fa-briefcase"></i> 직업 적성 분석하기 (₩14,900)
                 </button>
             </form>
         </div>
-
-        <div class="result-card" id="resultCard">
-            <div class="result-header">
-                <h2>💼 직업 적성 매칭 결과</h2>
-                <p id="resultName">홍길동님을 위한 TOP 5 직업</p>
-            </div>
-
-            <div class="career-section">
-                <h3>🏆 TOP 5 추천 직업</h3>
-                
-                <div class="career-card">
-                    <span class="career-rank">🥇 1위</span>
-                    <h4 class="career-title">IT 개발자 / 프로그래머</h4>
-                    <div class="career-score">
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: 95%"></div>
-                        </div>
-                        <span class="score-text">95점</span>
-                    </div>
-                    <p class="career-desc">
-                        논리적 사고와 문제 해결 능력이 뛰어나며, 혼자서도 집중력 있게 일할 수 있는 성향이 IT 개발자에 최적화되어 있습니다. 
-                        창의성과 분석력이 조화를 이루어 복잡한 시스템을 설계하고 구현하는 데 강점을 보입니다.
-                    </p>
-                    <div class="career-strategy">
-                        <h5>💡 성공 전략</h5>
-                        <p>최신 기술 트렌드를 꾸준히 학습하고, 오픈소스 프로젝트에 참여하여 포트폴리오를 구축하세요. 
-                        팀 프로젝트 경험을 쌓으며 소통 능력을 개발하면 시니어 개발자로 성장할 수 있습니다.</p>
-                    </div>
-                </div>
-
-                <div class="career-card">
-                    <span class="career-rank">🥈 2위</span>
-                    <h4 class="career-title">재무 분석가 / 회계사</h4>
-                    <div class="career-score">
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: 88%"></div>
-                        </div>
-                        <span class="score-text">88점</span>
-                    </div>
-                    <p class="career-desc">
-                        체계적이고 꼼꼼한 성격이 재무 분석과 회계 업무에 적합합니다. 
-                        숫자에 강하고 규칙을 따르는 것을 선호하여 정확한 재무 보고서를 작성할 수 있습니다.
-                    </p>
-                    <div class="career-strategy">
-                        <h5>💡 성공 전략</h5>
-                        <p>CPA, CFA 등 전문 자격증을 취득하고, 대기업 또는 회계법인에서 경력을 쌓으세요. 
-                        세무 및 재무 컨설팅 능력을 키우면 독립 컨설턴트로 성장할 수 있습니다.</p>
-                    </div>
-                </div>
-
-                <div class="career-card">
-                    <span class="career-rank">🥉 3위</span>
-                    <h4 class="career-title">마케팅 매니저 / 브랜드 전략가</h4>
-                    <div class="career-score">
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: 82%"></div>
-                        </div>
-                        <span class="score-text">82점</span>
-                    </div>
-                    <p class="career-desc">
-                        창의적이고 트렌드에 민감하며 사람들의 심리를 잘 파악합니다. 
-                        소통 능력이 뛰어나 브랜드 메시지를 효과적으로 전달할 수 있습니다.
-                    </p>
-                    <div class="career-strategy">
-                        <h5>💡 성공 전략</h5>
-                        <p>디지털 마케팅 (SNS, SEO, 광고) 전문성을 키우고, 성공 사례를 포트폴리오로 구축하세요. 
-                        데이터 분석 능력을 더하면 마케팅 디렉터로 성장할 수 있습니다.</p>
-                    </div>
-                </div>
-
-                <div class="career-card">
-                    <span class="career-rank">4위</span>
-                    <h4 class="career-title">교육 전문가 / 강사</h4>
-                    <div class="career-score">
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: 78%"></div>
-                        </div>
-                        <span class="score-text">78점</span>
-                    </div>
-                    <p class="career-desc">
-                        지식을 전달하는 능력이 뛰어나고 사람들을 돕는 것에서 보람을 느낍니다. 
-                        인내심이 많아 학생들의 성장을 이끌어낼 수 있습니다.
-                    </p>
-                    <div class="career-strategy">
-                        <h5>💡 성공 전략</h5>
-                        <p>전문 분야를 확립하고 온라인 강의 플랫폼에 콘텐츠를 업로드하세요. 
-                        교육 자격증을 취득하고 강의 스킬을 연마하면 인기 강사가 될 수 있습니다.</p>
-                    </div>
-                </div>
-
-                <div class="career-card">
-                    <span class="career-rank">5위</span>
-                    <h4 class="career-title">인사(HR) 관리자 / 채용 담당자</h4>
-                    <div class="career-score">
-                        <div class="score-bar">
-                            <div class="score-fill" style="width: 75%"></div>
-                        </div>
-                        <span class="score-text">75점</span>
-                    </div>
-                    <p class="career-desc">
-                        사람을 보는 통찰력이 있고 조직 내 갈등을 중재하는 능력이 있습니다. 
-                        공정하고 객관적인 판단으로 인재를 선발하고 육성할 수 있습니다.
-                    </p>
-                    <div class="career-strategy">
-                        <h5>💡 성공 전략</h5>
-                        <p>인사 관리 자격증 (SHRM, PHR)을 취득하고, 채용 트렌드를 연구하세요. 
-                        조직 문화 개선 및 리더십 개발 프로그램을 운영하면 HR 디렉터로 승진할 수 있습니다.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="roadmap-section">
-                <h3>🗺️ 10년 커리어 로드맵</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-year">📅 2026-2028년 (초기)</div>
-                        <div class="timeline-content">
-                            <strong>기술 습득 및 경력 시작:</strong> IT 개발 기술을 집중 학습하고, 중소기업 또는 스타트업에서 주니어 개발자로 커리어를 시작하세요. 
-                            다양한 프로젝트 경험을 쌓으며 실무 능력을 키우세요.
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">📅 2029-2031년 (중기)</div>
-                        <div class="timeline-content">
-                            <strong>전문성 강화 및 팀 리딩:</strong> 시니어 개발자로 승진하고, 작은 팀을 이끌어보세요. 
-                            특정 기술 스택 (예: 클라우드, AI)에 대한 전문성을 확보하여 경쟁력을 높이세요.
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">📅 2032-2034년 (성장기)</div>
-                        <div class="timeline-content">
-                            <strong>리더십 발휘 및 대기업 이직:</strong> 대기업이나 유명 IT 기업으로 이직하여 더 큰 프로젝트를 리드하세요. 
-                            테크 리드 또는 아키텍트 포지션을 목표로 하세요.
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">📅 2035-2036년 (정점)</div>
-                        <div class="timeline-content">
-                            <strong>경영진 진입 또는 창업:</strong> CTO, VP of Engineering 등 경영진에 합류하거나, 
-                            자신의 기술 기반 스타트업을 창업하는 것을 고려하세요. 풍부한 경험을 바탕으로 리더십을 발휘하세요.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timing-section">
-                <h3>⏰ 이직 적기 분석</h3>
-                <div class="timing-grid">
-                    <div class="timing-card">
-                        <h4>✅ 이직 추천 시기</h4>
-                        <ul class="timing-list">
-                            <li>🟢 <strong>2027년 봄</strong>: 첫 이직 최적기</li>
-                            <li>🟢 <strong>2030년 가을</strong>: 대기업 이직 적기</li>
-                            <li>🟢 <strong>2034년 여름</strong>: 경영진 진입 기회</li>
-                        </ul>
-                    </div>
-                    <div class="timing-card">
-                        <h4>💡 이직 준비 전략</h4>
-                        <ul class="timing-list">
-                            <li>📝 포트폴리오 정리 (프로젝트 결과물)</li>
-                            <li>🤝 네트워킹 및 헤드헌터 연결</li>
-                            <li>📈 기술 스택 업데이트 및 자격증 취득</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="premium-cta">
-                <h3>✨ 더 상세한 커리어 컨설팅이 필요하신가요?</h3>
-                <p>
-                    <strong>프리미엄 커리어 컨설팅</strong>에서는 <strong>개인 맞춤 커리어 코칭</strong>, <strong>이력서/포트폴리오 첨삭</strong>, <strong>면접 전략</strong> 등<br>
-                    전문가 1:1 상담으로 커리어 성공을 지원합니다.
-                </p>
-                <button class="btn-premium" onclick="location.href='premium-features.html'">
-                    💎 프리미엄 종합 분석 (₩49,000)
-                </button>
-            </div>
-        </div>
     </div>
 
+    <!-- 푸터 -->
     <footer>
         <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
     </footer>
 
+    <!-- 네비게이션 로더 -->
+    <script src="js/navbar-loader.js" defer></script>
+
+    <!-- JavaScript -->
     <script>
-        function analyzeCareer(event) {
-            event.preventDefault();
+        // 양력/음력 선택
+        function selectCalendar(element, type) {
+            document.querySelectorAll('.gender-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('calendar').value = type;
+        }
 
-            const userName = document.getElementById('userName').value;
-            const gender = document.querySelector('input[name="gender"]:checked').value;
-            const birthYear = parseInt(document.getElementById('birthYear').value);
-            const birthMonth = parseInt(document.getElementById('birthMonth').value);
-            const birthDay = parseInt(document.getElementById('birthDay').value);
-            const birthHour = parseInt(document.getElementById('birthHour').value) || 12;
-            const calendar = document.querySelector('input[name="calendar"]:checked').value;
+        // 폼 제출 - 결제 페이지로 이동
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            // 결과 업데이트
-            document.getElementById('resultName').textContent = userName + '님을 위한 TOP 5 직업';
+            const birthYear = document.getElementById('birthYear').value;
+            const birthMonth = document.getElementById('birthMonth').value;
+            const birthDay = document.getElementById('birthDay').value;
+            const birthHour = document.getElementById('birthHour').value || '12';
+            const calendar = document.getElementById('calendar').value;
+
+            // 유효성 검사
+            if (!birthYear || !birthMonth || !birthDay) {
+                alert('생년월일을 모두 입력해주세요.');
+                return;
+            }
 
             // localStorage에 데이터 저장
             const careerData = {
                 mode: 'career',
-                name: userName,
-                gender: gender,
                 birthdate: `${birthYear}-${String(birthMonth).padStart(2, '0')}-${String(birthDay).padStart(2, '0')}`,
-                birth_time: String(birthHour).padStart(2, '0') + ':00',
+                birth_time: birthHour + ':00',
                 calendar_type: calendar,
                 timestamp: new Date().toISOString()
             };
@@ -857,47 +313,31 @@
             localStorage.setItem('careerData', JSON.stringify(careerData));
             console.log('✅ 직업 적성 데이터 저장:', careerData);
 
-            // 결과 카드 표시
-            document.getElementById('resultCard').style.display = 'block';
-            
-            // 부드럽게 스크롤
-            setTimeout(function() {
-                document.getElementById('resultCard').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 100);
-
             // Google Analytics 이벤트
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'career_analysis', {
+                gtag('event', 'career_payment_start', {
                     event_category: 'engagement',
                     event_label: 'career_match',
                     value: 14900
                 });
             }
-        }
 
-        function upgradeToPremium() {
-            const careerData = localStorage.getItem('careerData');
-            if (careerData) {
-                localStorage.setItem('premiumUpgrade', JSON.stringify({
-                    from: 'career-match',
-                    type: 'career',
-                    price: 49000
-                }));
-            }
-            window.location.href = 'pricing.html?service=career-premium';
-        }
+            // 결제 페이지로 이동
+            window.location.href = `payment.html?service=career-match&price=14900&name=직업 적성 분석`;
+        });
 
+        // 전역 에러 핸들러
         window.addEventListener('error', function(e) {
             if (e.filename && !e.filename.includes('aisaju1000.com')) {
                 e.preventDefault();
-                return false;
+                return true;
             }
-        });
+        }, true);
 
-        console.log('✅ 직업 적성 매칭 페이지 로드 완료');
+        // DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('직업 적성 분석 페이지 로드 완료');
+        });
     </script>
 </body>
 </html>
