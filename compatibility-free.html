@@ -194,7 +194,7 @@
                     <li>사업 파트너십 & 역할 분담 분석</li>
                     <li>월별 궁합 운세 & 조언</li>
                 </ul>
-                <a href="pricing.html#compatibility" class="btn-premium">
+                <a href="#" id="btnPremium" class="btn-premium">
                     프리미엄 분석 보기 (₩3,900)
                 </a>
             </div>
@@ -249,6 +249,29 @@
             document.getElementById('resultCard').style.display = 'block';
             document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+
+        // 프리미엄 버튼 클릭 이벤트
+        document.getElementById('btnPremium').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 입력된 이름 가져오기
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            
+            // localStorage에 궁합 데이터 저장
+            const compatibilityData = {
+                service: 'compatibility',
+                name1: name1,
+                name2: name2,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('compatibilityData', JSON.stringify(compatibilityData));
+            console.log('✅ 궁합 데이터 저장:', compatibilityData);
+            
+            // 결제 페이지로 이동
+            window.location.href = `payment.html?service=compatibility&price=3900&name=연애 궁합`;
+        });
     </script>
 </body>
 </html>
