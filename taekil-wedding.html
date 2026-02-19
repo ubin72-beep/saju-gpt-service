@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결혼 택일 무료 미리보기 | AI 사주 천년지기</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>결혼 택일 - 평생의 약속을 위한 완벽한 날 | AI 사주 천년지기</title>
+    <meta name="description" content="2026년 결혼 택일 - 두 사람의 행복한 시작을 위한 최고의 결혼 날짜를 찾아드립니다. 프리미엄 궁합 분석과 함께.">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -17,653 +19,434 @@
             font-family: 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
             min-height: 100vh;
-            padding: 2rem 1rem;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF1493;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #FF1493;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* 입력 섹션 */
+        .input-section {
             background: white;
             border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin: 2rem auto;
+            max-width: 800px;
         }
 
-        .header {
+        .section-title {
             text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
             font-size: 2rem;
-            color: #ff6b9d;
-            margin-bottom: 0.5rem;
-        }
-
-        .header .subtitle {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .couple-info {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 1.5rem;
+            color: #FF1493;
             margin-bottom: 2rem;
-            align-items: center;
-        }
-
-        .person-card {
-            background: #fff5f8;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 2px solid #ff6b9d;
-        }
-
-        .person-card h3 {
-            font-size: 1.2rem;
-            color: #ff6b9d;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .person-card h3 i {
-            font-size: 1.5rem;
-        }
-
-        .info-item {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-item i {
-            color: #ff6b9d;
-            width: 20px;
-        }
-
-        .info-item label {
-            font-weight: 500;
-            color: #333;
-            min-width: 80px;
-        }
-
-        .info-item span {
-            color: #ff6b9d;
-            font-weight: 600;
-        }
-
-        .heart-icon {
-            font-size: 2rem;
-            color: #ff1493;
-            text-align: center;
-        }
-
-        .result-section {
-            margin-bottom: 2rem;
-        }
-
-        .result-title {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #ff6b9d;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .result-title i {
-            color: #ff6b9d;
-        }
-
-        .result-content {
-            background: #fff5f8;
-            border-radius: 12px;
-            padding: 1.5rem;
-            line-height: 1.8;
-            color: #444;
-        }
-
-        .compatibility-score {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-            border-radius: 15px;
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-
-        .compatibility-score .score {
-            font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
-        .compatibility-score .score-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .lucky-dates {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .lucky-date-card {
-            background: white;
-            border: 2px solid #ff6b9d;
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .lucky-date-card .date {
-            font-size: 1.1rem;
+        .form-group label {
+            display: block;
             font-weight: 600;
-            color: #ff6b9d;
-            margin-bottom: 0.3rem;
-        }
-
-        .lucky-date-card .day {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .blur-section {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .blur-content {
-            filter: blur(8px);
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .unlock-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background: rgba(255,255,255,0.98);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .unlock-overlay i {
-            font-size: 3rem;
-            color: #ff6b9d;
-            margin-bottom: 1rem;
-        }
-
-        .unlock-overlay h3 {
-            font-size: 1.3rem;
             color: #333;
             margin-bottom: 0.5rem;
+            font-size: 1.05rem;
         }
 
-        .unlock-overlay p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .premium-features {
-            background: #fff5f8;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .premium-features h3 {
-            font-size: 1.3rem;
-            color: #ff6b9d;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .feature-item i {
-            color: #ff6b9d;
-            font-size: 1.2rem;
-        }
-
-        .feature-item span {
-            font-size: 0.95rem;
-            color: #333;
-        }
-
-        .price-section {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .original-price {
-            font-size: 1rem;
-            color: #999;
-            text-decoration: line-through;
-            margin-bottom: 0.3rem;
-        }
-
-        .current-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ff6b9d;
-        }
-
-        .current-price .won {
-            font-size: 1.2rem;
-        }
-
-        .cta-button {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
-        }
-
-        .cta-button i {
+        .form-group label i {
+            color: #FF1493;
             margin-right: 0.5rem;
         }
 
-        .guarantee-badge {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #666;
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
-        .guarantee-badge i {
-            color: #f59e0b;
-            margin-right: 0.3rem;
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FF1493;
+            box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .btn-premium {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #ff6b9d 0%, #FF1493 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .btn-premium i {
+            margin-right: 0.5rem;
+        }
+
+        /* 특징 섹션 */
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: #FF1493;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f0 100%);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #FF1493;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 푸터 */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem 0.5rem;
+            .hero h1 {
+                font-size: 2rem;
             }
 
-            .container {
-                padding: 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .couple-info {
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .heart-icon {
-                display: none;
-            }
-
-            .features-grid {
+            .feature-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .lucky-dates {
-                grid-template-columns: 1fr;
-            }
-
-            .unlock-overlay {
-                width: 95%;
-                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 헤더 -->
-        <div class="header">
-            <h1>💍 결혼 택일 무료 미리보기</h1>
-            <p class="subtitle">AI가 분석한 두 분의 기본 궁합 결과를 확인하세요</p>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <!-- 커플 정보 -->
-        <div class="couple-info">
-            <!-- 신랑 정보 -->
-            <div class="person-card">
-                <h3><i class="fas fa-male"></i> 신랑</h3>
-                <div class="info-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <label>생년월일:</label>
-                    <span id="groomBirthDate">-</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-star"></i>
-                    <label>일간:</label>
-                    <span id="groomDayMaster">-</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <label>시간:</label>
-                    <span id="groomBirthHour">-</span>
-                </div>
-            </div>
-
-            <!-- 하트 아이콘 -->
-            <div class="heart-icon">
-                <i class="fas fa-heart"></i>
-            </div>
-
-            <!-- 신부 정보 -->
-            <div class="person-card">
-                <h3><i class="fas fa-female"></i> 신부</h3>
-                <div class="info-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <label>생년월일:</label>
-                    <span id="brideBirthDate">-</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-star"></i>
-                    <label>일간:</label>
-                    <span id="brideDayMaster">-</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <label>시간:</label>
-                    <span id="brideBirthHour">-</span>
-                </div>
-            </div>
+    <!-- 히어로 -->
+    <section class="hero">
+        <div class="container">
+            <h1>💍 결혼 택일</h1>
+            <p class="subtitle">두 사람의 행복한 시작을 위한 완벽한 날을 찾아드립니다</p>
+            <span class="premium-badge">⭐ PREMIUM 분석 ₩14,900 ⭐</span>
         </div>
+    </section>
 
-        <!-- 무료 결과: 궁합 점수 -->
-        <div class="result-section">
-            <h2 class="result-title">
-                <i class="fas fa-heart-circle-check"></i>
-                두 분의 기본 궁합 점수
-            </h2>
-            <div class="compatibility-score">
-                <div class="score" id="compatibilityScore">85점</div>
-                <div class="score-label">매우 좋은 궁합입니다! 💕</div>
-            </div>
-            <div class="result-content">
-                <p id="compatibilityDesc">
-                    두 분은 서로를 보완해주는 아름다운 궁합을 가지고 계십니다. 
-                    신랑의 <strong id="groomElement">-</strong>과(와) 신부의 <strong id="brideElement">-</strong>이(가) 
-                    조화를 이루어 안정적인 결혼 생활을 이끌어갈 수 있습니다.
-                </p>
-            </div>
-        </div>
-
-        <!-- 무료 결과: 추천 결혼 날짜 TOP 3 -->
-        <div class="result-section">
-            <h2 class="result-title">
-                <i class="fas fa-calendar-heart"></i>
-                추천 결혼 날짜 TOP 3
-            </h2>
-            <div class="result-content">
-                <p style="margin-bottom: 1rem;">
-                    두 분의 사주를 바탕으로 가장 좋은 날짜 3개를 선정했습니다.
-                </p>
-                <div class="lucky-dates" id="luckyDates">
-                    <!-- JavaScript로 채워질 예정 -->
+    <!-- 입력 폼 -->
+    <section class="input-section">
+        <h2 class="section-title">
+            <i class="fas fa-rings-wedding"></i> 결혼 정보 입력
+        </h2>
+        <form id="weddingForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-male"></i> 신랑 생년월일</label>
+                    <input type="date" id="groomBirthDate" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-female"></i> 신부 생년월일</label>
+                    <input type="date" id="brideBirthDate" required>
                 </div>
             </div>
-        </div>
-
-        <!-- 프리미엄 기능 블러 처리 -->
-        <div class="blur-section">
-            <div class="blur-content">
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-calendar-check"></i>
-                        세부 날짜별 운세 분석 (TOP 20)
-                    </h2>
-                    <div class="result-content">
-                        <p><strong>2026년 4월 5일 (토):</strong> ★★★★★ 대길</p>
-                        <p>이날은 두 분의 사주와 가장 조화를 이루는 날입니다. 재물운과 건강운이 모두 상승...</p>
-                        <p style="margin-top: 1rem;"><strong>2026년 4월 12일 (토):</strong> ★★★★☆ 길</p>
-                        <p>가족들의 축복 속에 화목한 결혼식을 올릴 수 있는 날입니다...</p>
-                    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> 신랑 출생 시간 (선택)</label>
+                    <select id="groomBirthHour">
+                        <option value="">모르면 비워두세요</option>
+                        <option value="23">자시 (23:00-00:59)</option>
+                        <option value="01">축시 (01:00-02:59)</option>
+                        <option value="03">인시 (03:00-04:59)</option>
+                        <option value="05">묘시 (05:00-06:59)</option>
+                        <option value="07">진시 (07:00-08:59)</option>
+                        <option value="09">사시 (09:00-10:59)</option>
+                        <option value="11">오시 (11:00-12:59)</option>
+                        <option value="13">미시 (13:00-14:59)</option>
+                        <option value="15">신시 (15:00-16:59)</option>
+                        <option value="17">유시 (17:00-18:59)</option>
+                        <option value="19">술시 (19:00-20:59)</option>
+                        <option value="21">해시 (21:00-22:59)</option>
+                    </select>
                 </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        피해야 할 날짜
-                    </h2>
-                    <div class="result-content">
-                        <p>2026년 4월 3일, 11일, 19일은 두 분의 사주와 충돌하여...</p>
-                    </div>
-                </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-clock"></i>
-                        시간대별 길흉 분석
-                    </h2>
-                    <div class="result-content">
-                        <p>오전 11시~오후 1시: 대길</p>
-                        <p>결혼식을 올리기에 가장 좋은 시간대입니다...</p>
-                    </div>
-                </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-lightbulb"></i>
-                        결혼 생활 맞춤 조언
-                    </h2>
-                    <div class="result-content">
-                        <p>신랑의 성격과 신부의 성격을 고려한 구체적인 조언...</p>
-                    </div>
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> 신부 출생 시간 (선택)</label>
+                    <select id="brideBirthHour">
+                        <option value="">모르면 비워두세요</option>
+                        <option value="23">자시 (23:00-00:59)</option>
+                        <option value="01">축시 (01:00-02:59)</option>
+                        <option value="03">인시 (03:00-04:59)</option>
+                        <option value="05">묘시 (05:00-06:59)</option>
+                        <option value="07">진시 (07:00-08:59)</option>
+                        <option value="09">사시 (09:00-10:59)</option>
+                        <option value="11">오시 (11:00-12:59)</option>
+                        <option value="13">미시 (13:00-14:59)</option>
+                        <option value="15">신시 (15:00-16:59)</option>
+                        <option value="17">유시 (17:00-18:59)</option>
+                        <option value="19">술시 (19:00-20:59)</option>
+                        <option value="21">해시 (21:00-22:59)</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- 잠금 오버레이 -->
-            <div class="unlock-overlay">
-                <i class="fas fa-lock"></i>
-                <h3>더 자세한 분석이 필요하신가요?</h3>
-                <p>프리미엄으로 업그레이드하고<br>상세한 결혼 택일 분석을 확인하세요!</p>
-            </div>
-        </div>
-
-        <!-- 프리미엄 기능 안내 -->
-        <div class="premium-features">
-            <h3>💎 프리미엄 업그레이드 시 제공되는 기능</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>TOP 20 추천 날짜</span>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> 희망 결혼 시기</label>
+                    <input type="month" id="targetMonth" placeholder="2026-05" min="2026-01" max="2027-12" required>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-ban"></i>
-                    <span>피해야 할 날짜</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-clock"></i>
-                    <span>시간대별 길흉 분석</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-heart"></i>
-                    <span>상세 궁합 분석</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-baby"></i>
-                    <span>자녀운 분석</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-hands-helping"></i>
-                    <span>결혼 생활 맞춤 조언</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>PDF 다운로드</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-headset"></i>
-                    <span>전문가 1:1 상담</span>
+                <div class="form-group">
+                    <label><i class="fas fa-church"></i> 예식 형태</label>
+                    <select id="weddingType">
+                        <option value="modern">현대식 (호텔/웨딩홀)</option>
+                        <option value="traditional">전통식 (한옥/전통)</option>
+                        <option value="outdoor">야외 (정원/해변)</option>
+                        <option value="small">스몰웨딩 (소규모)</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- 가격 정보 -->
-            <div class="price-section">
-                <div class="original-price">정가 29,900원</div>
-                <div class="current-price">
-                    <span class="won">₩</span>14,900
-                </div>
-            </div>
-
-            <!-- CTA 버튼 -->
-            <button class="cta-button" onclick="goToPremium()">
+            <button type="submit" class="btn-premium">
                 <i class="fas fa-crown"></i>
-                프리미엄으로 전체 결과 보기
+                프리미엄 결혼 길일 분석하기 (₩14,900)
             </button>
+        </form>
+    </section>
 
-            <!-- 보증 배지 -->
-            <div class="guarantee-badge">
-                <i class="fas fa-shield-alt"></i>
-                결과가 만족스럽지 않으면 100% 환불 보장
+    <!-- 특징 -->
+    <section class="features">
+        <h2>💎 프리미엄 결혼 택일의 특별함</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💕</div>
+                <div class="feature-title">두 사람의 궁합 분석</div>
+                <div class="feature-desc">신랑 신부의 사주 궁합을 종합적으로 분석합니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <div class="feature-title">최고 길일 TOP 3</div>
+                <div class="feature-desc">2026년 최적의 결혼 날짜 3개를 정확히 추천드립니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <div class="feature-title">예식 시간 분석</div>
+                <div class="feature-desc">길일의 최적 예식 시간까지 상세 안내합니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚠️</div>
+                <div class="feature-title">피해야 할 날짜</div>
+                <div class="feature-desc">절대 피해야 할 흉일을 명확히 알려드립니다</div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">📞 0502-1909-7788 | 📧 aisaju1000@gmail.com</p>
+    </footer>
 
     <script>
-        // URL 파라미터에서 정보 읽기
-        const urlParams = new URLSearchParams(window.location.search);
-        const groomBirthDate = urlParams.get('groomBirthDate');
-        const brideBirthDate = urlParams.get('brideBirthDate');
-        const groomBirthHour = urlParams.get('groomBirthHour') || '모름';
-        const brideBirthHour = urlParams.get('brideBirthHour') || '모름';
-        const targetMonth = urlParams.get('targetMonth');
-        const weddingType = urlParams.get('weddingType');
-        const groomDayMaster = urlParams.get('groomDayMaster');
-        const brideDayMaster = urlParams.get('brideDayMaster');
-
-        // 페이지에 정보 표시
-        if (groomBirthDate) document.getElementById('groomBirthDate').textContent = groomBirthDate;
-        if (brideBirthDate) document.getElementById('brideBirthDate').textContent = brideBirthDate;
-        if (groomBirthHour) document.getElementById('groomBirthHour').textContent = groomBirthHour;
-        if (brideBirthHour) document.getElementById('brideBirthHour').textContent = brideBirthHour;
-        
-        if (groomDayMaster) {
-            document.getElementById('groomDayMaster').textContent = groomDayMaster;
-            document.getElementById('groomElement').textContent = getElement(groomDayMaster);
-        }
-        if (brideDayMaster) {
-            document.getElementById('brideDayMaster').textContent = brideDayMaster;
-            document.getElementById('brideElement').textContent = getElement(brideDayMaster);
-        }
-
-        // 일간에서 오행 추출
-        function getElement(dayMaster) {
-            const elementMap = {
-                '갑': '목(木)', '을': '목(木)',
-                '병': '화(火)', '정': '화(火)',
-                '무': '토(土)', '기': '토(土)',
-                '경': '금(金)', '신': '금(金)',
-                '임': '수(水)', '계': '수(水)'
-            };
-            return elementMap[dayMaster] || '오행';
-        }
-
-        // 궁합 점수 계산 (간단한 알고리즘)
-        function calculateCompatibility(groom, bride) {
-            const scores = {
-                '갑을': 85, '갑병': 75, '갑정': 80, '갑무': 70, '갑기': 75,
-                '갑경': 65, '갑신': 70, '갑임': 90, '갑계': 85,
-                '을병': 80, '을정': 85, '을무': 75, '을기': 80, '을경': 70,
-                '을신': 75, '을임': 85, '을계': 90,
-                // ... 더 많은 조합
-            };
-            const key1 = groom + bride;
-            const key2 = bride + groom;
-            return scores[key1] || scores[key2] || 75; // 기본값 75
-        }
-
-        if (groomDayMaster && brideDayMaster) {
-            const score = calculateCompatibility(groomDayMaster, brideDayMaster);
-            document.getElementById('compatibilityScore').textContent = score + '점';
+        document.getElementById('weddingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            let scoreLabel = '';
-            if (score >= 90) scoreLabel = '천생연분입니다! 💕💕💕';
-            else if (score >= 80) scoreLabel = '매우 좋은 궁합입니다! 💕💕';
-            else if (score >= 70) scoreLabel = '좋은 궁합입니다! 💕';
-            else scoreLabel = '노력하면 행복할 수 있습니다! 💪';
-            
-            document.querySelector('.score-label').textContent = scoreLabel;
+            const groomBirthDate = document.getElementById('groomBirthDate').value;
+            const brideBirthDate = document.getElementById('brideBirthDate').value;
+            const groomBirthHour = document.getElementById('groomBirthHour').value;
+            const brideBirthHour = document.getElementById('brideBirthHour').value;
+            const targetMonth = document.getElementById('targetMonth').value;
+            const weddingType = document.getElementById('weddingType').value;
+
+            if (!groomBirthDate || !brideBirthDate || !targetMonth) {
+                alert('필수 항목을 모두 입력해주세요.');
+                return;
+            }
+
+            // localStorage에 데이터 저장
+            const taekilData = {
+                service: 'taekil-wedding',
+                groomBirthDate: groomBirthDate,
+                brideBirthDate: brideBirthDate,
+                groomBirthHour: groomBirthHour,
+                brideBirthHour: brideBirthHour,
+                targetMonth: targetMonth,
+                weddingType: weddingType,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('taekilData', JSON.stringify(taekilData));
+            console.log('✅ 결혼 택일 데이터 저장:', taekilData);
+
+            // 결제 페이지로 이동
+            window.location.href = `payment.html?service=taekil-wedding&price=14900&name=결혼 택일`;
+        });
+
+        // 일간 계산 (10천간)
+        function calculateDayMaster(date) {
+            const dayMasters = ['갑','을','병','정','무','기','경','신','임','계'];
+            const baseDate = new Date('1900-01-01');
+            const diffDays = Math.floor((date - baseDate) / (1000 * 60 * 60 * 24));
+            return dayMasters[diffDays % 10];
         }
 
-        // 추천 날짜 3개 생성 (샘플)
-        function generateLuckyDates() {
-            const dates = [
-                { date: '2026년 4월 5일', day: '토요일' },
-                { date: '2026년 4월 12일', day: '토요일' },
-                { date: '2026년 4월 26일', day: '토요일' }
-            ];
+        // 전역 에러 처리
+        window.addEventListener('error', function(e) {
+            if (!e.message.includes('aisaju1000.com')) {
+                e.preventDefault();
+            }
+        });
 
-            const container = document.getElementById('luckyDates');
-            dates.forEach(dateInfo => {
-                const card = document.createElement('div');
-                card.className = 'lucky-date-card';
-                card.innerHTML = `
-                    <div class="date">${dateInfo.date}</div>
-                    <div class="day">${dateInfo.day}</div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // 프리미엄 페이지로 이동
-        function goToPremium() {
-            const params = new URLSearchParams({
-                groomBirthDate: groomBirthDate || '',
-                brideBirthDate: brideBirthDate || '',
-                groomBirthHour: groomBirthHour || '',
-                brideBirthHour: brideBirthHour || '',
-                targetMonth: targetMonth || '',
-                weddingType: weddingType || '',
-                groomDayMaster: groomDayMaster || '',
-                brideDayMaster: brideDayMaster || '',
-                eventType: 'wedding'
-            });
-            window.location.href = `/taekil-result-premium.html?${params.toString()}`;
-        }
-
-        // 페이지 로드 시 실행
-        generateLuckyDates();
-        
-        console.log('결혼 택일 무료 결과 페이지 로드 완료');
+        console.log('결혼 택일 페이지 로드 완료');
     </script>
 </body>
 </html>
