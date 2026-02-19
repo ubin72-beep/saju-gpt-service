@@ -1,21 +1,31 @@
+# UTF-8 인코딩 설정
+AddType text/html .html
+AddDefaultCharset UTF-8
+
+<Files "index.html">
+    ForceType text/html
+    Header set Content-Type "text/html; charset=utf-8"
+</Files>
+
 # URL에서 .html 확장자 제거
 RewriteEngine On
 
-# .html 확장자가 있는 URL을 확장자 없는 URL로 리다이렉트
+# .html 확장자가 있는 URL을 확장자 없는 URL로 301 리다이렉트
 RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
 RewriteRule ^ /%1 [NC,L,R=301]
 
-# 확장자 없는 URL을 .html 파일로 매핑
+# 확장자 없는 URL 요청을 .html 파일로 내부 매핑
 RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^ %{REQUEST_URI}.html [NC,L]
+RewriteCond %{REQUEST_URI} !\.html$
+RewriteRule ^(.*)$ $1.html [NC,L]
 
-# 404 에러 페이지 설정 (선택사항)
-ErrorDocument 404 /404.html
-
-# HTTPS 강제 리다이렉트 (선택사항)
+# HTTPS 강제 리다이렉트 (보안 강화)
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# www 없는 도메인으로 리다이렉트 (선택사항)
+# www 없는 도메인으로 통일 (선택사항)
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# 404 에러 페이지
+ErrorDocument 404 /404.html
