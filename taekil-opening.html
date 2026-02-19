@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개업 택일 무료 미리보기 | AI 사주 천년지기</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>개업 택일 - 사업 번창을 위한 최고의 개업일 | AI 사주 천년지기</title>
+    <meta name="description" content="2026년 개업 택일 - 사업의 성공적인 시작을 위한 최적의 개업 날짜를 찾아드립니다. 프리미엄 사업운 분석.">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -15,628 +17,436 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #f9ca24 0%, #f0932b 100%);
             min-height: 100vh;
-            padding: 2rem 1rem;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f0932b;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #f0932b;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1a1a1a;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* 입력 섹션 */
+        .input-section {
             background: white;
             border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin: 2rem auto;
+            max-width: 800px;
         }
 
-        .header {
+        .section-title {
             text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
             font-size: 2rem;
-            color: #f5576c;
-            margin-bottom: 0.5rem;
-        }
-
-        .header .subtitle {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .user-info {
-            background: #fff8f9;
-            border-radius: 12px;
-            padding: 1.5rem;
+            color: #f0932b;
             margin-bottom: 2rem;
-        }
-
-        .user-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .user-info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .user-info-item i {
-            color: #f5576c;
-            font-size: 1.2rem;
-        }
-
-        .user-info-item label {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .user-info-item span {
-            color: #f5576c;
-            font-weight: 600;
-        }
-
-        .result-section {
-            margin-bottom: 2rem;
-        }
-
-        .result-title {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #f5576c;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .result-title i {
-            color: #f5576c;
-        }
-
-        .result-content {
-            background: #fff8f9;
-            border-radius: 12px;
-            padding: 1.5rem;
-            line-height: 1.8;
-            color: #444;
-        }
-
-        .fortune-score {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 15px;
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-
-        .fortune-score .icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .fortune-score .label {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .lucky-dates {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .lucky-date-card {
-            background: white;
-            border: 2px solid #f5576c;
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .lucky-date-card .date {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #f5576c;
-            margin-bottom: 0.3rem;
-        }
-
-        .lucky-date-card .day {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .blur-section {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .blur-content {
-            filter: blur(8px);
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .unlock-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .unlock-overlay i {
-            font-size: 3rem;
-            color: #f5576c;
-            margin-bottom: 1rem;
-        }
-
-        .unlock-overlay h3 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .unlock-overlay p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .premium-features {
-            background: #fff8f9;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .premium-features h3 {
-            font-size: 1.3rem;
-            color: #f5576c;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .feature-item i {
-            color: #f5576c;
-            font-size: 1.2rem;
-        }
-
-        .feature-item span {
-            font-size: 0.95rem;
-            color: #333;
-        }
-
-        .price-section {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .original-price {
-            font-size: 1rem;
-            color: #999;
-            text-decoration: line-through;
-            margin-bottom: 0.3rem;
-        }
-
-        .current-price {
-            font-size: 2rem;
             font-weight: 700;
-            color: #f5576c;
         }
 
-        .current-price .won {
-            font-size: 1.2rem;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .cta-button {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
+        .form-group label {
+            display: block;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
-        }
-
-        .cta-button i {
+        .form-group label i {
+            color: #f0932b;
             margin-right: 0.5rem;
         }
 
-        .guarantee-badge {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #666;
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
-        .guarantee-badge i {
-            color: #f59e0b;
-            margin-right: 0.3rem;
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f0932b;
+            box-shadow: 0 0 0 3px rgba(240, 147, 43, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .btn-premium {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f9ca24 0%, #f0932b 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(240, 147, 43, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(240, 147, 43, 0.4);
+        }
+
+        .btn-premium i {
+            margin-right: 0.5rem;
+        }
+
+        /* 특징 섹션 */
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: #f0932b;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6cc 100%);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #f0932b;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 푸터 */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem 0.5rem;
+            .hero h1 {
+                font-size: 2rem;
             }
 
-            .container {
-                padding: 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .user-info-grid {
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .lucky-dates {
+            .feature-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .unlock-overlay {
-                width: 95%;
-                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 헤더 -->
-        <div class="header">
-            <h1>💼 개업 택일 무료 미리보기</h1>
-            <p class="subtitle">AI가 분석한 기본 결과를 확인하세요</p>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-yin-yang"></i> AI 사주 천년지기
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">홈</a></li>
+                <li><a href="pricing.html">가격표</a></li>
+                <li><a href="ai-chat.html">AI 상담</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <!-- 사용자 정보 -->
-        <div class="user-info">
-            <div class="user-info-grid">
-                <div class="user-info-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <label>생년월일:</label>
-                    <span id="birthDate">-</span>
-                </div>
-                <div class="user-info-item">
-                    <i class="fas fa-venus-mars"></i>
-                    <label>성별:</label>
-                    <span id="gender">-</span>
-                </div>
-                <div class="user-info-item">
-                    <i class="fas fa-briefcase"></i>
-                    <label>업종:</label>
-                    <span id="businessType">-</span>
-                </div>
-                <div class="user-info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <label>위치:</label>
-                    <span id="location">-</span>
-                </div>
-                <div class="user-info-item">
-                    <i class="fas fa-clock"></i>
-                    <label>희망 시기:</label>
-                    <span id="targetMonth">-</span>
-                </div>
-                <div class="user-info-item">
-                    <i class="fas fa-store"></i>
-                    <label>유형:</label>
-                    <span id="placeType">-</span>
-                </div>
-            </div>
+    <!-- 히어로 -->
+    <section class="hero">
+        <div class="container">
+            <h1>💼 개업 택일</h1>
+            <p class="subtitle">사업 번창을 위한 최고의 개업 날짜를 찾아드립니다</p>
+            <span class="premium-badge">⭐ PREMIUM 분석 ₩14,900 ⭐</span>
         </div>
+    </section>
 
-        <!-- 무료 결과: 일간 및 사업운 -->
-        <div class="result-section">
-            <h2 class="result-title">
-                <i class="fas fa-star"></i>
-                당신의 일간(日干) 및 사업운
-            </h2>
-            <div class="result-content">
-                <p style="font-size: 1.2rem; font-weight: 600; color: #f5576c; margin-bottom: 1rem;">
-                    일간: <span id="dayMaster">-</span>
-                </p>
-                <p id="dayMasterDesc">
-                    일간은 사주에서 나를 나타내는 가장 중요한 요소입니다. 
-                    개업 날짜 선택 시 일간과 조화를 이루는 날을 선택하는 것이 중요합니다.
-                </p>
-            </div>
-        </div>
-
-        <!-- 무료 결과: 사업 운세 -->
-        <div class="result-section">
-            <h2 class="result-title">
-                <i class="fas fa-chart-line"></i>
-                2026년 사업 운세
-            </h2>
-            <div class="fortune-score">
-                <div class="icon">🚀</div>
-                <div class="label" id="fortuneLabel">좋은 사업운입니다!</div>
-            </div>
-            <div class="result-content">
-                <p id="fortuneDesc">
-                    2026년은 새로운 시작에 좋은 해입니다. 특히 당신의 일간과 
-                    2026년의 기운이 조화를 이루어 사업 확장에 유리합니다.
-                </p>
-            </div>
-        </div>
-
-        <!-- 무료 결과: 추천 개업 날짜 TOP 3 -->
-        <div class="result-section">
-            <h2 class="result-title">
-                <i class="fas fa-calendar-check"></i>
-                추천 개업 날짜 TOP 3
-            </h2>
-            <div class="lucky-dates" id="luckyDates">
-                <!-- JavaScript로 채워질 예정 -->
-            </div>
-        </div>
-
-        <!-- 프리미엄 기능 블러 처리 -->
-        <div class="blur-section">
-            <div class="blur-content">
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-chart-line"></i>
-                        세부 날짜별 운세 분석 (TOP 20)
-                    </h2>
-                    <div class="result-content">
-                        <p>2026년 5월 8일 (금): ★★★★★ 대길</p>
-                        <p>이날은 당신의 일간과 가장 조화를 이루는 날입니다. 재물운이 최고조...</p>
-                        <p style="margin-top: 1rem;">2026년 5월 15일 (금): ★★★★☆ 길</p>
-                        <p>고객이 많이 찾아오는 날로, 개업 첫날에 좋습니다...</p>
-                    </div>
+    <!-- 입력 폼 -->
+    <section class="input-section">
+        <h2 class="section-title">
+            <i class="fas fa-store"></i> 개업 정보 입력
+        </h2>
+        <form id="openingForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> 사업자 생년월일</label>
+                    <input type="date" id="birthDate" required>
                 </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        피해야 할 날짜
-                    </h2>
-                    <div class="result-content">
-                        <p>2026년 5월 3일, 11일, 23일은 당신의 사주와 충돌...</p>
-                    </div>
-                </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-compass"></i>
-                        위치별 맞춤 조언
-                    </h2>
-                    <div class="result-content">
-                        <p>당신이 선택한 위치에 맞춘 구체적인 풍수 조언...</p>
-                    </div>
-                </div>
-
-                <div class="result-section">
-                    <h2 class="result-title">
-                        <i class="fas fa-lightbulb"></i>
-                        업종별 성공 전략
-                    </h2>
-                    <div class="result-content">
-                        <p>당신의 업종에 특화된 사업 성공 전략...</p>
-                    </div>
+                <div class="form-group">
+                    <label><i class="fas fa-venus-mars"></i> 성별</label>
+                    <select id="gender" required>
+                        <option value="">선택하세요</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- 잠금 오버레이 -->
-            <div class="unlock-overlay">
-                <i class="fas fa-lock"></i>
-                <h3>더 자세한 분석이 필요하신가요?</h3>
-                <p>프리미엄으로 업그레이드하고<br>상세한 개업 택일 분석을 확인하세요!</p>
-            </div>
-        </div>
-
-        <!-- 프리미엄 기능 안내 -->
-        <div class="premium-features">
-            <h3>💎 프리미엄 업그레이드 시 제공되는 기능</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>TOP 20 추천 날짜</span>
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-briefcase"></i> 업종</label>
+                    <select id="businessType" required>
+                        <option value="">선택하세요</option>
+                        <option value="food">음식점/카페</option>
+                        <option value="retail">소매점/쇼핑몰</option>
+                        <option value="service">서비스업</option>
+                        <option value="beauty">미용/뷰티</option>
+                        <option value="education">교육/학원</option>
+                        <option value="medical">의료/병원</option>
+                        <option value="construction">건설/부동산</option>
+                        <option value="it">IT/기술</option>
+                        <option value="finance">금융/보험</option>
+                        <option value="other">기타</option>
+                    </select>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-ban"></i>
-                    <span>피해야 할 날짜</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-compass"></i>
-                    <span>위치별 풍수 조언</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-clock"></i>
-                    <span>시간대별 길흉 분석</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-briefcase"></i>
-                    <span>업종별 성공 전략</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>5년 사업 운세</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>PDF 다운로드</span>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-headset"></i>
-                    <span>전문가 1:1 상담</span>
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> 사업장 위치 (시/도)</label>
+                    <select id="location" required>
+                        <option value="">선택하세요</option>
+                        <option value="seoul">서울</option>
+                        <option value="gyeonggi">경기</option>
+                        <option value="incheon">인천</option>
+                        <option value="busan">부산</option>
+                        <option value="daegu">대구</option>
+                        <option value="daejeon">대전</option>
+                        <option value="gwangju">광주</option>
+                        <option value="ulsan">울산</option>
+                        <option value="sejong">세종</option>
+                        <option value="other">기타 지역</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- 가격 정보 -->
-            <div class="price-section">
-                <div class="original-price">정가 29,900원</div>
-                <div class="current-price">
-                    <span class="won">₩</span>14,900
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> 희망 개업 시기</label>
+                    <input type="month" id="targetMonth" placeholder="2026-03" min="2026-01" max="2027-12" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> 사업장 유형</label>
+                    <select id="placeType">
+                        <option value="ground">1층/지상</option>
+                        <option value="basement">지하</option>
+                        <option value="upper">2층 이상</option>
+                        <option value="online">온라인 전용</option>
+                    </select>
                 </div>
             </div>
-
-            <!-- CTA 버튼 -->
-            <button class="cta-button" onclick="goToPremium()">
+            <button type="submit" class="btn-premium">
                 <i class="fas fa-crown"></i>
-                프리미엄으로 전체 결과 보기
+                프리미엄 개업 길일 분석하기 (₩14,900)
             </button>
+        </form>
+    </section>
 
-            <!-- 보증 배지 -->
-            <div class="guarantee-badge">
-                <i class="fas fa-shield-alt"></i>
-                결과가 만족스럽지 않으면 100% 환불 보장
+    <!-- 특징 -->
+    <section class="features">
+        <h2>💎 프리미엄 개업 택일의 특별함</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <div class="feature-title">사업운 종합 분석</div>
+                <div class="feature-desc">사주 기반 사업 적성과 재물운을 종합 분석합니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <div class="feature-title">최고 길일 TOP 3</div>
+                <div class="feature-desc">2026년 최적의 개업 날짜 3개를 정확히 추천드립니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <div class="feature-title">개업 시간 분석</div>
+                <div class="feature-desc">길일의 최적 개업 시간까지 상세 안내합니다</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧭</div>
+                <div class="feature-title">업종별 맞춤 분석</div>
+                <div class="feature-desc">업종 특성을 고려한 전문적인 택일 분석을 제공합니다</div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <p>&copy; 2026 AI 사주 천년지기. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">📞 0502-1909-7788 | 📧 aisaju1000@gmail.com</p>
+    </footer>
 
     <script>
-        // URL 파라미터에서 정보 읽기
-        const urlParams = new URLSearchParams(window.location.search);
-        const birthDate = urlParams.get('birthDate');
-        const gender = urlParams.get('gender');
-        const businessType = urlParams.get('businessType');
-        const location = urlParams.get('location');
-        const targetMonth = urlParams.get('targetMonth');
-        const placeType = urlParams.get('placeType');
-        const dayMaster = urlParams.get('dayMaster');
+        document.getElementById('openingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const birthDate = document.getElementById('birthDate').value;
+            const gender = document.getElementById('gender').value;
+            const businessType = document.getElementById('businessType').value;
+            const location = document.getElementById('location').value;
+            const targetMonth = document.getElementById('targetMonth').value;
+            const placeType = document.getElementById('placeType').value;
 
-        // 페이지에 정보 표시
-        if (birthDate) document.getElementById('birthDate').textContent = birthDate;
-        if (gender) document.getElementById('gender').textContent = gender === 'male' ? '남성' : '여성';
-        if (businessType) {
-            const typeMap = {
-                'retail': '소매/유통',
-                'food': '음식점/카페',
-                'service': '서비스업',
-                'manufacturing': '제조업',
-                'it': 'IT/기술',
-                'education': '교육',
-                'healthcare': '의료/건강',
-                'finance': '금융',
-                'real-estate': '부동산',
-                'other': '기타'
-            };
-            document.getElementById('businessType').textContent = typeMap[businessType] || businessType;
-        }
-        if (location) document.getElementById('location').textContent = location;
-        if (targetMonth) {
-            const monthMap = {
-                '1': '1월', '2': '2월', '3': '3월', '4': '4월',
-                '5': '5월', '6': '6월', '7': '7월', '8': '8월',
-                '9': '9월', '10': '10월', '11': '11월', '12': '12월'
-            };
-            document.getElementById('targetMonth').textContent = monthMap[targetMonth] || targetMonth;
-        }
-        if (placeType) {
-            const placeMap = {
-                'shop': '매장',
-                'office': '사무실',
-                'factory': '공장',
-                'online': '온라인',
-                'home': '재택'
-            };
-            document.getElementById('placeType').textContent = placeMap[placeType] || placeType;
-        }
-        if (dayMaster) {
-            document.getElementById('dayMaster').textContent = dayMaster;
-            
-            // 일간별 설명
-            const dayMasterDescriptions = {
-                '갑': '갑목(甲木)은 큰 나무를 상징합니다. 사업가로서 강한 추진력과 리더십을 발휘할 수 있습니다.',
-                '을': '을목(乙木)은 꽃이나 풀을 상징합니다. 유연한 사고와 창의성으로 사업을 이끌어갈 수 있습니다.',
-                '병': '병화(丙火)는 태양을 상징합니다. 열정과 적극성으로 사업을 빠르게 성장시킬 수 있습니다.',
-                '정': '정화(丁火)는 촛불을 상징합니다. 섬세한 서비스와 고객 관리로 성공할 수 있습니다.',
-                '무': '무토(戊土)는 산을 상징합니다. 안정적이고 믿음직한 사업 운영이 강점입니다.',
-                '기': '기토(己土)는 밭을 상징합니다. 실용적이고 현실적인 사업 전략이 강점입니다.',
-                '경': '경금(庚金)은 쇠붙이를 상징합니다. 결단력과 추진력으로 사업을 성공시킬 수 있습니다.',
-                '신': '신금(辛金)은 보석을 상징합니다. 섬세한 품질 관리와 차별화 전략이 강점입니다.',
-                '임': '임수(壬水)는 큰 강이나 바다를 상징합니다. 넓은 시야로 사업을 확장할 수 있습니다.',
-                '계': '계수(癸水)는 빗물이나 이슬을 상징합니다. 부드러운 소통과 네트워킹이 강점입니다.'
-            };
-            
-            if (dayMasterDescriptions[dayMaster]) {
-                document.getElementById('dayMasterDesc').textContent = dayMasterDescriptions[dayMaster];
+            if (!birthDate || !gender || !businessType || !location || !targetMonth) {
+                alert('모든 필수 항목을 입력해주세요.');
+                return;
             }
+
+            // localStorage에 데이터 저장
+            const taekilData = {
+                service: 'taekil-opening',
+                birthDate: birthDate,
+                gender: gender,
+                businessType: businessType,
+                location: location,
+                targetMonth: targetMonth,
+                placeType: placeType,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('taekilData', JSON.stringify(taekilData));
+            console.log('✅ 개업 택일 데이터 저장:', taekilData);
+
+            // 결제 페이지로 이동
+            window.location.href = `payment.html?service=taekil-opening&price=14900&name=개업 택일`;
+        });
+
+        // 일간 계산 (10천간)
+        function calculateDayMaster(date) {
+            const dayMasters = ['갑','을','병','정','무','기','경','신','임','계'];
+            const baseDate = new Date('1900-01-01');
+            const diffDays = Math.floor((date - baseDate) / (1000 * 60 * 60 * 24));
+            return dayMasters[diffDays % 10];
         }
 
-        // 추천 날짜 3개 생성 (샘플)
-        function generateLuckyDates() {
-            const dates = [
-                { date: '2026년 5월 8일', day: '금요일' },
-                { date: '2026년 5월 15일', day: '금요일' },
-                { date: '2026년 5월 22일', day: '금요일' }
-            ];
+        // 전역 에러 처리
+        window.addEventListener('error', function(e) {
+            if (!e.message.includes('aisaju1000.com')) {
+                e.preventDefault();
+            }
+        });
 
-            const container = document.getElementById('luckyDates');
-            dates.forEach(dateInfo => {
-                const card = document.createElement('div');
-                card.className = 'lucky-date-card';
-                card.innerHTML = `
-                    <div class="date">${dateInfo.date}</div>
-                    <div class="day">${dateInfo.day}</div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // 프리미엄 페이지로 이동
-        function goToPremium() {
-            const params = new URLSearchParams({
-                birthDate: birthDate || '',
-                gender: gender || '',
-                businessType: businessType || '',
-                location: location || '',
-                targetMonth: targetMonth || '',
-                placeType: placeType || '',
-                dayMaster: dayMaster || '',
-                eventType: 'opening'
-            });
-            window.location.href = `/taekil-result-premium.html?${params.toString()}`;
-        }
-
-        // 페이지 로드 시 실행
-        generateLuckyDates();
-        
-        console.log('개업 택일 무료 결과 페이지 로드 완료');
+        console.log('개업 택일 페이지 로드 완료');
     </script>
 </body>
 </html>
