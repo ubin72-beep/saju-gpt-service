@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>가격표 - AI 사주 천년지기</title>
-    <meta name="description" content="AI 사주 천년지기의 모든 서비스 가격을 확인하세요. 무료부터 프리미엄까지!">
+    <meta name="description" content="AI 사주 천년지기의 모든 서비스 가격을 확인하세요.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 네비게이션 로더 -->
+    <script src="js/navbar-loader.js" defer></script>
+    
     <style>
         * {
             margin: 0;
@@ -16,260 +20,403 @@
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #c41e3a 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding-bottom: 3rem;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
         
         .header {
             text-align: center;
             color: white;
-            padding: 40px 20px;
+            padding: 4rem 2rem 3rem;
         }
         
         .header h1 {
             font-size: 3rem;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            opacity: 0.95;
         }
         
-        .pricing-grid {
+        /* 서비스 그리드 */
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
         }
         
-        .pricing-card {
+        .service-card {
             background: white;
             border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s;
             position: relative;
+            overflow: hidden;
         }
         
-        .pricing-card:hover {
+        .service-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
-        .pricing-card.best {
-            border: 4px solid #FFD700;
-            transform: scale(1.05);
+        .service-card.popular {
+            border: 3px solid #FFD700;
         }
         
-        .best-badge {
+        .popular-badge {
             position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #FFD700;
+            top: 15px;
+            right: -35px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
             color: #1a1a1a;
-            padding: 8px 24px;
-            border-radius: 25px;
-            font-weight: 900;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
         }
         
-        .plan-name {
+        .service-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 20px;
             text-align: center;
-            color: #1a1a1a;
-        }
-        
-        .plan-price {
-            font-size: 3rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .plan-price.free {
-            color: #27ae60;
-        }
-        
-        .plan-price.monthly {
-            color: #e74c3c;
-        }
-        
-        .plan-price span {
-            font-size: 1.2rem;
-            font-weight: 400;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 0.8rem;
             color: #333;
-            font-size: 1rem;
         }
         
-        .plan-features li i {
-            color: #27ae60;
+        .service-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .service-price {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #c41e3a;
+        }
+        
+        .price-original {
+            text-decoration: line-through;
+            color: #999;
             font-size: 1.2rem;
+            margin-left: 0.5rem;
         }
         
-        .plan-btn {
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .service-features li {
+            padding: 0.6rem 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        .service-features li i {
+            color: #4CAF50;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-select {
             width: 100%;
-            padding: 18px;
+            padding: 1rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
         
-        .plan-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        .btn-select:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
         
-        .plan-btn.free {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
-        }
-        
-        .plan-btn.free:hover {
-            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.6);
-        }
-        
-        .discount {
-            background: #ff4444;
+        /* 카테고리 제목 */
+        .category-title {
             color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            display: inline-block;
-            font-size: 0.85rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-top: 10px;
+            margin: 3rem 0 1.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
-        .original-price {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1.5rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
+        /* 반응형 */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
             }
             
-            .pricing-grid {
+            .services-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .pricing-card.best {
-                transform: scale(1);
+                gap: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 네비게이션 바 -->
+    <div id="navbar-placeholder"></div>
+
     <div class="container">
         <div class="header">
             <h1>💎 가격표</h1>
             <p>합리적인 가격으로 만나는 정통 운세 서비스</p>
         </div>
-        
-        <div class="pricing-grid">
-            <!-- 무료 체험 -->
-            <div class="pricing-card">
-                <div class="plan-name">무료 체험</div>
-                <div class="plan-price free">₩0<span>/평생</span></div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check-circle"></i> 기본 사주 확인</li>
-                    <li><i class="fas fa-check-circle"></i> AI 상담 3회/일</li>
-                </ul>
-                <button class="plan-btn free" onclick="location.href='index.html'">무료 시작하기</button>
-            </div>
-            
-            <!-- 월간 프리미엄 (BEST) -->
-            <div class="pricing-card best">
-                <div class="best-badge">BEST</div>
-                <div class="plan-name">월간 프리미엄</div>
-                <div class="plan-price monthly">₩19,900<span>/월</span></div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check-circle"></i> 무료 플랜 모든 기능</li>
-                    <li><i class="fas fa-check-circle"></i> AI 상담 무제한</li>
-                </ul>
-                <button class="plan-btn" onclick="goToPayment('월간 프리미엄', 19900, '무료 플랜 모든 기능 + AI 상담 무제한', 'monthly_premium')">선택하기</button>
-            </div>
-            
-            <!-- 연간 프리미엄 -->
-            <div class="pricing-card">
-                <div class="plan-name">연간 프리미엄</div>
-                <div class="plan-price monthly">
-                    <span class="original-price">₩239,000</span>
-                    ₩199,000<span>/년</span>
-                    <div class="discount">월 ₩16,583 (16% 할인!)</div>
+
+        <!-- 기본 궁합 서비스 (₩3,900) -->
+        <h2 class="category-title">💕 궁합 분석</h2>
+        <div class="services-grid">
+            <div class="service-card popular">
+                <div class="popular-badge">BEST</div>
+                <div class="service-icon">💑</div>
+                <div class="service-title">연애·결혼 궁합</div>
+                <div class="service-description">두 사람의 연애 · 결혼 궁합을 종합 분석</div>
+                <div class="service-price">
+                    <span class="price-amount">₩3,900</span>
+                    <span class="price-original">₩9,900</span>
                 </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check-circle"></i> 월간 플랜 모든 기능</li>
-                    <li><i class="fas fa-check-circle"></i> 전문가 우선 지원</li>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 연애 스타일 & 갈등 포인트 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 결혼 생활 & 자녀 궁합 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 사업 파트너십 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 월별 궁합 운세 & 조언</li>
                 </ul>
-                <button class="plan-btn" onclick="goToPayment('연간 프리미엄', 199000, '월간 플랜 모든 기능 + 전문가 우선 지원 + 16% 할인', 'yearly_premium')">선택하기</button>
+                <button class="btn-select" onclick="selectService('compatibility', 3900, '연애·결혼 궁합')">
+                    선택하기
+                </button>
             </div>
         </div>
-        
-        <div style="text-align: center;">
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> 메인으로 돌아가기
-            </a>
+
+        <!-- 맞춤 연애운 (₩7,900) -->
+        <h2 class="category-title">💕 연애운</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💘</div>
+                <div class="service-title">맞춤 연애운</div>
+                <div class="service-description">2026년 나의 연애운 12개월 상세 분석</div>
+                <div class="service-price">
+                    <span class="price-amount">₩7,900</span>
+                    <span class="price-original">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 월별 연애운 상세 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 행운의 날 & 주의할 날</li>
+                    <li><i class="fas fa-check-circle"></i> 이상형 & 만남의 장소</li>
+                    <li><i class="fas fa-check-circle"></i> 데이트 성공 팁</li>
+                </ul>
+                <button class="btn-select" onclick="selectService('love-fortune', 7900, '맞춤 연애운')">
+                    선택하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 당사주 & 재물운 & 토정비결 (₩9,900) -->
+        <h2 class="category-title">🌟 종합 운세</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <div class="service-title">당사주 평생운</div>
+                <div class="service-description">평생의 운세를 세 시기로 나누어 분석</div>
+                <div class="service-price">
+                    <span class="price-amount">₩9,900</span>
+                    <span class="price-original">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 청년기 (0-30세) 운세</li>
+                    <li><i class="fas fa-check-circle"></i> 중년기 (30-60세) 운세</li>
+                    <li><i class="fas fa-check-circle"></i> 노년기 (60세 이후) 운세</li>
+                    <li><i class="fas fa-check-circle"></i> 인생 전환기 조언</li>
+                </ul>
+                <button class="btn-select" onclick="selectService('dangsaju', 9900, '당사주 평생운')">
+                    선택하기
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <div class="service-title">재물운 분석</div>
+                <div class="service-description">평생 재물운 그래프와 재테크 전략</div>
+                <div class="service-price">
+                    <span class="price-amount">₩9,900</span>
+                    <span class="price-original">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 평생 재물운 차트 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 연령대별 재테크 전략</li>
+                    <li><i class="fas fa-check-circle"></i> 투자 적기 & 주의 시기</li>
+                    <li><i class="fas fa-check-circle"></i> 맞춤 재테크 조언</li>
+                </ul>
+                <button class="btn-select" onclick="selectService('wealth-forecast', 9900, '재물운 분석')">
+                    선택하기
+                </button>
+            </div>
+
+            <div class="service-card popular">
+                <div class="popular-badge">인기</div>
+                <div class="service-icon">📅</div>
+                <div class="service-title">토정비결 2026년</div>
+                <div class="service-description">2026년 월별 상세 운세 & 길흉일</div>
+                <div class="service-price">
+                    <span class="price-amount">₩9,900</span>
+                    <span class="price-original">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 월별 상세 운세 12개월</li>
+                    <li><i class="fas fa-check-circle"></i> 길일 & 흉일 달력</li>
+                    <li><i class="fas fa-check-circle"></i> 월별 주의사항</li>
+                    <li><i class="fas fa-check-circle"></i> 종합 조언</li>
+                </ul>
+                <button class="btn-select" onclick="selectService('tojeong-premium', 9900, '토정비결 2026년')">
+                    선택하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 택일 서비스 (₩14,900) -->
+        <h2 class="category-title">📅 택일 서비스</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🏠</div>
+                <div class="service-title">이사 택일</div>
+                <div class="service-description">새로운 출발을 위한 최적의 이사 날짜</div>
+                <div class="service-price">
+                    <span class="price-amount">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 최고 길일 TOP 3 추천</li>
+                    <li><i class="fas fa-check-circle"></i> 방향별 길흉 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 시간대별 운세</li>
+                    <li><i class="fas fa-check-circle"></i> 피해야 할 날짜</li>
+                </ul>
+                <button class="btn-select" onclick="location.href='taekil-moving.html'">
+                    선택하기
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💍</div>
+                <div class="service-title">결혼 택일</div>
+                <div class="service-description">평생의 약속을 위한 완벽한 결혼 날짜</div>
+                <div class="service-price">
+                    <span class="price-amount">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 두 사람 궁합 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 최고 길일 TOP 3</li>
+                    <li><i class="fas fa-check-circle"></i> 예식 시간 추천</li>
+                    <li><i class="fas fa-check-circle"></i> 피해야 할 흉일</li>
+                </ul>
+                <button class="btn-select" onclick="location.href='taekil-wedding.html'">
+                    선택하기
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🏪</div>
+                <div class="service-title">개업 택일</div>
+                <div class="service-description">사업 번창을 위한 최고의 개업 날짜</div>
+                <div class="service-price">
+                    <span class="price-amount">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 최고 길일 TOP 3</li>
+                    <li><i class="fas fa-check-circle"></i> 업종별 맞춤 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 개업 시간 추천</li>
+                    <li><i class="fas fa-check-circle"></i> 풍수 조언</li>
+                </ul>
+                <button class="btn-select" onclick="location.href='taekil-opening.html'">
+                    선택하기
+                </button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <div class="service-title">직업 적성 분석</div>
+                <div class="service-description">사주 기반 최적 직업 & 적성 분석</div>
+                <div class="service-price">
+                    <span class="price-amount">₩14,900</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 적성 직업 TOP 6</li>
+                    <li><i class="fas fa-check-circle"></i> 직업별 성공 가능성</li>
+                    <li><i class="fas fa-check-circle"></i> 강점 & 약점 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 커리어 조언</li>
+                </ul>
+                <button class="btn-select" onclick="location.href='career-match.html'">
+                    선택하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 작명 서비스 (₩19,000) -->
+        <h2 class="category-title">✍️ 작명 서비스</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📝</div>
+                <div class="service-title">작명 서비스 (프리미엄)</div>
+                <div class="service-description">사주 오행 기반 30개 이름 추천</div>
+                <div class="service-price">
+                    <span class="price-amount">₩19,000</span>
+                    <span class="price-original">₩29,000</span>
+                </div>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> 30개 이름 추천</li>
+                    <li><i class="fas fa-check-circle"></i> 상세 성명학 분석</li>
+                    <li><i class="fas fa-check-circle"></i> 작명 가이드북</li>
+                    <li><i class="fas fa-check-circle"></i> PDF 다운로드</li>
+                </ul>
+                <button class="btn-select" onclick="location.href='naming.html'">
+                    선택하기
+                </button>
+            </div>
         </div>
     </div>
-    
+
     <script>
-        // 결제 페이지로 이동
-        function goToPayment(serviceName, price, description, type) {
-            const params = new URLSearchParams({
-                name: serviceName,
-                price: price,
-                desc: description,
-                type: type
+        function selectService(service, price, name) {
+            // 결제 페이지로 이동
+            window.location.href = `payment.html?service=${service}&price=${price}&name=${encodeURIComponent(name)}`;
+        }
+
+        // GA 이벤트
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                'page_title': 'Pricing',
+                'page_location': window.location.href
             });
-            window.location.href = `payment.html?${params.toString()}`;
         }
     </script>
 </body>
