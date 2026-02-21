@@ -1,26 +1,41 @@
 # GitHub Pages 설정
-# Jekyll 처리 비활성화
+title: "AI 사주 천년지기"
+description: "AI 기반 사주, 운세, 궁합, 작명 서비스"
+url: "https://aisaju1000.com"
+baseurl: ""
+
+# Permalink 설정 - URL에서 .html 제거
+permalink: pretty
 
 # 모든 파일을 있는 그대로 서빙
 include:
   - _headers
   - .htaccess
   - .nojekyll
+  - CNAME
 
 # 제외할 파일들
 exclude:
   - README.md
   - .git
   - .github
+  - DOCS
+  - STRATEGY
+  - backend
+  - backend-php
+  - scripts
+  - "*.md"
 
-# Markdown 엔진 비활성화 (순수 HTML만 사용)
+# Markdown 엔진
 markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
 
-# 플러그인 없음
-plugins: []
+# SEO 플러그인
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
 # 기본 설정
 safe: true
