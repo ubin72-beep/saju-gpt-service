@@ -634,10 +634,14 @@
             try {
                 const contentData = {
                     title: title,
-                    body: body,
+                    content: body,  // ✅ body → content로 수정
                     category: document.getElementById('contentCategory')?.value || '일반',
                     tags: document.getElementById('contentTags')?.value || '',
-                    status: document.querySelector('input[name="contentStatus"]:checked')?.value || 'draft',
+                    author: '관리자',  // ✅ author 필드 추가
+                    published: document.querySelector('input[name="contentStatus"]:checked')?.value === 'published',  // ✅ status → published (boolean)
+                    featured: false,  // ✅ featured 필드 추가
+                    thumbnail: '',  // ✅ thumbnail 필드 추가
+                    summary: body.substring(0, 100) + '...',  // ✅ summary 필드 추가 (첫 100자)
                     publishedAt: new Date().toISOString(),
                     views: 0
                 };
