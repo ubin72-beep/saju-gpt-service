@@ -222,11 +222,13 @@
         // 블로그 로드
         async function loadBlogs() {
             try {
-                const response = await fetch('/tables/blogs?limit=100&sort=-publishedAt');
-                const data = await response.json();
+                const response = await fetch('/blogs-data.json');
+                const blogsArray = await response.json();
                 
                 // 공개된 블로그만 필터링
-                allBlogs = data.data.filter(blog => blog.published);
+                allBlogs = blogsArray
+                    .filter(blog => blog.published)
+                    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
                 
                 displayBlogs(allBlogs);
             } catch (error) {
