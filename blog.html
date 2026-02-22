@@ -47,6 +47,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
+            /* 깜빡임 방지: 최소 높이 설정 */
+            min-height: 600px;
         }
 
         .category-filter {
@@ -91,26 +93,24 @@
             transition: all 0.3s;
             cursor: pointer;
             position: relative;
-            /* 깜빡임 방지: 애니메이션 추가 */
-            opacity: 1;
-            animation: fadeIn 0.3s ease-in;
+            /* 깜빡임 방지: 페이드 인 애니메이션 */
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* 부드러운 페이드인 효과 */
+        /* 카드 숨김/표시 시 부드러운 전환 */
+        .blog-card.hidden {
+            display: none;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* 숨김 상태 */
-        .blog-card.hidden {
-            display: none;
         }
 
         .blog-card:hover {
@@ -200,7 +200,6 @@
             font-size: 1.2rem;
         }
 
-        /* 로딩 상태 스타일 */
         .loading {
             text-align: center;
             padding: 4rem 2rem;
@@ -239,8 +238,12 @@
             <button class="category-btn" data-category="풍수">풍수</button>
         </div>
 
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> 블로그를 불러오는 중...
+        </div>
+
         <div class="blog-grid" id="blogGrid">
-            <div class="loading">블로그를 불러오는 중...</div>
+            <!-- 동적 로드 -->
         </div>
 
         <div id="noResults" class="no-results" style="display: none;">
@@ -249,60 +252,61 @@
     </div>
 
     <script>
-        // ✅ 전역 변수로 데이터 캐싱 - 중복 로드 방지
-        let allBlogs = [];
-        let blogsLoaded = false;
+        let blogsCache = null;  // 캐시로 중복 로드 방지
+        let blogsLoaded = false;  // 로드 상태 플래그
 
-        // ✅ 블로그 로드 (한 번만 실행)
+        // 블로그 로드 (한 번만)
         async function loadBlogs() {
-            // 이미 로드했으면 스킵
-            if (blogsLoaded) {
-                console.log('✅ 블로그 이미 로드됨 - 스킵');
-                return;
+            // 이미 로드되었으면 캐시 반환
+            if (blogsLoaded && blogsCache) {
+                console.log('✅ 캐시에서 블로그 데이터 사용');
+                return blogsCache;
             }
 
             try {
-                console.log('📡 블로그 데이터 로딩 시작...');
+                console.log('🔄 블로그 데이터 로딩 중...');
                 const response = await fetch('/blogs-data.json');
                 
                 if (!response.ok) {
-                    throw new Error('블로그 데이터를 불러올 수 없습니다.');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
+                
                 const blogsArray = await response.json();
                 
                 // 공개된 블로그만 필터링 및 정렬
-                allBlogs = blogsArray
-                    .filter(blog => blog.published === true)
+                blogsCache = blogsArray
+                    .filter(blog => blog.published)
                     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
                 
                 blogsLoaded = true;
-                console.log(`✅ ${allBlogs.length}개 블로그 로드 완료`);
+                console.log(`✅ ${blogsCache.length}개 블로그 로드 완료`);
                 
-                // 처음 로드 시에만 DOM 생성
-                renderAllBlogs();
-                
+                return blogsCache;
             } catch (error) {
                 console.error('❌ 블로그 로드 실패:', error);
-                document.getElementById('blogGrid').innerHTML = '';
+                document.getElementById('loading').style.display = 'none';
                 document.getElementById('noResults').style.display = 'block';
-                document.getElementById('noResults').textContent = '블로그를 불러오는데 실패했습니다.';
+                document.getElementById('noResults').textContent = '블로그를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.';
+                return [];
             }
         }
 
-        // ✅ 모든 블로그 카드를 한 번에 렌더링 (DOM 재생성 없음)
-        function renderAllBlogs() {
+        // 전체 블로그 렌더링 (한 번만)
+        async function renderAllBlogs() {
+            const blogs = await loadBlogs();
             const grid = document.getElementById('blogGrid');
-            grid.innerHTML = ''; // 로딩 메시지 제거
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'none';
 
-            if (allBlogs.length === 0) {
+            if (blogs.length === 0) {
                 document.getElementById('noResults').style.display = 'block';
                 return;
             }
 
-            document.getElementById('noResults').style.display = 'none';
+            grid.innerHTML = '';
 
-            allBlogs.forEach(blog => {
+            blogs.forEach(blog => {
                 const card = document.createElement('div');
                 card.className = 'blog-card';
                 card.setAttribute('data-category', blog.category);
@@ -315,15 +319,17 @@
                 card.innerHTML = `
                     ${blog.featured ? '<div class="featured-badge">⭐ 추천</div>' : ''}
                     <img src="${blog.thumbnail || 'https://via.placeholder.com/350x220'}" 
-                         alt="${blog.title}" class="blog-thumbnail" onerror="this.src='https://via.placeholder.com/350x220'">
+                         alt="${blog.title}" class="blog-thumbnail" 
+                         onerror="this.src='https://via.placeholder.com/350x220?text=No+Image'"
+                         loading="lazy">
                     <div class="blog-content">
                         <span class="blog-category">${blog.category}</span>
                         <h2 class="blog-title">${blog.title}</h2>
                         <p class="blog-summary">${blog.summary}</p>
                         ${tagsHTML}
                         <div class="blog-meta">
-                            <span><i class="far fa-calendar"></i> ${new Date(blog.publishedAt).toLocaleDateString()}</span>
-                            <span><i class="far fa-eye"></i> ${blog.views || 0}회</span>
+                            <span><i class="far fa-calendar"></i> ${new Date(blog.publishedAt).toLocaleDateString('ko-KR')}</span>
+                            <span><i class="far fa-eye"></i> ${(blog.views || 0).toLocaleString()}회</span>
                         </div>
                     </div>
                 `;
@@ -331,17 +337,18 @@
                 grid.appendChild(card);
             });
 
-            console.log(`✅ ${allBlogs.length}개 블로그 카드 렌더링 완료`);
+            console.log(`✅ ${blogs.length}개 블로그 카드 렌더링 완료`);
         }
 
-        // ✅ 카테고리 필터 (DOM 재생성 없이 show/hide만)
+        // 카테고리 필터 (DOM 재렌더링 없이 show/hide만)
         function filterByCategory(category) {
             console.log(`🔍 카테고리 필터: ${category}`);
             
-            const allCards = document.querySelectorAll('.blog-card');
+            const cards = document.querySelectorAll('.blog-card');
+            const noResults = document.getElementById('noResults');
             let visibleCount = 0;
 
-            allCards.forEach(card => {
+            cards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 
                 if (category === 'all' || cardCategory === category) {
@@ -354,11 +361,10 @@
                 }
             });
 
-            // 결과 없음 메시지 처리
-            const noResults = document.getElementById('noResults');
+            // 결과 없음 메시지
             if (visibleCount === 0) {
                 noResults.style.display = 'block';
-                noResults.textContent = `'${category}' 카테고리의 블로그가 없습니다.`;
+                noResults.textContent = `"${category}" 카테고리의 블로그가 없습니다.`;
             } else {
                 noResults.style.display = 'none';
             }
@@ -366,19 +372,18 @@
             console.log(`✅ ${visibleCount}개 블로그 표시`);
         }
 
-        // ✅ 카테고리 버튼 이벤트 리스너 설정
+        // 카테고리 버튼 이벤트 설정
         function setupCategoryButtons() {
             const buttons = document.querySelectorAll('.category-btn');
             
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
-                    
-                    // 활성화 상태 변경
+                    // 활성 버튼 스타일 변경
                     buttons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // 필터 적용 (DOM 재생성 없음!)
+                    // 필터링
+                    const category = this.getAttribute('data-category');
                     filterByCategory(category);
                 });
             });
@@ -386,17 +391,17 @@
             console.log('✅ 카테고리 버튼 이벤트 설정 완료');
         }
 
-        // ✅ 페이지 로드 시 초기화 (단 한 번만 실행)
+        // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', async function() {
             console.log('🚀 페이지 로드 시작');
             
-            // 1. 블로그 데이터 로드 (한 번만)
-            await loadBlogs();
-            
-            // 2. 카테고리 버튼 이벤트 설정
+            // 1. 카테고리 버튼 이벤트 설정
             setupCategoryButtons();
             
-            console.log('✅ 초기화 완료 - 깜빡임 없음!');
+            // 2. 모든 블로그 렌더링 (한 번만)
+            await renderAllBlogs();
+            
+            console.log('✅ 페이지 로드 완료');
         });
     </script>
 </body>
