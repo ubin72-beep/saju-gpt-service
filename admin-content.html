@@ -633,15 +633,16 @@
             
             try {
                 const contentData = {
+                    id: 'blog-' + Date.now(),  // ✅ ID 수동 생성 추가!
                     title: title,
-                    content: body,  // ✅ body → content로 수정
+                    content: body,
                     category: document.getElementById('contentCategory')?.value || '일반',
                     tags: document.getElementById('contentTags')?.value || '',
-                    author: '관리자',  // ✅ author 필드 추가
-                    published: document.querySelector('input[name="contentStatus"]:checked')?.value === 'published',  // ✅ status → published (boolean)
-                    featured: false,  // ✅ featured 필드 추가
-                    thumbnail: '',  // ✅ thumbnail 필드 추가
-                    summary: body.substring(0, 100) + '...',  // ✅ summary 필드 추가 (첫 100자)
+                    author: '관리자',
+                    published: document.querySelector('input[name="contentStatus"]:checked')?.value === 'published',
+                    featured: false,
+                    thumbnail: '',
+                    summary: body.substring(0, 100) + '...',
                     publishedAt: new Date().toISOString(),
                     views: 0
                 };
