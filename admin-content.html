@@ -617,18 +617,57 @@
         }
 
         // 콘텐츠 저장
-        function saveContent() {
+        async function saveContent() {
+            console.log('💾 저장 버튼 클릭됨!');
+            
             const title = document.getElementById('contentTitle').value;
             const body = document.getElementById('contentBody').value;
+            
+            console.log('📝 제목:', title);
+            console.log('📝 내용:', body);
             
             if (!title || !body) {
                 alert('제목과 내용을 입력해주세요.');
                 return;
             }
             
-            alert('콘텐츠가 저장되었습니다!');
-            closeContentModal();
-            // 실제로는 API 호출
+            try {
+                const contentData = {
+                    title: title,
+                    body: body,
+                    category: document.getElementById('contentCategory')?.value || '일반',
+                    tags: document.getElementById('contentTags')?.value || '',
+                    status: document.querySelector('input[name="contentStatus"]:checked')?.value || 'draft',
+                    publishedAt: new Date().toISOString(),
+                    views: 0
+                };
+                
+                console.log('📤 저장 데이터:', contentData);
+                
+                const response = await fetch('/tables/blogs', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(contentData)
+                });
+                
+                console.log('📡 응답 상태:', response.status);
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ 저장 성공:', result);
+                    alert('콘텐츠가 저장되었습니다!');
+                    closeContentModal();
+                    // 목록 새로고침
+                    location.reload();
+                } else {
+                    const error = await response.text();
+                    console.error('❌ 저장 실패:', error);
+                    alert('저장에 실패했습니다: ' + response.status);
+                }
+            } catch (error) {
+                console.error('❌ 오류 발생:', error);
+                alert('저장 중 오류가 발생했습니다: ' + error.message);
+            }
         }
 
         // 콘텐츠 미리보기
