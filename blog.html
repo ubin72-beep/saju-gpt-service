@@ -28,6 +28,9 @@
             color: white;
             padding: 4rem 2rem;
             text-align: center;
+            /* 깜빡임 방지: 고정 높이 설정 */
+            min-height: 200px;
+            position: relative;
         }
 
         .hero h1 {
@@ -76,6 +79,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
+            /* 깜빡임 방지: 최소 높이 설정 */
+            min-height: 400px;
         }
 
         .blog-card {
@@ -86,6 +91,26 @@
             transition: all 0.3s;
             cursor: pointer;
             position: relative;
+            /* 깜빡임 방지: 애니메이션 추가 */
+            opacity: 1;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* 부드러운 페이드인 효과 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 숨김 상태 */
+        .blog-card.hidden {
+            display: none;
         }
 
         .blog-card:hover {
@@ -175,6 +200,14 @@
             font-size: 1.2rem;
         }
 
+        /* 로딩 상태 스타일 */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -197,63 +230,82 @@
 
     <div class="container">
         <div class="category-filter">
-            <button class="category-btn active" onclick="filterCategory('all', event)">전체</button>
-            <button class="category-btn" onclick="filterCategory('사주', event)">사주</button>
-            <button class="category-btn" onclick="filterCategory('운세', event)">운세</button>
-            <button class="category-btn" onclick="filterCategory('궁합', event)">궁합</button>
-            <button class="category-btn" onclick="filterCategory('택일', event)">택일</button>
-            <button class="category-btn" onclick="filterCategory('작명', event)">작명</button>
-            <button class="category-btn" onclick="filterCategory('풍수', event)">풍수</button>
+            <button class="category-btn active" data-category="all">전체</button>
+            <button class="category-btn" data-category="사주">사주</button>
+            <button class="category-btn" data-category="운세">운세</button>
+            <button class="category-btn" data-category="궁합">궁합</button>
+            <button class="category-btn" data-category="택일">택일</button>
+            <button class="category-btn" data-category="작명">작명</button>
+            <button class="category-btn" data-category="풍수">풍수</button>
         </div>
 
         <div class="blog-grid" id="blogGrid">
-            <!-- 동적 로드 -->
+            <div class="loading">블로그를 불러오는 중...</div>
         </div>
 
         <div id="noResults" class="no-results" style="display: none;">
-            블로그가 없습니다.
+            해당 카테고리의 블로그가 없습니다.
         </div>
     </div>
 
     <script>
+        // ✅ 전역 변수로 데이터 캐싱 - 중복 로드 방지
         let allBlogs = [];
-        let currentCategory = 'all';
+        let blogsLoaded = false;
 
-        // 블로그 로드
+        // ✅ 블로그 로드 (한 번만 실행)
         async function loadBlogs() {
-            try {
-                const response = await fetch('/blogs-data.json');
-                const blogsArray = await response.json();
-                
-                // 공개된 블로그만 필터링
-                allBlogs = blogsArray
-                    .filter(blog => blog.published)
-                    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-                
-                displayBlogs(allBlogs);
-            } catch (error) {
-                console.error('블로그 로드 실패:', error);
-                document.getElementById('noResults').style.display = 'block';
-            }
-        }
-
-        // 블로그 표시
-        function displayBlogs(blogs) {
-            const grid = document.getElementById('blogGrid');
-            const noResults = document.getElementById('noResults');
-
-            if (blogs.length === 0) {
-                grid.innerHTML = '';
-                noResults.style.display = 'block';
+            // 이미 로드했으면 스킵
+            if (blogsLoaded) {
+                console.log('✅ 블로그 이미 로드됨 - 스킵');
                 return;
             }
 
-            noResults.style.display = 'none';
-            grid.innerHTML = '';
+            try {
+                console.log('📡 블로그 데이터 로딩 시작...');
+                const response = await fetch('/blogs-data.json');
+                
+                if (!response.ok) {
+                    throw new Error('블로그 데이터를 불러올 수 없습니다.');
+                }
 
-            blogs.forEach(blog => {
+                const blogsArray = await response.json();
+                
+                // 공개된 블로그만 필터링 및 정렬
+                allBlogs = blogsArray
+                    .filter(blog => blog.published === true)
+                    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+                
+                blogsLoaded = true;
+                console.log(`✅ ${allBlogs.length}개 블로그 로드 완료`);
+                
+                // 처음 로드 시에만 DOM 생성
+                renderAllBlogs();
+                
+            } catch (error) {
+                console.error('❌ 블로그 로드 실패:', error);
+                document.getElementById('blogGrid').innerHTML = '';
+                document.getElementById('noResults').style.display = 'block';
+                document.getElementById('noResults').textContent = '블로그를 불러오는데 실패했습니다.';
+            }
+        }
+
+        // ✅ 모든 블로그 카드를 한 번에 렌더링 (DOM 재생성 없음)
+        function renderAllBlogs() {
+            const grid = document.getElementById('blogGrid');
+            grid.innerHTML = ''; // 로딩 메시지 제거
+
+            if (allBlogs.length === 0) {
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('noResults').style.display = 'none';
+
+            allBlogs.forEach(blog => {
                 const card = document.createElement('div');
                 card.className = 'blog-card';
+                card.setAttribute('data-category', blog.category);
                 card.onclick = () => window.location.href = `blog-post.html?id=${blog.id}`;
 
                 const tagsHTML = blog.tags && blog.tags.length > 0 
@@ -278,28 +330,74 @@
 
                 grid.appendChild(card);
             });
+
+            console.log(`✅ ${allBlogs.length}개 블로그 카드 렌더링 완료`);
         }
 
-        // 카테고리 필터
-        function filterCategory(category, event) {
-            currentCategory = category;
+        // ✅ 카테고리 필터 (DOM 재생성 없이 show/hide만)
+        function filterByCategory(category) {
+            console.log(`🔍 카테고리 필터: ${category}`);
+            
+            const allCards = document.querySelectorAll('.blog-card');
+            let visibleCount = 0;
 
-            // 버튼 활성화
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
+            allCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (category === 'all' || cardCategory === category) {
+                    card.classList.remove('hidden');
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                    card.style.display = 'none';
+                }
             });
-            event.target.classList.add('active');
 
-            // 필터링
-            const filtered = category === 'all' 
-                ? allBlogs 
-                : allBlogs.filter(blog => blog.category === category);
+            // 결과 없음 메시지 처리
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                noResults.textContent = `'${category}' 카테고리의 블로그가 없습니다.`;
+            } else {
+                noResults.style.display = 'none';
+            }
 
-            displayBlogs(filtered);
+            console.log(`✅ ${visibleCount}개 블로그 표시`);
         }
 
-        // 페이지 로드 시
-        window.addEventListener('DOMContentLoaded', loadBlogs);
+        // ✅ 카테고리 버튼 이벤트 리스너 설정
+        function setupCategoryButtons() {
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 활성화 상태 변경
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 필터 적용 (DOM 재생성 없음!)
+                    filterByCategory(category);
+                });
+            });
+
+            console.log('✅ 카테고리 버튼 이벤트 설정 완료');
+        }
+
+        // ✅ 페이지 로드 시 초기화 (단 한 번만 실행)
+        window.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 페이지 로드 시작');
+            
+            // 1. 블로그 데이터 로드 (한 번만)
+            await loadBlogs();
+            
+            // 2. 카테고리 버튼 이벤트 설정
+            setupCategoryButtons();
+            
+            console.log('✅ 초기화 완료 - 깜빡임 없음!');
+        });
     </script>
 </body>
 </html>
