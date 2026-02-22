@@ -20,7 +20,8 @@
     </script>
     
     <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="81DxU0oTAy466ZXTubMCoKzvkZVWyGv8b8pL9wpjvK0" />
+    <!-- TODO: Google Search Console에서 실제 확인 코드를 받은 후 아래 주석을 해제하고 YOUR_VERIFICATION_CODE를 교체하세요 -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
     
     <!-- Naver Search Advisor Verification -->
     <meta name="naver-site-verification" content="85acabea5de0d0f550c0dbe860ba3223c382a829" />
@@ -3402,18 +3403,21 @@
             console.log('🔄 블로그 로딩 시작...');
 
             try {
-                // API에서 최신 공개 블로그 3개 가져오기
-                const response = await fetch('/tables/blogs?limit=3&sort=-created_at');
+                // 정적 블로그 데이터 로드 (GitHub Pages용)
+                const response = await fetch('/blogs-data.json');
                 
                 if (!response.ok) {
-                    throw new Error(`API 오류: ${response.status}`);
+                    throw new Error(`데이터 로드 오류: ${response.status}`);
                 }
                 
-                const data = await response.json();
-                console.log('📡 API 응답:', data);
+                const blogsArray = await response.json();
+                console.log('📡 블로그 데이터 로드:', blogsArray);
                 
-                // 공개된 블로그만 필터링
-                const publishedBlogs = data.data.filter(blog => blog.published === true);
+                // 공개된 블로그만 필터링 (최신순 3개)
+                const publishedBlogs = blogsArray
+                    .filter(blog => blog.published === true)
+                    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+                    .slice(0, 3);
                 console.log('✅ 공개된 블로그:', publishedBlogs.length + '개');
 
                 // 로딩 숨기기
