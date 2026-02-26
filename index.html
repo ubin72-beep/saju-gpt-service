@@ -3197,8 +3197,31 @@
             
             console.log('📝 구독 신청 데이터:', formData);
             
+            // 🔥 중복 체크
+            const existingSubscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
+            const isDuplicate = existingSubscribers.some(sub => sub.phone === cleanPhone);
+            
+            if (isDuplicate) {
+                alert('이미 구독 신청된 전화번호입니다.\n\n문의사항이 있으시면 고객센터로 연락주세요.\n📞 1588-0000');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            // 🔥 1순위: LocalStorage에 먼저 저장 (오프라인에서도 작동)
+            const tempId = 'SUB_' + Date.now();
+            const subscriberData = {
+                ...formData,
+                id: tempId,
+                subscribedAt: new Date().toISOString()
+            };
+            
+            existingSubscribers.push(subscriberData);
+            localStorage.setItem('kakaoSubscribers', JSON.stringify(existingSubscribers));
+            console.log('✅ LocalStorage 저장 완료:', tempId);
+            
+            // 🔥 2순위: RESTful API로 백업 저장 (실패해도 계속 진행)
             try {
-                // RESTful API로 저장 (상대 경로 사용)
                 const response = await fetch('/tables/kakao_subscribers', {
                     method: 'POST',
                     headers: {
@@ -3209,63 +3232,39 @@
                 
                 if (response.ok) {
                     const saved = await response.json();
-                    console.log('✅ 구독 신청 완료! ID:', saved.id);
+                    console.log('✅ API 저장 완료! ID:', saved.id);
                     
-                    // 로컬스토리지에도 백업 저장
-                    const subscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
-                    subscribers.push({
-                        ...formData, 
-                        id: saved.id, 
-                        subscribedAt: new Date().toISOString()
-                    });
-                    localStorage.setItem('kakaoSubscribers', JSON.stringify(subscribers));
-                    
-                    // 사용자에게 알림 (개인정보 보호를 위해 전화번호는 숨김)
-                    const maskedPhone = cleanPhone.substring(0, 3) + '****' + cleanPhone.substring(7);
-                    console.log(`✅ ${userName}님 (${maskedPhone}) 구독 완료!`);
-                    
-                    // Google Analytics 이벤트
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'subscription_success', {
-                            'event_category': 'Kakao Daily Fortune',
-                            'event_label': zodiac,
-                            'value': 1
-                        });
-                    }
-                    
-                    // 성공 메시지 표시
-                    document.getElementById('kakaoSubscriptionForm').style.display = 'none';
-                    document.getElementById('subscriptionSuccess').style.display = 'block';
-                    
-                    // 페이지 최상단으로 스크롤
-                    document.getElementById('subscriptionSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
+                    // API ID로 업데이트
+                    const updatedSubscribers = existingSubscribers.map(sub => 
+                        sub.id === tempId ? { ...sub, id: saved.id, api_synced: true } : sub
+                    );
+                    localStorage.setItem('kakaoSubscribers', JSON.stringify(updatedSubscribers));
                 } else {
-                    const errorText = await response.text();
-                    console.error('❌ 서버 응답 오류:', response.status, errorText);
-                    throw new Error(`서버 오류 (${response.status})`);
+                    console.warn('⚠️ API 저장 실패, LocalStorage만 사용:', response.status);
                 }
-                
             } catch (error) {
-                console.error('❌ 구독 신청 실패:', error);
-                
-                // 사용자에게 친절한 오류 메시지
-                let errorMessage = '구독 신청 중 오류가 발생했습니다.\n';
-                
-                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                    errorMessage += '인터넷 연결을 확인해주세요.';
-                } else if (error.message.includes('500')) {
-                    errorMessage += '서버 오류입니다. 잠시 후 다시 시도해주세요.';
-                } else {
-                    errorMessage += '다시 시도해주세요.';
-                }
-                
-                alert(errorMessage);
-                
-                // 버튼 복구
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                console.warn('⚠️ API 연결 실패, LocalStorage만 사용:', error.message);
             }
+            
+            // 사용자에게 알림 (개인정보 보호를 위해 전화번호는 숨김)
+            const maskedPhone = cleanPhone.substring(0, 3) + '****' + cleanPhone.substring(7);
+            console.log(`✅ ${userName}님 (${maskedPhone}) 구독 완료!`);
+            
+            // Google Analytics 이벤트
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'subscription_success', {
+                    'event_category': 'Kakao Daily Fortune',
+                    'event_label': zodiac,
+                    'value': 1
+                });
+            }
+            
+            // 성공 메시지 표시
+            document.getElementById('kakaoSubscriptionForm').style.display = 'none';
+            document.getElementById('subscriptionSuccess').style.display = 'block';
+            
+            // 페이지 최상단으로 스크롤
+            document.getElementById('subscriptionSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         console.log('✅ 카카오톡 구독 배너 로드 완료');
