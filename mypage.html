@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지 - AI 사주 천년지기</title>
     <meta name="description" content="내 사주 정보, 서비스 이용 내역, 결제 내역을 확인하세요.">
+    
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="81DxU0oTAy466ZXTubMCoKzvkZVWyGv8b8pL9wpjvK0" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -235,16 +239,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .service-name {
             font-weight: 600;
             color: #333;
+            font-size: 1.05rem;
         }
         
         .service-date {
             color: #666;
             font-size: 0.9rem;
+            margin-top: 5px;
         }
         
         .service-count {
@@ -447,12 +455,33 @@
             purchases.forEach(purchase => {
                 const li = document.createElement('li');
                 li.className = 'service-item';
+                
+                // 서비스 타입에 따라 다른 아이콘과 링크 표시
+                let serviceIcon = '📄';
+                let serviceUrl = '#';
+                
+                if (purchase.serviceType === 'ilju-encyclopedia') {
+                    serviceIcon = '📚';
+                    serviceUrl = 'ilju.html';
+                } else if (purchase.serviceUrl) {
+                    serviceUrl = purchase.serviceUrl;
+                }
+                
                 li.innerHTML = `
                     <div>
-                        <div class="service-name">${purchase.serviceName}</div>
-                        <div class="service-date">${new Date(purchase.purchaseDate).toLocaleDateString()}</div>
+                        <div class="service-name">${serviceIcon} ${purchase.serviceName}</div>
+                        <div class="service-date">
+                            ${new Date(purchase.purchaseDate).toLocaleDateString()} | 
+                            ${purchase.paymentMethod || '결제완료'}
+                        </div>
+                        ${purchase.orderId ? `<div style="font-size: 0.85rem; color: #999; margin-top: 5px;">주문번호: ${purchase.orderId}</div>` : ''}
                     </div>
-                    <span class="badge badge-success">결제완료</span>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span class="badge badge-success">결제완료</span>
+                        <a href="${serviceUrl}" class="btn btn-outline" style="padding: 8px 20px; white-space: nowrap;">
+                            <i class="fas fa-external-link-alt"></i> 이용하기
+                        </a>
+                    </div>
                 `;
                 list.appendChild(li);
             });
