@@ -3186,18 +3186,19 @@
             const formData = {
                 name: userName,
                 phone: cleanPhone,
-                birth_year: birthYear,
+                birth_year: parseInt(birthYear),
                 zodiac: zodiac,
                 status: 'active',
                 subscription_start: new Date().toISOString(),
                 last_sent: null,
                 free_until: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30일 후
-                consent: true
+                consent: true,
+                created_at: Date.now()
             };
             
             console.log('📝 구독 신청 데이터:', formData);
             
-            // 🔥 중복 체크
+            // 🔥 중복 체크 (LocalStorage 기준)
             const existingSubscribers = JSON.parse(localStorage.getItem('kakaoSubscribers') || '[]');
             const isDuplicate = existingSubscribers.some(sub => sub.phone === cleanPhone);
             
@@ -3213,7 +3214,8 @@
             const subscriberData = {
                 ...formData,
                 id: tempId,
-                subscribedAt: new Date().toISOString()
+                subscribedAt: new Date().toISOString(),
+                api_synced: false
             };
             
             existingSubscribers.push(subscriberData);
