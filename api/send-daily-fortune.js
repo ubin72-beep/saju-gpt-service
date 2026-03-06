@@ -129,14 +129,24 @@ async function sendKakaoMessage(phone, name, ilju, fortune) {
   };
   
   try {
-    // 실제 카카오 API 호출
-    const response = await fetch('https://api.kakao.com/v1/api/send', {
+    // 카카오 알림톡 API 호출 (정식 엔드포인트)
+    // 참고: 카카오 비즈메시지 API는 채널 관리자 인증이 필요합니다.
+    const response = await fetch('https://kapi.kakao.com/v2/api/talk/memo/default/send', {
       method: 'POST',
       headers: {
-        'Authorization': `KakaoAK ${KAKAO_API_KEY}`,
-        'Content-Type': 'application/json'
+        'Authorization': `Bearer ${KAKAO_API_KEY}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: JSON.stringify(messageData)
+      body: new URLSearchParams({
+        template_object: JSON.stringify({
+          object_type: 'text',
+          text: `🌅 매일 아침 운세\n\n안녕하세요, ${name}님!\n\n${fortune.emoji} ${ilju} - ${fortune.title}\n\n✨ 오늘의 운세\n${fortune.fortune}\n\n🍀 행운의 숫자: ${fortune.luckyNumber}\n🎨 행운의 색상: ${fortune.luckyColor}\n\n좋은 하루 되세요! 💖\n\nAI 사주 천년지기\nwww.aisaju1000.com`,
+          link: {
+            web_url: 'https://www.aisaju1000.com',
+            mobile_web_url: 'https://www.aisaju1000.com'
+          }
+        })
+      })
     });
     
     const result = await response.json();
