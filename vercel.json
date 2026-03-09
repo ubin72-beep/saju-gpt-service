@@ -1,15 +1,15 @@
 {
-  "redirects": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
     {
-      "source": "/:path*",
-      "has": [
+      "source": "/(.*)",
+      "headers": [
         {
-          "type": "host",
-          "value": "aisaju1000.com"
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
         }
-      ],
-      "destination": "https://www.aisaju1000.com/:path*",
-      "permanent": true
+      ]
     }
   ]
 }
