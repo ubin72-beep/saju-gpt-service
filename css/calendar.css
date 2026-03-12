@@ -78,7 +78,7 @@ body {
 
 .nav-logo {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-decoration: none;
     display: flex;
@@ -95,8 +95,11 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
+    margin-left: auto;
+    flex: 1;
+    justify-content: center;
 }
 
 .nav-menu a {
@@ -106,6 +109,7 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 8px;
     transition: var(--transition);
+    font-size: 1.1rem;
 }
 
 .nav-menu a:hover,
@@ -222,6 +226,236 @@ body {
 /* ===================================
    Calendar Section
    =================================== */
+/* ===================================
+   Calendar Section
+   =================================== */
+.saju-input-section {
+    padding: 60px 20px;
+    background: var(--bg-secondary);
+}
+
+.saju-input-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.saju-input-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.saju-input-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.saju-input-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.saju-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group label i {
+    color: var(--primary-color);
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    padding-top: 5px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.radio-label input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-save-saju,
+.btn-skip-saju {
+    flex: 1;
+    padding: 15px 30px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-save-saju {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-save-saju:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-skip-saju {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.btn-skip-saju:hover {
+    background: white;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.form-notice {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 15px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.saju-saved-info {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(124, 58, 237, 0.05));
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    border-radius: var(--border-radius);
+    padding: 25px;
+}
+
+.saved-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.saved-info-header h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-edit {
+    padding: 8px 20px;
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-edit:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.saju-info-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-item {
+    background: white;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 .calendar-section {
     padding: 80px 20px;
     background: var(--bg-primary);
@@ -954,6 +1188,152 @@ body {
    Responsive Design
    =================================== */
 @media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .saju-input-card {
+        padding: 25px 20px;
+    }
+    
+    .saju-input-title {
+        font-size: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-save-saju,
+    .btn-skip-saju {
+        width: 100%;
+    }
+    
+    .saved-info-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .saju-info-display {
+        grid-template-columns: 1fr;
+    }
+    
+    .calendar-title h2 {
+        font-size: 1.5rem;
+    }
+    
+    .calendar-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .calendar-grid {
+        padding: 15px;
+    }
+    
+    .calendar-days {
+        gap: 5px;
+    }
+    
+    .day-number {
+        font-size: 1rem;
+    }
+    
+    .day-fortune-preview {
+        font-size: 1.2rem;
+    }
+    
+    .fortune-header {
+        padding: 40px 20px 20px;
+    }
+    
+    .fortune-title {
+        font-size: 1.5rem;
+    }
+    
+    .fortune-content {
+        padding: 30px 20px;
+    }
+    
+    .fortune-section-title {
+        font-size: 1.1rem;
+    }
+    
+    .fortune-lucky-items {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    .fortune-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .pricing-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .cta-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-primary-large,
+    .btn-secondary-large {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+    }
+    
+    .nav-menu a {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .nav-logo {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
     }
