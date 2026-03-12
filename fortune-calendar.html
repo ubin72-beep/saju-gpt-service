@@ -64,6 +64,160 @@
         </div>
     </section>
 
+    <!-- Saju Input Section -->
+    <section class="saju-input-section" id="sajuInput">
+        <div class="container">
+            <div class="saju-input-card">
+                <div class="saju-input-header">
+                    <h2 class="saju-input-title">
+                        <i class="fas fa-user-circle"></i> 나의 사주 정보
+                    </h2>
+                    <p class="saju-input-subtitle">
+                        사주팔자를 입력하시면 더욱 정확한 맞춤 운세를 제공합니다
+                    </p>
+                </div>
+
+                <form id="sajuForm" class="saju-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userName">
+                                <i class="fas fa-user"></i> 이름
+                            </label>
+                            <input type="text" id="userName" placeholder="예: 홍길동" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userGender">
+                                <i class="fas fa-venus-mars"></i> 성별
+                            </label>
+                            <select id="userGender" required>
+                                <option value="">선택</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="birthYear">
+                                <i class="fas fa-calendar"></i> 생년
+                            </label>
+                            <input type="number" id="birthYear" placeholder="예: 1990" min="1900" max="2026" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthMonth">월</label>
+                            <select id="birthMonth" required>
+                                <option value="">선택</option>
+                                <option value="1">1월</option>
+                                <option value="2">2월</option>
+                                <option value="3">3월</option>
+                                <option value="4">4월</option>
+                                <option value="5">5월</option>
+                                <option value="6">6월</option>
+                                <option value="7">7월</option>
+                                <option value="8">8월</option>
+                                <option value="9">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthDay">일</label>
+                            <input type="number" id="birthDay" placeholder="예: 15" min="1" max="31" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="birthHour">
+                                <i class="fas fa-clock"></i> 시간
+                            </label>
+                            <select id="birthHour" required>
+                                <option value="">선택</option>
+                                <option value="0">00시 (자시)</option>
+                                <option value="1">01시 (축시)</option>
+                                <option value="2">02시 (축시)</option>
+                                <option value="3">03시 (인시)</option>
+                                <option value="4">04시 (인시)</option>
+                                <option value="5">05시 (묘시)</option>
+                                <option value="6">06시 (묘시)</option>
+                                <option value="7">07시 (진시)</option>
+                                <option value="8">08시 (진시)</option>
+                                <option value="9">09시 (사시)</option>
+                                <option value="10">10시 (사시)</option>
+                                <option value="11">11시 (오시)</option>
+                                <option value="12">12시 (오시)</option>
+                                <option value="13">13시 (미시)</option>
+                                <option value="14">14시 (미시)</option>
+                                <option value="15">15시 (신시)</option>
+                                <option value="16">16시 (신시)</option>
+                                <option value="17">17시 (유시)</option>
+                                <option value="18">18시 (유시)</option>
+                                <option value="19">19시 (술시)</option>
+                                <option value="20">20시 (술시)</option>
+                                <option value="21">21시 (해시)</option>
+                                <option value="22">22시 (해시)</option>
+                                <option value="23">23시 (자시)</option>
+                                <option value="unknown">모름</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthMinute">분</label>
+                            <input type="number" id="birthMinute" placeholder="예: 30" min="0" max="59" value="0">
+                        </div>
+
+                        <div class="form-group calendar-type">
+                            <label>
+                                <i class="fas fa-moon"></i> 달력 구분
+                            </label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="calendarType" value="solar" checked>
+                                    <span>양력</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="calendarType" value="lunar">
+                                    <span>음력</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save-saju">
+                            <i class="fas fa-save"></i> 저장하고 운세 보기
+                        </button>
+                        <button type="button" class="btn-skip-saju" onclick="skipSajuInput()">
+                            <i class="fas fa-arrow-right"></i> 건너뛰기
+                        </button>
+                    </div>
+
+                    <div class="form-notice">
+                        <i class="fas fa-info-circle"></i>
+                        입력하신 정보는 안전하게 보관되며, 더 정확한 운세 제공을 위해서만 사용됩니다.
+                    </div>
+                </form>
+
+                <div id="sajuSavedInfo" class="saju-saved-info" style="display: none;">
+                    <div class="saved-info-header">
+                        <h3><i class="fas fa-check-circle"></i> 저장된 사주 정보</h3>
+                        <button onclick="editSajuInfo()" class="btn-edit">
+                            <i class="fas fa-edit"></i> 수정
+                        </button>
+                    </div>
+                    <div id="sajuInfoDisplay" class="saju-info-display">
+                        <!-- 저장된 정보가 여기 표시됩니다 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Calendar Section -->
     <section class="calendar-section" id="calendar">
         <div class="container">
@@ -411,8 +565,135 @@
     <!-- Scripts -->
     <script src="js/calendar.js"></script>
     <script src="js/fortune-generator.js"></script>
+    <script src="js/ai-chat-saju-integration.js"></script>
     
     <script>
+        // Saju Form Handling
+        document.getElementById('sajuForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const sajuData = {
+                name: document.getElementById('userName').value,
+                gender: document.getElementById('userGender').value,
+                birthYear: parseInt(document.getElementById('birthYear').value),
+                birthMonth: parseInt(document.getElementById('birthMonth').value),
+                birthDay: parseInt(document.getElementById('birthDay').value),
+                birthHour: document.getElementById('birthHour').value,
+                birthMinute: parseInt(document.getElementById('birthMinute').value) || 0,
+                isLunar: document.querySelector('input[name="calendarType"]:checked').value === 'lunar',
+                birthDate: `${document.getElementById('birthYear').value}-${String(document.getElementById('birthMonth').value).padStart(2, '0')}-${String(document.getElementById('birthDay').value).padStart(2, '0')}`,
+                birthTime: `${String(document.getElementById('birthHour').value === 'unknown' ? '12' : document.getElementById('birthHour').value).padStart(2, '0')}:${String(document.getElementById('birthMinute').value || 0).padStart(2, '0')}`
+            };
+            
+            // Save to database and localStorage
+            if (window.SajuChatIntegration) {
+                await window.SajuChatIntegration.saveSajuData(sajuData);
+            } else {
+                localStorage.setItem('user_saju_data', JSON.stringify(sajuData));
+            }
+            
+            // Display saved info
+            displaySavedSajuInfo(sajuData);
+            
+            // Smooth scroll to calendar
+            document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
+            
+            // Track event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'saju_input_complete', {
+                    'event_category': 'engagement',
+                    'event_label': 'calendar'
+                });
+            }
+        });
+        
+        // Display saved Saju info
+        function displaySavedSajuInfo(data) {
+            const calendarTypes = { true: '음력', false: '양력' };
+            const genders = { male: '남성', female: '여성' };
+            
+            const infoHTML = `
+                <div class="info-item">
+                    <div class="info-label">이름</div>
+                    <div class="info-value">${data.name}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">성별</div>
+                    <div class="info-value">${genders[data.gender]}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">생년월일</div>
+                    <div class="info-value">${data.birthYear}년 ${data.birthMonth}월 ${data.birthDay}일</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">시간</div>
+                    <div class="info-value">${data.birthHour === 'unknown' ? '모름' : data.birthHour + '시 ' + data.birthMinute + '분'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">달력</div>
+                    <div class="info-value">${calendarTypes[data.isLunar]}</div>
+                </div>
+            `;
+            
+            document.getElementById('sajuInfoDisplay').innerHTML = infoHTML;
+            document.getElementById('sajuForm').style.display = 'none';
+            document.getElementById('sajuSavedInfo').style.display = 'block';
+        }
+        
+        // Edit Saju info
+        function editSajuInfo() {
+            document.getElementById('sajuForm').style.display = 'block';
+            document.getElementById('sajuSavedInfo').style.display = 'none';
+        }
+        
+        // Skip Saju input
+        function skipSajuInput() {
+            document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
+            
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'saju_input_skipped', {
+                    'event_category': 'engagement',
+                    'event_label': 'calendar'
+                });
+            }
+        }
+        
+        // Load saved Saju data on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            let sajuData = null;
+            
+            // Try to load from database
+            if (window.SajuChatIntegration) {
+                sajuData = await window.SajuChatIntegration.loadSajuData();
+            }
+            
+            // Fallback to localStorage
+            if (!sajuData) {
+                const localData = localStorage.getItem('user_saju_data');
+                if (localData) {
+                    sajuData = JSON.parse(localData);
+                }
+            }
+            
+            // Display if found
+            if (sajuData) {
+                // Fill form fields
+                if (sajuData.name) document.getElementById('userName').value = sajuData.name;
+                if (sajuData.gender) document.getElementById('userGender').value = sajuData.gender;
+                if (sajuData.birthYear) document.getElementById('birthYear').value = sajuData.birthYear;
+                if (sajuData.birthMonth) document.getElementById('birthMonth').value = sajuData.birthMonth;
+                if (sajuData.birthDay) document.getElementById('birthDay').value = sajuData.birthDay;
+                if (sajuData.birthHour) document.getElementById('birthHour').value = sajuData.birthHour;
+                if (sajuData.birthMinute) document.getElementById('birthMinute').value = sajuData.birthMinute;
+                
+                const calendarType = sajuData.isLunar ? 'lunar' : 'solar';
+                document.querySelector(`input[name="calendarType"][value="${calendarType}"]`).checked = true;
+                
+                // Display saved info
+                displaySavedSajuInfo(sajuData);
+            }
+        });
+        
         // Smooth scroll functions
         function scrollToCalendar() {
             document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
