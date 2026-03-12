@@ -1888,152 +1888,85 @@
         </div>
     </section>
 
-    <!-- 카카오톡 매일 운세 배너 -->
-    <div class="kakao-banner-container">
-        <div class="kakao-banner">
-            <div class="banner-icon">
-                <i class="fas fa-comment-dots"></i>
-            </div>
-            <div class="banner-content">
-                <h3>📱 매일 아침 7시, 무료 운세 받기!</h3>
-                <p>AI가 분석하는 정확한 사주·연애운·오늘의 운세를 카톡으로!</p>
-                <p class="banner-highlight">🎉 첫 달 100명 완전 무료! (선착순 마감)</p>
-            </div>
-            <div class="banner-action">
-                <a href="#kakao-subscription-form" class="kakao-btn" onclick="scrollToSubscription(event)">
-                    <i class="fas fa-comment"></i> 무료로 받기
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 카카오톡 구독 신청 폼 -->
-    <div id="kakao-subscription-form" class="subscription-form-container">
-        <div class="subscription-form">
-            <h2>🌅 매일 아침 7시, 무료 운세 카톡 받기</h2>
-            <p class="form-description">🎁 첫 달 완전 무료! AI가 당신의 띠에 맞춰 매일 새로운 운세를 보내드립니다</p>
-            
-            <form id="kakaoSubscriptionForm" onsubmit="handleSubscription(event)">
-                <div class="form-group">
-                    <label for="userName">
-                        <i class="fas fa-user"></i> 이름
-                    </label>
-                    <input type="text" id="userName" name="userName" required 
-                           placeholder="홍길동" maxlength="20">
+    <!-- 활인명리학협회 신뢰 섹션 -->
+    <section class="certification-section" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 30px 20px; position: relative; overflow: hidden;">
+        <!-- 배경 장식 -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05; background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23d4af37\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        
+        <div class="container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div style="display: inline-block; background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 50px; padding: 6px 18px; margin-bottom: 12px;">
+                    <span style="color: #d4af37; font-size: 11px; font-weight: 600; letter-spacing: 1.5px;">✨ 공인 인증 ✨</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="userPhone">
-                        <i class="fas fa-phone"></i> 휴대폰 번호
-                    </label>
-                    <input type="tel" id="userPhone" name="userPhone" required 
-                           placeholder="01012345678 (숫자만 입력)" 
-                           maxlength="13">
-                    <small>카카오톡 알림 수신용 (안심하세요, 광고 없어요!)</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="birthYear">
-                        <i class="fas fa-calendar"></i> 생년 (띠 확인용)
-                    </label>
-                    <select id="birthYear" name="birthYear" required onchange="updateZodiac()">
-                        <option value="">생년을 선택하세요</option>
-                        <option value="2024">2024년 (용띠)</option>
-                        <option value="2023">2023년 (토끼띠)</option>
-                        <option value="2022">2022년 (호랑이띠)</option>
-                        <option value="2021">2021년 (소띠)</option>
-                        <option value="2020">2020년 (쥐띠)</option>
-                        <option value="2019">2019년 (돼지띠)</option>
-                        <option value="2018">2018년 (개띠)</option>
-                        <option value="2017">2017년 (닭띠)</option>
-                        <option value="2016">2016년 (원숭이띠)</option>
-                        <option value="2015">2015년 (양띠)</option>
-                        <option value="2014">2014년 (말띠)</option>
-                        <option value="2013">2013년 (뱀띠)</option>
-                        <option value="2012">2012년 (용띠)</option>
-                        <option value="2011">2011년 (토끼띠)</option>
-                        <option value="2010">2010년 (호랑이띠)</option>
-                        <option value="2009">2009년 (소띠)</option>
-                        <option value="2008">2008년 (쥐띠)</option>
-                        <option value="2007">2007년 (돼지띠)</option>
-                        <option value="2006">2006년 (개띠)</option>
-                        <option value="2005">2005년 (닭띠)</option>
-                        <option value="2004">2004년 (원숭이띠)</option>
-                        <option value="2003">2003년 (양띠)</option>
-                        <option value="2002">2002년 (말띠)</option>
-                        <option value="2001">2001년 (뱀띠)</option>
-                        <option value="2000">2000년 (용띠)</option>
-                        <option value="1999">1999년 (토끼띠)</option>
-                        <option value="1998">1998년 (호랑이띠)</option>
-                        <option value="1997">1997년 (소띠)</option>
-                        <option value="1996">1996년 (쥐띠)</option>
-                        <option value="1995">1995년 (돼지띠)</option>
-                        <option value="1994">1994년 (개띠)</option>
-                        <option value="1993">1993년 (닭띠)</option>
-                        <option value="1992">1992년 (원숭이띠)</option>
-                        <option value="1991">1991년 (양띠)</option>
-                        <option value="1990">1990년 (말띠)</option>
-                        <option value="1989">1989년 (뱀띠)</option>
-                        <option value="1988">1988년 (용띠)</option>
-                        <option value="1987">1987년 (토끼띠)</option>
-                        <option value="1986">1986년 (호랑이띠)</option>
-                        <option value="1985">1985년 (소띠)</option>
-                        <option value="1984">1984년 (쥐띠)</option>
-                        <option value="1983">1983년 (돼지띠)</option>
-                        <option value="1982">1982년 (개띠)</option>
-                        <option value="1981">1981년 (닭띠)</option>
-                        <option value="1980">1980년 (원숭이띠)</option>
-                        <option value="1979">1979년 (양띠)</option>
-                        <option value="1978">1978년 (말띠)</option>
-                        <option value="1977">1977년 (뱀띠)</option>
-                        <option value="1976">1976년 (용띠)</option>
-                        <option value="1975">1975년 (토끼띠)</option>
-                        <option value="1974">1974년 (호랑이띠)</option>
-                        <option value="1973">1973년 (소띠)</option>
-                        <option value="1972">1972년 (쥐띠)</option>
-                        <option value="1971">1971년 (돼지띠)</option>
-                        <option value="1970">1970년 (개띠)</option>
-                        <option value="1969">1969년 (닭띠)</option>
-                        <option value="1968">1968년 (원숭이띠)</option>
-                        <option value="1967">1967년 (양띠)</option>
-                        <option value="1966">1966년 (말띠)</option>
-                        <option value="1965">1965년 (뱀띠)</option>
-                        <option value="1964">1964년 (용띠)</option>
-                        <option value="1963">1963년 (토끼띠)</option>
-                        <option value="1962">1962년 (호랑이띠)</option>
-                        <option value="1961">1961년 (소띠)</option>
-                        <option value="1960">1960년 (쥐띠)</option>
-                    </select>
-                    <div id="zodiacDisplay" class="zodiac-display"></div>
-                </div>
-
-                <div class="form-group consent">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="consent" name="consent" required>
-                        <span>개인정보 수집 및 카카오톡 알림 수신에 동의합니다</span>
-                    </label>
-                    <small>수집 항목: 이름, 휴대폰번호, 생년 | 목적: 매일 운세 발송 | 보관 기간: 구독 해지 시까지</small>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-check-circle"></i> 무료 구독 신청하기
-                </button>
-
-                <p class="form-note">
-                    🎁 첫 달 완전 무료 | 📱 매일 아침 7시 자동 발송 | 🚫 언제든 해지 가능
+                <h2 style="font-size: 1.5em; color: #ffffff; margin-bottom: 8px; font-weight: 700;">
+                    활인명리학협회 인증
+                </h2>
+                <p style="font-size: 0.85em; color: #d4af37; margin-bottom: 5px; font-weight: 500;">
+                    活人命理學協會 (사람을 살리는 명리학)
                 </p>
-            </form>
+                <p style="font-size: 0.75em; color: rgba(255, 255, 255, 0.7); max-width: 500px; margin: 0 auto; line-height: 1.5;">
+                    정통 명리학의 깊이와 AI 기술의 정확성을 인정받은 공인 인증 플랫폼입니다
+                </p>
+            </div>
 
-            <div id="subscriptionSuccess" class="success-message" style="display: none;">
-                <div class="success-icon">✅</div>
-                <h3>🎉 축하합니다! 구독 신청 완료!</h3>
-                <p><strong>첫 달 무료 혜택이 적용되었습니다!</strong></p>
-                <p>내일 아침 7시부터 매일 운세를 받으실 수 있습니다.</p>
-                <p class="success-detail">카카오톡으로 알림이 발송됩니다 📱</p>
-                <button onclick="location.reload()" class="btn-restart">다른 사람 신청하기</button>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                <!-- 인증서 카드 -->
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 18px; text-align: center; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+                    <div style="width: 45px; height: 45px; background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 12px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-certificate" style="font-size: 20px; color: #1a1a1a;"></i>
+                    </div>
+                    <h3 style="color: #ffffff; font-size: 0.95em; margin-bottom: 8px; font-weight: 600;">공식 인증</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-size: 0.75em;">
+                        활인명리학협회가 인정하는<br>
+                        정통 명리학 기반 시스템
+                    </p>
+                </div>
+
+                <!-- 전문성 카드 -->
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 18px; text-align: center; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+                    <div style="width: 45px; height: 45px; background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 12px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-user-graduate" style="font-size: 20px; color: #1a1a1a;"></i>
+                    </div>
+                    <h3 style="color: #ffffff; font-size: 0.95em; margin-bottom: 8px; font-weight: 600;">전문 명리학자 검증</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-size: 0.75em;">
+                        30년 이상 경력의<br>
+                        전문 명리학자들이 직접 검증
+                    </p>
+                </div>
+
+                <!-- 정확성 카드 -->
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 18px; text-align: center; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+                    <div style="width: 45px; height: 45px; background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 12px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-check-double" style="font-size: 20px; color: #1a1a1a;"></i>
+                    </div>
+                    <h3 style="color: #ffffff; font-size: 0.95em; margin-bottom: 8px; font-weight: 600;">60갑자 정확도</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-size: 0.75em;">
+                        만세력 기반 100% 정확한<br>
+                        사주팔자 계산 시스템
+                    </p>
+                </div>
+            </div>
+
+            <!-- 핵심 가치 -->
+            <div style="background: rgba(212, 175, 55, 0.08); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 20px; text-align: center;">
+                <h3 style="color: #d4af37; font-size: 1em; margin-bottom: 12px; font-weight: 600;">
+                    활인명리학 (活人命理學)의 정신
+                </h3>
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.8em; line-height: 1.6; margin-bottom: 12px;">
+                        "사람을 살리는 명리학"이라는 뜻으로,<br>
+                        단순히 운명을 예측하는 것이 아니라<br>
+                        <strong style="color: #d4af37;">사람들의 삶을 긍정적으로 변화시키고 희망을 주는 것</strong>을 목표로 합니다
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+                        <span style="background: rgba(212, 175, 55, 0.2); color: #d4af37; padding: 5px 12px; border-radius: 15px; font-size: 0.7em; font-weight: 500;">🌟 정확한 분석</span>
+                        <span style="background: rgba(212, 175, 55, 0.2); color: #d4af37; padding: 5px 12px; border-radius: 15px; font-size: 0.7em; font-weight: 500;">💡 실용적 조언</span>
+                        <span style="background: rgba(212, 175, 55, 0.2); color: #d4af37; padding: 5px 12px; border-radius: 15px; font-size: 0.7em; font-weight: 500;">❤️ 긍정적 변화</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- 신뢰 지표 -->
     <section class="trust-section">
