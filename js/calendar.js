@@ -1,6 +1,6 @@
 /**
- * Fortune Calendar - Main Logic
- * 운세 캘린더 메인 로직
+ * Fortune Calendar - Main Logic v2.0
+ * 운세 캘린더 메인 로직 - 완전히 재작성된 버전
  */
 
 // Global variables
@@ -8,8 +8,14 @@ let currentYear = 2026;
 let currentMonth = 2; // 0-based (2 = March)
 let selectedDate = null;
 
+// Version control for cache invalidation
+const CALENDAR_VERSION = '2.0.0';
+
 // Initialize calendar on page load
 document.addEventListener('DOMContentLoaded', function() {
+    // Check version and clear old cache if needed
+    checkVersionAndClearCache();
+    
     // Set current date
     const today = new Date();
     currentYear = today.getFullYear();
@@ -26,6 +32,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+/**
+ * Check version and clear outdated cache
+ */
+function checkVersionAndClearCache() {
+    const storedVersion = localStorage.getItem('calendarVersion');
+    
+    if (storedVersion !== CALENDAR_VERSION) {
+        console.log('🔄 새로운 버전 감지! 캐시를 초기화합니다...');
+        
+        // Clear old fortune data
+        localStorage.removeItem('savedFortunes');
+        
+        // Update version
+        localStorage.setItem('calendarVersion', CALENDAR_VERSION);
+        
+        console.log('✅ 캐시 초기화 완료! 버전:', CALENDAR_VERSION);
+    }
+}
 
 /**
  * Render calendar for given year and month
@@ -74,7 +99,7 @@ function renderCalendar(year, month) {
 }
 
 /**
- * Create a day element
+ * Create a day element with enhanced emoji display
  */
 function createDayElement(day, year, month, isOtherMonth = false, isToday = false) {
     const dayElement = document.createElement('div');
@@ -119,16 +144,6 @@ function createDayElement(day, year, month, isOtherMonth = false, isToday = fals
     }
     
     return dayElement;
-}
-
-/**
- * Get daily fortune emoji based on date
- */
-function getDailyFortuneEmoji(year, month, day) {
-    // Use date as seed for consistent emoji
-    const seed = year * 10000 + (month + 1) * 100 + day;
-    const emojis = ['🌟', '✨', '🎯', '🍀', '💎', '🌈', '⭐', '💫', '🔥', '🌸', '🎁', '🏆'];
-    return emojis[seed % emojis.length];
 }
 
 /**
@@ -177,8 +192,15 @@ function nextMonth() {
 function showFortuneDetail(year, month, day) {
     selectedDate = { year, month, day };
     
-    // Generate fortune for the date
+    // Generate fortune for the date using the new algorithm
     const fortune = generateDailyFortune(year, month, day);
+    
+    console.log('🔮 운세 생성:', {
+        date: `${year}-${month+1}-${day}`,
+        seed: fortune.seed,
+        score: fortune.score,
+        emoji: getDailyFortuneEmoji(year, month, day)
+    });
     
     // Update fortune detail card
     updateFortuneDetail(fortune);
