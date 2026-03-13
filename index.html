@@ -1948,19 +1948,20 @@
                     <label><i class="fas fa-calendar"></i> 생년월일</label>
                     <div class="birthdate-wrapper">
                         <input 
-                            type="date" 
+                            type="text" 
                             id="birthdateInput"
                             name="birthdate" 
                             class="birthdate-input"
                             placeholder="예: 19900515"
+                            maxlength="10"
                             required>
                         <button type="button" class="birthdate-toggle" id="birthdateToggle" title="입력 방식 전환">
-                            <i class="fas fa-keyboard"></i>
+                            <i class="fas fa-calendar-alt"></i>
                         </button>
                     </div>
                     <div class="birthdate-hint">
                         <i class="fas fa-lightbulb"></i>
-                        <span id="birthdateHint">날짜를 선택하거나 8자리 숫자로 입력하세요 (예: 19900515)</span>
+                        <span id="birthdateHint">8자리 숫자를 입력하세요 (예: 19900515)</span>
                     </div>
                 </div>
                 
@@ -2926,7 +2927,7 @@
             const birthdateHint = document.getElementById('birthdateHint');
             
             if (birthdateInput && birthdateToggle) {
-                let isTextMode = false;
+                let isTextMode = true;
                 
                 // 입력 방식 전환 버튼
                 birthdateToggle.addEventListener('click', function() {
