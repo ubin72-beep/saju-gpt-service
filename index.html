@@ -3209,11 +3209,32 @@
             console.log('🔄 블로그 로딩 시작...');
 
             try {
-                // 정적 블로그 데이터 로드 (GitHub Pages용)
-                const response = await fetch('/blogs-data.json');
+                // 여러 경로 시도 (GitHub Pages, Vercel, 로컬 등)
+                const possiblePaths = [
+                    './blogs-data.json',
+                    '/blogs-data.json',
+                    'blogs-data.json'
+                ];
                 
-                if (!response.ok) {
-                    throw new Error(`데이터 로드 오류: ${response.status}`);
+                let response = null;
+                let lastError = null;
+                
+                for (const path of possiblePaths) {
+                    try {
+                        console.log(`🔍 시도 중: ${path}`);
+                        response = await fetch(path);
+                        if (response.ok) {
+                            console.log(`✅ 성공: ${path}`);
+                            break;
+                        }
+                    } catch (err) {
+                        lastError = err;
+                        console.log(`❌ 실패: ${path}`);
+                    }
+                }
+                
+                if (!response || !response.ok) {
+                    throw new Error(`데이터 로드 오류: ${lastError?.message || 'Unknown error'}`);
                 }
                 
                 const blogsArray = await response.json();
@@ -3293,13 +3314,22 @@
 
             } catch (error) {
                 console.error('❌ 블로그 로드 실패:', error);
+                // 에러 발생 시 블로그 섹션을 조용히 숨김 (사이트는 계속 작동)
                 blogLoading.style.display = 'none';
-                noBlogMessage.style.display = 'block';
-                noBlogMessage.innerHTML = `
-                    <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5; color: #ff6b6b;"></i>
-                    <p>블로그를 불러오는데 실패했습니다.</p>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">잠시 후 다시 시도해주세요.</p>
-                `;
+                
+                // 간단한 메시지만 표시하고 사이트 운영에는 지장 없도록 처리
+                if (noBlogMessage) {
+                    noBlogMessage.style.display = 'block';
+                    noBlogMessage.innerHTML = `
+                        <div style="text-align: center; color: #999;">
+                            <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.4;"></i>
+                            <p style="font-size: 0.95rem;">블로그 콘텐츠 준비 중입니다 📝</p>
+                        </div>
+                    `;
+                }
+                
+                // 사이트는 계속 정상 작동
+                console.log('ℹ️ 블로그 로드 실패했지만 사이트는 정상 작동합니다.');
             }
         }
 
