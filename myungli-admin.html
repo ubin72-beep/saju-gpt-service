@@ -404,6 +404,10 @@
             .filter-item {
                 width: 100%;
             }
+
+            #consultantManagement {
+                grid-template-columns: 1fr !important;
+            }
         }
     </style>
 </head>
@@ -501,6 +505,139 @@
                             <i class="fas fa-search"></i> 검색
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- 상담사 관리 섹션 -->
+            <div class="consultations-table" style="margin-bottom: 30px;">
+                <h2 style="color: #d4af37; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; justify-content: space-between;">
+                    <span><i class="fas fa-users-cog"></i> 상담사 관리</span>
+                    <button onclick="toggleConsultantEdit()" id="editToggleBtn" style="padding: 10px 20px; background: rgba(212, 175, 55, 0.2); border: 2px solid rgba(212, 175, 55, 0.4); color: #d4af37; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s;">
+                        <i class="fas fa-edit"></i> 수정 모드
+                    </button>
+                </h2>
+                
+                <div id="consultantManagement" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <!-- 상담사 1 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-user"></i> 김태양 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_1" value="010-1234-5678" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_1" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_1" value="사업운·재물운 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+
+                    <!-- 상담사 2 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-user-tie"></i> 박진우 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_2" value="010-2345-6789" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_2" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_2" value="궁합·연애운 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+
+                    <!-- 상담사 3 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-user-graduate"></i> 이현석 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_3" value="010-3456-7890" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_3" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_3" value="진로·학업운 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+
+                    <!-- 상담사 4 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-user-circle"></i> 최민지 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_4" value="010-4567-8901" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_4" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_4" value="건강·가정운 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+
+                    <!-- 상담사 5 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-female"></i> 정수연 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_5" value="010-5678-9012" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_5" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_5" value="종합운세 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+
+                    <!-- 상담사 6 -->
+                    <div class="consultant-manage-card" style="background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 25px;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-user-alt"></i> 한예린 선생
+                        </h3>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">📞 전화번호</label>
+                            <input type="tel" id="phone_6" value="010-6789-0123" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">💬 카카오톡 오픈채팅</label>
+                            <input type="text" id="kakao_6" value="" placeholder="https://open.kakao.com/..." readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                        <div>
+                            <label style="display: block; color: #f4e5b5; margin-bottom: 5px; font-size: 0.9em;">🌟 전문분야</label>
+                            <input type="text" id="specialty_6" value="타로·역학 전문" readonly style="width: 100%; padding: 10px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 8px; background: rgba(255,255,255,0.05); color: white; font-size: 0.95em;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 저장 버튼 (수정 모드에서만 표시) -->
+                <div id="saveButtonContainer" style="display: none; text-align: center; margin-top: 25px;">
+                    <button onclick="saveConsultants()" style="padding: 15px 50px; background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); border: none; color: #1a1a1a; font-size: 1.1em; font-weight: 700; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s;">
+                        <i class="fas fa-save"></i> 저장하기
+                    </button>
                 </div>
             </div>
 
@@ -793,6 +930,93 @@
                 alert('❌ 상태 변경 중 오류가 발생했습니다.');
             }
         }
+
+        // 상담사 정보 수정 모드 토글
+        let isEditMode = false;
+        function toggleConsultantEdit() {
+            isEditMode = !isEditMode;
+            const inputs = document.querySelectorAll('#consultantManagement input');
+            const saveBtn = document.getElementById('saveButtonContainer');
+            const toggleBtn = document.getElementById('editToggleBtn');
+
+            inputs.forEach(input => {
+                input.readOnly = !isEditMode;
+                if (isEditMode) {
+                    input.style.background = 'rgba(212, 175, 55, 0.1)';
+                    input.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+                } else {
+                    input.style.background = 'rgba(255,255,255,0.05)';
+                    input.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                }
+            });
+
+            if (isEditMode) {
+                saveBtn.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fas fa-times"></i> 취소';
+                toggleBtn.style.background = 'rgba(244, 67, 54, 0.2)';
+                toggleBtn.style.borderColor = 'rgba(244, 67, 54, 0.4)';
+                toggleBtn.style.color = '#f44336';
+            } else {
+                saveBtn.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-edit"></i> 수정 모드';
+                toggleBtn.style.background = 'rgba(212, 175, 55, 0.2)';
+                toggleBtn.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                toggleBtn.style.color = '#d4af37';
+            }
+        }
+
+        // 상담사 정보 저장
+        async function saveConsultants() {
+            if (!confirm('상담사 정보를 저장하시겠습니까?')) {
+                return;
+            }
+
+            const consultants = [];
+            for (let i = 1; i <= 6; i++) {
+                consultants.push({
+                    id: i,
+                    phone: document.getElementById(`phone_${i}`).value,
+                    kakao: document.getElementById(`kakao_${i}`).value,
+                    specialty: document.getElementById(`specialty_${i}`).value
+                });
+            }
+
+            // LocalStorage에 저장 (실제로는 API로 저장)
+            try {
+                localStorage.setItem('myungli_consultants', JSON.stringify(consultants));
+                alert('✅ 상담사 정보가 저장되었습니다!');
+                toggleConsultantEdit(); // 수정 모드 종료
+                
+                // index.html에도 반영하려면 별도 API 필요
+                console.log('저장된 상담사 정보:', consultants);
+            } catch (error) {
+                console.error('저장 오류:', error);
+                alert('❌ 저장 중 오류가 발생했습니다.');
+            }
+        }
+
+        // 페이지 로드 시 저장된 상담사 정보 불러오기
+        function loadConsultants() {
+            const saved = localStorage.getItem('myungli_consultants');
+            if (saved) {
+                const consultants = JSON.parse(saved);
+                consultants.forEach(c => {
+                    document.getElementById(`phone_${c.id}`).value = c.phone || '';
+                    document.getElementById(`kakao_${c.id}`).value = c.kakao || '';
+                    document.getElementById(`specialty_${c.id}`).value = c.specialty || '';
+                });
+            }
+        }
+
+        // 페이지 로드 시 상담사 정보 불러오기
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('myungliAdmin') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminScreen').style.display = 'block';
+                loadConsultations();
+                loadConsultants(); // 상담사 정보 불러오기
+            }
+        });
 
         // ESC 키로 모달 닫기
         document.addEventListener('keydown', (e) => {
