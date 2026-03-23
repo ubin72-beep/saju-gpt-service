@@ -1913,10 +1913,311 @@
                         <span style="background: rgba(212, 175, 55, 0.25); color: #d4af37; padding: 10px 20px; border-radius: 25px; font-size: 0.95em; font-weight: 600; border: 2px solid rgba(212, 175, 55, 0.3);">💡 실용적 조언</span>
                         <span style="background: rgba(212, 175, 55, 0.25); color: #d4af37; padding: 10px 20px; border-radius: 25px; font-size: 0.95em; font-weight: 600; border: 2px solid rgba(212, 175, 55, 0.3);">❤️ 긍정적 변화</span>
                     </div>
+
+                    <!-- 1:1 전문가 상담 버튼 -->
+                    <div style="margin-top: 35px;">
+                        <button onclick="openConsultationModal()" style="background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); color: #1a1a1a; border: none; padding: 18px 45px; font-size: 1.2em; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-phone-alt" style="font-size: 1.1em;"></i>
+                            💎 1:1 전문가 상담 시작하기
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- 상담사 선택 모달 -->
+    <div id="consultationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; overflow-y: auto; padding: 20px;">
+        <div style="max-width: 1000px; margin: 50px auto; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 20px; padding: 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <!-- 닫기 버튼 -->
+            <button onclick="closeConsultationModal()" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #d4af37; font-size: 2em; cursor: pointer; transition: transform 0.3s;">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- 헤더 -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="color: #d4af37; font-size: 2.2em; margin-bottom: 15px; font-weight: 700;">
+                    💎 활인명리학협회 공인 전문가
+                </h2>
+                <p style="color: rgba(255,255,255,0.8); font-size: 1.1em; line-height: 1.6;">
+                    6명의 검증된 전문가가 당신의 운명을 밝혀드립니다<br>
+                    <strong style="color: #f4e5b5;">상담료: 50,000원 (1회 60분)</strong>
+                </p>
+            </div>
+
+            <!-- 상담사 그리드 -->
+            <div id="consultantGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 30px;">
+                <!-- 상담사 1 (남) -->
+                <div class="consultant-card" onclick="selectConsultant('김태양', '010-1234-5678')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);">
+                        <i class="fas fa-user" style="font-size: 80px; color: #d4af37; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">김태양 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">정통 사주명리 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 15년 / 상담 5,000건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        사업운·재물운 전문
+                    </div>
+                </div>
+
+                <!-- 상담사 2 (남) -->
+                <div class="consultant-card" onclick="selectConsultant('박진우', '010-2345-6789')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);">
+                        <i class="fas fa-user-tie" style="font-size: 80px; color: #d4af37; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">박진우 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">궁합·연애운 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 12년 / 상담 4,200건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        결혼·연애·궁합 전문
+                    </div>
+                </div>
+
+                <!-- 상담사 3 (남) -->
+                <div class="consultant-card" onclick="selectConsultant('이현석', '010-3456-7890')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);">
+                        <i class="fas fa-user-graduate" style="font-size: 80px; color: #d4af37; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">이현석 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">진로·학업운 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 10년 / 상담 3,800건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        진로·취업·학업 전문
+                    </div>
+                </div>
+
+                <!-- 상담사 4 (여) -->
+                <div class="consultant-card" onclick="selectConsultant('최민지', '010-4567-8901')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #d946c5 0%, #9333ea 100%);">
+                        <i class="fas fa-user-circle" style="font-size: 80px; color: #fff; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">최민지 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">건강·가정운 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 13년 / 상담 4,600건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        건강·가정·육아 전문
+                    </div>
+                </div>
+
+                <!-- 상담사 5 (여) -->
+                <div class="consultant-card" onclick="selectConsultant('정수연', '010-5678-9012')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #d946c5 0%, #9333ea 100%);">
+                        <i class="fas fa-female" style="font-size: 80px; color: #fff; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">정수연 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">종합운세 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 18년 / 상담 6,200건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        종합운세·토정비결
+                    </div>
+                </div>
+
+                <!-- 상담사 6 (여) -->
+                <div class="consultant-card" onclick="selectConsultant('한예린', '010-6789-0123')" style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s;">
+                    <div style="width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #d4af37; background: linear-gradient(135deg, #d946c5 0%, #9333ea 100%);">
+                        <i class="fas fa-user-alt" style="font-size: 80px; color: #fff; line-height: 120px;"></i>
+                    </div>
+                    <h3 style="color: #d4af37; font-size: 1.4em; margin-bottom: 8px;">한예린 선생</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-bottom: 10px;">타로·역학 전문</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85em; line-height: 1.5;">경력 9년 / 상담 3,200건+</p>
+                    <div style="margin-top: 15px; padding: 8px; background: rgba(212, 175, 55, 0.2); border-radius: 8px; color: #f4e5b5; font-size: 0.9em;">
+                        타로·사주 융합상담
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상담 신청 폼 (처음엔 숨김) -->
+            <div id="consultationForm" style="display: none; margin-top: 40px; padding: 35px; background: rgba(212, 175, 55, 0.05); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 15px;">
+                <h3 style="color: #d4af37; font-size: 1.6em; margin-bottom: 25px; text-align: center;">
+                    <span id="selectedConsultantName"></span> 선생님께 상담 신청
+                </h3>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #f4e5b5; font-size: 1em; margin-bottom: 8px; font-weight: 600;">이름 *</label>
+                    <input type="text" id="clientName" placeholder="성함을 입력해주세요" style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 10px; background: rgba(255,255,255,0.05); color: white; font-size: 1em;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #f4e5b5; font-size: 1em; margin-bottom: 8px; font-weight: 600;">전화번호 *</label>
+                    <input type="tel" id="clientPhone" placeholder="010-1234-5678" style="width: 100%; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 10px; background: rgba(255,255,255,0.05); color: white; font-size: 1em;">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #f4e5b5; font-size: 1em; margin-bottom: 8px; font-weight: 600;">상담 내용 간단 작성 *</label>
+                    <textarea id="consultationContent" placeholder="어떤 부분에 대해 상담받고 싶으신가요?&#10;예) 올해 사업운, 결혼 시기, 진로 고민 등" style="width: 100%; height: 120px; padding: 15px; border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 10px; background: rgba(255,255,255,0.05); color: white; font-size: 1em; resize: vertical;"></textarea>
+                </div>
+
+                <!-- 입금 안내 -->
+                <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid rgba(212, 175, 55, 0.4); border-radius: 10px; padding: 20px; margin-bottom: 25px;">
+                    <h4 style="color: #d4af37; font-size: 1.2em; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-coins"></i> 입금 안내
+                    </h4>
+                    <p style="color: rgba(255,255,255,0.9); line-height: 1.8; margin-bottom: 12px;">
+                        <strong style="color: #f4e5b5;">상담료:</strong> 50,000원<br>
+                        <strong style="color: #f4e5b5;">은행:</strong> 국민은행<br>
+                        <strong style="color: #f4e5b5;">계좌번호:</strong> 123456-78-901234<br>
+                        <strong style="color: #f4e5b5;">예금주:</strong> 활인명리학협회
+                    </p>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9em; line-height: 1.6;">
+                        ※ 입금자명을 신청하신 성함과 동일하게 입력해주세요<br>
+                        ※ 입금 확인 후 선택하신 상담사님께서 연락드립니다
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <button onclick="goBackToConsultants()" style="flex: 1; padding: 15px; background: rgba(255,255,255,0.1); border: 2px solid rgba(212, 175, 55, 0.3); color: #d4af37; font-size: 1.1em; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-arrow-left"></i> 다른 상담사 선택
+                    </button>
+                    <button onclick="submitConsultation()" style="flex: 2; padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%); border: none; color: #1a1a1a; font-size: 1.1em; font-weight: 700; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s;">
+                        <i class="fas fa-paper-plane"></i> 신청하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .consultant-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37 !important;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            #consultantGrid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #consultantGrid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+    <script>
+        // 선택된 상담사 정보 저장
+        let selectedConsultant = {
+            name: '',
+            phone: ''
+        };
+
+        // 상담 모달 열기
+        function openConsultationModal() {
+            document.getElementById('consultationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 상담 모달 닫기
+        function closeConsultationModal() {
+            document.getElementById('consultationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // 폼 초기화
+            document.getElementById('consultationForm').style.display = 'none';
+            document.getElementById('consultantGrid').style.display = 'grid';
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('consultationContent').value = '';
+        }
+
+        // 상담사 선택
+        function selectConsultant(name, phone) {
+            selectedConsultant = { name, phone };
+            
+            // 상담사 선택 화면 숨기고 폼 표시
+            document.getElementById('consultantGrid').style.display = 'none';
+            document.getElementById('consultationForm').style.display = 'block';
+            document.getElementById('selectedConsultantName').textContent = name;
+            
+            // 폼 최상단으로 스크롤
+            document.getElementById('consultationForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 상담사 재선택
+        function goBackToConsultants() {
+            document.getElementById('consultationForm').style.display = 'none';
+            document.getElementById('consultantGrid').style.display = 'grid';
+            document.getElementById('consultationModal').scrollTop = 0;
+        }
+
+        // 상담 신청 제출
+        async function submitConsultation() {
+            const clientName = document.getElementById('clientName').value.trim();
+            const clientPhone = document.getElementById('clientPhone').value.trim();
+            const content = document.getElementById('consultationContent').value.trim();
+
+            // 유효성 검사
+            if (!clientName) {
+                alert('이름을 입력해주세요.');
+                document.getElementById('clientName').focus();
+                return;
+            }
+
+            if (!clientPhone) {
+                alert('전화번호를 입력해주세요.');
+                document.getElementById('clientPhone').focus();
+                return;
+            }
+
+            // 전화번호 형식 검사
+            const phoneRegex = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
+            if (!phoneRegex.test(clientPhone)) {
+                alert('올바른 전화번호 형식을 입력해주세요.\n예) 010-1234-5678 또는 01012345678');
+                document.getElementById('clientPhone').focus();
+                return;
+            }
+
+            if (!content) {
+                alert('상담 내용을 간단히 작성해주세요.');
+                document.getElementById('consultationContent').focus();
+                return;
+            }
+
+            // 상담 신청 데이터
+            const consultationData = {
+                consultant_name: selectedConsultant.name,
+                consultant_phone: selectedConsultant.phone,
+                client_name: clientName,
+                client_phone: clientPhone,
+                consultation_content: content,
+                payment_status: '입금대기',
+                created_at: new Date().toISOString()
+            };
+
+            try {
+                // 상담 신청 정보 저장 (협회 전용 테이블에 저장)
+                const response = await fetch('tables/myungli_consultations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(consultationData)
+                });
+
+                if (response.ok) {
+                    // 성공 메시지
+                    alert(`✅ 상담 신청이 완료되었습니다!\n\n📞 상담사: ${selectedConsultant.name} 선생님\n💰 입금 계좌: 국민은행 123456-78-901234 (활인명리학협회)\n💵 입금액: 50,000원\n\n입금 확인 후 상담사님께서 연락드립니다.\n입금자명을 "${clientName}"으로 입력해주세요.`);
+                    
+                    // TODO: 여기에 문자/카카오톡 발송 로직 추가
+                    // sendSMS(selectedConsultant.phone, clientName, clientPhone, content);
+                    
+                    closeConsultationModal();
+                } else {
+                    throw new Error('저장 실패');
+                }
+            } catch (error) {
+                console.error('상담 신청 오류:', error);
+                alert('❌ 상담 신청 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            }
+        }
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeConsultationModal();
+            }
+        });
+    </script>
 
     <!-- 신뢰 지표 -->
     <section class="trust-section">
