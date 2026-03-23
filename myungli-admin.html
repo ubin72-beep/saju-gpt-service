@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>활인명리학협회 상담 관리</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .header {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #d4af37;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        /* 통계 카드 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-card .icon {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #f4e5b5;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95em;
+        }
+
+        /* 필터 */
+        .filter-section {
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-item label {
+            display: block;
+            color: #f4e5b5;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .filter-item select,
+        .filter-item input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1em;
+        }
+
+        .filter-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%);
+            border: none;
+            color: #1a1a1a;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            margin-top: 22px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* 상담 목록 테이블 */
+        .consultations-table {
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            color: #d4af37;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        tbody tr {
+            transition: all 0.3s;
+        }
+
+        tbody tr:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-waiting {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+
+        .status-paid {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .status-completed {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border: 1px solid #2196f3;
+        }
+
+        .status-cancelled {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-detail {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border: 1px solid #2196f3;
+        }
+
+        .btn-detail:hover {
+            background: rgba(33, 150, 243, 0.4);
+        }
+
+        .btn-status {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .btn-status:hover {
+            background: rgba(76, 175, 80, 0.4);
+        }
+
+        /* 상세 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 700px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #d4af37;
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            color: #d4af37;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .detail-item {
+            margin-bottom: 20px;
+        }
+
+        .detail-item label {
+            display: block;
+            color: #f4e5b5;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .detail-item .value {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+        }
+
+        /* 로그인 화면 */
+        .login-container {
+            max-width: 450px;
+            margin: 100px auto;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 50px 40px;
+        }
+
+        .login-container h1 {
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            display: block;
+            color: #f4e5b5;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1em;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%);
+            border: none;
+            color: #1a1a1a;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .filter-row {
+                flex-direction: column;
+            }
+
+            .filter-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 로그인 화면 -->
+    <div id="loginScreen" class="login-container">
+        <h1><i class="fas fa-lock"></i> 협회 관리자 로그인</h1>
+        <form class="login-form" onsubmit="loginAdmin(event)">
+            <div class="form-group">
+                <label>아이디</label>
+                <input type="text" id="adminId" placeholder="협회 관리자 ID" required>
+            </div>
+            <div class="form-group">
+                <label>비밀번호</label>
+                <input type="password" id="adminPassword" placeholder="비밀번호" required>
+            </div>
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> 로그인
+            </button>
+        </form>
+        <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 20px; font-size: 0.9em;">
+            활인명리학협회 전용 상담 관리 시스템
+        </p>
+    </div>
+
+    <!-- 관리자 화면 -->
+    <div id="adminScreen" style="display: none;">
+        <div class="container">
+            <!-- 헤더 -->
+            <div class="header">
+                <h1>
+                    <i class="fas fa-user-shield"></i>
+                    활인명리학협회 상담 관리
+                </h1>
+                <button class="logout-btn" onclick="logoutAdmin()">
+                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </button>
+            </div>
+
+            <!-- 통계 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-clock"></i></div>
+                    <div class="number" id="statWaiting">0</div>
+                    <div class="label">입금 대기</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="number" id="statPaid">0</div>
+                    <div class="label">입금 완료</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-comments"></i></div>
+                    <div class="number" id="statCompleted">0</div>
+                    <div class="label">상담 완료</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-coins"></i></div>
+                    <div class="number" id="statRevenue">0원</div>
+                    <div class="label">총 수익</div>
+                </div>
+            </div>
+
+            <!-- 필터 -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label>상담사</label>
+                        <select id="filterConsultant">
+                            <option value="">전체</option>
+                            <option value="김태양">김태양 선생</option>
+                            <option value="박진우">박진우 선생</option>
+                            <option value="이현석">이현석 선생</option>
+                            <option value="최민지">최민지 선생</option>
+                            <option value="정수연">정수연 선생</option>
+                            <option value="한예린">한예린 선생</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>상태</label>
+                        <select id="filterStatus">
+                            <option value="">전체</option>
+                            <option value="입금대기">입금 대기</option>
+                            <option value="입금완료">입금 완료</option>
+                            <option value="상담완료">상담 완료</option>
+                            <option value="취소">취소</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>검색</label>
+                        <input type="text" id="filterSearch" placeholder="고객명/전화번호">
+                    </div>
+                    <div class="filter-item">
+                        <button class="filter-btn" onclick="applyFilters()">
+                            <i class="fas fa-search"></i> 검색
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상담 목록 -->
+            <div class="consultations-table">
+                <h2 style="color: #d4af37; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-list"></i> 상담 신청 내역
+                </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>신청일시</th>
+                            <th>상담사</th>
+                            <th>고객명</th>
+                            <th>전화번호</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultationsTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">
+                                데이터를 불러오는 중...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상세보기 모달 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDetailModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">
+                <i class="fas fa-file-alt"></i> 상담 신청 상세
+            </h2>
+            <div id="modalBody">
+                <!-- 동적으로 채워짐 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 임시 로그인 정보 (실제로는 서버에서 검증해야 함)
+        const ADMIN_CREDENTIALS = {
+            username: 'myungli_admin',
+            password: 'myungli2026!'
+        };
+
+        let consultationsData = [];
+
+        // 로그인
+        function loginAdmin(e) {
+            e.preventDefault();
+            const id = document.getElementById('adminId').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (id === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                sessionStorage.setItem('myungliAdmin', 'true');
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminScreen').style.display = 'block';
+                loadConsultations();
+            } else {
+                alert('❌ 아이디 또는 비밀번호가 올바르지 않습니다.');
+            }
+        }
+
+        // 로그아웃
+        function logoutAdmin() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                sessionStorage.removeItem('myungliAdmin');
+                document.getElementById('loginScreen').style.display = 'block';
+                document.getElementById('adminScreen').style.display = 'none';
+            }
+        }
+
+        // 페이지 로드 시 로그인 체크
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('myungliAdmin') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminScreen').style.display = 'block';
+                loadConsultations();
+            }
+        });
+
+        // 상담 목록 불러오기
+        async function loadConsultations() {
+            try {
+                const response = await fetch('tables/myungli_consultations?limit=100&sort=-created_at');
+                const result = await response.json();
+                consultationsData = result.data || [];
+                updateStatistics();
+                renderConsultations(consultationsData);
+            } catch (error) {
+                console.error('데이터 로드 오류:', error);
+                document.getElementById('consultationsTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #f44336;">
+                            데이터를 불러오는 중 오류가 발생했습니다.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // 통계 업데이트
+        function updateStatistics() {
+            const waiting = consultationsData.filter(c => c.payment_status === '입금대기').length;
+            const paid = consultationsData.filter(c => c.payment_status === '입금완료').length;
+            const completed = consultationsData.filter(c => c.payment_status === '상담완료').length;
+            const revenue = (paid + completed) * 50000;
+
+            document.getElementById('statWaiting').textContent = waiting;
+            document.getElementById('statPaid').textContent = paid;
+            document.getElementById('statCompleted').textContent = completed;
+            document.getElementById('statRevenue').textContent = revenue.toLocaleString() + '원';
+        }
+
+        // 상담 목록 렌더링
+        function renderConsultations(data) {
+            const tbody = document.getElementById('consultationsTableBody');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">
+                            상담 신청 내역이 없습니다.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = data.map(item => {
+                const date = new Date(item.created_at).toLocaleString('ko-KR');
+                const statusClass = {
+                    '입금대기': 'status-waiting',
+                    '입금완료': 'status-paid',
+                    '상담완료': 'status-completed',
+                    '취소': 'status-cancelled'
+                }[item.payment_status] || 'status-waiting';
+
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${item.consultant_name}</td>
+                        <td>${item.client_name}</td>
+                        <td>${item.client_phone}</td>
+                        <td><span class="status-badge ${statusClass}">${item.payment_status}</span></td>
+                        <td>
+                            <button class="action-btn btn-detail" onclick="showDetail('${item.id}')">
+                                <i class="fas fa-eye"></i> 상세
+                            </button>
+                            <button class="action-btn btn-status" onclick="changeStatus('${item.id}')">
+                                <i class="fas fa-edit"></i> 상태변경
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 필터 적용
+        function applyFilters() {
+            const consultant = document.getElementById('filterConsultant').value;
+            const status = document.getElementById('filterStatus').value;
+            const search = document.getElementById('filterSearch').value.toLowerCase();
+
+            let filtered = consultationsData;
+
+            if (consultant) {
+                filtered = filtered.filter(c => c.consultant_name === consultant);
+            }
+
+            if (status) {
+                filtered = filtered.filter(c => c.payment_status === status);
+            }
+
+            if (search) {
+                filtered = filtered.filter(c => 
+                    c.client_name.toLowerCase().includes(search) ||
+                    c.client_phone.includes(search)
+                );
+            }
+
+            renderConsultations(filtered);
+        }
+
+        // 상세보기
+        function showDetail(id) {
+            const item = consultationsData.find(c => c.id === id);
+            if (!item) return;
+
+            const date = new Date(item.created_at).toLocaleString('ko-KR');
+            const statusClass = {
+                '입금대기': 'status-waiting',
+                '입금완료': 'status-paid',
+                '상담완료': 'status-completed',
+                '취소': 'status-cancelled'
+            }[item.payment_status] || 'status-waiting';
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="detail-item">
+                    <label><i class="fas fa-calendar-alt"></i> 신청일시</label>
+                    <div class="value">${date}</div>
+                </div>
+                <div class="detail-item">
+                    <label><i class="fas fa-user-tie"></i> 상담사</label>
+                    <div class="value">${item.consultant_name} (${item.consultant_phone})</div>
+                </div>
+                <div class="detail-item">
+                    <label><i class="fas fa-user"></i> 고객명</label>
+                    <div class="value">${item.client_name}</div>
+                </div>
+                <div class="detail-item">
+                    <label><i class="fas fa-phone"></i> 고객 전화번호</label>
+                    <div class="value">
+                        ${item.client_phone}
+                        <a href="tel:${item.client_phone}" style="color: #d4af37; margin-left: 10px;">
+                            <i class="fas fa-phone-alt"></i> 전화걸기
+                        </a>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <label><i class="fas fa-comment-dots"></i> 상담 내용</label>
+                    <div class="value" style="white-space: pre-wrap; line-height: 1.6;">${item.consultation_content}</div>
+                </div>
+                <div class="detail-item">
+                    <label><i class="fas fa-info-circle"></i> 상태</label>
+                    <div class="value">
+                        <span class="status-badge ${statusClass}">${item.payment_status}</span>
+                    </div>
+                </div>
+                <div style="margin-top: 30px; padding: 20px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px;">
+                    <h4 style="color: #d4af37; margin-bottom: 10px;">💰 입금 정보</h4>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6;">
+                        상담료: 50,000원<br>
+                        은행: 국민은행<br>
+                        계좌: 123456-78-901234<br>
+                        예금주: 활인명리학협회
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('detailModal').style.display = 'block';
+        }
+
+        // 모달 닫기
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // 상태 변경
+        async function changeStatus(id) {
+            const item = consultationsData.find(c => c.id === id);
+            if (!item) return;
+
+            const newStatus = prompt(
+                `현재 상태: ${item.payment_status}\n\n변경할 상태를 입력하세요:\n1. 입금대기\n2. 입금완료\n3. 상담완료\n4. 취소`,
+                item.payment_status
+            );
+
+            if (!newStatus || newStatus === item.payment_status) return;
+
+            const validStatuses = ['입금대기', '입금완료', '상담완료', '취소'];
+            if (!validStatuses.includes(newStatus)) {
+                alert('올바른 상태를 입력해주세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`tables/myungli_consultations/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ payment_status: newStatus })
+                });
+
+                if (response.ok) {
+                    alert('✅ 상태가 변경되었습니다.');
+                    loadConsultations();
+                } else {
+                    throw new Error('상태 변경 실패');
+                }
+            } catch (error) {
+                console.error('상태 변경 오류:', error);
+                alert('❌ 상태 변경 중 오류가 발생했습니다.');
+            }
+        }
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDetailModal();
+            }
+        });
+    </script>
+</body>
+</html>
