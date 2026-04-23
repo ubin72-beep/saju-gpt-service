@@ -441,121 +441,266 @@
     <!-- 주문 관리 스크립트 -->
     <script>
         let currentOrderId = null;
+        let allOrders = [];
 
         // 사이드바 토글
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.getElementById('adminSidebar').classList.toggle('collapsed');
         });
 
+        // 페이지 로드 시 결제 데이터 불러오기
+        async function loadPayments() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const tableBody = document.getElementById('ordersTableBody');
+            
+            try {
+                loadingIndicator.style.display = 'block';
+                
+                // payments 테이블에서 데이터 가져오기
+                const response = await fetch('tables/payments?limit=100&sort=-created_at');
+                const data = await response.json();
+                
+                allOrders = data.data || [];
+                
+                // 테이블에 표시
+                renderOrders(allOrders);
+                
+                // 통계 계산
+                updateStatistics(allOrders);
+                
+            } catch (error) {
+                console.error('결제 데이터 로드 오류:', error);
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">데이터를 불러오지 못했습니다.</td></tr>';
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // 주문 목록 렌더링
+        function renderOrders(orders) {
+            const tableBody = document.getElementById('ordersTableBody');
+            
+            if (!orders || orders.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">주문 내역이 없습니다.</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = orders.map(order => {
+                const statusBadge = getStatusBadge(order.status);
+                const date = new Date(order.created_at || order.updated_at).toLocaleString('ko-KR');
+                
+                return `
+                    <tr>
+                        <td><strong>#${order.order_id || order.id}</strong></td>
+                        <td>${order.customer_name || '-'}</td>
+                        <td>${order.product_name || '-'}</td>
+                        <td><strong>₩${(order.amount || 0).toLocaleString()}</strong></td>
+                        <td>${order.payment_method || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td>${date}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn view" onclick="viewOrder('${order.id}')" title="상세보기">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit" onclick="updateOrderStatus('${order.id}')" title="상태변경">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete" onclick="refundOrder('${order.id}')" title="환불처리">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 상태 배지 생성
+        function getStatusBadge(status) {
+            const statusMap = {
+                '대기': '<span class="badge warning">결제 대기</span>',
+                '완료': '<span class="badge success">결제 완료</span>',
+                '취소': '<span class="badge danger">취소</span>',
+                '환불': '<span class="badge info">환불</span>',
+                '실패': '<span class="badge danger">실패</span>'
+            };
+            return statusMap[status] || '<span class="badge">알 수 없음</span>';
+        }
+
+        // 통계 업데이트
+        function updateStatistics(orders) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const thisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            
+            // 오늘 주문
+            const todayOrders = orders.filter(o => {
+                const orderDate = new Date(o.created_at || o.updated_at);
+                return orderDate >= today;
+            });
+            
+            // 오늘 매출
+            const todayRevenue = todayOrders
+                .filter(o => o.status === '완료')
+                .reduce((sum, o) => sum + (o.amount || 0), 0);
+            
+            // 이번 달 매출
+            const monthlyRevenue = orders
+                .filter(o => {
+                    const orderDate = new Date(o.created_at || o.updated_at);
+                    return orderDate >= thisMonth && o.status === '완료';
+                })
+                .reduce((sum, o) => sum + (o.amount || 0), 0);
+            
+            // 환불 대기
+            const pendingRefunds = orders.filter(o => o.status === '환불').length;
+            
+            // DOM 업데이트
+            document.getElementById('today-orders').textContent = todayOrders.length;
+            document.getElementById('today-revenue').textContent = '₩' + todayRevenue.toLocaleString();
+            document.getElementById('monthly-revenue').textContent = '₩' + monthlyRevenue.toLocaleString();
+            document.getElementById('pending-refunds').textContent = pendingRefunds;
+        }
+
         // 검색
         document.getElementById('orderSearch')?.addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('#ordersTableBody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            const filteredOrders = allOrders.filter(order => {
+                const orderId = (order.order_id || order.id || '').toLowerCase();
+                const customerName = (order.customer_name || '').toLowerCase();
+                const productName = (order.product_name || '').toLowerCase();
+                
+                return orderId.includes(searchTerm) || 
+                       customerName.includes(searchTerm) || 
+                       productName.includes(searchTerm);
             });
+            
+            renderOrders(filteredOrders);
         });
 
         // 상태 필터
         document.getElementById('statusFilter')?.addEventListener('change', function(e) {
             const filter = e.target.value;
-            const rows = document.querySelectorAll('#ordersTableBody tr');
             
-            rows.forEach(row => {
-                if (filter === 'all') {
-                    row.style.display = '';
-                } else {
-                    const badge = row.querySelector('.badge');
-                    const text = badge?.textContent.toLowerCase();
-                    const match = 
-                        (filter === 'pending' && text.includes('대기')) ||
-                        (filter === 'paid' && text.includes('완료') && !text.includes('배송')) ||
-                        (filter === 'completed' && text.includes('배송')) ||
-                        (filter === 'cancelled' && text.includes('취소')) ||
-                        (filter === 'refunded' && text.includes('환불'));
-                    row.style.display = match ? '' : 'none';
-                }
-            });
+            let filteredOrders = allOrders;
+            
+            if (filter !== 'all') {
+                filteredOrders = allOrders.filter(order => {
+                    const status = (order.status || '').toLowerCase();
+                    
+                    if (filter === 'pending') return status.includes('대기');
+                    if (filter === 'paid') return status.includes('완료');
+                    if (filter === 'cancelled') return status.includes('취소');
+                    if (filter === 'refunded') return status.includes('환불');
+                    
+                    return false;
+                });
+            }
+            
+            renderOrders(filteredOrders);
         });
 
         // 주문 상세보기
-        function viewOrder(orderId) {
+        async function viewOrder(orderId) {
             const modal = document.getElementById('orderDetailModal');
             const body = document.getElementById('orderDetailBody');
             
-            // 샘플 데이터
-            body.innerHTML = `
-                <div style="padding: 1rem;">
-                    <div class="form-group">
-                        <label class="form-label">주문번호</label>
-                        <input type="text" class="form-control" value="#${orderId}" readonly>
+            try {
+                // DB에서 주문 데이터 가져오기
+                const response = await fetch(`tables/payments/${orderId}`);
+                const order = await response.json();
+                
+                const date = new Date(order.created_at || order.updated_at).toLocaleString('ko-KR');
+                const statusBadge = getStatusBadge(order.status);
+                
+                body.innerHTML = `
+                    <div style="padding: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">주문번호</label>
+                            <input type="text" class="form-control" value="#${order.order_id || order.id}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">주문자 정보</label>
+                            <input type="text" class="form-control" value="${order.customer_name || '-'}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">이메일</label>
+                            <input type="text" class="form-control" value="${order.customer_email || '-'}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">전화번호</label>
+                            <input type="text" class="form-control" value="${order.customer_phone || '-'}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">상품/서비스</label>
+                            <input type="text" class="form-control" value="${order.product_name || '-'}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">결제 금액</label>
+                            <input type="text" class="form-control" value="₩${(order.amount || 0).toLocaleString()}" readonly style="font-weight: 600; font-size: 1.1em;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">결제 방법</label>
+                            <input type="text" class="form-control" value="${order.payment_method || '-'}" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">결제 상태</label>
+                            ${statusBadge}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">주문 일시</label>
+                            <input type="text" class="form-control" value="${date}" readonly>
+                        </div>
+                        
+                        ${order.payment_key ? `
+                        <div class="form-group">
+                            <label class="form-label">결제 키</label>
+                            <input type="text" class="form-control" value="${order.payment_key}" readonly>
+                        </div>
+                        ` : ''}
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">주문자 정보</label>
-                        <input type="text" class="form-control" value="홍길동 (hong@example.com)" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">상품/서비스</label>
-                        <input type="text" class="form-control" value="프리미엄 사주 분석" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">주문 금액</label>
-                        <input type="text" class="form-control" value="₩50,000" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">할인 금액</label>
-                        <input type="text" class="form-control" value="₩0" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">최종 결제 금액</label>
-                        <input type="text" class="form-control" value="₩50,000" readonly style="font-weight: 600; font-size: 1.1em;">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">결제 방법</label>
-                        <input type="text" class="form-control" value="신용카드 (****-****-****-1234)" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">결제 상태</label>
-                        <span class="badge success">결제 완료</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">주문 일시</label>
-                        <input type="text" class="form-control" value="2026-02-03 14:30:25" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">결제 승인 번호</label>
-                        <input type="text" class="form-control" value="1234567890" readonly>
-                    </div>
-                </div>
-            `;
-            
-            modal.classList.add('active');
+                `;
+                
+                modal.classList.add('active');
+                
+            } catch (error) {
+                console.error('주문 상세 조회 오류:', error);
+                alert('주문 정보를 불러오지 못했습니다.');
+            }
         }
 
         // 주문 상태 변경
-        function updateOrderStatus(orderId) {
+        async function updateOrderStatus(orderId) {
             currentOrderId = orderId;
             const modal = document.getElementById('statusModal');
             
-            // 현재 상태 표시
-            document.getElementById('currentStatus').value = '결제 완료';
-            
-            modal.classList.add('active');
+            try {
+                // 현재 주문 정보 가져오기
+                const response = await fetch(`tables/payments/${orderId}`);
+                const order = await response.json();
+                
+                // 현재 상태 표시
+                document.getElementById('currentStatus').value = order.status || '알 수 없음';
+                
+                modal.classList.add('active');
+            } catch (error) {
+                console.error('주문 조회 오류:', error);
+                alert('주문 정보를 불러오지 못했습니다.');
+            }
         }
 
         // 상태 변경 확인
-        function confirmStatusChange() {
+        async function confirmStatusChange() {
             const newStatus = document.getElementById('newStatus').value;
             const reason = document.getElementById('statusReason').value;
             
@@ -564,23 +709,107 @@
                 return;
             }
             
-            alert(`주문 ${currentOrderId}의 상태가 변경되었습니다.`);
-            closeStatusModal();
-            // 실제로는 API 호출
+            if (!currentOrderId) {
+                alert('주문 ID가 없습니다.');
+                return;
+            }
+            
+            try {
+                // 상태 업데이트
+                await fetch(`tables/payments/${currentOrderId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: newStatus,
+                        status_reason: reason,
+                        updated_at: new Date().toISOString()
+                    })
+                });
+                
+                alert('주문 상태가 변경되었습니다.');
+                closeStatusModal();
+                
+                // 목록 새로고침
+                await loadPayments();
+                
+            } catch (error) {
+                console.error('상태 변경 오류:', error);
+                alert('상태 변경 중 오류가 발생했습니다.');
+            }
         }
 
         // 환불 처리
-        function refundOrder(orderId) {
-            if (confirm('이 주문을 환불 처리하시겠습니까?')) {
-                alert(`주문 ${orderId}이 환불 처리되었습니다.`);
-                // 실제로는 API 호출
+        async function refundOrder(orderId) {
+            if (!confirm('이 주문을 환불 처리하시겠습니까?')) {
+                return;
+            }
+            
+            const reason = prompt('환불 사유를 입력하세요:');
+            if (!reason || !reason.trim()) {
+                alert('환불 사유를 입력해야 합니다.');
+                return;
+            }
+            
+            try {
+                // 환불 상태로 업데이트
+                await fetch(`tables/payments/${orderId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: '환불',
+                        refund_reason: reason,
+                        refund_date: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    })
+                });
+                
+                alert('환불 처리가 완료되었습니다.');
+                
+                // 목록 새로고침
+                await loadPayments();
+                
+            } catch (error) {
+                console.error('환불 처리 오류:', error);
+                alert('환불 처리 중 오류가 발생했습니다.');
             }
         }
 
         // 내보내기
         function exportOrders() {
-            alert('주문 목록을 엑셀 파일로 내보냅니다.');
-            // 실제로는 엑셀 다운로드 기능 구현
+            if (allOrders.length === 0) {
+                alert('내보낼 주문이 없습니다.');
+                return;
+            }
+            
+            // CSV 생성
+            const headers = ['주문번호', '고객명', '이메일', '전화번호', '상품명', '금액', '결제방법', '상태', '주문일시'];
+            const rows = allOrders.map(order => [
+                order.order_id || order.id,
+                order.customer_name || '-',
+                order.customer_email || '-',
+                order.customer_phone || '-',
+                order.product_name || '-',
+                order.amount || 0,
+                order.payment_method || '-',
+                order.status || '-',
+                new Date(order.created_at || order.updated_at).toLocaleString('ko-KR')
+            ]);
+            
+            const csv = [headers, ...rows]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            // BOM 추가 (엑셀에서 한글이 깨지지 않도록)
+            const bom = '\uFEFF';
+            const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8;' });
+            
+            // 다운로드
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `주문목록_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.click();
+            
+            alert('주문 목록이 다운로드되었습니다.');
         }
 
         // 인쇄
@@ -611,7 +840,12 @@
             }
         }
 
-        console.log('✅ 주문/결제 관리 페이지 로드 완료');
+        // 페이지 로드 시 데이터 불러오기
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPayments();
+        });
+
+        console.log('✅ 주문/결제 관리 페이지 로드 완료 - DB 연동됨');
     </script>
 </body>
 </html>
