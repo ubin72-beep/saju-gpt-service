@@ -3,368 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제하기 - AI 사주 천년지기</title>
-    
-    <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="81DxU0oTAy466ZXTubMCoKzvkZVWyGv8b8pL9wpjvK0" />
-    
+    <title>결제하기 - AI사주천년지기</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 토스페이먼츠 SDK -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 600px;
-            margin: 40px auto;
-            background: white;
+            margin: 50px auto;
+        }
+
+        .payment-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        
+
         .header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 40px;
         }
-        
+
         .header h1 {
-            font-size: 1.8rem;
+            color: #d4af37;
+            font-size: 2em;
             margin-bottom: 10px;
         }
-        
+
         .header p {
-            opacity: 0.8;
-            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 1em;
         }
-        
-        .content {
-            padding: 30px;
-        }
-        
-        .service-info {
-            background: #f8f9fa;
-            padding: 20px;
+
+        .product-info {
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.2);
             border-radius: 15px;
+            padding: 25px;
             margin-bottom: 30px;
         }
-        
-        .service-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 10px;
-        }
-        
-        .service-description {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .price-box {
+
+        .product-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-top: 2px solid #e0e0e0;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
-        
-        .price-label {
-            font-size: 1.1rem;
-            color: #666;
+
+        .product-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
-        
-        .price-amount {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #e74c3c;
+
+        .product-label {
+            color: #f4e5b5;
+            font-weight: 600;
         }
-        
+
+        .product-value {
+            color: white;
+            font-weight: 700;
+        }
+
+        .total-amount {
+            font-size: 1.5em;
+            color: #d4af37;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
+            color: #f4e5b5;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
         }
-        
+
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 1em;
         }
-        
+
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
         }
-        
+
         .payment-methods {
             margin: 30px 0;
         }
-        
+
         .payment-methods h3 {
-            font-size: 1.1rem;
+            color: #d4af37;
             margin-bottom: 15px;
-            color: #333;
+            font-size: 1.2em;
         }
-        
-        .payment-options {
+
+        .method-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 15px;
         }
-        
-        .payment-option {
-            padding: 15px;
-            border: 2px solid #e0e0e0;
+
+        .method-card {
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 10px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .payment-option:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
+
+        .method-card:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+            transform: translateY(-3px);
         }
-        
-        .payment-option.active {
-            border-color: #667eea;
-            background: #667eea;
+
+        .method-card.selected {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .method-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+
+        .method-name {
             color: white;
-        }
-        
-        .payment-option input[type="radio"] {
-            display: none;
-        }
-        
-        .payment-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.3s;
-            margin-top: 20px;
-        }
-        
-        .payment-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .payment-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .security-notice {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #856404;
-        }
-        
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            color: #667eea;
-            text-decoration: none;
             font-weight: 600;
         }
-        
-        .back-btn:hover {
-            text-decoration: underline;
+
+        .pay-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b5 100%);
+            border: none;
+            color: #1a1a1a;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
         }
-        
+
+        .pay-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .pay-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .notice {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+
+        .notice i {
+            color: #ffc107;
+            margin-right: 5px;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                margin: 20px auto;
-            }
-            
-            .payment-options {
+            .method-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .payment-card {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>💳 결제하기</h1>
-            <p>안전하고 간편한 결제 시스템</p>
-        </div>
-        
-        <div class="content">
-            <div class="service-info">
-                <div class="service-name" id="serviceName">프리미엄 분석</div>
-                <div class="service-description" id="serviceDescription">9가지 분석 포함 · 100p PDF 리포트 · 평생 보관</div>
-                
-                <div class="price-box">
-                    <span class="price-label">결제 금액</span>
-                    <span class="price-amount" id="priceAmount">로딩 중...</span>
+        <div class="payment-card">
+            <div class="header">
+                <h1><i class="fas fa-credit-card"></i> 결제하기</h1>
+                <p>안전한 토스페이먼츠로 결제합니다</p>
+            </div>
+
+            <!-- 상품 정보 -->
+            <div class="product-info">
+                <div class="product-row">
+                    <span class="product-label">상품명</span>
+                    <span class="product-value" id="productName">프리미엄 사주 분석</span>
+                </div>
+                <div class="product-row">
+                    <span class="product-label">수량</span>
+                    <span class="product-value">1개</span>
+                </div>
+                <div class="product-row">
+                    <span class="product-label">결제 금액</span>
+                    <span class="product-value total-amount" id="totalAmount">10,000원</span>
                 </div>
             </div>
-            
+
+            <!-- 주문자 정보 -->
             <form id="paymentForm">
                 <div class="form-group">
-                    <label><i class="fas fa-user"></i> 이름</label>
+                    <label>이름 *</label>
                     <input type="text" id="customerName" placeholder="홍길동" required>
                 </div>
-                
                 <div class="form-group">
-                    <label><i class="fas fa-envelope"></i> 이메일 (결제 영수증 발송)</label>
+                    <label>이메일 *</label>
                     <input type="email" id="customerEmail" placeholder="example@email.com" required>
                 </div>
-                
                 <div class="form-group">
-                    <label><i class="fas fa-phone"></i> 휴대폰 번호</label>
+                    <label>휴대폰 번호 *</label>
                     <input type="tel" id="customerPhone" placeholder="010-1234-5678" required>
                 </div>
-                
+
+                <!-- 결제 수단 선택 -->
                 <div class="payment-methods">
                     <h3>결제 수단 선택</h3>
-                    <div class="payment-options">
-                        <label class="payment-option active">
-                            <input type="radio" name="paymentMethod" value="CARD" checked>
-                            <div>💳 신용/체크카드</div>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" name="paymentMethod" value="TRANSFER">
-                            <div>🏦 계좌이체</div>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" name="paymentMethod" value="VIRTUAL_ACCOUNT">
-                            <div>🧾 가상계좌</div>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" name="paymentMethod" value="EASY_PAY">
-                            <div>📱 간편결제</div>
-                        </label>
+                    <div class="method-grid">
+                        <div class="method-card selected" data-method="카드" onclick="selectMethod('카드', this)">
+                            <div class="method-icon"><i class="fas fa-credit-card"></i></div>
+                            <div class="method-name">카드 결제</div>
+                        </div>
+                        <div class="method-card" data-method="계좌이체" onclick="selectMethod('계좌이체', this)">
+                            <div class="method-icon"><i class="fas fa-building-columns"></i></div>
+                            <div class="method-name">계좌이체</div>
+                        </div>
+                        <div class="method-card" data-method="간편결제" onclick="selectMethod('간편결제', this)">
+                            <div class="method-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <div class="method-name">간편결제</div>
+                        </div>
+                        <div class="method-card" data-method="토스페이" onclick="selectMethod('토스페이', this)">
+                            <div class="method-icon">💙</div>
+                            <div class="method-name">토스페이</div>
+                        </div>
                     </div>
                 </div>
-                
-                <button type="submit" class="payment-btn" id="paymentBtn">
-                    <i class="fas fa-lock"></i> 안전하게 결제하기
+
+                <button type="submit" class="pay-button">
+                    <i class="fas fa-lock"></i> 결제하기
                 </button>
+
+                <div class="notice">
+                    <i class="fas fa-info-circle"></i>
+                    결제 완료 후 이메일로 영수증이 발송됩니다.<br>
+                    결제 관련 문의: aisaju1000@gmail.com
+                </div>
             </form>
-            
-            <div class="security-notice">
-                <i class="fas fa-shield-alt"></i>
-                <strong>안전한 결제</strong><br>
-                모든 결제 정보는 SSL 암호화로 안전하게 보호됩니다.
-            </div>
-            
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> 메인으로 돌아가기
-            </a>
         </div>
     </div>
-    
-    <!-- 토스페이먼츠 SDK -->
-    <script src="https://js.tosspayments.com/v1/payment"></script>
-    
+
     <script>
-        // URL 파라미터에서 서비스 정보 가져오기
+        // URL 파라미터에서 상품 정보 가져오기
         const urlParams = new URLSearchParams(window.location.search);
-        const serviceType = urlParams.get('type') || 'premium';
-        const serviceName = urlParams.get('name') || '프리미엄 분석';
-        // price 또는 amount 파라미터 모두 지원 (기본값 제거)
-        const servicePrice = parseInt(urlParams.get('price') || urlParams.get('amount') || '0');
-        const serviceDescription = urlParams.get('desc') || '9가지 분석 포함 · 100p PDF 리포트 · 평생 보관';
-        
-        // 서비스 정보 표시
-        document.getElementById('serviceName').textContent = serviceName;
-        document.getElementById('serviceDescription').textContent = serviceDescription;
-        document.getElementById('priceAmount').textContent = `₩${servicePrice.toLocaleString()}`;
-        
+        const productName = urlParams.get('product') || '프리미엄 사주 분석';
+        const amount = parseInt(urlParams.get('amount')) || 10000;
+
+        // 상품 정보 표시
+        document.getElementById('productName').textContent = productName;
+        document.getElementById('totalAmount').textContent = amount.toLocaleString() + '원';
+
+        // 선택된 결제 수단
+        let selectedMethod = '카드';
+
         // 결제 수단 선택
-        const paymentOptions = document.querySelectorAll('.payment-option');
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                paymentOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                this.querySelector('input[type="radio"]').checked = true;
-            });
-        });
-        
-        // 토스페이먼츠 클라이언트 키 (테스트 키)
-        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
-        const tossPayments = TossPayments(clientKey);
-        
-        // 결제 요청
-        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        function selectMethod(method, element) {
+            selectedMethod = method;
             
+            // 모든 카드에서 selected 클래스 제거
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // 클릭한 카드에 selected 클래스 추가
+            element.classList.add('selected');
+        }
+
+        // 토스페이먼츠 초기화
+        // ⚠️ 실제 클라이언트 키로 변경하세요!
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';  // 테스트 키
+        const tossPayments = TossPayments(clientKey);
+
+        // 결제 폼 제출
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 입력 값 가져오기
             const customerName = document.getElementById('customerName').value.trim();
             const customerEmail = document.getElementById('customerEmail').value.trim();
             const customerPhone = document.getElementById('customerPhone').value.trim();
-            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            
-            if (!customerName || !customerEmail || !customerPhone) {
-                alert('모든 정보를 입력해주세요.');
+
+            // 유효성 검사
+            if (!customerName) {
+                alert('이름을 입력해주세요.');
                 return;
             }
-            
-            // 주문 ID 생성 (고유값)
-            const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-            
-            // 로딩 상태
-            const paymentBtn = document.getElementById('paymentBtn');
-            const originalText = paymentBtn.innerHTML;
-            paymentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 결제 창 열기 중...';
-            paymentBtn.disabled = true;
-            
+            if (!customerEmail) {
+                alert('이메일을 입력해주세요.');
+                return;
+            }
+            if (!customerPhone) {
+                alert('휴대폰 번호를 입력해주세요.');
+                return;
+            }
+
+            // 주문 ID 생성 (타임스탬프 + 랜덤)
+            const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            // 결제 데이터 저장 (대기 상태)
             try {
-                // 토스페이먼츠 결제 창 호출
-                await tossPayments.requestPayment(paymentMethod, {
-                    amount: servicePrice,
+                await fetch('tables/payments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order_id: orderId,
+                        customer_name: customerName,
+                        customer_email: customerEmail,
+                        customer_phone: customerPhone,
+                        amount: amount,
+                        product_name: productName,
+                        payment_method: selectedMethod,
+                        status: '대기',
+                        created_at: new Date().toISOString()
+                    })
+                });
+            } catch (error) {
+                console.error('결제 정보 저장 오류:', error);
+            }
+
+            // 토스페이먼츠 결제창 호출
+            try {
+                await tossPayments.requestPayment(selectedMethod, {
+                    amount: amount,
                     orderId: orderId,
-                    orderName: serviceName,
+                    orderName: productName,
                     customerName: customerName,
                     customerEmail: customerEmail,
-                    customerMobilePhone: customerPhone.replace(/-/g, ''),
-                    successUrl: `${window.location.origin}/payment-success.html`,
-                    failUrl: `${window.location.origin}/payment-fail.html`,
+                    customerMobilePhone: customerPhone,
+                    successUrl: window.location.origin + window.location.pathname.replace('payment.html', 'payment-success.html'),
+                    failUrl: window.location.origin + window.location.pathname.replace('payment.html', 'payment-fail.html'),
                 });
             } catch (error) {
                 console.error('결제 오류:', error);
                 alert('결제 중 오류가 발생했습니다. 다시 시도해주세요.');
-                paymentBtn.innerHTML = originalText;
-                paymentBtn.disabled = false;
             }
         });
-        
-        console.log('✅ 결제 페이지 로드 완료');
+
+        // 페이지 로드 시 저장된 정보 불러오기 (선택사항)
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem('customerName');
+            const savedEmail = localStorage.getItem('customerEmail');
+            const savedPhone = localStorage.getItem('customerPhone');
+
+            if (savedName) document.getElementById('customerName').value = savedName;
+            if (savedEmail) document.getElementById('customerEmail').value = savedEmail;
+            if (savedPhone) document.getElementById('customerPhone').value = savedPhone;
+        });
     </script>
 </body>
 </html>
