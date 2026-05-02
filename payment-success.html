@@ -227,44 +227,118 @@
         const orderId = urlParams.get('orderId');
         const amount = urlParams.get('amount');
 
+        console.log('결제 승인 시작:', { paymentKey, orderId, amount });
+
         // 결제 승인 처리
         async function approvePayment() {
             try {
-                // 결제 데이터베이스 업데이트 (상태: 완료)
-                const payments = await fetch(`tables/payments?search=${orderId}`);
-                const result = await payments.json();
+                console.log('🔍 결제 승인 시작:', { paymentKey, orderId, amount });
                 
-                if (result.data && result.data.length > 0) {
-                    const payment = result.data[0];
-                    
-                    // 결제 완료 상태로 업데이트
-                    await fetch(`tables/payments/${payment.id}`, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            payment_key: paymentKey,
-                            status: '완료',
-                            approved_at: new Date().toISOString()
-                        })
-                    });
+                // 1. orderId로 결제 정보 검색
+                console.log('결제 정보 검색 중...');
+                const searchResponse = await fetch(`tables/payments?limit=100&sort=-created_at`);
+                const searchResult = await searchResponse.json();
+                
+                console.log('검색 결과:', searchResult);
 
-                    // 화면에 표시
-                    document.getElementById('orderId').textContent = orderId;
-                    document.getElementById('orderName').textContent = payment.product_name;
-                    document.getElementById('amount').textContent = payment.amount.toLocaleString() + '원';
-                    document.getElementById('paymentMethod').textContent = payment.payment_method;
-                    document.getElementById('approvedAt').textContent = new Date().toLocaleString('ko-KR');
-
-                    // 로딩 숨기고 성공 화면 표시
-                    document.getElementById('loadingSection').style.display = 'none';
-                    document.getElementById('successSection').style.display = 'block';
-                } else {
+                // orderId로 필터링
+                const payment = searchResult.data.find(p => p.order_id === orderId);
+                
+                if (!payment) {
+                    console.error('❌ 결제 정보를 찾을 수 없습니다:', orderId);
                     throw new Error('결제 정보를 찾을 수 없습니다.');
                 }
+
+                console.log('✅ 결제 정보 발견:', payment);
+
+                // 2. 결제 금액 검증
+                const receivedAmount = parseInt(amount);
+                const expectedAmount = payment.amount;
+                
+                if (receivedAmount !== expectedAmount) {
+                    console.error('❌ 금액 불일치:', { receivedAmount, expectedAmount });
+                    throw new Error(`결제 금액이 일치하지 않습니다. (요청: ${expectedAmount}원, 승인: ${receivedAmount}원)`);
+                }
+                
+                console.log('✅ 금액 검증 완료');
+
+                // 3. 결제 완료 상태로 업데이트
+                console.log('결제 상태 업데이트 중...');
+                const updateResponse = await fetch(`tables/payments/${payment.id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        payment_key: paymentKey,
+                        status: '완료',
+                        approved_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    })
+                });
+
+                if (!updateResponse.ok) {
+                    const errorText = await updateResponse.text();
+                    console.error('❌ 업데이트 실패:', errorText);
+                    throw new Error('결제 상태 업데이트 실패');
+                }
+                
+                const updatedPayment = await updateResponse.json();
+                console.log('✅ 결제 상태 업데이트 완료:', updatedPayment);
+
+                // 4. 화면에 표시
+                document.getElementById('orderId').textContent = orderId;
+                document.getElementById('orderName').textContent = payment.product_name || '-';
+                document.getElementById('amount').textContent = (payment.amount || 0).toLocaleString() + '원';
+                document.getElementById('paymentMethod').textContent = payment.payment_method || '-';
+                document.getElementById('approvedAt').textContent = new Date().toLocaleString('ko-KR');
+
+                // 5. 로딩 숨기고 성공 화면 표시
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('successSection').style.display = 'block';
+
+                console.log('🎉 결제 승인 완료!');
+
             } catch (error) {
-                console.error('결제 승인 오류:', error);
-                alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
-                window.location.href = 'index.html';
+                console.error('❌ 결제 승인 오류:', error);
+                
+                // 실패 상태로 업데이트 시도
+                try {
+                    const searchResponse = await fetch(`tables/payments?limit=100&sort=-created_at`);
+                    const searchResult = await searchResponse.json();
+                    const payment = searchResult.data.find(p => p.order_id === orderId);
+                    
+                    if (payment) {
+                        await fetch(`tables/payments/${payment.id}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                status: '실패',
+                                error_message: error.message || '승인 처리 실패',
+                                updated_at: new Date().toISOString()
+                            })
+                        });
+                        console.log('실패 상태 업데이트 완료');
+                    }
+                } catch (updateError) {
+                    console.error('실패 상태 업데이트 오류:', updateError);
+                }
+                
+                // 고객센터 정보 표시
+                document.getElementById('loadingSection').innerHTML = `
+                    <div style="color: #ff4444; text-align: center;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 3em; margin-bottom: 20px;"></i>
+                        <h2 style="color: #ff4444; margin-bottom: 15px;">결제 처리 중 오류가 발생했습니다</h2>
+                        <p style="margin: 20px 0; color: rgba(255,255,255,0.8);">고객센터로 문의해주세요.</p>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <p style="color: white; margin: 10px 0;"><strong>주문번호:</strong> ${orderId}</p>
+                            <p style="color: white; margin: 10px 0;"><strong>오류 내용:</strong> ${error.message}</p>
+                            <p style="color: white; margin: 10px 0;"><strong>전화:</strong> 0502-1909-7788</p>
+                            <p style="color: white; margin: 10px 0;"><strong>이메일:</strong> aisaju1000@gmail.com</p>
+                        </div>
+                        <button onclick="window.location.href='index.html'" style="margin-top: 20px; padding: 15px 30px; background: #d4af37; border: none; border-radius: 10px; color: #1a1a1a; font-weight: bold; cursor: pointer; font-size: 1em;">
+                            <i class="fas fa-home"></i> 홈으로 돌아가기
+                        </button>
+                    </div>
+                `;
             }
         }
 
@@ -272,6 +346,7 @@
         if (paymentKey && orderId && amount) {
             approvePayment();
         } else {
+            console.error('필수 파라미터 누락:', { paymentKey, orderId, amount });
             alert('잘못된 접근입니다.');
             window.location.href = 'index.html';
         }
