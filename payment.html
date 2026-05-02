@@ -294,8 +294,15 @@
     <script>
         // URL 파라미터에서 상품 정보 가져오기
         const urlParams = new URLSearchParams(window.location.search);
-        const productName = urlParams.get('product') || urlParams.get('name') || '프리미엄 사주 분석';
+        const productName = urlParams.get('product') || urlParams.get('name') || urlParams.get('service') || urlParams.get('description') || '프리미엄 사주 분석';
         const amount = parseInt(urlParams.get('amount') || urlParams.get('price')) || 10000;
+        
+        // 추가 정보 저장 (주문 상세에 포함)
+        const serviceType = urlParams.get('service') || '';
+        const description = urlParams.get('description') || '';
+        const birthYear = urlParams.get('birthYear') || '';
+        
+        console.log('📦 결제 정보:', { productName, amount, serviceType, description, birthYear });
 
         // 상품 정보 표시
         document.getElementById('productName').textContent = productName;
@@ -349,23 +356,42 @@
 
             // 결제 데이터 저장 (대기 상태)
             try {
-                await fetch('tables/payments', {
+                const paymentData = {
+                    order_id: orderId,
+                    customer_name: customerName,
+                    customer_email: customerEmail,
+                    customer_phone: customerPhone,
+                    amount: amount,
+                    product_name: productName,
+                    payment_method: selectedMethod,
+                    status: '대기',
+                    created_at: new Date().toISOString()
+                };
+                
+                // 추가 정보가 있으면 포함
+                if (serviceType) paymentData.service_type = serviceType;
+                if (description) paymentData.description = description;
+                if (birthYear) paymentData.birth_year = birthYear;
+                
+                console.log('💾 DB 저장 시도:', paymentData);
+                
+                const saveResponse = await fetch('tables/payments', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        order_id: orderId,
-                        customer_name: customerName,
-                        customer_email: customerEmail,
-                        customer_phone: customerPhone,
-                        amount: amount,
-                        product_name: productName,
-                        payment_method: selectedMethod,
-                        status: '대기',
-                        created_at: new Date().toISOString()
-                    })
+                    body: JSON.stringify(paymentData)
                 });
+                
+                if (!saveResponse.ok) {
+                    const errorText = await saveResponse.text();
+                    console.error('❌ DB 저장 실패:', errorText);
+                    throw new Error('결제 정보 저장 실패: ' + errorText);
+                }
+                
+                console.log('✅ DB 저장 완료');
             } catch (error) {
-                console.error('결제 정보 저장 오류:', error);
+                console.error('❌ 결제 정보 저장 오류:', error);
+                alert('결제 정보 저장 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.\n\n오류: ' + error.message);
+                return; // 저장 실패 시 결제 진행 중단
             }
 
             // 저장된 고객 정보 저장
