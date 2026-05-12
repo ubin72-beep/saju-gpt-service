@@ -335,7 +335,7 @@
             // 입력 값 가져오기
             const customerName = document.getElementById('customerName').value.trim();
             const customerEmail = document.getElementById('customerEmail').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim().replace(/-/g, ''); // 하이픈 제거
 
             // 유효성 검사
             if (!customerName) {
@@ -348,6 +348,12 @@
             }
             if (!customerPhone) {
                 alert('휴대폰 번호를 입력해주세요.');
+                return;
+            }
+            
+            // 결제 금액 검증
+            if (amount < 100) {
+                alert('결제 금액은 100원 이상이어야 합니다.');
                 return;
             }
 
