@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>결제하기 - AI사주천년지기</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 토스페이먼츠 SDK v2 (최신버전) -->
-    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <!-- 토스페이먼츠 SDK v1 (안정버전) -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
     <style>
         * {
             margin: 0;
@@ -259,19 +259,19 @@
                 <div class="payment-methods">
                     <h3>결제 수단 선택</h3>
                     <div class="method-grid">
-                        <div class="method-card selected" data-method="CARD" onclick="selectMethod('CARD', this)">
+                        <div class="method-card selected" data-method="카드" onclick="selectMethod('카드', this)">
                             <div class="method-icon"><i class="fas fa-credit-card"></i></div>
                             <div class="method-name">카드 결제</div>
                         </div>
-                        <div class="method-card" data-method="TRANSFER" onclick="selectMethod('TRANSFER', this)">
+                        <div class="method-card" data-method="계좌이체" onclick="selectMethod('계좌이체', this)">
                             <div class="method-icon"><i class="fas fa-building-columns"></i></div>
                             <div class="method-name">계좌이체</div>
                         </div>
-                        <div class="method-card" data-method="VIRTUAL_ACCOUNT" onclick="selectMethod('VIRTUAL_ACCOUNT', this)">
+                        <div class="method-card" data-method="가상계좌" onclick="selectMethod('가상계좌', this)">
                             <div class="method-icon"><i class="fas fa-receipt"></i></div>
                             <div class="method-name">가상계좌</div>
                         </div>
-                        <div class="method-card" data-method="MOBILE_PHONE" onclick="selectMethod('MOBILE_PHONE', this)">
+                        <div class="method-card" data-method="휴대폰" onclick="selectMethod('휴대폰', this)">
                             <div class="method-icon"><i class="fas fa-mobile-alt"></i></div>
                             <div class="method-name">휴대폰 결제</div>
                         </div>
@@ -308,8 +308,8 @@
         document.getElementById('productName').textContent = productName;
         document.getElementById('totalAmount').textContent = amount.toLocaleString() + '원';
 
-        // 선택된 결제 수단 (토스페이먼츠 SDK v2 메서드명 사용)
-        let selectedMethod = 'CARD';
+        // 선택된 결제 수단
+        let selectedMethod = '카드';
 
         // 결제 수단 선택
         function selectMethod(method, element) {
@@ -326,9 +326,11 @@
             console.log('✅ 결제수단 선택:', selectedMethod);
         }
 
-        // 토스페이먼츠 초기화 (SDK v2)
-        const clientKey = 'test_gck_kYG57Eba3GRlaoQjWG5E8pWDOxmA';  // 테스트용 클라이언트 키
+        // 토스페이먼츠 초기화 (SDK v1 - 안정버전)
+        const clientKey = 'test_gck_kYG57Eba3GRlaoQjWG5E8pWDOxmA';
         const tossPayments = TossPayments(clientKey);
+
+        console.log('✅ TossPayments 초기화 완료:', tossPayments);
 
         // 결제 폼 제출
         document.getElementById('paymentForm').addEventListener('submit', async (e) => {
@@ -337,7 +339,7 @@
             // 입력 값 가져오기
             const customerName = document.getElementById('customerName').value.trim();
             const customerEmail = document.getElementById('customerEmail').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim().replace(/-/g, ''); // 하이픈 제거
+            const customerPhone = document.getElementById('customerPhone').value.trim().replace(/-/g, '');
 
             // 유효성 검사
             if (!customerName) {
@@ -365,7 +367,7 @@
                 return;
             }
 
-            // 주문 ID 생성 (타임스탬프 + 랜덤)
+            // 주문 ID 생성
             const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
             // 결제 데이터 준비
@@ -382,21 +384,18 @@
                 payment_method: selectedMethod,
                 status: '대기',
                 created_at: new Date().toISOString(),
-                
-                // 회원 정보 추가
                 user_id: isLoggedIn && currentUser.id ? currentUser.id : null,
                 is_member: isLoggedIn,
                 member_email: isLoggedIn && currentUser.email ? currentUser.email : null
             };
             
-            // 추가 정보가 있으면 포함
             if (serviceType) paymentData.service_type = serviceType;
             if (description) paymentData.description = description;
             if (birthYear) paymentData.birth_year = birthYear;
             
             console.log('💾 결제 정보 준비:', paymentData);
             
-            // DB 저장 시도 (실패해도 결제는 진행)
+            // DB 저장 시도
             try {
                 const saveResponse = await fetch('tables/payments', {
                     method: 'POST',
@@ -408,33 +407,40 @@
                     console.log('✅ DB 저장 완료');
                 } else {
                     console.warn('⚠️ DB 저장 실패, localStorage에 백업');
-                    // DB 저장 실패 시 localStorage에 백업
                     localStorage.setItem('pending_payment_' + orderId, JSON.stringify(paymentData));
                 }
             } catch (error) {
                 console.warn('⚠️ DB 연결 실패, localStorage에 백업:', error);
-                // DB 연결 실패 시 localStorage에 백업
                 localStorage.setItem('pending_payment_' + orderId, JSON.stringify(paymentData));
             }
 
-            // 저장된 고객 정보 저장
+            // 고객 정보 저장
             localStorage.setItem('customerName', customerName);
             localStorage.setItem('customerEmail', customerEmail);
             localStorage.setItem('customerPhone', customerPhone);
 
+            // 토스페이먼츠 결제 수단 매핑 (SDK v1 API 정확한 이름)
+            let tossMethod = '카드';
+            if (selectedMethod === '카드') {
+                tossMethod = '카드';
+            } else if (selectedMethod === '계좌이체') {
+                tossMethod = '계좌이체';
+            } else if (selectedMethod === '가상계좌') {
+                tossMethod = '가상계좌';
+            } else if (selectedMethod === '휴대폰') {
+                tossMethod = '휴대폰';
+            }
+
+            console.log('🚀 결제 요청 시작:', {
+                method: tossMethod,
+                amount: amount,
+                orderId: orderId,
+                orderName: productName
+            });
+
             // 토스페이먼츠 결제창 호출
             try {
-                console.log('🚀 결제 요청 시작:', {
-                    method: selectedMethod,
-                    amount: amount,
-                    orderId: orderId,
-                    orderName: productName,
-                    customerName: customerName,
-                    customerMobilePhone: customerPhone
-                });
-
-                // 결제 위젯 생성 및 렌더링
-                await tossPayments.requestPayment(selectedMethod, {
+                await tossPayments.requestPayment(tossMethod, {
                     amount: amount,
                     orderId: orderId,
                     orderName: productName,
@@ -446,8 +452,6 @@
                 });
                 
                 console.log('✅ 결제창 호출 성공');
-                
-                // 결제 정보를 localStorage에 백업 (결제 성공 시 사용)
                 localStorage.setItem('current_payment_' + orderId, JSON.stringify(paymentData));
             } catch (error) {
                 console.error('❌ 결제 오류:', error);
@@ -463,10 +467,6 @@
                     errorMessage = '결제가 취소되었습니다.';
                 } else if (error.code === 'INVALID_PARAMETER') {
                     errorMessage = '결제 정보가 올바르지 않습니다.\n\n오류: ' + error.message;
-                } else if (error.code === 'INVALID_ORDER_ID') {
-                    errorMessage = '주문번호가 올바르지 않습니다. 페이지를 새로고침 후 다시 시도해주세요.';
-                } else if (error.code === 'NOT_ALLOWED_CLIENT_KEY') {
-                    errorMessage = '결제 설정에 문제가 있습니다. 관리자에게 문의해주세요.';
                 } else if (error.message) {
                     errorMessage += '\n\n상세 오류: ' + error.message;
                 }
@@ -489,7 +489,6 @@
                                 updated_at: new Date().toISOString()
                             })
                         });
-                        console.log('결제 실패 상태 업데이트 완료');
                     }
                 } catch (updateError) {
                     console.error('상태 업데이트 오류:', updateError);
@@ -497,21 +496,18 @@
             }
         });
 
-        // 페이지 로드 시 로그인 상태 확인 및 정보 불러오기
+        // 페이지 로드 시 로그인 상태 확인
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. 로그인 상태 확인
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
             
             if (isLoggedIn && currentUser.name) {
-                // 회원 - 정보 자동 입력
                 console.log('✅ 회원 로그인 상태:', currentUser.name);
                 
                 document.getElementById('customerName').value = currentUser.name || '';
                 document.getElementById('customerEmail').value = currentUser.email || '';
                 document.getElementById('customerPhone').value = currentUser.phone || '';
                 
-                // 회원 안내 메시지 표시
                 const memberNotice = document.createElement('div');
                 memberNotice.style.cssText = `
                     background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
@@ -536,7 +532,6 @@
                 productInfo.parentNode.insertBefore(memberNotice, productInfo);
                 
             } else {
-                // 비회원 - 저장된 정보 또는 빈 값
                 console.log('ℹ️ 비회원 결제 모드');
                 
                 const savedName = localStorage.getItem('customerName');
@@ -547,7 +542,6 @@
                 if (savedEmail) document.getElementById('customerEmail').value = savedEmail;
                 if (savedPhone) document.getElementById('customerPhone').value = savedPhone;
                 
-                // 비회원 안내 메시지 표시
                 const guestNotice = document.createElement('div');
                 guestNotice.style.cssText = `
                     background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
