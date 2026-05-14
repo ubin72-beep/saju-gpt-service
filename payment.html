@@ -284,7 +284,7 @@
     </div>
 
     <script>
-        // 🎉 실제 라이브 클라이언트 키 적용!
+        // 실제 라이브 클라이언트 키
         const clientKey = 'live_gck_vZnjEJeQVxeXejY1v7ROrPmOoBN0';
         
         // URL 파라미터에서 상품 정보 가져오기
@@ -315,10 +315,10 @@
         let tossPayments;
         try {
             tossPayments = TossPayments(clientKey);
-            console.log('✅ TossPayments 초기화 완료 (라이브 환경)');
+            console.log('✅ TossPayments 초기화 완료');
         } catch (error) {
             console.error('❌ TossPayments 초기화 실패:', error);
-            alert('결제 시스템 초기화에 실패했습니다.\n페이지를 새로고침 후 다시 시도해주세요.');
+            alert('결제 시스템 초기화에 실패했습니다. 관리자에게 문의해주세요.');
         }
 
         // 결제 폼 제출
@@ -326,7 +326,7 @@
             e.preventDefault();
 
             if (!tossPayments) {
-                alert('결제 시스템이 초기화되지 않았습니다.\n페이지를 새로고침 후 다시 시도해주세요.');
+                alert('결제 시스템이 준비되지 않았습니다.');
                 return;
             }
 
@@ -351,59 +351,16 @@
             }
 
             // 주문 ID 생성
-            const orderId = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            const orderId = 'ORD_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-            // 결제 데이터 준비
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            
-            const paymentData = {
-                order_id: orderId,
-                customer_name: customerName,
-                customer_email: customerEmail,
-                customer_phone: customerPhone,
-                amount: amount,
-                product_name: productName,
-                payment_method: selectedMethod,
-                status: '대기',
-                created_at: new Date().toISOString(),
-                user_id: isLoggedIn && currentUser.id ? currentUser.id : null,
-                is_member: isLoggedIn
-            };
-            
-            console.log('💾 결제 정보 준비:', paymentData);
-            
-            // DB 저장 시도
-            try {
-                const saveResponse = await fetch('/tables/payments', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(paymentData)
-                });
-                
-                if (saveResponse.ok) {
-                    console.log('✅ DB 저장 완료');
-                } else {
-                    console.warn('⚠️ DB 저장 실패, localStorage 백업');
-                    localStorage.setItem('pending_payment_' + orderId, JSON.stringify(paymentData));
-                }
-            } catch (error) {
-                console.warn('⚠️ DB 연결 실패, localStorage 백업');
-                localStorage.setItem('pending_payment_' + orderId, JSON.stringify(paymentData));
-            }
-
-            // 고객 정보 저장
-            localStorage.setItem('customerName', customerName);
-            localStorage.setItem('customerEmail', customerEmail);
-            localStorage.setItem('customerPhone', customerPhone);
-
-            console.log('🚀 실제 결제 요청 시작:', {
+            console.log('🚀 결제 요청:', {
                 method: selectedMethod,
                 amount: amount,
-                orderId: orderId
+                orderId: orderId,
+                orderName: productName
             });
 
-            // 토스페이먼츠 결제창 호출 (실제 결제)
+            // 토스페이먼츠 결제창 호출
             try {
                 await tossPayments.requestPayment(selectedMethod, {
                     amount: amount,
@@ -412,19 +369,22 @@
                     customerName: customerName,
                     customerEmail: customerEmail,
                     customerMobilePhone: customerPhone,
-                    successUrl: window.location.origin + '/payment-success.html',
-                    failUrl: window.location.origin + '/payment-fail.html'
+                    successUrl: 'https://www.aisaju1000.com/payment-success.html',
+                    failUrl: 'https://www.aisaju1000.com/payment-fail.html'
                 });
                 
-                console.log('✅ 실제 결제창 호출 성공');
+                console.log('✅ 결제창 호출 성공');
             } catch (error) {
                 console.error('❌ 결제 오류:', error);
                 
                 let errorMessage = '결제 중 오류가 발생했습니다.';
                 if (error.code === 'USER_CANCEL') {
                     errorMessage = '결제가 취소되었습니다.';
-                } else if (error.message) {
-                    errorMessage += '\n\n' + error.message;
+                } else if (error.code) {
+                    errorMessage += '\n오류 코드: ' + error.code;
+                }
+                if (error.message) {
+                    errorMessage += '\n상세: ' + error.message;
                 }
                 
                 alert(errorMessage);
@@ -437,72 +397,9 @@
             const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
             
             if (isLoggedIn && currentUser.name) {
-                console.log('✅ 회원 로그인:', currentUser.name);
-                
                 document.getElementById('customerName').value = currentUser.name || '';
                 document.getElementById('customerEmail').value = currentUser.email || '';
-                document.getElementById('customerPhone').value = currentUser.phone || '';
-                
-                const memberNotice = document.createElement('div');
-                memberNotice.style.cssText = `
-                    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-                    border: 2px solid #4caf50;
-                    border-radius: 15px;
-                    padding: 20px;
-                    margin-bottom: 25px;
-                    text-align: center;
-                `;
-                memberNotice.innerHTML = `
-                    <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
-                    <div style="color: #2e7d32; font-weight: 600; font-size: 1.1em;">
-                        <strong>${currentUser.name}</strong>님 환영합니다!
-                    </div>
-                    <div style="color: #388e3c; font-size: 0.95em;">
-                        회원 정보가 자동으로 입력되었습니다.
-                    </div>
-                `;
-                
-                const productInfo = document.querySelector('.product-info');
-                productInfo.parentNode.insertBefore(memberNotice, productInfo);
-                
-            } else {
-                console.log('ℹ️ 비회원 결제 모드');
-                
-                const savedName = localStorage.getItem('customerName');
-                const savedEmail = localStorage.getItem('customerEmail');
-                const savedPhone = localStorage.getItem('customerPhone');
-                
-                if (savedName) document.getElementById('customerName').value = savedName;
-                if (savedEmail) document.getElementById('customerEmail').value = savedEmail;
-                if (savedPhone) document.getElementById('customerPhone').value = savedPhone;
-                
-                const guestNotice = document.createElement('div');
-                guestNotice.style.cssText = `
-                    background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
-                    border: 2px solid #ffc107;
-                    border-radius: 15px;
-                    padding: 20px;
-                    margin-bottom: 25px;
-                    text-align: center;
-                `;
-                guestNotice.innerHTML = `
-                    <div style="font-size: 2em; margin-bottom: 10px;">💡</div>
-                    <div style="color: #856404; font-weight: 600; font-size: 1em; margin-bottom: 8px;">
-                        비회원으로 결제하시나요?
-                    </div>
-                    <div style="color: #856404; font-size: 0.9em; margin-bottom: 12px;">
-                        회원이시면 정보가 자동으로 입력됩니다!
-                    </div>
-                    <a href="login.html" 
-                       style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                              color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; 
-                              font-weight: 600; font-size: 0.95em;">
-                        <i class="fas fa-sign-in-alt"></i> 로그인하기
-                    </a>
-                `;
-                
-                const productInfo = document.querySelector('.product-info');
-                productInfo.parentNode.insertBefore(guestNotice, productInfo);
+                document.getElementById('customerPhone').value = (currentUser.phone || '').replace(/-/g, '');
             }
         });
     </script>
